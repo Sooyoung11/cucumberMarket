@@ -11,17 +11,17 @@
       <tr>
         <th scope="col">글 번호</th>
         <th scope="col">제목</th>
-
+        <th scope="col">작성자</th>
         <th scope="col">작성일</th>
         <th scope="col">조회수</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="list : ${list}">
-
         <td th:text="${list.postNo}"></td>
         <td th:text="${list.title}"></td>
-
+        <td th:text="${list.writer}"></td>
+        <!--작성자추가-->
         <td th:text="${list.createdTime}"></td>
         <td th:text="${list.clickCount}"></td>
       </tr>
