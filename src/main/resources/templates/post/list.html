@@ -1,77 +1,94 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{ layout/layout.html }">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{ layout/layout.html }"
+>
+  <div layout:fragment="content">
+    <div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">글 번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">작성일</th>
+            <th scope="col">조회수</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="list : ${list}">
+            <td th:text="${list.postNo}"></td>
+            <td th:text="${list.title}"></td>
+            <td th:text="${list.writer}"></td>
+            <td th:text="${list.createdTime}"></td>
+            <td th:text="${list.clickCount}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- 검색기능 -->
+    <form
+      class="row g-3 d-flex justify-content-end"
+      method="get"
+      th:action="@{/post/list}"
+    >
+      <div class="col-auto">
+        <label for="searchText" class="visually-hidden">검색</label>
+        <input
+          type="text"
+          class="form-control"
+          id="searchText"
+          name="searchText"
+          placeholder="검색어를 입력해주세요"
+          th:value="${param.searchText}"
+        />
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-outline-secondary mb-3">
+          검색
+        </button>
+      </div>
+    </form>
 
-
-<div layout:fragment="content">
-  <div>
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th scope="col">글 번호</th>
-        <th scope="col">제목</th>
-        <th scope="col">작성자</th>
-        <th scope="col">작성일</th>
-        <th scope="col">조회수</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="list : ${list}">
-        <td th:text="${list.postNo}"></td>
-        <td th:text="${list.title}"></td>
-        <td th:text="${list.writer}"></td>
-        <td th:text="${list.createdTime}"></td>
-        <td th:text="${list.clickCount}"></td>
-      </tr>
-      </tbody>
-    </table>
+    <!--페이지버튼-->
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li
+          class="page-item"
+          th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled'"
+        >
+          <a
+            class="page-link"
+            th:href="@{/board/list(page=${list.pageable.pageNumber-1}, searchText=${param.searchText})}"
+            ><<</a
+          >
+        </li>
+        <li
+          class="page-item"
+          th:classappend="${i == list.pageable.pageNumber + 1} ? 'disabled'"
+          th:each="i : ${#numbers.sequence(startPage, endPage)}"
+        >
+          <a
+            class="page-link"
+            href="#"
+            th:text="${i}"
+            th:href="@{/board/list(page=${i-1}, searchText=${param.searchText})}"
+            >1</a
+          >
+        </li>
+        <li
+          class="page-item"
+          th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled'"
+        >
+          <a
+            class="page-link"
+            href="#"
+            th:href="@{/board/list(page=${list.pageable.pageNumber+1}, searchText=${param.searchText})}"
+            >>></a
+          >
+        </li>
+      </ul>
+    </nav>
   </div>
-  <!-- 검색기능 -->
-  <form
-          class="row g-3 d-flex justify-content-end"
-          method="get"
-          th:action="@{/post/list}"
-  >
-    <div class="col-auto">
-      <label for="searchText" class="visually-hidden">검색</label>
-      <input
-              type="text"
-              class="form-control"
-              id="searchText"
-              name="searchText"
-              placeholder="검색어를 입력해주세요"
-              th:value="${param.searchText}"
-      />
-    </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-outline-secondary mb-3">
-        검색
-      </button>
-    </div>
-  </form>
-
-  <!--페이지버튼-->
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Next</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-</div>
-
 </html>

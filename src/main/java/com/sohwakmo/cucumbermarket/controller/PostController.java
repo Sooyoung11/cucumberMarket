@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/post")
 @RequiredArgsConstructor
-public class PostController {
+public class    PostController {
 
     private final PostService postService;
 
@@ -29,7 +29,9 @@ public class PostController {
     public String list(Model model, @PageableDefault(size = 5)Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
         List<PostReadDto> list = postService.listAll(pageable);
         final int start = (int)pageable.getOffset();
+        log.info("start={}",start);
         final int end = Math.min((start + pageable.getPageSize()), list.size());
+        log.info("end={}",end);
         final Page<PostReadDto> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
         int startPage = Math.max(1, page.getPageable().getPageNumber() - 9);
         int endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
