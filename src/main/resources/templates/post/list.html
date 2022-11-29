@@ -9,15 +9,21 @@
     <table class="table table-hover">
       <thead>
       <tr>
-        <th scope="col" th:text="#{글 번호}"></th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">글 번호</th>
+        <th scope="col">제목</th>
+
+        <th scope="col">작성일</th>
+        <th scope="col">조회수</th>
       </tr>
       </thead>
       <tbody>
-      <tr>
+      <tr th:each="list : ${list}">
 
+        <td th:text="${list.postNo}"></td>
+        <td th:text="${list.title}"></td>
+
+        <td th:text="${list.createdTime}"></td>
+        <td th:text="${list.clickCount}"></td>
       </tr>
       </tbody>
     </table>

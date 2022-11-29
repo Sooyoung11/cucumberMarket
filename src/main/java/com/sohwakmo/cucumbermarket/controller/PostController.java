@@ -23,7 +23,7 @@ public class PostController {
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 5)Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
-        Page<Post> list = postService.searchPost(searchText,searchText,pageable);
+        Page<Post> list = postService.listAll(pageable);
         int startPage = Math.max(1, list.getPageable().getPageNumber() - 9);
         int endPage = Math.min(list.getTotalPages(), list.getPageable().getPageNumber() + 9);
         model.addAttribute("list", list);
