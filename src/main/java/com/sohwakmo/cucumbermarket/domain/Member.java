@@ -1,8 +1,6 @@
 package com.sohwakmo.cucumbermarket.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -28,7 +26,7 @@ public class Member {
     @NotNull
     @Size(min = 8, max = 20, message = "비밀번호는 8자이상 20자 이하입니다.")
     @Column(nullable = false)
-    private String passWord;
+    private String password;
 
     @NotNull
     @Column(nullable = false)
@@ -36,7 +34,7 @@ public class Member {
 
     @NotNull
     @Column(nullable = false, unique = true)
-    private String nickName;
+    private String nickname;
 
     @NotNull
     @Column(nullable = false)
