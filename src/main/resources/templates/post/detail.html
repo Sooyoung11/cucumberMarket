@@ -1,51 +1,99 @@
 <!DOCTYPE html>
-<html
-  xmlns:th="http://www.thymeleaf.org"
-  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{ layout/layout.html }"
->
-  <div layout:fragment="content">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ layout/layout.html }">
+
+<div layout:fragment="content">
+  <div class="border border-secondary">
+    <!--디테일 페이지 시작-->
     <div>
-      <button>수정</button>
-      <button>삭제</button>
+      <h3 th:text="${post.title}">제목</h3>
     </div>
-    <div class="border border-secondary">
-      <!--디테일 페이지 시작-->
-
-      <div>
-        <h3 th:text="${post.title}">제목</h3>
-      </div>
-      <div>
-        <span th:text="${nickname}">작성자</span>
-        <button>1대1채팅</button>
-      </div>
-      <div>
-        <span th:text="${post.createdTime}">작성시간</span>
-        <span th:text="'조회 '+${post.clickCount}">조회수</span>
-      </div>
-      <div> <!--게시물 내용칸-->
-        <div>
-          <p>게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이 없으시길 바랍니다.</p>
-          <p>규정을 위반한 게시글은 무통보 삭제될 수 있으며, 추가적인 제재 조치가 진행될 수 있습니다.</p>
-        </div>
-        <div> <!--게시물 찐 내용-->
-          <span th:text="${post.content}">내용</span>
-        </div>
-        <div> <!-- 이미지가 있다면 들어갈곳-->
-          <img src="#"/>
-        </div>
-        <div> <!-- //TODO 이 작성자가 작성한 게시물 더보기-->
-          <span>
-            <a href="#"></a>
-          </span>
-        </div>
-      </div>
-
-
-
-
+    <div>
+      <span th:text="${nickname}">작성자</span>
+      <button>1대1채팅</button>
     </div>
-
-    <!--아래는 희지띄 위에는 주환띄 넘어오면 안됨 -->
+    <div>
+      <span th:text="${post.createdTime}">작성시간</span>
+      <span th:text="'조회 '+${post.clickCount}">조회수</span>
+    </div>
+    <div> <!--게시물 내용칸-->
+      <div>
+        <p>게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이 없으시길 바랍니다.</p>
+        <p>규정을 위반한 게시글은 무통보 삭제될 수 있으며, 추가적인 제재 조치가 진행될 수 있습니다.</p>
+      </div>
+      <div> <!--게시물 찐 내용-->
+        <span th:text="${post.content}">내용</span>
+      </div>
+      <div> <!-- 이미지가 있다면 들어갈곳-->
+        <img src="#"/>
+      </div>
+      <div> <!-- //TODO 이 작성자가 작성한 게시물 더보기-->
+        <span>
+                            <a href="#"></a>
+                         </span>
+      </div>
+    </div>
   </div>
+
+  <!--아래는 희지~ 위는 주환~ 선넘으면 안됨-->
+  <hr />
+
+  <!-- 댓글 작성하기 -->
+  <div class="card border-gray my-5">
+    <div class="col-4">
+      <input type="text" class="form-control" id="postNo" placeholder="포스트아이디"/>
+    </div>
+    <div class="card-header">
+      <div class="col-4">
+        <input type="text" class="form-control" id="writer" placeholder="작성자"/>
+      </div>
+    </div>
+    <div class="card-body row">
+      <div class="col-10">
+        <textarea class="form-control" id="replyText" placeholder="댓글 작성"></textarea>
+      </div>
+      <div class="col-2">
+        <button class="btn btn-primary" id="btnReplyRegister">등록</button>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- 댓글 리스트 -->
+  <div id="replies" class="row row-cols-3 row-cols-md-3 g-4"></div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="ReplyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="ReplyModalLabel">댓글 수정</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- 댓글 아이디 삽입 위치 -->
+          <input type="hidden" readonly="readonly" id="modalreplyId" />
+          <!-- 댓글 내용 삽입 위치 -->
+          <textarea id="modalreplyText" class="form-control"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-outline-danger" id="modalBtnDelete">삭제</button>
+          <button type="button" class="btn btn-outline-success" id="modalBtnUpdate">수정 완료</button>
+        </div>
+      </div>
+    </div>
+  </div> <!-- end Modal -->
+</div> <!-- layout: fragment = "content" end -->
+
+<th:block layout:fragment="script">
+  <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- 댓글 관련 자바스크립트 함수/코드들을 작성한 스크립트 파일 -->
+  <script th:src="@{/js/reply.js}"></script>
+</th:block>
+
 </html>
+
