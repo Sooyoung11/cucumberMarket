@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,17 +27,15 @@ public class    PostController {
     private final PostService postService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 2) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
-        List<PostReadDto> list = postService.listAll();
+    public String list(Model model, @PageableDefault(size = 2, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
+//        List<PostReadDto> list = postService.listAll();
+        List<PostReadDto> list = postService.searchPost(searchText);
         final int start = (int)pageable.getOffset();
-        log.info("start={}",start);
         final int end = Math.min((start + pageable.getPageSize()), list.size());
-        log.info("end={}",end);
         final Page<PostReadDto> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
         int startPage = Math.max(1, page.getPageable().getPageNumber() - 9);
         int endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
         int a = page.getPageable().getPageNumber();
-        log.info("a={}", a);
         model.addAttribute("list", page);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

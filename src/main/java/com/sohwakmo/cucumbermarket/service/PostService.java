@@ -7,7 +7,6 @@ import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -23,22 +22,12 @@ public class PostService {
     private final MemberRepository memberRepository;
 
     /**
-     *  내용, 제목으로 검색해서 결과를 페이지로 가져오기
+     * 내용, 제목으로 검색해서 결과를 페이지로 가져오기
      * @param searchText 검색 내용
-     * @param pageable 검색내용이 포함되어있는 페이지
      * @return 결과 페이지들을 리턴
      */
-    public Page<Post> searchPost(String searchText, Pageable pageable){
-        return postRepository.findByTitleContainingOrContentContaining(searchText,searchText,pageable);
-    }
-
-    /**
-     * 모든 페이지 불러오기
-     *
-     * @return 페이지로 가져옴
-     */
-    public List<PostReadDto>listAll(){
-        List<Post> postList = postRepository.findAll();
+    public List<PostReadDto> searchPost(String searchText){
+        List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText);
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
             Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
