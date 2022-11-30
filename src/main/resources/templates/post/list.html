@@ -81,7 +81,7 @@
       <li
               class="page-item"
               th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled'">
-      <a
+        <a
                 class="page-link"
                 href="#"
                 th:href="@{/post/list(page=${list.pageable.pageNumber+1})}"

@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@ToString(exclude = "post, member") // 필드 post, member는 toString()에서 제외
+@ToString(exclude = {"post","member"}) // 필드 post, member는 toString()에서 제외
 @Entity(name = "REPLIES") // 테이블명
 @SequenceGenerator(name = "REPLIES_SEQ_GEN", sequenceName = "REPLIES_SEQ", allocationSize = 1)
 public class Reply extends BaseTimeEntity {

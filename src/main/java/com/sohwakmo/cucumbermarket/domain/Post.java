@@ -20,12 +20,12 @@ public class Post extends BaseTimeEntity{
 
     @NotNull
     @Size(min = 2,max = 30,message = "제목은 2자 이상 30자 이하입니다")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String title;
 
     @NotNull
     @Size(min = 2,max = 300,message = "내용은 2자 이상 300자 이하입니다")
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY) // 다대일 관계(relation)
