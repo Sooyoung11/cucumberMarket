@@ -24,7 +24,7 @@ public class MemberController {
         log.info("join() GET");
     }
 
-    @GetMapping("/checkid")
+    @GetMapping("/check_id")
     @ResponseBody
     public ResponseEntity<String> checkMemberId(String memberId){
         log.info("checkMemberId(memberId= {})", memberId);
