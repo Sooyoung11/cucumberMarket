@@ -38,4 +38,8 @@ public class PostService {
         }
         return list;
     }
+
+    public Post findPostById(Integer id) {
+        return postRepository.findById(id).orElse(null);
+    }
 }

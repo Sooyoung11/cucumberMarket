@@ -41,4 +41,15 @@ public class    PostController {
         model.addAttribute("endPage", endPage);
         return "/post/list";
     }
+
+    @GetMapping("/detail")
+    public String create(Model model, @RequestParam(required = false)Integer id){ // 새글 작성일경우 id가 필요 없으므로 필수 항복은 아니므로 false를 준다.
+        if(id==null){
+            model.addAttribute("board", new Post());
+        }else{
+            Post post = postService.findPostById(id);
+            model.addAttribute("post", post);
+        }
+        return "/post/detail";
+    }
 }
