@@ -43,13 +43,11 @@ public class    PostController {
     }
 
     @GetMapping("/detail")
-    public String create(Model model, @RequestParam(required = false)Integer id){ // 새글 작성일경우 id가 필요 없으므로 필수 항복은 아니므로 false를 준다.
-        if(id==null){
-            model.addAttribute("board", new Post());
-        }else{
-            Post post = postService.findPostById(id);
-            model.addAttribute("post", post);
-        }
+    public String create(Model model, @RequestParam Integer postNo){ // 새글 작성일경우 id가 필요 없으므로 필수 항복은 아니므로 false를 준다.
+        Post post = postService.findPostById(postNo);
+        String nickname = post.getMember().getNickname();
+        model.addAttribute("post", post);
+        model.addAttribute("nickname", nickname);
         return "/post/detail";
     }
 }
