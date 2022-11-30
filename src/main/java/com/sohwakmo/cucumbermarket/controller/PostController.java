@@ -26,8 +26,8 @@ public class    PostController {
     private final PostService postService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 5)Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
-        List<PostReadDto> list = postService.listAll(pageable);
+    public String list(Model model, @PageableDefault(size = 2) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
+        List<PostReadDto> list = postService.listAll();
         final int start = (int)pageable.getOffset();
         log.info("start={}",start);
         final int end = Math.min((start + pageable.getPageSize()), list.size());
@@ -35,6 +35,8 @@ public class    PostController {
         final Page<PostReadDto> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
         int startPage = Math.max(1, page.getPageable().getPageNumber() - 9);
         int endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
+        int a = page.getPageable().getPageNumber();
+        log.info("a={}", a);
         model.addAttribute("list", page);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);

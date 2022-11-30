@@ -8,7 +8,6 @@ import com.sohwakmo.cucumbermarket.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -35,11 +34,11 @@ public class PostService {
 
     /**
      * 모든 페이지 불러오기
-     * @param pageable 모든 게시풀 페이지로 담기
+     *
      * @return 페이지로 가져옴
      */
-    public List<PostReadDto>listAll(Pageable pageable){
-        Page<Post> postList = postRepository.findAll(pageable);
+    public List<PostReadDto>listAll(){
+        List<Post> postList = postRepository.findAll();
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
             Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
