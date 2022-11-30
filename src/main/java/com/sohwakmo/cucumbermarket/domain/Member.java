@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.HashSet;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,12 +44,40 @@ public class Member {
 
     @NotNull
     @Column(nullable = false)
-    private Integer phone;
+    private String phone;
 
     @NotNull
     @Column(unique = true, nullable = false)
     private String email;
 
     private Integer grade;
+
+    private boolean deleted;
+    private String userImgUrl;
+    
+    //Spring security 사용시 적용 예정
+    //private Set<MemberRole> roles = new HashSet<>();
+    
+    // 회원정보 수정 업데이트
+    public Member memberUpdate(String password, String nickname, String address, String phone, String email){
+        this.password = password;
+        this.nickname = nickname;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        return this;
+    }
+
+    // 회원 등급 수정 업데이트
+    public Member gradeUpdate(Integer grade){
+        this.grade = grade;
+        return this;
+    }
+
+    //회원 이미지 수정 업데이트
+    public Member userImageUpdate(String userImgUrl){
+        this.userImgUrl = userImgUrl;
+        return this;
+    }
 
 }
