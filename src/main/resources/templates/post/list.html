@@ -52,6 +52,12 @@
       </button>
     </div>
   </form>
+  <!--글 작성 버튼-->
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary" type="button">
+      <a th:href="@{/post/create}" th:value="#{글 작성}">글작성</a>
+    </button>
+  </div>
 
   <!--페이지버튼-->
   <nav aria-label="Page navigation example">

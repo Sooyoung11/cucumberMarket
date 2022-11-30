@@ -5,8 +5,13 @@
   layout:decorate="~{ layout/layout.html }"
 >
   <div layout:fragment="content">
+    <div>
+      <button>수정</button>
+      <button>삭제</button>
+    </div>
     <div class="border border-secondary">
       <!--디테일 페이지 시작-->
+
       <div>
         <h3 th:text="${post.title}">제목</h3>
       </div>
