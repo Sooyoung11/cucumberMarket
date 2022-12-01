@@ -139,7 +139,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 axios
                     .delete('/api/reply/'+ replyNo) // Ajax DELETE 요청 전송
                     .then(response => {
-                        alert(`#${response.data} 댓글 삭제 성공`);
+                        alert('#' + response.data + ' 댓글 삭제 성공');
                         readAllReplies();
                     }) // HTTP 200 OK 응답
                       .catch(err => { console.log(err) }) // 실패 응답 처리
