@@ -73,18 +73,30 @@
                             <h4>사용자 프로필</h4>
                         </div>
                         <div class="card-body">
-                            <label for="name" class="form-label">사용자 이름</label>
-                            <input type="hidden" id="memberNo" th:value="${userProfile.memberNo}"  readonly/>
-                            <input id="name" class="form-control" type="text" th:value="${userProfile.name}" readonly/>
-                            <label for="nickname" class="form-label">닉네임</label>
-                            <input id="nickname" class="form-control" type="text" th:value="${userProfile.nickname}" readonly/>
-                            <label for="address" class="form-label">주소</label>
-                            <input id="address" class="form-control" type="text" th:value="${userProfile.address}" readonly/>
-                            <label for="phone" class="form-label">핸드폰 번호</label>
-                            <input id="phone" class="form-control" type="text" th:value="${userProfile.phone}" readonly/>
-                            <label for="email" class="form-label">이메일</label>
-                            <input id="email" class="form-control" type="email" th:value="${userProfile.email}" readonly/>
-                            <a class="btn btn-primary form-control" th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}">프로필 수정</a>
+                            <div class="my-2">
+                                <input type="hidden" id="memberNo" th:value="${userProfile.memberNo}"  readonly/>
+                                <label for="name" class="form-label">사용자 이름</label>
+                                <input id="name" class="form-control" type="text" th:value="${userProfile.name}" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <label for="nickname" class="form-label">닉네임</label>
+                                <input id="nickname" class="form-control" type="text" th:value="${userProfile.nickname}" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <label for="address" class="form-label">주소</label>
+                                <input id="address" class="form-control" type="text" th:value="${userProfile.address}" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <label for="phone" class="form-label">핸드폰 번호</label>
+                                <input id="phone" class="form-control" type="text" th:value="${userProfile.phone}" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <label for="email" class="form-label">이메일</label>
+                                <input id="email" class="form-control" type="email" th:value="${userProfile.email}" readonly/>
+                            </div>
+                            <div class="my-2">
+                                <a class="btn btn-primary form-control" th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}">프로필 수정</a>
+                            </div>
                         </div>
                     </div>
                 </div>
