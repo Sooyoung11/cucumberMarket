@@ -5,65 +5,37 @@
 
     <div layout:fragment="content">
 
-        <div class="card my-2">
+        <div class="card my-2 container">
             <div class="card-header text-center">
                 <h1>상품 목록 페이지</h1>
             </div>
 
-            <div id="product_list" th:each="p, i : ${ list }">
-                <div class="card-group">
-                    <div class="card">
-                        <img th:src="@{ /images/product/ear.jpg }" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${ i.index }"></h5>
-                            <p class="card-text" th:text="${ p.content }"></p>
-                            <p class="card-text">
-                                <small class="text-muted" th:text="${ p.createdTime}"></small>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
-                    </div>
+            <div id="productList" >
 
+                <div class="card-group row h-75 my-5" th:each="products : ${ list }">
+                    <div th:each="p : ${products}" class="col-4" >
+                        <div class="card" >
+                            <a th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"><img th:src="@{ ${p.photoUrl1} }" class="card-img-top" alt="..."></a>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${ p.title  }"></h5>
+                                <p class="card-text" th:text="${ p.content }"></p>
+                                <p class="card-text">
+                                    <small class="text-muted" th:text="${ p.createdTime}"></small>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
                 </div>
+
+
             </div>
 
         </div>
 
-    </div>
+    </div> <!-- layout:fragment="content" -->
 
     <th:block layout:fragment="script">
-        <script th:src="@{ /js/productList.js }"></script>
+        <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
 
     </th:block>
 
