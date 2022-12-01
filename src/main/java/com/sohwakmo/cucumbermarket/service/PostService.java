@@ -32,7 +32,7 @@ public class PostService {
         List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText);
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
-            Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
+            Member member = memberRepository.findById(1).get();
             PostReadDto dto = PostReadDto.builder()
                     .postNo(p.getPostNo()).title(p.getTitle()).writer(member.getNickname()).createdTime(p.getCreatedTime()).clickCount(p.getClickCount())
                     .build();
