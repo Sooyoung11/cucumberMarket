@@ -25,6 +25,9 @@
                         <div class="card-header">사용자 정보</div>
                         <div class="card-body">
                             <div class="container">
+                                <div class="my-2">
+                                    <a class="btn btn-primary form-control" th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}">프로필 수정</a>
+                                </div>
                                 <!-- img container -->
                                 <!-- image show -->
 <!--                                <div class="image-show" id="image-show"></div>-->
@@ -67,7 +70,6 @@
                 </div>
                 <!-- userInfo entries-->
                 <div class="col-lg-8">
-                    <!-- Featured blog post-->
                     <div class="card mb-4">
                         <div class="card-header">
                             <h4>사용자 프로필</h4>
@@ -94,8 +96,43 @@
                                 <label for="email" class="form-label">이메일</label>
                                 <input id="email" class="form-control" type="email" th:value="${userProfile.email}" readonly/>
                             </div>
-                            <div class="my-2">
-                                <a class="btn btn-primary form-control" th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}">프로필 수정</a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nested row for non-featured blog posts-->
+                <div class="row">
+                    <div class="col-lg-4">
+                        <!-- Blog post-->
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <h4>관심 거래</h4>
+                            </div>
+                            <div class="card-body">
+                                <label for="likesList" class="form-label align-content-center">0건</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <!-- Blog post-->
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <h4>진행 중인 거래</h4>
+                            </div>
+                            <div class="card-body">
+                                <label for="currentList" class="form-label align-content-center">0건</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <!-- Blog post-->
+                        <div class="card mb-2">
+                            <div class="card-header">
+                                <h4>진행 완료</h4>
+                            </div>
+                            <div class="card-body">
+                                <label for="completedList" class="form-label align-content-center">0건</label>
                             </div>
                         </div>
                     </div>
