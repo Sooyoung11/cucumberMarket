@@ -79,13 +79,28 @@
                                 <input id="name" class="form-control" name="name" type="text" th:value="${userProfile.name}" autofocus/>
                                 <label for="nickname" class="form-label">닉네임</label>
                                 <input id="nickname" class="form-control" name="nickname" type="text" th:value="${userProfile.nickname}" />
+
+                                <label for="password" class="form-label">비밀번호</label>
+                                <input id="password" class="form-control" name="password" type="password" th:value="${userProfile.password}" />
+                                <div class="my-2 d-none" id="passwordCheck">
+                                    <p class="text-danger">비밀번호는 8~20자리를 입력해주세요.</p>
+                                </div>
+                                <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
+                                <input id="passwordConfirm" class="form-control" type="password" th:value="${userProfile.password}" disabled />
+                                <div class="my-2 d-none" id="passwordMatched">
+                                    <p class="text-success">비밀번호가 일치합니다.</p>
+                                </div>
+                                <div class="my-2 d-none" id="passwordMismatched">
+                                    <p class="text-danger">비밀번호가 일치하지 않습니다.</p>
+                                </div>
+
                                 <label for="address" class="form-label">주소</label>
                                 <input id="address" class="form-control" name="address" type="text" th:value="${userProfile.address}" />
                                 <label for="phone" class="form-label">핸드폰 번호</label>
                                 <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
                                 <label for="email" class="form-label">이메일</label>
                                 <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />
-                                <input type="submit" value="수정완료"/>
+                                <input type="submit" id="btnSubmit" class="form-control btn btn-success disabled" value="수정완료"/>
 
                             </form>
                         </div>
@@ -99,12 +114,46 @@
         <!-- Core theme JS-->
         <script th:src="@{/js/scripts.js}"></script>
         <!--<script th:src="@{/js/index.js}"></script>-->
+
         <script>
         const form = document.getElementById("formModify");
-        if(form.name.value!=''){
+        const passwordMatched = document.querySelector('#passwordMatched');
+        const passwordMismatched = document.querySelector('#passwordMismatched');
+        const btnSubmit = document.querySelector('#btnSubmit');
+        const passwordConfirm = document.querySelector('#passwordConfirm');
+        const password =document.querySelector('#password');
+        const passwordCheck = document.querySelector('#passwordCheck');
 
-            console.log("form value");
+        //비밀번호 일치, 불일치 체크
+        function passwordValueCheck(){
+            if(form.password.value == form.passwordConfirm.value){
+                console.log("일치")
+                passwordMatched.className = "my-2";
+                passwordMismatched.className = 'my-2 d-none';
+                btnSubmit.classList.remove('disabled');
+            }else{
+                console.log("불일치")
+                passwordMatched.className = 'my-2 d-none';
+                passwordMismatched.className = 'my-2';
+                btnSubmit.classList.add('disabled');
+            }
         }
+        
+        password.addEventListener('change', function () {
+            if(password.value.length < 8 || password.value.length > 20){
+                passwordCheck.className = "my-2";
+                passwordConfirm.disabled = true;
+            }else{
+                passwordCheck.className = "my-2 d-none";
+                passwordConfirm.disabled = false;
+                passwordValueCheck();
+            }
+        })
+
+        passwordConfirm.addEventListener('change', function () {
+                passwordValueCheck();
+        })
+
         form.addEventListener("submit", function (e) {
             if(form.name.value =='' ||form.nickname.value ==''|| form.address.value==''|| form.phone.value=='' || form.email.value==''){
                 alert('사용자 정보를 모두 입력해주세요');
@@ -112,6 +161,7 @@
                 form.name.focus();
                 return;
             }
+
             const result = confirm("정말 수정하시겠습니까?");
             if(result){
                 form.action='/mypage/update';
@@ -119,8 +169,6 @@
                 form.submit();
             }
         })
-
-
 
         </script>
     </div>

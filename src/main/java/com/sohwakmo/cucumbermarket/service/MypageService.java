@@ -31,7 +31,7 @@ public class MypageService {
         log.info("update(dto={})", dto);
         Member entity = mypageRepository.findByMemberNo(dto.getMemberNo());
 
-        entity.memberUpdate(dto.getName(), dto.getNickname(), dto.getAddress(), dto.getPhone(), dto.getEmail());
+        entity.memberUpdate(dto.getName(), dto.getNickname(), dto.getPassword(), dto.getAddress(), dto.getPhone(), dto.getEmail());
         return dto.getMemberNo();
     }
 }

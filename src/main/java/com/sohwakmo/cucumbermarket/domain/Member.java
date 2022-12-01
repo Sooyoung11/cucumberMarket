@@ -60,9 +60,10 @@ public class Member {
     //private Set<MemberRole> roles = new HashSet<>();
     
     // 회원정보 수정 업데이트
-    public Member memberUpdate( String name, String nickname, String address, String phone, String email){
+    public Member memberUpdate( String name, String nickname, String password, String address, String phone, String email){
         this.name = name;
         this.nickname = nickname;
+        this.password = password;
         this.address = address;
         this.phone = phone;
         this.email = email;

@@ -9,6 +9,7 @@ public class MypageUpdateDto {
     private Integer memberNo;
     private String name;
     private String nickname;
+    private String password;
     private String address;
     private String phone;
     private String email;
@@ -18,6 +19,7 @@ public class MypageUpdateDto {
                 .memberNo(memberNo)
                 .name(name)
                 .nickname(nickname)
+                .password(password)
                 .address(address)
                 .phone(phone)
                 .email(email)
