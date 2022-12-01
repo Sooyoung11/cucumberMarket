@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -94,7 +95,14 @@ public class    PostController {
     public String modify(Model model, Integer id){
         Post post = postService.findPostByPostNo(id);
         model.addAttribute("post", post);
-        return "/post/create";
+        return "/post/modify";
     }
 
+    @PostMapping("/modify")
+    public String modify(PostUpdateDto dto,RedirectAttributes attrs){
+        Integer postNo = postService.modifyPost(dto);
+        log.info("postNo={}",postNo);
+        attrs.addAttribute("postNo",postNo);
+        return "redirect:/post/detail";
+    }
 }

@@ -2,13 +2,15 @@ package com.sohwakmo.cucumbermarket.service;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Post;
-import com.sohwakmo.cucumbermarket.dto.PostCreateDto;
 import com.sohwakmo.cucumbermarket.dto.PostReadDto;
+import com.sohwakmo.cucumbermarket.dto.PostUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.PostRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,7 @@ public class PostService {
         return list;
     }
 
+
     public Post findPostById(Integer id) {
         return postRepository.findById(id).orElse(null);
     }
@@ -53,5 +56,13 @@ public class PostService {
 
     public Post findPostByPostNo(Integer postNO) {
         return postRepository.findById(postNO).orElse(null);
+    }
+
+    @Transactional
+    public Integer modifyPost(PostUpdateDto dto) {
+        Post post = postRepository.findById(dto.getPostNo()).get();
+        Post newPost = post.update(dto.getTitle(), dto.getContent());
+        log.info(newPost.toString());
+        return post.getPostNo();
     }
 }

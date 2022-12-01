@@ -6,15 +6,11 @@
 >
 <div layout:fragment="content">
     <div class="container">
-      <form id="form" method="post">
+      <form id="form">
 
         <div class="row">
           <div class="col-9">
-            <input
-              type="hidden"
-              th:value="${post.postNo}"
-              name="id"
-            />
+            <input type="hidden" th:value="${post.postNo}" name="id" />
             <button type="button" class="btn btn-outline-secondary" id="modify">
               수정
             </button>
@@ -25,8 +21,8 @@
           <div class="col-3">
             <button
               type="button"
-              class="btn btn-outline-secondary text-end"
-              id="list"
+              class="btn btn-outline-secondary"
+              id="gotoList"
             >
               목록
             </button>

@@ -13,7 +13,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Getter
 @ToString(exclude = {"member"})
 @SequenceGenerator(name = "POST_SEQ_GEN",sequenceName = "POST_SEQ", allocationSize = 1)
-public class Post extends BaseTimeEntity{
+public class Post extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POSTS_SEQ_GEN")
