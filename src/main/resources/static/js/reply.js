@@ -5,7 +5,7 @@
 
 window.addEventListener('DOMContentLoaded', event => {
     // HTML 의 Document Object들이 모두 로딩이 끝난 후에 코드들이 실행될 수 있도록 하기 위해서.
-    // readAllReplies(); // 포스트 상세 페이지가 로딩된 후 댓글 목록 화면 출력.
+    readAllReplies(); // 포스트 상세 페이지가 로딩된 후 댓글 목록 화면 출력.
 
     // btnReplyRegister 버튼을 찾고 이벤트 리스너를 등록.
     const btnReplyRegister = document.querySelector('#btnReplyRegister');
