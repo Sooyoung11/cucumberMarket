@@ -9,4 +9,5 @@ public class ReplyRegisterDto {
     private Integer postNo;
     private String replyContent;
     private String replier;
+    private boolean secretReply;
 }

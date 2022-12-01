@@ -83,9 +83,9 @@ public class    PostController {
     }
 
     @PostMapping("/delete")
-    public String delete(Integer postNo){
+    public String delete(Integer id){
 
-        postService.deletePost(postNo);
+        postService.deletePost(id);
 
         return "redirect:/post/list";
     }

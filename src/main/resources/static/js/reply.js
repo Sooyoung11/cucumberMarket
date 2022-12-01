@@ -26,15 +26,23 @@ window.addEventListener('DOMContentLoaded', event => {
             return;
         }
 
+        //비밀 댓글 체크 여부
+        let secret_reply = document.getElementById('secret_reply').checked;
+        console.log(secret_reply);
 
+        const number = 1;
+
+        if(secret_reply = true){
+
+        }
 
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
         // java {} 은 배열, javascript {} 은 object.
         const data = {
             postNo: postNo, // 댓글이 달릴 포스트 아이디(번호)
             replyContent: replyContent, // 댓글 내용
-            replier: replier // 댓글 작성자
-
+            replier: replier, // 댓글 작성자
+            secret_reply: secret_reply // 비밀 댓글
         };
 
 
@@ -72,24 +80,24 @@ window.addEventListener('DOMContentLoaded', event => {
         const divReplies = document.querySelector('#replies');
 
         let str = ''; // div 안에 들어갈 HTML 코드
+
+
+
         for(let r of data){
             str +=
             '<div class="col">'
                 + '<div class="card">'
-                    + '<div class="card border-secondary mb-3">'
                         + '<div class="card-header">'
                             + '<h5 class="form-control" >' + r.replier + '</h5>'
                         + '</div>'
                         + '<div class="card-body text-secondary">'
                             + '<p class="card-text">' + r.replyContent + '</p>'
-                            + '<p class="card-text"> 작성시간: '  + r.createdTime + '</p>'
-                            + '<p class="card-text"> 수정시간: ' + r.modifiedTime + '</p>'
+                            + '<p class="card-text"> ' + r.modifiedTime + '</p>'
                         + '</div>'
                         + '<div class="card-footer">'
                             + `<button type="button" class="btnModifies btn btn-outline-primary" data-rid="${r.replyNo}">수정</button>`
                         + '</div>'
                     + '</div>'
-                + '</div>'
             + '</div>';
         }
         divReplies.innerHTML = str;
