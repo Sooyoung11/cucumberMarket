@@ -4,9 +4,9 @@ import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Post;
 import com.sohwakmo.cucumbermarket.dto.PostCreateDto;
 import com.sohwakmo.cucumbermarket.dto.PostReadDto;
+import com.sohwakmo.cucumbermarket.dto.PostUpdateDto;
 import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.PostService;
-import com.sohwakmo.cucumbermarket.validator.PostValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,6 @@ public class    PostController {
 
     private final PostService postService;
     private final MemberService memberService;
-    private final PostValidator postValidator;
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 2, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
@@ -71,13 +70,31 @@ public class    PostController {
 
 
     @PostMapping("/create")
-    public String create(String title,String content,Integer memberNo){
+    public String create(@Valid  PostCreateDto dto, Integer memberNo, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "/post/create";
+        }
         Member member = memberService.findMemberByMemberNo(memberNo);
         Post post = PostCreateDto.builder()
-                .title(title).content(content).member(member).build().toEntity();
+                .title(dto.getTitle()).content(dto.getContent()).clickCount(dto.getClickCount()).member(member).build().toEntity();
         Post newPost = postService.createPost(post);
         log.info(newPost.toString());
         return "redirect:/post/list";
+    }
+
+    @PostMapping("/delete")
+    public String delete(Integer postNo){
+
+        postService.deletePost(postNo);
+
+        return "redirect:/post/list";
+    }
+
+    @GetMapping("/modify")
+    public String modify(Model model, Integer id){
+        Post post = postService.findPostByPostNo(id);
+        model.addAttribute("post", post);
+        return "/post/create";
     }
 
 }

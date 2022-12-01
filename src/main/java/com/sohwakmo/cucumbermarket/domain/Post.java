@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity(name = "POST")
 @NoArgsConstructor
@@ -18,17 +19,18 @@ public class Post extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POSTS_SEQ_GEN")
     private Integer postNo; // Primary Key(고유키)
 
-    @NotNull
-    @Size(min = 2,max = 30,message = "제목은 2자 이상 30자 이하입니다")
+    @Column(nullable = false)
     private String title;
 
-    @NotNull
-    @Size(min = 2,max = 300,message = "내용은 2자 이상 300자 이하입니다")
+
+    @Column(nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY) // 다대일 관계(relation)
     private Member member;
 
+
+    @ColumnDefault("0")
     private Integer clickCount;
 
     private String imageUrl01;
