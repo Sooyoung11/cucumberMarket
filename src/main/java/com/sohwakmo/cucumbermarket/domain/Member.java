@@ -54,13 +54,14 @@ public class Member {
 
     private boolean deleted;
     private String userImgUrl;
+    private String userImgName;
     
     //Spring security 사용시 적용 예정
     //private Set<MemberRole> roles = new HashSet<>();
     
     // 회원정보 수정 업데이트
-    public Member memberUpdate(String password, String nickname, String address, String phone, String email){
-        this.password = password;
+    public Member memberUpdate( String name, String nickname, String address, String phone, String email){
+        this.name = name;
         this.nickname = nickname;
         this.address = address;
         this.phone = phone;

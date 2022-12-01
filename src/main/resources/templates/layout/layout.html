@@ -30,7 +30,10 @@
                             <a class="nav-link" href="#">sub</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">sub</a>
+                            <input name="member_id" value="testUser1" readonly/>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " th:href="@{/mypage/mymain?memberNo={no} (no=1)}" tabindex="-1" aria-disabled="true">마이페이지</a>
                         </li>
                     </ul>
                 </nav>

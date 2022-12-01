@@ -487,6 +487,19 @@ progress {
   display: none !important;
 }
 
+.box{
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  overflow: hidden;
+}
+
+.profile{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .lead {
   font-size: 1.25rem;
   font-weight: 300;

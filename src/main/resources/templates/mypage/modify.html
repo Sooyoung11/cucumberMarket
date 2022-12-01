@@ -25,7 +25,6 @@
                         <div class="card-header">사용자 정보</div>
                         <div class="card-body">
                             <div class="container">
-                                <input type="submit" value="비밀번호 변경"/>
                                 <!-- img container -->
                                 <!-- image show -->
 <!--                                <div class="image-show" id="image-show"></div>-->
@@ -71,33 +70,59 @@
                     <!-- Featured blog post-->
                     <div class="card mb-4">
                         <div class="card-header">
-                            <h4>사용자 프로필</h4>
+                            <h4>사용자 프로필 수정</h4>
                         </div>
                         <div class="card-body">
-                            <label for="name" class="form-label">사용자 이름</label>
-                            <input type="hidden" id="memberNo" th:value="${userProfile.memberNo}"  readonly/>
-                            <input id="name" class="form-control" type="text" th:value="${userProfile.name}" readonly/>
-                            <label for="nickname" class="form-label">닉네임</label>
-                            <input id="nickname" class="form-control" type="text" th:value="${userProfile.nickname}" readonly/>
-                            <label for="address" class="form-label">주소</label>
-                            <input id="address" class="form-control" type="text" th:value="${userProfile.address}" readonly/>
-                            <label for="phone" class="form-label">핸드폰 번호</label>
-                            <input id="phone" class="form-control" type="text" th:value="${userProfile.phone}" readonly/>
-                            <label for="email" class="form-label">이메일</label>
-                            <input id="email" class="form-control" type="email" th:value="${userProfile.email}" readonly/>
-                            <a class="btn btn-primary" th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}">프로필 수정</a>
+                            <form id="formModify">
+                                <input type="hidden" id="memberNo" name="memberNo" th:value="${userProfile.memberNo}"  readonly/>
+                                <label for="name" class="form-label">사용자 이름</label>
+                                <input id="name" class="form-control" name="name" type="text" th:value="${userProfile.name}" autofocus/>
+                                <label for="nickname" class="form-label">닉네임</label>
+                                <input id="nickname" class="form-control" name="nickname" type="text" th:value="${userProfile.nickname}" />
+                                <label for="address" class="form-label">주소</label>
+                                <input id="address" class="form-control" name="address" type="text" th:value="${userProfile.address}" />
+                                <label for="phone" class="form-label">핸드폰 번호</label>
+                                <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
+                                <label for="email" class="form-label">이메일</label>
+                                <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />
+                                <input type="submit" value="수정완료"/>
+
+                            </form>
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
-
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script th:src="@{/js/scripts.js}"></script>
         <!--<script th:src="@{/js/index.js}"></script>-->
+        <script>
+        const form = document.getElementById("formModify");
+        if(form.name.value!=''){
+
+            console.log("form value");
+        }
+        form.addEventListener("submit", function (e) {
+            if(form.name.value =='' ||form.nickname.value ==''|| form.address.value==''|| form.phone.value=='' || form.email.value==''){
+                alert('사용자 정보를 모두 입력해주세요');
+                e.preventDefault();
+                form.name.focus();
+                return;
+            }
+            const result = confirm("정말 수정하시겠습니까?");
+            if(result){
+                form.action='/mypage/update';
+                form.method='post';
+                form.submit();
+            }
+        })
+
+
+
+        </script>
     </div>
     </body>
 </html>
