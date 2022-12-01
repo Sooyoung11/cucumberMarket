@@ -15,7 +15,7 @@
           <button type="submit" class="btn btn-primary" id="insertPostButton">
             작성
           </button>
-          <a type="button" class="btn btn-primary" th:href="@{/post/list}"
+          <a type="button" class="btn btn-primary" th:href="@{list/post/}"
             >취소</a
           >
         </div>
@@ -24,7 +24,7 @@
       <div>
         <form th:object="${post}" id="form">
           <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
-          <input type="hidden" name="memberNo" th:value="${post.postNo}" />
+          <input type="hidden" name="memberNo" th:value="${1}" />
           <input type="hidden" name="clickCount" th:value="0" />
           <input
             type="text"

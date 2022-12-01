@@ -76,6 +76,7 @@ public class    PostController {
             return "/post/create";
         }
         Member member = memberService.findMemberByMemberNo(memberNo);
+        log.info(member.toString());
         Post post = PostCreateDto.builder()
                 .title(dto.getTitle()).content(dto.getContent()).clickCount(dto.getClickCount()).member(member).build().toEntity();
         Post newPost = postService.createPost(post);
