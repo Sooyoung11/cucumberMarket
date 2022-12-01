@@ -54,9 +54,8 @@
   </form>
   <!--글 작성 버튼-->
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button class="btn btn-primary" type="button">
-      <a th:href="@{/post/create}" th:value="#{글 작성}">글작성</a>
-    </button>
+    <a type="button" class="btn btn-primary" th:href="@{/post/create}"
+    >글 작성</a>
   </div>
 
   <!--페이지버튼-->
@@ -72,7 +71,6 @@
 
         <a
                 class="page-link"
-                href="#"
                 th:text="${i}"
                 th:href="@{/post/list(page=${i-1})}"
         ></a>
@@ -83,7 +81,6 @@
               th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled'">
         <a
                 class="page-link"
-                href="#"
                 th:href="@{/post/list(page=${list.pageable.pageNumber+1})}"
         >></a>
       </li>

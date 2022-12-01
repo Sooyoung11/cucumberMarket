@@ -1,34 +1,43 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{ layout/layout.html }">
-
-
-<div layout:fragment="content">
-  <div> <!--글 작성 칸-->
-    <div> <!--제목, 등록버튼-->
-      <h2>카페 글쓰기</h2>
-      <button>
-        <a href="#">등록</a> <!--//TODO 포스트 방식으로 넘겨주기-->
-      </button>
-    </div>
-    <div> <!-- 글 제목-->
-      <input type="text" placeholder="제목을 입력해 주세요."/>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{ layout/layout.html }"
+>
+  <div layout:fragment="content">
+    <div class="text-center">
+      <h1>글 작성</h1>
     </div>
     <div>
-      <p>게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이 없으시길 바랍니다.</p>
-      <p>규정을 위반한 게시글은 무통보 삭제될 수 있으며, 추가적인 제재 조치가 진행될 수 있습니다.</p>
+      <form th:action="@{/post/create}" method="post">
+        <input type="hidden" name="memberNo" th:value="1"/>
+        <div class="mb-3">
+          <label for="title" class="form-label">제목</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            aria-describedby="emailHelp"
+            name="title"
+          />
+        </div>
+        <div class="form-floating mb-2">
+          <textarea
+            class="form-control"
+            placeholder="내용을 입력해주세요."
+            id="content"
+            style="height: 100px"
+            name="content"
+          ></textarea>
+          <label for="content">내용</label>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary">작성</button>
+          <a type="button" class="btn btn-primary" th:href="@{/post/list}"
+            >취소</a
+          >
+        </div>
+      </form>
     </div>
-    <div> <!-- 사진, 메뉴 넣는 칸-->
-
-    </div>
-    <div>
-      <textarea placeholder="내용을 입력해주세요."></textarea>
-    </div>
-
-
   </div>
-
-</div>
-
 </html>

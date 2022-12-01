@@ -1,8 +1,13 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Post;
+import com.sohwakmo.cucumbermarket.dto.PostCreateDto;
 import com.sohwakmo.cucumbermarket.dto.PostReadDto;
+import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.PostService;
+import com.sohwakmo.cucumbermarket.validator.PostValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,9 +17,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +29,8 @@ import java.util.List;
 public class    PostController {
 
     private final PostService postService;
+    private final MemberService memberService;
+    private final PostValidator postValidator;
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 2, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
@@ -52,7 +58,26 @@ public class    PostController {
     }
 
     @GetMapping("/create")
-    public void create(){
-
+    public String create(Model model, @RequestParam(required = false)Integer id){ // 새글 작성일경우 id가 필요 없으므로 필수 항복은 아니므로 false를 준다.
+        if(id==null){
+            model.addAttribute("post", new Post());
+            return "/post/create";
+        }else{
+            Post post = postService.findPostById(id);
+            model.addAttribute("post", post);
+            return "/post/detail";
+        }
     }
+
+
+    @PostMapping("/create")
+    public String create(String title,String content,Integer memberNo){
+        Member member = memberService.findMemberByMemberNo(memberNo);
+        Post post = PostCreateDto.builder()
+                .title(title).content(content).member(member).build().toEntity();
+        Post newPost = postService.createPost(post);
+        log.info(newPost.toString());
+        return "redirect:/post/list";
+    }
+
 }
