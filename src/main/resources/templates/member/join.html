@@ -19,51 +19,143 @@
     <div id="joinForm">
         <form method="post">
             <div>
-                <label for="memberId" class="form-label">아이디</label>
-                <input type="text" id="memberId" name="memberId" required autofocus class="form-control" />
-            </div>
-            <div id="memberIdOk">
-                <p class="text-success">사용할 수 있는 아이디</p>
-            </div>
-            <div id="memberIdNok">
-                <p class="text-danger">사용할 수 없는 아이디</p>
-            </div>
-            <div>
-                <label for="password" class="form-label">비밀번호</label>
-                <input type="text" id="password" name="password" required class="form-control" />
-            </div>
-            <div>
-                <label for="password2" class="form-label">비밀번호 재확인</label>
-                <input type="text" id="password2" name="password2" required class="form-control" />
-            </div>
-            <div>
-                <label for="name" class="form-label">이름</label>
-                <input type="text" id="name" name="name" required class="form-control" />
-            </div>
-            <div>
-                <label for="nickname" class="form-label">닉네임</label>
-                <input type="text" id="nickname" name="nickname" required class="form-control" />
-            </div>
-            <div>
-                <label for="sample4_postcode" class="form-label">주소</label>
-                <input type="text" id="sample4_postcode" placeholder="우편번호" class="form-control">
-                <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-                <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="form-control">
-                <input type="text" id="sample4_jibunAddress" placeholder="지번주소" name="address" class="form-control">
-                <span id="guide" style="color:#999;display:none"></span>
-                <input type="text" id="sample4_detailAddress" placeholder="상세주소" class="form-control">
-                <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="form-control">
-            </div>
-            <div>
-                <label for="phone" class="form-label">휴대폰 번호</label>
-                <input type="tel" id="phone" name="phone" required class="form-control" />
-            </div>
-            <div>
-                <label for="phone" class="form-label">이메일</label>
-                <input type="email" id="email" name="email" required class="form-control" />
-            </div>
-            <div>
-                <input type="submit" value="가입하기" id="btnSubmit" class="disabled"/>
+
+                <!-- 아이디 -->
+                <div class="mt-4">
+                    <div>
+                        <label for="memberId" class="form-label">아이디</label>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="memberId" name="memberId" required autofocus />
+                        </span>
+                        <div id="memberIdOk" class="d-none">
+                            <p class="text-success">멋진 아이디네요!</p>
+                        </div>
+                        <div id="memberIdNok" class="d-none">
+                            <p class="text-danger">이미 사용중이거나 탈퇴한 아이디입니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 비밀번호 -->
+                <div class="mt-4">
+                    <div>
+                        <label for="password" class="form-label">비밀번호</label>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="password" name="password" required />
+                            <span id="passwordOk" class="d-none">
+                                <span class="text-success"><p>안전</p></span>
+                                <!-- 안전 아이콘 -->
+                            </span>
+                            <span id="passwordNok" class="d-none">
+                                <span class="text-danger"><p>사용불가</p></span>
+                                <!-- 사용불가 아이콘 -->
+                            </span>
+                        </span>
+                        <div id="passwordNok2" class="d-none">
+                            <p class="text-danger">8~16자의 비밀번호를 사용하세요.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 비밀번호 확인 -->
+                <div>
+                    <div>
+                        <label for="password2" class="form-label">비밀번호 재확인</label>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="password2" name="password2" required />
+                            <span id="password2Ok" class="d-none">
+                                <span class="text-success"><p>확인</p></span>
+                                <!-- 안전 아이콘 -->
+                            </span>
+                            <span id="password2Nok" class="d-none">
+                                <span class="text-danger"><p>사용불가</p></span>
+                                <!-- 사용불가 아이콘 -->
+                            </span>
+                        </span>
+                        <div id="password2Nok2" class="d-none">
+                            <p class="text-danger">비밀번호를 다시 확인해주세요.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 이름 -->
+                <div>
+                    <div>
+                        <label for="name" class="form-label">이름</label>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="name" name="name" required />
+                        </span>
+                        <div id="nameNok" class="d-none">
+                            <p class="text-danger">필수 정보입니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 닉네임 -->
+                <div>
+                    <div>
+                        <label for="nickname" class="form-label">닉네임</label>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="nickname" name="nickname" required />
+                        </span>
+                        <div id="nicknameNok" class="d-none">
+                            <p class="text-danger">필수 정보입니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 주소 -->
+                <div>
+                    <div>
+                        <label for="sample4_postcode" class="form-label">주소</label>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="sample4_postcode" placeholder="우편번호">
+                        </span>
+                        <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+                        </span>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" name="address">
+                        </span>
+                        <span id="guide" style="color:#999;display:none"></span>
+                        <span class="form-control form-control-lg">
+                            <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+                        </span>
+                        <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="d-none">
+                        <div id="addressNok" class="d-none">
+                            <p class="text-danger">필수 정보입니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 휴대폰 번호 -->
+                <div>
+                    <label for="phone">휴대전화</label>
+                    <span class="form-control form-control-lg">
+                        <input type="tel" id="phone" name="phone" required/>
+                    </span>
+                    <div id="phoneNok" class="d-none">
+                        <p class="text-danger">필수 정보입니다.</p>
+                    </div>
+                </div>
+
+                <!-- 이메일 -->
+                <div>
+                    <label for="phone" class="form-label">이메일</label>
+                    <span class="form-control form-control-lg">
+                        <input type="email" id="email" name="email" required />
+                    </span>
+                    <div id="emailNok" class="d-none">
+                        <p class="text-danger">필수 정보입니다.</p>
+                    </div>
+                    <!-- 이메일 확인 코드 -->
+                </div>
+
+                <!-- 가입하기 버튼 -->
+                <div>
+                    <input type="submit" value="가입하기" id="btnSubmit" class="disabled"/>
+                </div>
             </div>
         </form>
     </div>

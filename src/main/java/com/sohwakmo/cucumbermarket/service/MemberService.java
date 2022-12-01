@@ -21,9 +21,29 @@ public class MemberService {
 
         Optional<Member> result= memberRepository.findByMemberId(memberId);
         if(result.isPresent()){
-            return "nok";
+            return "memberIdNok";
         }else{
-            return "ok";
+            return "memberIdOk";
+        }
+    }
+
+    public String checkPassword(String password){
+        log.info("checkPassword(password= {})", password);
+        int result= password.length();
+        if(8>result|| result>16){
+            return "passwordNok";
+        }else{
+            return "passwordOk";
+        }
+    }
+
+    public String checkPassword2(String password, String password2){
+        log.info("checkPassword2(password= {}, password2= {})", password, password2);
+
+        if(password.equals(password2)){
+            return "password2Ok";
+        }else{
+            return "password2Nok";
         }
     }
 

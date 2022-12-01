@@ -1,0 +1,11 @@
+*{margin: 0; padding: 0;}
+body{margin: 0; padding: 0; width: 100%; height: 100%; position:relative;}
+#wrap{margin:0 auto; padding: 0; width: 768px;}
+#joinForm{margin: 0 auto; width:480px;}
+label{font-size: 14px; font-weight: 700;}
+p{font-size: 12px; margin-bottom: 0;}
+span>p{display: inline;}
+input{display:inline-block; width: 360px;}
+#memberId,#password,#password2,#name,#nickname,#sample4_postcode,
+#sample4_roadAddress,#sample4_jibunAddress,#sample4_detailAddress,
+#phone,#email{border: none; font-size: 16px;}

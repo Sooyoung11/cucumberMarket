@@ -24,7 +24,7 @@ public class MemberController {
         log.info("join() GET");
     }
 
-    @GetMapping("/check_id")
+    @GetMapping("/check_memberid")
     @ResponseBody
     public ResponseEntity<String> checkMemberId(String memberId){
         log.info("checkMemberId(memberId= {})", memberId);
@@ -33,11 +33,29 @@ public class MemberController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/check_password")
+    @ResponseBody
+    public ResponseEntity<String> checkPassword(String password){
+        log.info("checkPassword(password= {})", password);
+
+        String result= memberService.checkPassword(password);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/check_password2")
+    @ResponseBody
+    public ResponseEntity<String> checkPassword2(String password, String password2){
+        log.info("checkPassword2(password= {}, password2= {})", password, password2);
+
+        String result= memberService.checkPassword2(password, password2);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/join")
     public String join(MemberRegisterDto dto){
         log.info("join(dto= {}) POST", dto);
 
         memberService.registerMember(dto);
-        return "redirect:/";
+        return "redirect:/login";
     }
 }

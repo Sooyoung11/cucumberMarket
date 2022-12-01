@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html>
 <head>
@@ -18,7 +19,13 @@
                 <div id="topNav">
                     <div id="topNavWrap">
                         <ul>
-                            <li><a>로그인</a></li>
+                            <li><a th:href="@{ /login }">로그인</a></li>
+                            <li>
+                                <a th:href="@{ /logout }">
+                                    <span sec:authentication="name"></span>
+                                    로그아웃
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
