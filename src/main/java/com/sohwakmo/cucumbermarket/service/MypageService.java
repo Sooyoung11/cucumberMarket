@@ -2,6 +2,7 @@ package com.sohwakmo.cucumbermarket.service;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.dto.MypageUpdateDto;
+import com.sohwakmo.cucumbermarket.dto.ProfileImageReadDto;
 import com.sohwakmo.cucumbermarket.repository.MypageRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,12 @@ public class MypageService {
 
         entity.memberUpdate(dto.getName(), dto.getNickname(), dto.getPassword(), dto.getAddress(), dto.getPhone(), dto.getEmail());
         return dto.getMemberNo();
+    }
+
+    public ProfileImageReadDto readProfileImage(Integer memberNo) {
+        log.info("readProfileImage(memberNo={})", memberNo);
+        Member entity = mypageRepository.findByMemberNo(memberNo);
+        return null;
+        //return entity.fromEntity();
     }
 }
