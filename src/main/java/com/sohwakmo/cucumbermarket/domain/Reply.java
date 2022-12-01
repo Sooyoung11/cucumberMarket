@@ -22,13 +22,13 @@ public class Reply extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY) // 다대일 관계
     private Member member;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 1000)
     private String replyContent; // reply 내용
 
     @Column(nullable = false)
-    private String replyer; // reply 작성자
+    private String replier; // reply 작성자
 
-    private boolean scretReply; // 비밀 답글
+    private boolean secretReply; // 비밀 답글
 
     public Reply update(String replyContent) {
         this.replyContent = replyContent;

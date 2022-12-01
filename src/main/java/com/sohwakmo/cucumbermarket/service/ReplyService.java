@@ -26,7 +26,7 @@ public class ReplyService {
         log.info("dto={}", dto);
 
         Post post = postRepository.findById(dto.getPostNo()).get();
-        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replyer(dto.getReplier()).build();
+        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).build();
         reply = replyRepository.save(reply);
 
         return  reply.getReplyNo();

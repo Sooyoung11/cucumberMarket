@@ -6,6 +6,7 @@
 <div layout:fragment="content">
   <div class="border border-secondary">
     <!--디테일 페이지 시작-->
+
     <div>
       <h3 th:text="${post.title}">제목</h3>
     </div>
@@ -42,16 +43,16 @@
   <!-- 댓글 작성하기 -->
   <div class="card border-gray my-5">
     <div class="col-4">
-      <input type="text" class="form-control" id="postNo" placeholder="포스트아이디"/>
+      <input type="hidden" id="postNo" name="postNo" th:value="${post.postNo}" />
     </div>
     <div class="card-header">
       <div class="col-4">
-        <input type="text" class="form-control" id="writer" placeholder="작성자"/>
+        <input type="text" class="form-control" id="replier" placeholder="작성자"/>
       </div>
     </div>
     <div class="card-body row">
       <div class="col-10">
-        <textarea class="form-control" id="replyText" placeholder="댓글 작성"></textarea>
+        <textarea class="form-control" id="replyContent" placeholder="댓글 작성"></textarea>
       </div>
       <div class="col-2">
         <button class="btn btn-primary" id="btnReplyRegister">등록</button>
