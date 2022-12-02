@@ -27,14 +27,8 @@ window.addEventListener('DOMContentLoaded', event => {
         }
 
         //비밀 댓글 체크 여부
-        let secret_reply = document.getElementById('secret_reply').checked;
-        console.log(secret_reply);
-
-        const number = 1;
-
-        if(secret_reply != true){
-            console.log(1);
-        }
+        let secretReply = document.getElementById('secretReply').checked;
+        console.log(secretReply);
 
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
         // java {} 은 배열, javascript {} 은 object.
@@ -42,7 +36,7 @@ window.addEventListener('DOMContentLoaded', event => {
             postNo: postNo, // 댓글이 달릴 포스트 아이디(번호)
             replyContent: replyContent, // 댓글 내용
             replier: replier, // 댓글 작성자
-            secret_reply: secret_reply // 비밀 댓글
+            secretReply: secretReply // 비밀 댓글
         };
 
 
@@ -81,24 +75,32 @@ window.addEventListener('DOMContentLoaded', event => {
 
         let str = ''; // div 안에 들어갈 HTML 코드
 
-
-
+        // 비밀 댓글 출력 구분
         for(let r of data){
-            str +=
-            '<div class="col">'
-                + '<div class="card">'
+            str += '<div class="col">'
+                    + '<div class="card">'
                         + '<div class="card-header">'
                             + '<h5 class="form-control" >' + r.replier + '</h5>'
                         + '</div>'
-                        + '<div class="card-body text-secondary">'
-                            + '<p class="card-text">' + r.replyContent + '</p>'
+                        + '<div class="card-body text-secondary">';
+
+            if(r.secretReply != false ){ // 비밀 체크 했을 때
+                        str +=  '<p class="card-text">' + ' 비밀 댓글입니다. ' + '</p>'
+                                + '<p class="card-text">'  + r.modifiedTime + '</p>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>'
+            } else { // 비밀 체크 하지 않을 때
+                        str +=  '<p class="card-text">' + r.replyContent + '</p>'
                             + '<p class="card-text"> ' + r.modifiedTime + '</p>'
-                        + '</div>'
-                        + '<div class="card-footer">'
+                            + '</div>'
+                            + '<div class="card-footer">'
                             + `<button type="button" class="btnModifies btn btn-outline-primary" data-rid="${r.replyNo}">수정</button>`
-                        + '</div>'
-                    + '</div>'
-            + '</div>';
+                            + '</div>'
+                            + '</div>'
+                            + '</div>'
+            }
+
         }
         divReplies.innerHTML = str;
 

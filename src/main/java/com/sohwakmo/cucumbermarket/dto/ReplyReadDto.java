@@ -17,6 +17,7 @@ public class ReplyReadDto {
     private Integer postNo; // 댓글이 달린 포스트 번호
     private String replyContent; // 댓글 내용
     private String replier; // 댓글 작성자
+    private boolean secretReply; // 비밀 댓글 여부
     private LocalDateTime createdTime; // 댓글 최초 작성 시간
     private LocalDateTime modifiedTime; // 댓글 최종 수정 시간
 
@@ -24,7 +25,7 @@ public class ReplyReadDto {
     public static ReplyReadDto fromEntity(Reply entity) {
         return ReplyReadDto.builder()
                 .replyNo(entity.getReplyNo()).postNo(entity.getPost().getPostNo()).replyContent(entity.getReplyContent()).replier(entity.getReplier())
-                .createdTime(entity.getCreatedTime()).modifiedTime(entity.getModifiedTime())
+                .createdTime(entity.getCreatedTime()).modifiedTime(entity.getModifiedTime()).secretReply(entity.isSecretReply())
                 .build();
     }
 

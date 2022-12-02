@@ -28,7 +28,7 @@ public class ReplyController {
     }
 
     @GetMapping("/all/{postNo}") // POST 게시물에 달린 모든 댓글 list 보기
-    public ResponseEntity<List<ReplyReadDto>> readAllReplies(@PathVariable Integer postNo) {
+    public ResponseEntity<List<ReplyReadDto>> readAllReplies(@PathVariable Integer postNo, boolean secret_reply) {
         log.info("readAllReplies(postNo={})", postNo);
 
         List<ReplyReadDto> list = replyService.selectByid(postNo);
