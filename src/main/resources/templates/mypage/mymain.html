@@ -28,8 +28,8 @@
 
                                 <!-- img container -->
                                 <!-- image show -->
-                                    <div class="card box">
-                                        <img class="card-img-top" th:src="@{/images/mypage/darwin.png}" alt="..." id="userProfileImage"/>
+                                    <div>
+                                        <img class="user_img" alt="..." id="userProfileImage"/>
                                     </div>
                                     <div class="my-2">
                                         <a class="btn btn-primary form-control" id="profileImageChange" >사진수정</a>
@@ -67,6 +67,9 @@
 <!--                                </div>-->
                                 <div class="my-2">
                                     <a class="btn btn-primary form-control" th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}">프로필 수정</a>
+                                </div>
+                                <div class="my-2">
+                                    <label class="form-label">매너온도</label>
                                 </div>
 
                             </div>
@@ -156,12 +159,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label for="imageFile" class="form-label">사용자 이미지</label>
-                        <input type="file" class="form-control" id="imageFile" name="userImageFile" accept="image/*" onchange="loadFile(this)">
+                        <div>
+                            <label for="imageFile" class="form-label">사용자 이미지</label>
+                        </div>
+                        <div>
+                            <input type="hidden" id="modalMemberNo" readonly />
+                           <!-- <label class="form-label">이미지 이름:</label>-->
+                            <input type="text" id="modalImgName" readonly />
+                        </div>
+                        <div>
+                            <input type="file" class="form-control" id="imageFile" name="9" accept="image/*" />
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary">수정</button>
+                        <button type="button" id="modalBtnDelete" class="btn btn-primary">삭제</button>
+                        <button type="button" id="modalBtnUpdate" class="btn btn-primary">수정</button>
                     </div>
                 </div>
             </div>

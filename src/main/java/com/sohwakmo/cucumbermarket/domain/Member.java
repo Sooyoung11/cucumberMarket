@@ -77,7 +77,8 @@ public class Member {
     }
 
     //회원 이미지 수정 업데이트
-    public Member userImageUpdate(String userImgUrl){
+    public Member userImageUpdate(String userImgName, String userImgUrl){
+        this.userImgName = userImgName;
         this.userImgUrl = userImgUrl;
         return this;
     }

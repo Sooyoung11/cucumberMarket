@@ -493,7 +493,13 @@ progress {
   border-radius: 70%;
   overflow: hidden;
 }
-
+.user_img{
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  margin: auto;
+  display: block;
+}
 .profile{
   width: 100%;
   height: 100%;

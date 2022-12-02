@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.File;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -39,7 +41,17 @@ public class MypageService {
     public ProfileImageReadDto readProfileImage(Integer memberNo) {
         log.info("readProfileImage(memberNo={})", memberNo);
         Member entity = mypageRepository.findByMemberNo(memberNo);
-        return null;
-        //return entity.fromEntity();
+        return ProfileImageReadDto.fromEntity(entity);
+    }
+
+    @Transactional
+    public Integer updateImage(ProfileImageReadDto dto) {
+        log.info("updateImage(dto={}, file={})", dto);
+
+        Member entity = mypageRepository.findByMemberNo(dto.getMemberNo());
+
+        entity.userImageUpdate(dto.getUserImgName(),dto.getUserImgUrl());
+
+        return entity.getMemberNo();
     }
 }
