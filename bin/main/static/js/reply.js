@@ -32,8 +32,8 @@ window.addEventListener('DOMContentLoaded', event => {
 
         const number = 1;
 
-        if(secret_reply = true){
-
+        if(secret_reply != true){
+            console.log(1);
         }
 
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.

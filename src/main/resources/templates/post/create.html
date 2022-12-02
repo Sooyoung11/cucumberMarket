@@ -15,7 +15,7 @@
           <button type="submit" class="btn btn-primary" id="insertPostButton">
             작성
           </button>
-          <a type="button" class="btn btn-primary" th:href="@{list/post/}"
+          <a type="button" class="btn btn-primary" th:href="@{/post/list}"
             >취소</a
           >
         </div>
@@ -24,7 +24,7 @@
       <div>
         <form th:object="${post}" id="form">
           <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
-          <input type="hidden" name="memberNo" th:value="${1}" />
+          <input type="hidden" name="memberNo" th:value="${5}" />
           <input type="hidden" name="clickCount" th:value="0" />
           <input
             type="text"
@@ -47,15 +47,7 @@
           </div>
           <nav class="navbar navbar-light bg-light">
             <div class="container">
-              <a class="navbar-brand" href="#">
-                <!--                <img-->
-                <!--                  src="/docs/5.0/assets/brand/bootstrap-logo.svg"-->
-                <!--                  alt=""-->
-                <!--                  width="30"-->
-                <!--                  height="24"-->
-                <!--                />-->
-                사진
-              </a>
+              <a class="navbar-brand" href="#"> 사진 </a>
             </div>
           </nav>
           <div class="form-floating my-2">
