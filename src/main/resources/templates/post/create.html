@@ -22,7 +22,7 @@
       </div>
       <!--제목, 버튼-->
       <div>
-        <form th:object="${post}" id="form">
+        <form th:object="${post}" id="form"  enctype="multipart/form-data">
           <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
           <input type="hidden" name="memberNo" th:value="${5}" />
           <input type="hidden" name="clickCount" th:value="0" />
@@ -47,7 +47,10 @@
           </div>
           <nav class="navbar navbar-light bg-light">
             <div class="container">
-              <a class="navbar-brand" href="#"> 사진 </a>
+                <a class="navbar-brand" href="#" type="button">
+                  <img src=""/>
+                  <input multiple="multiple" type="file" name="files"/>
+                </a>
             </div>
           </nav>
           <div class="form-floating my-2">

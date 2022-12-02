@@ -11,9 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -47,7 +50,23 @@ public class PostService {
         return postRepository.findById(id).orElse(null);
     }
 
-    public Post createPost(Post post) {
+    public Post createPost(Post post, MultipartFile files)throws Exception{
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fineName = uuid + "_" + files.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fineName);
+
+        files.transferTo(saveFile);
+
+        post.setImageName01(fineName);
+        post.setImageUrl01("/files/"+fineName);
+        if(!post.getImageName01().isEmpty()&&!post.getImageUrl01().isEmpty()){
+            post.setImageName02(fineName);
+            post.setImageUrl02("/files/" + fineName);
+        }
         return postRepository.save(post);
     }
 

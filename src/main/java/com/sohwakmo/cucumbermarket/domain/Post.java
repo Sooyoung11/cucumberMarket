@@ -11,6 +11,7 @@ import org.hibernate.annotations.ColumnDefault;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @ToString(exclude = {"member"})
 @SequenceGenerator(name = "POST_SEQ_GEN",sequenceName = "POST_SEQ", allocationSize = 1)
 public class Post extends BaseTimeEntity {
@@ -35,7 +36,11 @@ public class Post extends BaseTimeEntity {
 
     private String imageUrl01;
 
+    private String imageName01;
+
     private String imageUrl02;
+
+    private String imageName02;
 
     public Post update(String title, String content) {
         this.title = title;
