@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,15 +52,7 @@ public class PostService {
     }
 
     public Post createPost(Post post, MultipartFile files)throws Exception{
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-
-        UUID uuid = UUID.randomUUID();
-
-        String fileName = uuid + "_" + files.getOriginalFilename();
-
-        File saveFile = new File(projectPath, fileName);
-
-        files.transferTo(saveFile);
+        String fileName = saveImage(files); // 이미지 생성,저장 메서드
 
         if(post.getImageUrl01()==null){
             post.setImageUrl01("/files/"+fileName);
@@ -68,10 +61,10 @@ public class PostService {
             post.setImageUrl02("/files/"+fileName);
             post.setImageName02(fileName);
         }
-
-
         return postRepository.save(post);
     }
+
+
 
     public void deletePost(Integer id) {
         postRepository.deleteById(id);
@@ -88,4 +81,20 @@ public class PostService {
         log.info(newPost.toString());
         return post.getPostNo();
     }
+
+
+    private  String saveImage(MultipartFile files) throws IOException {
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + files.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+
+        files.transferTo(saveFile);
+        return fileName;
+    }
 }
+
+

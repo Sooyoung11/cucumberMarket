@@ -25,7 +25,12 @@
           <!--제목, 버튼-->
           <div>
             <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
-            <input type="hidden" name="postNo" th:value="${post.postNo}" />
+            <input
+              type="hidden"
+              name="postNo"
+              th:value="${post.postNo}"
+              id="postNo"
+            />
             <input type="hidden" name="memberNo" th:value="5" />
             <input
               type="text"
@@ -50,8 +55,8 @@
             <nav class="navbar navbar-light bg-light">
               <div class="container">
                 <a class="navbar-brand" href="#" type="button">
-                  <img src=""/>
-                  <input multiple="multiple" type="file" name="files"/>
+                  <img src="" />
+                  <input multiple="multiple" type="file" name="files" />
                 </a>
               </div>
             </nav>
@@ -66,12 +71,22 @@
                 name="content"
               ></textarea>
               <div th:classappend="${post.imageUrl01 == ''} ? 'hidden'">
-                <img th:src="@{${post.imageUrl01}}">
+                <img
+                  id="image1"
+                  th:src="@{${post.imageUrl01}}"
+                  th:value="${post.imageUrl01}"
+                />
+                <div id="deleteModifyNav" style="display: none">
+                  <ul>
+                    <li>
+                      <button type="button" id="deleteImageButton">삭제</button>
+                    </li>
+                  </ul>
+                </div>
               </div>
               <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
-                <img th:src="@{${post.imageUrl02}}">
+                <img id="image2" th:src="@{${post.imageUrl02}}" />
               </div>
-            </div>
             </div>
           </div>
         </div>
@@ -80,6 +95,8 @@
   </div>
 
   <th:block layout:fragment="script">
+    <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script th:src="@{/js/PostModify.js}"></script>
   </th:block>
 </html>

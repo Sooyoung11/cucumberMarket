@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -107,5 +108,12 @@ public class    PostController {
         log.info("postNo={}",postNo);
         attrs.addAttribute("postNo",postNo);
         return "redirect:/post/detail";
+    }
+
+    @DeleteMapping("/deleteImage")
+    @ResponseBody
+    public ResponseEntity<String> deleteImage(@RequestBody String image1Src){
+        log.info("src={}", image1Src);
+        return null;
     }
 }

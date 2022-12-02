@@ -23,3 +23,29 @@ modifyButton.addEventListener("click", function () {
     form.submit(); // 서버로 제출
   }
 });
+
+const image1 = document.querySelector("#image1");
+image1.addEventListener("click", function () {
+  let deleteModifyNav = document.querySelector("#deleteModifyNav");
+  if (deleteModifyNav.style.display == "none") {
+    deleteModifyNav.style.display = "block";
+  } else {
+    deleteModifyNav.style.display = "none";
+  }
+});
+
+const deleteImageButton = document.querySelector("#deleteImageButton");
+deleteImageButton.addEventListener("click", function () {
+  let image1src = image1.src;
+  image1src = image1src.substr(28);
+  console.log(image1src);
+
+  axios
+    .delete("/post/reply/" + image1src)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
