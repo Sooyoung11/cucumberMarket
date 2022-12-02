@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -71,16 +72,17 @@ public class    PostController {
 
 
     @PostMapping("/create")
-    public String create(@Valid  PostCreateDto dto, Integer memberNo, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            return "/post/create";
-        }
+    public String create(PostCreateDto dto, Integer memberNo, @RequestParam("files")List<MultipartFile> files)throws Exception{
+        log.info("files={}", files);
+
         Member member = memberService.findMemberByMemberNo(memberNo);
         log.info(member.toString());
         Post post = PostCreateDto.builder()
                 .title(dto.getTitle()).content(dto.getContent()).clickCount(dto.getClickCount()).member(member).build().toEntity();
-        Post newPost = postService.createPost(post);
-        log.info(newPost.toString());
+        for (MultipartFile multipartFile : files) {
+            Post newPost=postService.createPost(post,multipartFile);
+        }
+
         return "redirect:/post/list";
     }
 
