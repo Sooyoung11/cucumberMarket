@@ -19,13 +19,18 @@
                 <div id="topNav">
                     <div id="topNavWrap">
                         <ul>
-                            <li><a th:href="@{ /login }">로그인</a></li>
-                            <li>
-                                <a th:href="@{ /logout }">
-                                    <span sec:authentication="name"></span>
-                                    로그아웃
-                                </a>
-                            </li>
+                            <th:block sec:authorize="isAnonymous()">
+                                <li><a th:href="@{ /member/join }">회원가입</a></li>
+                                <li><a th:href="@{ /login }">로그인</a></li>
+                            </th:block>
+                            <th:block sec:authorize="isAuthenticated()">
+                                <li>
+                                    <a th:href="@{ /logout }">
+                                        <span sec:authentication="name"></span>
+                                        로그아웃
+                                    </a>
+                                </li>
+                            </th:block>
                         </ul>
                     </div>
                 </div>

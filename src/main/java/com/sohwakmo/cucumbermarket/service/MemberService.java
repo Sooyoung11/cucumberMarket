@@ -5,6 +5,7 @@ import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 public class MemberService {
 
+    private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
     public String checkMemberId(String memberId){
@@ -47,9 +49,22 @@ public class MemberService {
         }
     }
 
+    public String checkNickname(String nickname){
+        log.info("checkNciknamenickname= {})", nickname);
+
+        Optional<Member> result= memberRepository.findByNickname(nickname);
+        if(result.isPresent()){
+            return "nicknameNok";
+        }else{
+            return "nicknameOk";
+        }
+    }
+
     public Member registerMember(MemberRegisterDto dto){
         log.info("registerMember(dto= {})", dto);
 
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        log.info("setPassword(dto= {})", dto);
         Member entity = memberRepository.save(dto.toEntity());
         log.info("entity= {}", entity);
 

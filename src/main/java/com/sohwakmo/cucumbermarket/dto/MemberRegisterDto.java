@@ -26,6 +26,7 @@ public class MemberRegisterDto {
                 .address(address)
                 .phone(phone)
                 .email(email)
-                .build();
+                .build()
+                .addRole(MemberRole.USER);
     }
 }

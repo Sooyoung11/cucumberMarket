@@ -90,4 +90,32 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // 닉네임 체크
+    const nicknameInput = document.querySelector('#nickname');
+    const nicknameOk = document.querySelector('#nicknameOk');
+    const nicknameNok = document.querySelector('#nicknameNok');
+
+    nicknameInput.addEventListener('change', function () {
+        const nickname = nicknameInput.value;
+        console.log(nickname);
+        axios
+        .get('/member/check_nickname?nickname='+ nickname)
+        .then(res => { displayCheckNickname(res.data) })
+        .catch(err => { console.log(err); });
+    });
+
+    function displayCheckNickname(data) {
+        if (data == 'nicknameOk') {
+            nicknameOk.className = '';
+            nicknameNok.className = 'd-none';
+            btnSubmit.classList.remove('disabled');
+        } else {
+            nicknameOk.className = 'd-none';
+            nicknameNok.className = '';
+            btnSubmit.classList.add('disabled');
+        }
+    }
+
+
+
 });

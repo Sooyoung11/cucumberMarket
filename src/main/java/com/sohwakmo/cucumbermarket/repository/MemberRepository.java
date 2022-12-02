@@ -1,6 +1,7 @@
 package com.sohwakmo.cucumbermarket.repository;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
+import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,13 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 
 //    @Query("select m from MEMBER m where m.memberId= :memberId")
 //    Optional<Member> findByMemberId(@Param(value = "memberId") String memberId);
+
+    @EntityGraph(attributePaths = "roles")
     Optional<Member> findByMemberId(String memberId);
 
+    @EntityGraph(attributePaths = "roles")
+    Optional<Member> findByNickname(String nickname);
+
+    @EntityGraph(attributePaths = "roles")
+    Member save(MemberRegisterDto dto);
 }

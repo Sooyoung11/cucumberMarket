@@ -14,17 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/join")
+    @GetMapping("/member/join")
     public void join(){
         log.info("join() GET");
     }
 
-    @GetMapping("/check_memberid")
+    @GetMapping("/member/check_memberid")
     @ResponseBody
     public ResponseEntity<String> checkMemberId(String memberId){
         log.info("checkMemberId(memberId= {})", memberId);
@@ -33,7 +32,7 @@ public class MemberController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/check_password")
+    @GetMapping("/member/check_password")
     @ResponseBody
     public ResponseEntity<String> checkPassword(String password){
         log.info("checkPassword(password= {})", password);
@@ -42,7 +41,7 @@ public class MemberController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/check_password2")
+    @GetMapping("/member/check_password2")
     @ResponseBody
     public ResponseEntity<String> checkPassword2(String password, String password2){
         log.info("checkPassword2(password= {}, password2= {})", password, password2);
@@ -51,7 +50,16 @@ public class MemberController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/join")
+    @GetMapping("/member/check_nickname")
+    @ResponseBody
+    public ResponseEntity<String> checkNickname(String nickname){
+        log.info("checkNickname(nickname= {})", nickname);
+
+        String result= memberService.checkNickname(nickname);
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/member/join")
     public String join(MemberRegisterDto dto){
         log.info("join(dto= {}) POST", dto);
 
