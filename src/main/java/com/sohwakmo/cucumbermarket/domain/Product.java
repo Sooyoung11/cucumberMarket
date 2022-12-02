@@ -15,8 +15,8 @@ public class Product extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
     private Integer productNo;
 
-    @Column
-    private Integer memberNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
     @Column(nullable = false)
     private String title;
@@ -50,5 +50,11 @@ public class Product extends BaseTimeEntity {
 
     @Column
     private String photoUrl5;
+
+    public Product update(Integer clickCount) {
+        this.clickCount = clickCount;
+
+        return this;
+    }
 
 }
