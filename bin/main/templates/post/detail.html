@@ -38,7 +38,10 @@
             <button>1대1채팅</button>
           </div>
           <div class="form-control">
-            <span th:text="${post.createdTime}">작성시간</span>
+            <span
+              th:text="${ #temporals.format(post.createdTime, 'yyyy-MM-dd HH:mm') }"
+              >작성시간</span
+            >
             <span th:text="'조회 '+${post.clickCount}">조회수</span>
           </div>
           <div>
@@ -62,7 +65,14 @@
                 name="content"
                 style="height: 200px"
                 th:text="${post.content}"
-              ></textarea>
+              >
+              </textarea>
+              <div th:classappend="${post.imageUrl01 == ''} ? 'hidden'">
+                <img th:src="@{${post.imageUrl01}}">
+              </div>
+              <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
+                <img th:src="@{${post.imageUrl02}}">
+              </div>
             </div>
             <div class="form-control">
               <!-- 이미지가 있다면 들어갈곳-->
@@ -188,6 +198,6 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- 댓글 관련 자바스크립트 함수/코드들을 작성한 스크립트 파일 -->
     <script th:src="@{/js/reply.js}"></script>
-    <script th:src="@{/js/modifydelete.js}"></script>
+    <script th:src="@{/js/PostDetail.js}"></script>
   </th:block>
 </html>

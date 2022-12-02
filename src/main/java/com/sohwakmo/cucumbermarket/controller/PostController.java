@@ -34,7 +34,7 @@ public class    PostController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 2, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
+    public String list(Model model, @PageableDefault(size = 10, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
 //        List<PostReadDto> list = postService.listAll();
         List<PostReadDto> list = postService.searchPost(searchText);
         final int start = (int)pageable.getOffset();
@@ -72,14 +72,14 @@ public class    PostController {
 
 
     @PostMapping("/create")
-    public String create(PostCreateDto dto, Integer memberNo, @RequestParam("files")List<MultipartFile> files)throws Exception{
-        log.info("files={}", files);
+    public String create(PostCreateDto dto, Integer memberNo, @RequestParam("files") List<MultipartFile> files) throws Exception {
 
         Member member = memberService.findMemberByMemberNo(memberNo);
         log.info(member.toString());
         Post post = PostCreateDto.builder()
                 .title(dto.getTitle()).content(dto.getContent()).clickCount(dto.getClickCount()).member(member).build().toEntity();
         for (MultipartFile multipartFile : files) {
+            log.info("files={}", files);
             Post newPost=postService.createPost(post,multipartFile);
         }
 
@@ -102,7 +102,7 @@ public class    PostController {
     }
 
     @PostMapping("/modify")
-    public String modify(PostUpdateDto dto,RedirectAttributes attrs){
+    public String modify(PostUpdateDto dto,RedirectAttributes attrs, @RequestParam("files") List<MultipartFile> files){
         Integer postNo = postService.modifyPost(dto);
         log.info("postNo={}",postNo);
         attrs.addAttribute("postNo",postNo);

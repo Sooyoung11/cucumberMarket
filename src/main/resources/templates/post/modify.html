@@ -7,7 +7,7 @@
   <div layout:fragment="content">
     <div class="container">
       <!-- Content here -->
-      <form th:object="${post}" id="form">
+      <form th:object="${post}" id="form" enctype="multipart/form-data">
         <div class="row">
           <div class="col-8">
             <h2>글 수정</h2>
@@ -49,7 +49,10 @@
             </div>
             <nav class="navbar navbar-light bg-light">
               <div class="container">
-                <a class="navbar-brand" href="#"> 사진 </a>
+                <a class="navbar-brand" href="#" type="button">
+                  <img src=""/>
+                  <input multiple="multiple" type="file" name="files"/>
+                </a>
               </div>
             </nav>
             <div class="form-floating my-2">
@@ -62,6 +65,13 @@
                 th:value="${post.content}"
                 name="content"
               ></textarea>
+              <div th:classappend="${post.imageUrl01 == ''} ? 'hidden'">
+                <img th:src="@{${post.imageUrl01}}">
+              </div>
+              <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
+                <img th:src="@{${post.imageUrl02}}">
+              </div>
+            </div>
             </div>
           </div>
         </div>

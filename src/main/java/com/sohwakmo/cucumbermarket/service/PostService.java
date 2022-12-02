@@ -55,18 +55,21 @@ public class PostService {
 
         UUID uuid = UUID.randomUUID();
 
-        String fineName = uuid + "_" + files.getOriginalFilename();
+        String fileName = uuid + "_" + files.getOriginalFilename();
 
-        File saveFile = new File(projectPath, fineName);
+        File saveFile = new File(projectPath, fileName);
 
         files.transferTo(saveFile);
 
-        post.setImageName01(fineName);
-        post.setImageUrl01("/files/"+fineName);
-        if(!post.getImageName01().isEmpty()&&!post.getImageUrl01().isEmpty()){
-            post.setImageName02(fineName);
-            post.setImageUrl02("/files/" + fineName);
+        if(post.getImageUrl01()==null){
+            post.setImageUrl01("/files/"+fileName);
+            post.setImageName01(fileName);
+        }else{
+            post.setImageUrl02("/files/"+fileName);
+            post.setImageName02(fileName);
         }
+
+
         return postRepository.save(post);
     }
 

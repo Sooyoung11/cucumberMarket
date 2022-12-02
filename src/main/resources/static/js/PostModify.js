@@ -3,12 +3,18 @@ modifyButton.addEventListener("click", function () {
   const title = document.querySelector("#title").value;
   const postContent = document.querySelector("#postContent").value;
 
-  if (title == "" || postContent == "") {
-    alert("제목과 내용을 입력해주세요");
+  if (title == "" && postContent == "") {
+    alert("제목과 내용을 입력해주세요.");
+    return;
+  } else if (title == "") {
+    alert("제목을 입력해주세요.");
+    return;
+  } else if (postContent == "") {
+    alert("내용을 입력해주세요.");
     return;
   }
 
-  const check = confirm("정말 수정해?");
+  const check = confirm("수정하시겠습니까?");
 
   if (check) {
     // 사용자가 '확인'을 선택했을 때
