@@ -84,7 +84,7 @@ public class PostService {
 
 
     private  String saveImage(MultipartFile files) throws IOException {
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
 
         UUID uuid = UUID.randomUUID();
 
@@ -94,6 +94,20 @@ public class PostService {
 
         files.transferTo(saveFile);
         return fileName;
+    }
+
+    @Transactional
+    public String chekImageNumandDeleteImage(String image1Src) {
+        Post post =  postRepository.findByImageName01(image1Src);
+        if(post.getImageName01().equals(image1Src)){
+            post.setImageName01("");
+            post.setImageUrl01("");
+            return "1번사진 삭제완료";
+        }else{
+            post.setImageName02("");
+            post.setImageUrl02("");
+            return "2번사진 삭제완료";
+        }
     }
 }
 

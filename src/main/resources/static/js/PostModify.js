@@ -37,13 +37,14 @@ image1.addEventListener("click", function () {
 const deleteImageButton = document.querySelector("#deleteImageButton");
 deleteImageButton.addEventListener("click", function () {
   let image1src = image1.src;
+  console.log(image1src);
   image1src = image1src.substr(28);
   console.log(image1src);
 
   axios
     .delete("/post/reply/" + image1src)
     .then((response) => {
-      console.log(response);
+      alert("사진이 삭제되었습니다.");
     })
     .catch((error) => {
       console.log(error);

@@ -73,7 +73,7 @@ public class    PostController {
 
 
     @PostMapping("/create")
-    public String create(PostCreateDto dto, Integer memberNo, @RequestParam("files") List<MultipartFile> files) throws Exception {
+    public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
 
         Member member = memberService.findMemberByMemberNo(memberNo);
         log.info(member.toString());
@@ -110,10 +110,4 @@ public class    PostController {
         return "redirect:/post/detail";
     }
 
-    @DeleteMapping("/deleteImage")
-    @ResponseBody
-    public ResponseEntity<String> deleteImage(@RequestBody String image1Src){
-        log.info("src={}", image1Src);
-        return null;
-    }
 }
