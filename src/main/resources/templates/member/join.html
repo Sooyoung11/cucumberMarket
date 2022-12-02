@@ -18,7 +18,7 @@
     <div id="header">
         <div id="logoWrap">
             <img src="" alt="">
-            <div id="logoText">cucumber<br>market</div>
+                <div id="logoText"><a th:href="@{ / }">cucumber<br>market</a></div>
         </div>
     </div>
     <div id="joinForm">
@@ -28,7 +28,7 @@
                 <!-- 아이디 -->
                 <div class="mt-4">
                     <div>
-                        <label for="memberId" class="form-label">아이디</label>
+                        <label for="memberId" class="form-label" id="lblMemberId">아이디</label>
                         <span class="form-control form-control-lg">
                             <input type="text" id="memberId" name="memberId" required autofocus />
                         </span>
@@ -44,16 +44,14 @@
                 <!-- 비밀번호 -->
                 <div class="mt-4">
                     <div>
-                        <label for="password" class="form-label">비밀번호</label>
+                        <label for="password" class="form-label" id="lblPassword">비밀번호</label>
                         <span class="form-control form-control-lg">
                             <input type="password" id="password" name="password" required />
                             <span id="passwordOk" class="d-none">
-                                <span class="text-success"><p>안전</p></span>
-                                <!-- 안전 아이콘 -->
+                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
                             </span>
                             <span id="passwordNok" class="d-none">
-                                <span class="text-danger"><p>사용불가</p></span>
-                                <!-- 사용불가 아이콘 -->
+                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
                             </span>
                         </span>
                         <div id="passwordNok2" class="d-none">
@@ -65,15 +63,15 @@
                 <!-- 비밀번호 확인 -->
                 <div class="mt-4">
                     <div>
-                        <label for="password2" class="form-label">비밀번호 재확인</label>
+                        <label for="password2" class="form-label" id="lblPassword2">비밀번호 재확인</label>
                         <span class="form-control form-control-lg">
                             <input type="password" id="password2" name="password2" required />
                             <span id="password2Ok" class="d-none">
-                                <span class="text-success"><p>확인</p></span>
+                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
                                 <!-- 안전 아이콘 -->
                             </span>
                             <span id="password2Nok" class="d-none">
-                                <span class="text-danger"><p>사용불가</p></span>
+                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
                                 <!-- 사용불가 아이콘 -->
                             </span>
                         </span>
@@ -86,7 +84,7 @@
                 <!-- 이름 -->
                 <div class="mt-4">
                     <div>
-                        <label for="name" class="form-label">이름</label>
+                        <label for="name" class="form-label" id="lblName">이름</label>
                         <span class="form-control form-control-lg">
                             <input type="text" id="name" name="name" required />
                         </span>
@@ -99,7 +97,7 @@
                 <!-- 닉네임 -->
                 <div class="mt-4">
                     <div>
-                        <label for="nickname" class="form-label">닉네임</label>
+                        <label for="nickname" class="form-label" id="lblNickname">닉네임</label>
                         <span class="form-control form-control-lg">
                             <input type="text" id="nickname" name="nickname" required />
                         </span>
@@ -115,11 +113,13 @@
                 <!-- 주소 -->
                 <div class="mt-4">
                     <div>
-                        <label for="sample4_postcode" class="form-label">주소</label>
-                        <span class="form-control form-control-lg mb-2" id="postcode">
-                            <input type="text" id="sample4_postcode" placeholder="우편번호">
-                        </span>
-                        <input type="button" id="btnPostcode" class="btn btn-success btn-lg" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                        <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
+                        <div>
+                            <span class="form-control form-control-lg mb-2" id="postcode">
+                                <input type="text" id="sample4_postcode" placeholder="우편번호">
+                            </span>
+                            <input type="button" id="btnPostcode" class="btn btn-outline-success btn-lg" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                        </div>
                         <span class="form-control form-control-lg mb-2">
                             <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
                         </span>
@@ -139,7 +139,7 @@
 
                 <!-- 휴대폰 번호 -->
                 <div class="mt-4">
-                    <label for="phone">휴대전화</label>
+                    <label for="phone" class="form-label" id="lblPhone">휴대전화</label>
                     <span class="form-control form-control-lg">
                         <input type="tel" id="phone" name="phone" required/>
                     </span>
@@ -150,7 +150,7 @@
 
                 <!-- 이메일 -->
                 <div class="mt-4">
-                    <label for="phone" class="form-label">이메일</label>
+                    <label for="phone" class="form-label" id="lblEmail">이메일</label>
                     <span class="form-control form-control-lg">
                         <input type="email" id="email" name="email" required />
                     </span>
@@ -162,7 +162,7 @@
 
                 <!-- 가입하기 버튼 -->
                 <div>
-                    <input type="submit" value="가입하기" id="btnSubmit" class="disabled"/>
+                    <input type="submit" value="가입하기" id="btnSubmit" class="btn btn-success btn-lg disabled"/>
                 </div>
             </div>
         </form>
