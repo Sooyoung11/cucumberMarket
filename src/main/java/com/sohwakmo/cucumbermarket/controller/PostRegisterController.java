@@ -16,11 +16,12 @@ public class PostRegisterController {
 
     private final PostService postService;
 
-    @DeleteMapping("/{image1Src}")
-    public ResponseEntity<String> deleteImage(@PathVariable String image1Src){
-        log.info("src={}", image1Src);
-        String result = postService.chekImageNumandDeleteImage(image1Src);
+    @DeleteMapping("/{imageSrc}")
+    public ResponseEntity<String> delete01Image(@PathVariable String imageSrc) throws Exception{
+        log.info("src={}", imageSrc);
+        String result = postService.chekImageNumandDeleteImage(imageSrc);
         log.info(result);
         return ResponseEntity.ok("성공");
     }
+
 }

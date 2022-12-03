@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -97,17 +100,30 @@ public class PostService {
     }
 
     @Transactional
-    public String chekImageNumandDeleteImage(String image1Src) {
-        Post post =  postRepository.findByImageName01(image1Src);
-        if(post.getImageName01().equals(image1Src)){
+    public String chekImageNumandDeleteImage(String imageSrc) throws Exception{
+        Post post =  postRepository.findByImageName01(imageSrc);
+        if(post == null){
+            Post post2 = postRepository.findByImageName02(imageSrc);
+            post2.setImageName02("");
+            post2.setImageUrl02("");
+            extractImage(imageSrc);
+            return "2번사진 삭제완료";
+        }else{
             post.setImageName01("");
             post.setImageUrl01("");
+            extractImage(imageSrc);
             return "1번사진 삭제완료";
-        }else{
-            post.setImageName02("");
-            post.setImageUrl02("");
-            return "2번사진 삭제완료";
         }
+    }
+
+    /**
+     * static  폴더 안에 있는 사진 경로를 찾아내서 삭제
+     * @param imageSrc 전달받은 이미지 경로
+     * @throws IOException
+     */
+    private void extractImage(String imageSrc) throws IOException {
+        Path filePath = Paths.get("/Users/byeonjuhwan/Desktop/cucumberMarket/src/main/resources/static/files/" + imageSrc);
+        Files.delete(filePath);
     }
 }
 

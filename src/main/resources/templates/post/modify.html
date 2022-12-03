@@ -76,16 +76,27 @@
                   th:src="@{${post.imageUrl01}}"
                   th:value="${post.imageUrl01}"
                 />
-                <div id="deleteModifyNav" style="display: none">
+                <div id="deleteModifyImage01Nav" style="display: none">
                   <ul>
                     <li>
-                      <button type="button" id="deleteImageButton">삭제</button>
+                      <button type="button" id="deleteImage01Button">
+                        삭제
+                      </button>
                     </li>
                   </ul>
                 </div>
               </div>
               <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
                 <img id="image2" th:src="@{${post.imageUrl02}}" />
+                <div id="deleteModifyImage02Nav" style="display: none">
+                  <ul>
+                    <li>
+                      <button type="button" id="deleteImage02Button">
+                        삭제
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

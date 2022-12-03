@@ -11,6 +11,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post,Integer>{
     List<Post> findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByPostNoDesc(String title, String content);
 
-    Post findByImageName01(String image1Src);
-
+    Post findByImageName01(String imageSrc);
+    Post findByImageName02(String imageSrc);
 }
