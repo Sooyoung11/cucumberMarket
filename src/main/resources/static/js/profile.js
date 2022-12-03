@@ -41,20 +41,31 @@ window.addEventListener('DOMContentLoaded', event => {
     const modalImgUrl = document.querySelector('#imageFile');
     let fileName = null;
     let files = null;
-    let imageFile= null
+    let imageFile= null;
 
     modalImgUrl.addEventListener('change', function (event) {
         files = event.currentTarget.files;
-        console.log("files!!!{}", files);
+
+        //image upload
+        let formData = new FormData();
+        formData.append("userProfileImage", event.target.files[0]);
+
+            axios({
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                url: "http://localhost:8889/api/profileImage/upload",
+                method: "POST",
+                data: formData,
+            }).then((response) => {
+                console.log(response)
+            });
 
         fileName = event.currentTarget.files[0].name;
         modalImgName.value = fileName;
-        console.log(typeof fileName, fileName);
         imageFile = "/images/mypage/"+ fileName;
 
-        // //이미지 저장
-        // const saveFile = new File(imageFile, fileName);
-        // files.transferTo(saveFile);
     })
 
     //modalBtnDelete.addEventListener('click', deleteImg)
@@ -62,27 +73,22 @@ window.addEventListener('DOMContentLoaded', event => {
 
     function updateImg(event){
         const modalMemberNo = memberNo;
-        console.log("files!!!"+files);
-        // const imageFile = "/images/mypage/"+ fileName;
+
         const result = confirm("정말 수정하시겠습니까?")
 
         if(result){
             const data = {
                 userImgUrl:imageFile,
-                userImgName:fileName
+                userImgName:fileName,
                             }
+
             axios
-                .put('/api/profileImage/'+modalMemberNo, data, files)
+                .post('/api/profileImage/'+modalMemberNo, data)
                 .then(response =>{
                     console.log(response);
                     alert('이미지 수정 성공');
-
-                    console.log(data);
-                    // //이미지 저장
-                    // const saveFile = new File(data.userImgUrl, data.userImgName);
-                    // files.transferTo(saveFile);
-
                     readUserImage();
+                    modalImgUrl.value = "";
                 })
                 .catch(error=>{
                     console.log(error);
@@ -106,8 +112,6 @@ window.addEventListener('DOMContentLoaded', event => {
 
     function imageView(data){
         const userProfileImage = document.querySelector('#userProfileImage');
-
-        console.log("데이터 URL={}", data.userImgUrl);
         userProfileImage.src =  data.userImgUrl;
 
     }

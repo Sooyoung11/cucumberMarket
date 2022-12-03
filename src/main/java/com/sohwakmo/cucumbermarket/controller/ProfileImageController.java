@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -28,15 +30,28 @@ public class ProfileImageController {
         return  ResponseEntity.ok(dto);
     }
 
-    @PutMapping("/{modalMemberNo}")
-    public ResponseEntity<Integer> updateImage(@PathVariable Integer modalMemberNo, @RequestBody ProfileImageReadDto dto){
-        log.info("updateImage(memberNo={}, dto={}, userImageFile={})", modalMemberNo, dto);
+    @PostMapping("/{modalMemberNo}")
+    public ResponseEntity<Integer> updateImage(@PathVariable Integer modalMemberNo, @RequestBody ProfileImageReadDto dto) {
+        log.info("updateImage(memberNo={}, dto={})", modalMemberNo, dto);
 
         dto.setMemberNo(modalMemberNo);
 
         Integer result = mypageService.updateImage(dto);
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("/upload")
+    public ResponseEntity<Integer> uploadImage(@RequestBody MultipartFile userProfileImage) throws IOException {
+        log.info("uploadImage(file={})", userProfileImage);
+
+        log.info("getFilename={}", userProfileImage.getOriginalFilename());
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/images/mypage";
+        log.info("image upload={}", projectPath);
+        File saveFile = new File(projectPath, userProfileImage.getOriginalFilename());
+        userProfileImage.transferTo(saveFile);
+        return null;
+    }
+
 
     @GetMapping("/userImage/{memberNo}")
     public ResponseEntity<ProfileImageReadDto> readUserImage(@PathVariable Integer memberNo){
