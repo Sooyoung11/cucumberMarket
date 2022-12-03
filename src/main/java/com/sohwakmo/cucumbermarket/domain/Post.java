@@ -47,4 +47,9 @@ public class Post extends BaseTimeEntity {
         this.content = content;
         return this;
     }
+
+    public Post plusClickCount(Integer clickCount){
+        this.clickCount = clickCount;
+        return this;
+    }
 }

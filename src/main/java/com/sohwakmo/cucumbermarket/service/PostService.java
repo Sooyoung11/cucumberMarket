@@ -30,6 +30,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
 
+    @Transactional(readOnly = true)
     /**
      * 내용, 제목으로 검색해서 결과를 페이지로 가져오기
      * @param searchText 검색 내용
@@ -49,9 +50,11 @@ public class PostService {
         return list;
     }
 
-
-    public Post findPostById(Integer id) {
-        return postRepository.findById(id).orElse(null);
+    @Transactional
+    public Post findPostByIdandUpdateClickCount(Integer id, Integer clickCount) {
+         Post post = postRepository.findById(id).orElse(null);
+         post = post.plusClickCount(clickCount + 1);
+         return post;
     }
 
     public Post createPost(Post post, MultipartFile files)throws Exception{
@@ -99,6 +102,12 @@ public class PostService {
         return fileName;
     }
 
+    /**
+     * 사진 삭제를 누를경우 사진 삭제를 바로바로 해준다.
+     * @param imageSrc
+     * @return 몇번 사진을 삭제했는지 알려준다.
+     * @throws Exception
+     */
     @Transactional
     public String chekImageNumandDeleteImage(String imageSrc) throws Exception{
         Post post =  postRepository.findByImageName01(imageSrc);
@@ -122,6 +131,7 @@ public class PostService {
      * @throws IOException
      */
     private void extractImage(String imageSrc) throws IOException {
+        // 경로는 능동적으로 변경
         Path filePath = Paths.get("/Users/byeonjuhwan/Desktop/cucumberMarket/src/main/resources/static/files/" + imageSrc);
         Files.delete(filePath);
     }

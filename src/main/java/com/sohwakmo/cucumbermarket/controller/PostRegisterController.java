@@ -23,5 +23,4 @@ public class PostRegisterController {
         log.info(result);
         return ResponseEntity.ok("성공");
     }
-
 }

@@ -36,7 +36,6 @@ public class    PostController {
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 10, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
-//        List<PostReadDto> list = postService.listAll();
         List<PostReadDto> list = postService.searchPost(searchText);
         final int start = (int)pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), list.size());
@@ -51,9 +50,13 @@ public class    PostController {
     }
 
     @GetMapping("/detail")
-    public String detail(Model model, @RequestParam Integer postNo){ // 새글 작성일경우 id가 필요 없으므로 필수 항복은 아니므로 false를 준다.
-        Post post = postService.findPostById(postNo);
+    public String detail(Model model, @RequestParam Integer postNo,@RequestParam(required = false, defaultValue = "-1")Integer clickCount){
+        if(clickCount==-1){ // modify 에서 넘어올경우 파라미터 초기화
+            clickCount = postService.findPostByPostNo(postNo).getClickCount()-1;
+        }
+        Post post = postService.findPostByIdandUpdateClickCount(postNo,clickCount); // detail page 로 올경우 조회수도 같이 증가.
         String nickname = post.getMember().getNickname();
+        log.info("컨트롤러 Post={}",post);
         model.addAttribute("post", post);
         model.addAttribute("nickname", nickname);
         return "/post/detail";
@@ -65,7 +68,7 @@ public class    PostController {
             model.addAttribute("post", new Post());
             return "/post/create";
         }else{
-            Post post = postService.findPostById(id);
+            Post post = postService.findPostByPostNo(id);
             model.addAttribute("post", post);
             return "/post/detail";
         }
@@ -89,9 +92,7 @@ public class    PostController {
 
     @PostMapping("/delete")
     public String delete(Integer id){
-
         postService.deletePost(id);
-
         return "redirect:/post/list";
     }
 
