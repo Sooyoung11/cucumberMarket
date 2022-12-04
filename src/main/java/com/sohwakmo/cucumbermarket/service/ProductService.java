@@ -21,6 +21,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
 
+
     public List<Product> read() { // 전체 상품 목록
         log.info("read()");
 
@@ -32,7 +33,6 @@ public class ProductService {
 
         return productRepository.findById(productNo).get();
     }
-
 
     @Transactional
     public Product update(Integer productNo) { // 상품 클릭 수 update
@@ -58,6 +58,7 @@ public class ProductService {
         return list;
     }
 
+
     public Product create(ProductCreateDto dto) { // 상품 등록
         log.info("create(dto={})", dto);
 
@@ -71,7 +72,7 @@ public class ProductService {
         log.info("update(dto={})", dto);
 
         Product entity = productRepository.findById(dto.getProductNo()).get();
-        entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory(), dto.getPhotoUrl1(), dto.getPhotoUrl2(), dto.getPhotoUrl3(), dto.getPhotoUrl4(), dto.getPhotoUrl5(), dto.getImgName());
+        entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
 
         return entity.getProductNo();
     }

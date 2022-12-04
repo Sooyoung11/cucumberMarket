@@ -1,6 +1,7 @@
 package com.sohwakmo.cucumbermarket.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @NoArgsConstructor
@@ -17,10 +18,11 @@ public class Product extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
-
-    @Column(nullable = false)
+    @Size(min = 5, max = 50)
+    @Column(length = 50, nullable = false)
     private String title;
 
+    @Size(min = 10)
     @Column(nullable = false)
     private String content;
 
@@ -30,7 +32,7 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private String category;
 
-    @Column //조회수
+    @Column(columnDefinition = "integer default 0") //조회수
     private Integer clickCount;
 
 
@@ -51,7 +53,15 @@ public class Product extends BaseTimeEntity {
 
     private String photoUrl5;
 
-    private String imgName;
+    private String photoName1;
+
+    private String photoName2;
+
+    private String photoName3;
+
+    private String photoName4;
+
+    private String photoName5;
 
     public Product update(Integer clickCount) {
         this.clickCount = clickCount;
@@ -59,17 +69,12 @@ public class Product extends BaseTimeEntity {
         return this;
     }
 
-    public Product update(String title, String content, Integer price, String category, String photoUrl1, String photoUrl2, String photoUrl3, String photoUrl4, String photoUrl5, String imgName) {
+    public Product update(String title, String content, Integer price, String category) {
         this.title = title;
         this.content = content;
         this.price = price;
         this.category = category;
-        this.photoUrl1 = photoUrl1;
-        this.photoUrl2 = photoUrl2;
-        this.photoUrl3 = photoUrl3;
-        this.photoUrl4 = photoUrl4;
-        this.photoUrl5 = photoUrl5;
 
-    return this;
+        return this;
     }
 }

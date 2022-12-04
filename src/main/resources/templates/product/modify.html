@@ -6,32 +6,37 @@
 <div layout:fragment="content">
     <div class="card mw-50" style="display: block; width:1000px; margin:0 auto;">
         <div class="list-group-item text-center fw-normal p-3 mb-2 bg-secondary text-dark bg-opacity-10" >
-            <h1>상품 등록</h1>
+            <h1>상품 수정</h1>
         </div>
 
         <div class="list-group list-group-flush">
-            <form method="post" enctype="multipart/form-data">
+            <form id="formModify" method="post" enctype="multipart/form-data">
+                <div class="my-2 mb-3">
+                    <label for="productNo" class="form-label fst-italic">제목</label>
+                    <input id="productNo" class="form-control"
+                           type="text" name="productNo" th:value="${product.productNo}" readonly />
+                </div>
                 <div class="my-2 mb-3">
                     <label for="title" class="form-label fst-italic">제목</label>
                     <input id="title" class="form-control"
-                           type="text" name="title" placeholder="제목을 입력해 주세요." required autofocus />
+                           type="text" name="title" th:value="${product.title }" autofocus />
                 </div>
                 <div class="mb-3">
                     <label for="content" class="form-label fst-italic" >내용</label>
                     <textarea row="5" cols="80" id="content" class="form-control"
-                              name="content" placeholder="내용을 입력해 주세요." required ></textarea>
+                              name="content" th:value="${product.content }" ></textarea>
                 </div>
                 <div class="mb-3">
                     <label for="price" class="form-label fst-italic">가격</label>
                     <div class="my-2 input-group">
                     <input  id="price" class="form-control"
-                           type="number" name="price" placeholder="가격을 입력해 주세요." required />
+                           type="number" name="price" th:value="${product.price}" />
                     <span class="input-group-text">원</span>
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="category" class="form-label fst-italic">카테고리</label>
-                    <select id="category" class="form-select" name="category">
+                    <select id="category" class="form-select" name="category" th:value="${product.category }">
                         <option value="0">카테고리 선택</option>
                         <option value="1">디지털기기</option>
                         <option value="2">생활가전/주방</option>
@@ -50,7 +55,7 @@
                            type="file" name="imgUpload" multiple="multiple"/>
                 </div>
                 <div class="my-2 input-group mb-3">
-                    <input type="submit" class="btn btn-outline-info" value="등록" />
+                    <input type="submit" class="btn btn-outline-info" value="수정완료" />
                     <a class="btn btn-outline-secondary" href="/product/list">취소</a>
                 </div>
             </form>
