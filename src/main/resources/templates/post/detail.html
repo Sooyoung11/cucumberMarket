@@ -8,23 +8,32 @@
     <div class="container">
       <form id="form">
         <div class="row">
-          <div class="col-9 my-2">
+          <div>
             <input type="hidden" th:value="${post.postNo}" name="id" />
-            <button type="button" class="btn btn-outline-secondary" id="modify">
-              수정
-            </button>
-            <button type="button" class="btn btn-outline-secondary" id="delete">
-              삭제
-            </button>
-          </div>
-          <div class="col-3">
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              id="gotoList"
-            >
-              목록
-            </button>
+
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                id="modify"
+              >
+                수정
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                id="delete"
+              >
+                삭제
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary float-right"
+                id="gotoList"
+              >
+                목록
+              </button>
+            </div>
           </div>
         </div>
 
@@ -68,10 +77,10 @@
               >
               </textarea>
               <div th:classappend="${post.imageUrl01 == ''} ? 'hidden'">
-                <img th:src="@{${post.imageUrl01}}">
+                <img th:src="@{${post.imageUrl01}}" />
               </div>
               <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
-                <img th:src="@{${post.imageUrl02}}">
+                <img th:src="@{${post.imageUrl02}}" />
               </div>
             </div>
             <div class="form-control">

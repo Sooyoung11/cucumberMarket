@@ -45,23 +45,31 @@
               조치가 진행될 수 있습니다.
             </p>
           </div>
-          <nav class="navbar navbar-light bg-light">
-            <div class="container">
-              <a class="navbar-brand" href="#" type="button">
-                <img src="" />
-                <input multiple="multiple" type="file" name="files" />
-              </a>
+          <nav class="navbar bg-light">
+            <div class="imageButton">
+              <label for="chooseFile">
+                <img src="/images/사진넣기.png" />
+              </label>
             </div>
+            <input
+              multiple="multiple"
+              type="file"
+              name="files"
+              id="chooseFile"
+              style="display: none"
+            />
           </nav>
           <div class="form-floating my-2">
-            <textarea
-              class="form-control"
-              placeholder="내용을 입력해주세요."
+            <div
+              contenteditable
+              class="fake_textarea form-control"
               id="postContent"
-              style="height: 200px"
-              th:field="*{content}"
-              th:value="${post.content}"
-            ></textarea>
+              style="width: 100%; height: 10%"
+            >
+              <span th:field="*{content}" th:value="${post.content}"></span>
+            </div>
+            <!-- <label for="postContent">내용을 입력하세요.</label>
+            <label for="postContent"> <img src="/images/사진넣기.png" /></label> -->
           </div>
         </form>
       </div>
