@@ -2,12 +2,14 @@ package com.sohwakmo.cucumbermarket.controller;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
+import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -90,5 +92,14 @@ public class ProductController {
 
         return "/product/list";
     }
+    @GetMapping("/create")
+    public void create() {
+        log.info("create()");
 
+    }
+
+    @PostMapping("/create")
+    public String create(ProductCreateDto dto) {
+        return "redirect:/product/detail";
+    }
 }

@@ -33,23 +33,25 @@ public class Product extends BaseTimeEntity {
     @Column //조회수
     private Integer clickCount;
 
-    @Column
+
     private boolean status; // 거래상태
 
-    @Column
+
     private String photoUrl1;
 
-    @Column
+
     private String photoUrl2;
 
-    @Column
+
     private String photoUrl3;
 
-    @Column
+
     private String photoUrl4;
 
-    @Column
+
     private String photoUrl5;
+
+    private String imgName;
 
     public Product update(Integer clickCount) {
         this.clickCount = clickCount;
@@ -57,4 +59,17 @@ public class Product extends BaseTimeEntity {
         return this;
     }
 
+    public Product update(String title, String content, Integer price, String category, String photoUrl1, String photoUrl2, String photoUrl3, String photoUrl4, String photoUrl5, String imgName) {
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.category = category;
+        this.photoUrl1 = photoUrl1;
+        this.photoUrl2 = photoUrl2;
+        this.photoUrl3 = photoUrl3;
+        this.photoUrl4 = photoUrl4;
+        this.photoUrl5 = photoUrl5;
+
+    return this;
+    }
 }
