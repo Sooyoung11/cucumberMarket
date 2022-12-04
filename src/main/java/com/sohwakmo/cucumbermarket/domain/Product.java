@@ -51,8 +51,17 @@ public class Product extends BaseTimeEntity {
     @Column
     private String photoUrl5;
 
-    public Product update(Integer clickCount) {
+    @Column
+    private Integer likeCount;
+
+    public Product updateClickCount(Integer clickCount) {
         this.clickCount = clickCount;
+
+        return this;
+    }
+
+    public Product updateLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
 
         return this;
     }

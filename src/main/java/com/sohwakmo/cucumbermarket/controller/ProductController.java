@@ -1,14 +1,17 @@
 package com.sohwakmo.cucumbermarket.controller;
 
-import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
+import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,8 +60,8 @@ public class ProductController {
         Product entity = productService.update(productNo); // 조회수 값 증가
         log.info("entity = {}", entity);
 
-        model.addAttribute("product", entity);
-        model.addAttribute("member", entity.getMember());
+        model.addAttribute("product", entity); // 상품 정보
+        model.addAttribute("member", entity.getMember()); // 상품 올린 사람의 정보
 
         return "/product/detail";
     }
@@ -68,7 +71,6 @@ public class ProductController {
         log.info("search(keyword = {})", keyword);
 
         List<Product> list = productService.search(keyword);
-
 
         List<List<Product>> productsList = new ArrayList<>();
         List<Product> products = new ArrayList<>();
@@ -85,10 +87,40 @@ public class ProductController {
             productsList.add(products);
         }
 
-
         model.addAttribute("list", productsList);
 
         return "/product/list";
     }
+
+    @GetMapping("/addInterested")
+    @ResponseBody
+    public ResponseEntity<String> addInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
+        log.info("addInterested(dto = {})", dto);
+
+        productService.addInterested(dto);
+
+        return ResponseEntity.ok("ok");
+    }
+
+    @DeleteMapping("/deleteInterested")
+    @ResponseBody
+    public ResponseEntity<String> deleteInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
+        log.info("deleteInterested(dto = {})", dto);
+
+        productService.deleteInterested(dto);
+
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/check")
+    @ResponseBody
+    public ResponseEntity<String> check(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
+        log.info("check(dto = {})", dto);
+
+        productService.check(dto);
+
+        return ResponseEntity.ok("ok");
+    }
+
 
 }

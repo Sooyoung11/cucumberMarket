@@ -1,6 +1,7 @@
 package com.sohwakmo.cucumbermarket;
 
 import com.sohwakmo.cucumbermarket.domain.Product;
+import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductRepository;
 
 
@@ -20,7 +21,10 @@ public class ProductSwimTest {
     @Autowired
     private ProductRepository productRepository;
 
-    @Test
+    @Autowired
+    private ProductOfInterestedRepository productOfInterestedRepository;
+
+//    @Test
     public void test1() {
         log.info("test1()");
 
@@ -30,6 +34,16 @@ public class ProductSwimTest {
         for (Product p : list) {
             log.info(p.toString());
         }
+    }
+
+    @Test
+    public void test2() {
+        log.info("test2()");
+
+        Assertions.assertNotNull(productOfInterestedRepository);
+
+//        productOfInterestedRepository.deleteById(1);
+
     }
 
 }
