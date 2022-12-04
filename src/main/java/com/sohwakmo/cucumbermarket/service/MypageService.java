@@ -54,4 +54,14 @@ public class MypageService {
 
         return entity.getMemberNo();
     }
+
+//    @Transactional
+//    public void deleteImage(ProfileImageReadDto dto) {
+//        log.info("deleteImage(dto={})", dto);
+//
+//        //default image로 변경
+//        Member entity = mypageRepository.findByMemberNo(dto.getMemberNo());
+//        entity.userImageUpdate(dto.getUserImgName(), dto.getUserImgUrl());
+//
+//    }
 }

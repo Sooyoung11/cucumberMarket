@@ -68,7 +68,36 @@ window.addEventListener('DOMContentLoaded', event => {
 
     })
 
-    //modalBtnDelete.addEventListener('click', deleteImg)
+    modalBtnDelete.addEventListener('click', deleteImg)
+    
+    //이미지 삭제 시 기본(default.jpg) 이미지로 업로드
+    function deleteImg(){
+        const modalMemberNo = memberNo;
+        const result = confirm("정말 삭제하시겠습니까?")
+
+          if(result){
+            const data = {
+                userImgUrl:"/images/mypage/default.jpg",
+                userImgName:"default.jpg"
+            }
+            axios
+                .post('/api/profileImage/'+modalMemberNo, data)
+                .then(response =>{
+                    console.log(response);
+                    alert('이미지 삭제 성공');
+                    readUserImage();
+                    modalImgUrl.value = "";
+
+                })
+                .catch(error=>{
+                    console.log(error);
+                })
+                .then(function (){
+                    profileImageModal.hide();
+                })
+        }
+    }
+
     modalBtnUpdate.addEventListener('click', updateImg);
 
     function updateImg(event){
@@ -89,6 +118,7 @@ window.addEventListener('DOMContentLoaded', event => {
                     alert('이미지 수정 성공');
                     readUserImage();
                     modalImgUrl.value = "";
+
                 })
                 .catch(error=>{
                     console.log(error);
@@ -112,6 +142,8 @@ window.addEventListener('DOMContentLoaded', event => {
 
     function imageView(data){
         const userProfileImage = document.querySelector('#userProfileImage');
+
+        console.log("데이터 URL={}", data.userImgUrl);
         userProfileImage.src =  data.userImgUrl;
 
     }

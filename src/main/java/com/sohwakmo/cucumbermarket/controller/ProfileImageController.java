@@ -41,15 +41,14 @@ public class ProfileImageController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<Integer> uploadImage(@RequestBody MultipartFile userProfileImage) throws IOException {
+    public ResponseEntity<String> uploadImage(@RequestBody MultipartFile userProfileImage) throws IOException {
         log.info("uploadImage(file={})", userProfileImage);
 
-        log.info("getFilename={}", userProfileImage.getOriginalFilename());
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/images/mypage";
-        log.info("image upload={}", projectPath);
         File saveFile = new File(projectPath, userProfileImage.getOriginalFilename());
         userProfileImage.transferTo(saveFile);
-        return null;
+
+        return ResponseEntity.ok("Image Upload Success");
     }
 
 
@@ -61,4 +60,13 @@ public class ProfileImageController {
 
         return ResponseEntity.ok(dto);
     }
+
+//    @DeleteMapping("/delete/{memberNo}")
+//    public ResponseEntity<String> deleteImage(@PathVariable Integer memberNo, @RequestBody ProfileImageReadDto dto){
+//        log.info("deleteImage(memberNo={}, dto={})", memberNo, dto);
+//
+//        mypageService.deleteImage(dto);
+//
+//        return ResponseEntity.ok("delete image success");
+//    }
 }
