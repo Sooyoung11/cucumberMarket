@@ -59,6 +59,7 @@ deleteImage01Button.addEventListener("click", function () {
     .delete("/post/reply/" + imageSrc)
     .then((response) => {
       alert("사진이 삭제되었습니다.");
+      location.reload();
     })
     .catch((error) => {
       console.log(error);
@@ -76,6 +77,7 @@ deleteImage02Button.addEventListener("click", function () {
     .delete("/post/reply/" + imageSrc)
     .then((response) => {
       alert("사진이 삭제되었습니다.");
+      location.reload();
     })
     .catch((error) => {
       console.log(error);
