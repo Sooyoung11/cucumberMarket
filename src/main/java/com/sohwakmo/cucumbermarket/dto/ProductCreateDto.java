@@ -9,6 +9,7 @@ public class ProductCreateDto {
     private String content;
     private Integer price;
     private String category;
+    private Integer clickCount;
     private String photoUrl1;
     private String photoUrl2;
     private String photoUrl3;
@@ -26,6 +27,7 @@ public class ProductCreateDto {
                 .content(content)
                 .price(price)
                 .category(category)
+                .clickCount(clickCount)
                 .photoUrl1(photoUrl1)
                 .photoUrl2(photoUrl2)
                 .photoUrl3(photoUrl3)

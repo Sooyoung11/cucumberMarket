@@ -2,6 +2,7 @@ package com.sohwakmo.cucumbermarket.repository;
 
 import com.sohwakmo.cucumbermarket.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -14,5 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //     select * from PRODUCTS where lower(TITLE) like ? or lower (CONTENT) like ? order by PRODUCT_NO desc
     List<Product> findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByProductNoDesc(String title, String content);
 
-
+    @Modifying
+    @Query("update PRODUCTS p set p.clickCount = p.clickCount + 1 where p.productNo = : productNo")
+    int updateclickCount(Integer productNo);
 }

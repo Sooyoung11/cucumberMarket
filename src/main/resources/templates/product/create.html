@@ -32,7 +32,7 @@
                 <div class="mb-3">
                     <label for="category" class="form-label fst-italic">카테고리</label>
                     <select id="category" class="form-select" name="category">
-                        <option value="0">카테고리 선택</option>
+                        <option>카테고리 선택</option>
                         <option value="1">디지털기기</option>
                         <option value="2">생활가전/주방</option>
                         <option value="3">유아용품</option>
@@ -45,9 +45,15 @@
                         <option value="10">반려동물용품</option>
                     </select>
                 </div>
+                <div>
+                    <label>
+                        <input name="clickCount" th:value="0"; readonly/>
+                    </label>
+                </div>
+
                 <div class="my-2 input-group mb-3">
                     <input id="imgUpload" class="form-control"
-                           type="file" name="imgUpload" multiple="multiple"/>
+                           type="file" name="files" multiple="multiple"/>
                 </div>
                 <div class="my-2 input-group mb-3">
                     <input type="submit" class="btn btn-outline-info" value="등록" />

@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @ToString
 @Entity(name = "PRODUCTS")
 @SequenceGenerator(name = "PRODUCTS_SEQ_GEN", sequenceName = "PRODUCTS_SEQ", allocationSize = 1)
@@ -18,11 +19,11 @@ public class Product extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
-    @Size(min = 5, max = 50)
-    @Column(length = 50, nullable = false)
+    @Size(min = 3, max = 50)
+    @Column(nullable = false)
     private String title;
 
-    @Size(min = 10)
+    @Size(min = 5)
     @Column(nullable = false)
     private String content;
 
@@ -32,7 +33,7 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private String category;
 
-    @Column(columnDefinition = "integer default 0") //조회수
+    @Column(columnDefinition = "integer default 0", nullable = false) //조회수
     private Integer clickCount;
 
 
