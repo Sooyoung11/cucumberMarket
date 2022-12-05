@@ -130,7 +130,7 @@ public class ProductController {
        public String delete(Integer productNo){
            log.info("delete(productNo={})", productNo);
            productService.delete(productNo);
-           return "redirect:/detail";
+           return "redirect:/product/list";
        }
 
 
