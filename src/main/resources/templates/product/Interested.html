@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ layout/layout.html }">
+
+    <div layout:fragment="content" class="container text-center">
+        <h1>관심 목록 페이지</h1>
+        ${ memberNo };
+        <p th:text="${memberNo}"></p>
+
+        <div id="productList" >
+            <div class="card-group row h-75 my-5" th:each="products : ${ list }">
+                <div th:each="p : ${products}" class="col-4" >
+                    <div class="card" >
+                        <a th:if="${ p.photoUrl1 } == null and ${ p.photoUrl2 } == null and ${ p.photoUrl3 } == null and ${ p.photoUrl4 } == null and ${ p.photoUrl5 } == null"
+                           th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }">
+                            <img th:src="@{ /images/product/noimg.png }" class="card-img-top" alt="...">
+                        </a>
+
+                        <a th:if="${p.photoUrl1} != null"
+                           th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }">
+                            <img th:src="@{ ${p.photoUrl1} }" class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${ p.title  }"></h5>
+                            <p class="card-text" th:text="${ p.content }"></p>
+                            <p class="card-text">
+                                <small class="text-muted" th:text="${ p.createdTime }"></small>
+                            </p>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
+    </div>
+
+    <th:block layout:fagment="script">
+
+    </th:block>
+
+</html>

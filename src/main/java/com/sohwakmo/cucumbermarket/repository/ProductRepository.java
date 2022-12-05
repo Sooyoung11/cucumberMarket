@@ -12,6 +12,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //     select * from PRODUCTS where lower(TITLE) like ? or lower (CONTENT) like ? order by PRODUCT_NO desc
     List<Product> findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByProductNoDesc(String title, String content);
 
-
-
 }
