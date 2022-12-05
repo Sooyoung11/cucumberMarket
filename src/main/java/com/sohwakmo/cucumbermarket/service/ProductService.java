@@ -7,12 +7,14 @@ import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrChec
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -66,7 +68,6 @@ public class ProductService {
 
         Member member = memberRepository.findById(dto.getMemberNo()).get();
         log.info("member = {}", member);
-
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
@@ -75,37 +76,62 @@ public class ProductService {
                         .build();
         log.info("entity = {}", entity);
 
-        productOfInterestedRepository.save(entity);
+        productOfInterestedRepository.save(entity); // DB에 insert
 
-        product.updateLikeCount(product.getLikeCount()+1);
+        product.updateLikeCount(product.getLikeCount()+1); // 상품의 관심목록 1증가
         log.info("product = {}", product);
-
     }
 
+    @Transactional
     public void deleteInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("deleteInterested(dto = {})", dto);
 
         Member member = memberRepository.findById(dto.getMemberNo()).get();
         log.info("member = {}", member);
-
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
-        ProductOfInterested entity = ProductOfInterested.builder()
-                .member(member).product(product)
-                .build();
-        log.info("entity = {}", entity);
+        product.updateLikeCount(product.getLikeCount()-1);
 
-//        productOfInterestedRepository.delete(entity);
+        productOfInterestedRepository.deleteByMemberAndProduct(member, product);
     }
 
-    public String check(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
-        log.info("check(dto = {})", dto);
+    public String checkInterestedProduct(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
+        log.info("checkInterestedProduct(dto = {})", dto);
 
-//        ProductOfInterested productOfInterested =productOfInterestedRepository.findByMemberNoAndProductNo(dto.getMemberNo(), dto.getProductNo());
-//        log.info("productOfInterested = {}", productOfInterested);
+        Member member = memberRepository.findById(dto.getMemberNo()).get();
+        log.info("member = {}", member);
+        Product product = productRepository.findById(dto.getProductNo()).get();
+        log.info("product = {}", product);
 
-        return null;
+        Optional<ProductOfInterested> result = productOfInterestedRepository.findByMemberAndProduct(member, product);
+        if (result.isPresent()) {
+            log.info("result = {}", result);
+            return "ok";
+        } else {
+            log.info("없음");
+            return "nok";
+        }
+
+    }
+
+    @Transactional
+    public List<Product> interestedRead(Integer memberNo) {
+        log.info("interested(memberNo = {})", memberNo);
+
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member = {}", member);
+
+        List<ProductOfInterested> list = productOfInterestedRepository.findByMember(member);
+        log.info("list = {}", list);
+
+        List<Product> productsList = new ArrayList<>();
+        for(ProductOfInterested s : list) {
+            productsList.add(s.getProduct());
+        }
+        log.info("productsList = {}", productsList);
+
+        return productsList;
     }
 
 

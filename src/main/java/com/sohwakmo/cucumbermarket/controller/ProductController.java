@@ -87,6 +87,9 @@ public class ProductController {
             productsList.add(products);
         }
 
+        log.info(productsList.toString());
+        log.info("list={}", list);
+
         model.addAttribute("list", productsList);
 
         return "/product/list";
@@ -94,32 +97,60 @@ public class ProductController {
 
     @GetMapping("/addInterested")
     @ResponseBody
-    public ResponseEntity<String> addInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
+    public void addInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("addInterested(dto = {})", dto);
 
         productService.addInterested(dto);
-
-        return ResponseEntity.ok("ok");
     }
 
     @DeleteMapping("/deleteInterested")
     @ResponseBody
-    public ResponseEntity<String> deleteInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
+    public void deleteInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("deleteInterested(dto = {})", dto);
 
         productService.deleteInterested(dto);
-
-        return ResponseEntity.ok("ok");
     }
 
-    @GetMapping("/check")
+    @GetMapping("/checkInterestedProduct")
     @ResponseBody
-    public ResponseEntity<String> check(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
-        log.info("check(dto = {})", dto);
+    public ResponseEntity<String> checkInterestedProduct(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
+        log.info("checkInterestedProduct(dto = {})", dto);
 
-        productService.check(dto);
+        String result = productService.checkInterestedProduct(dto);
+        log.info("result = {}", result);
 
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("interested")
+    public String interestedPage(Integer memberNo, Model model) {
+        log.info("interestedPage(memberNo = {})", memberNo);
+
+        List<Product> list = productService.interestedRead(memberNo);
+        log.info("list = {}", list);
+
+        List<List<Product>> productsList = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            products.add(list.get(i));
+
+            if ((i + 1) % 3 == 0) {
+                productsList.add(products);
+                products = new ArrayList<>();
+            }
+        }
+        if (products.size() > 0) {
+            productsList.add(products);
+        }
+
+        log.info(productsList.toString());
+        log.info("list={}", list);
+
+        model.addAttribute("memberNo", memberNo);
+        model.addAttribute("list", productsList);
+
+        return "/product/interested";
     }
 
 
