@@ -1,11 +1,9 @@
 package com.sohwakmo.cucumbermarket.domain;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +17,7 @@ import java.util.Set;
 public class Member{
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
     private Integer memberNo; // Primary Key
 
     @Column(nullable = false, unique = true)

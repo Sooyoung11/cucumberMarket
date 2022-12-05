@@ -1,9 +1,11 @@
 package com.sohwakmo.cucumbermarket.domain;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+
 import lombok.*;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity(name = "POST")
 @NoArgsConstructor
@@ -11,7 +13,7 @@ import lombok.*;
 @Builder
 @Getter
 @ToString(exclude = {"member"})
-@SequenceGenerator(name = "POST_SEQ_GEN",sequenceName = "POST_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "POSTS_SEQ_GEN",sequenceName = "POST_SEQ", allocationSize = 1)
 public class Post extends BaseTimeEntity{
 
     @Id
