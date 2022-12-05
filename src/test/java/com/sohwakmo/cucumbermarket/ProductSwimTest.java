@@ -1,9 +1,6 @@
 package com.sohwakmo.cucumbermarket;
 
-import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
-import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
-import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductRepository;
 
