@@ -1,25 +1,20 @@
 package com.sohwakmo.cucumbermarket.controller;
 
 import com.sohwakmo.cucumbermarket.domain.Product;
-import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
-import com.sohwakmo.cucumbermarket.dto.ProductFileDto;
-import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
+import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -58,15 +53,15 @@ public class ProductController {
         return "/product/list";
     }
 
-    @GetMapping({"/detail", "/modify"})
+    @GetMapping("/detail")
     public String detail(Integer productNo, Model model) {
         log.info("datail(productNo = {})", productNo);
 
         Product entity = productService.update(productNo); // 조회수 값 증가
         log.info("entity = {}", entity);
 
-        model.addAttribute("product", entity);
-        model.addAttribute("member", entity.getMember());
+        model.addAttribute("product", entity); // 상품 정보
+        model.addAttribute("member", entity.getMember()); // 상품 올린 사람의 정보
 
         return "/product/detail";
     }
@@ -106,10 +101,6 @@ public class ProductController {
         log.info("addInterested(dto = {})", dto);
 
         productService.addInterested(dto);
-    @GetMapping("/create")
-    public void create() {
-        log.info("create()");
-
     }
 
     @DeleteMapping("/deleteInterested")
@@ -118,23 +109,6 @@ public class ProductController {
         log.info("deleteInterested(dto = {})", dto);
 
         productService.deleteInterested(dto);
-    }
-    @PostMapping("/create")
-    public String create(ProductCreateDto dto, RedirectAttributes attrs) throws Exception {
-        log.info("create(dto={})", dto);
-        Product entity = productService.create(dto);
-
-        attrs.addFlashAttribute("createProduct", entity.getProductNo());
-         return "redirect:/product/list";
-   }
-    @PostMapping("/update")
-    public String update(ProductUpdateDto dto, Model model) {
-        log.info("update(dto={})", dto);
-
-        Integer product = productService.update(dto);
-        model.addAttribute("product", product);
-
-        return "redirect:/product/detail?productNo=" + dto.getProductNo();
     }
 
     @GetMapping("/checkInterestedProduct")
@@ -178,21 +152,6 @@ public class ProductController {
 
         return "/product/interested";
     }
-
-
-   @PostMapping("/delete")
-   public String delete(Integer productNo){
-       log.info("delete(productNo={})", productNo);
-       productService.delete(productNo);
-       return "redirect:/product/list";
-   }
-
-
-       // Integer productNoId = productService.delete(productNo);
-       // attrs.addFlashAttribute("deleteProductNoId", productNoId);
-
-       // return "redirect:/product/list";
-  // }
 
 
 }

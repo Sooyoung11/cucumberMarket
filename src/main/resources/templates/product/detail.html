@@ -52,6 +52,9 @@
                 <div class="col">
                     <p>작성자 : <span  th:text="${ member.nickname }"></span></p>
                 </div>
+                <div class="col">
+                    <p>찜 : <span  th:text="${ product.likeCount }"></span></p>
+                </div>
             </div>
             <div class="card-body">
                 <div class="my-2">
@@ -75,7 +78,6 @@
 
             <div class="my-2">
                 <a class="btn btn-primary" th:href="@{ # }">채팅하기</a>
-                <a class="btn btn-success" id="productBtnUpdate" th:href="@{/product/modify}">수정</a>
             </div>
         </div>
 

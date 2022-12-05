@@ -4,20 +4,17 @@ import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
-import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
-import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -63,37 +60,6 @@ public class ProductService {
         log.info("list = {}", list);
 
         return list;
-    }
-
-
-   // public Product create(ProductCreateDto dto, MultipartFile file) throws Exception { // 상품 등록
-      //  log.info("create(dto={})", dto);
-
-      //  Product product = dto.toEntity();
-
-     //   String productPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images\\product";
-
-     //   UUID uuid = UUID.randomUUID();
-     //   String fileName = uuid + "_" + file.getOriginalFilename();
-      //  File saveFile = new File(productPath, fileName);
-      //  file.transferTo(saveFile);
-
-     //   product.setPhotoName1(dto.getPhotoName1());
-      //  product.setPhotoUrl1("/product/" + fileName);
-
-
-      //  return productRepository.save(product);
-  //  }
-
-    public Product delete(Integer productNo){
-        Product product = productRepository.findById(productNo).orElse(null);
-
-        if(product==null){
-            return null;
-        }
-
-        productRepository.delete(product);
-        return product;
     }
 
     @Transactional
@@ -168,23 +134,5 @@ public class ProductService {
         return productsList;
     }
 
-
-    @Transactional
-    public Integer update(ProductUpdateDto dto) { // 상품 업데이트
-        log.info("update(dto={})", dto);
-
-        Product entity = productRepository.findById(dto.getProductNo()).get();
-        entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
-
-        return entity.getProductNo();
-    }
-
-    public Product create(ProductCreateDto dto) {
-        log.info("create(dto={})", dto);
-
-        Product entity = productRepository.save(dto.toEntity());
-
-        return entity;
-    }
 
 }

@@ -1,14 +1,12 @@
 package com.sohwakmo.cucumbermarket.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
-@Setter
 @ToString
 @Entity(name = "PRODUCTS")
 @SequenceGenerator(name = "PRODUCTS_SEQ_GEN", sequenceName = "PRODUCTS_SEQ", allocationSize = 1)
@@ -19,11 +17,10 @@ public class Product extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
-    @Size(min = 3, max = 50)
+
     @Column(nullable = false)
     private String title;
 
-    @Size(min = 5)
     @Column(nullable = false)
     private String content;
 
@@ -33,49 +30,40 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private String category;
 
-    @Column(columnDefinition = "integer default 0", nullable = false) //조회수
+    @Column //조회수
     private Integer clickCount;
 
-
+    @Column
     private boolean status; // 거래상태
 
-
+    @Column
     private String photoUrl1;
 
-
+    @Column
     private String photoUrl2;
 
-
+    @Column
     private String photoUrl3;
 
-
+    @Column
     private String photoUrl4;
 
-
+    @Column
     private String photoUrl5;
 
-    private String photoName1;
+    @Column
+    private Integer likeCount;
 
-    private String photoName2;
-
-    private String photoName3;
-
-    private String photoName4;
-
-    private String photoName5;
-
-    public Product update(Integer clickCount) {
+    public Product updateClickCount(Integer clickCount) {
         this.clickCount = clickCount;
 
         return this;
     }
 
-    public Product update(String title, String content, Integer price, String category) {
-        this.title = title;
-        this.content = content;
-        this.price = price;
-        this.category = category;
+    public Product updateLikeCount(Integer likeCount) {
+        this.likeCount = likeCount;
 
         return this;
     }
+
 }
