@@ -42,7 +42,7 @@ public class PostService {
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
             // TODO: getId 값 수정하기
-            Member member = memberRepository.findById(1).get();
+            Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
             PostReadDto dto = PostReadDto.builder()
                     .postNo(p.getPostNo()).title(p.getTitle()).writer(member.getNickname()).createdTime(p.getCreatedTime()).clickCount(p.getClickCount())
                     .build();
@@ -157,6 +157,22 @@ public class PostService {
         return "files/"+fileName;
     }
 
+
+    @Transactional
+    public String insertImage(Post post, MultipartFile data)throws Exception {
+        String fileName = saveImage(data);
+        if(post.getImageUrl01()==null) {
+            log.info(fileName);
+            post.setImageUrl01("/files/"+fileName);
+            post.setImageName01(fileName);
+            return "1번이미지 삽입 완료";
+        }else {
+            post.setImageUrl02("/files/"+fileName);
+            post.setImageName02(fileName);
+            return "2번이미지 삽입 완료";
+        }
+
+    }
 }
 
 

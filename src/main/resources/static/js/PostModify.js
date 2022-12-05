@@ -143,3 +143,31 @@ modifyFile02.addEventListener("change", function () {
       //handle error
     });
 });
+
+const chooseFile = document.querySelector("#chooseFile");
+chooseFile.addEventListener("change", function () {
+  const postNo = document.querySelector("#postNo").value;
+
+  let file = chooseFile.files[0];
+  const data = { file: file };
+  console.log(data);
+
+  axios
+    .put("/post/reply/3" + postNo, data, {
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      },
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.data == "사진은 2장까지 가능합니다!!") {
+        alert(response.data);
+        return;
+      }
+      alert(response.data);
+      location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});

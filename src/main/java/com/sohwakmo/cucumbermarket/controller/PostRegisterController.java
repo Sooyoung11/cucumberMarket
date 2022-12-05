@@ -48,4 +48,16 @@ public class PostRegisterController {
         return ResponseEntity.ok(fileName);
     }
 
+    @PutMapping("/3{postNo}")
+    public ResponseEntity<String>insertImage(@PathVariable Integer postNo, @RequestParam("file") @RequestBody MultipartFile data) throws Exception {
+        log.info("data={}", data);
+        log.info("postNo={}", postNo);
+        Post post = postService.findPostByPostNo(postNo);
+        if (post.getImageUrl01() != null && post.getImageUrl02() != null) {
+            return ResponseEntity.ok("사진은 2장까지 가능합니다!!");
+        } else {
+            String result = postService.insertImage(post, data);
+            return ResponseEntity.ok(result);
+        }
+    }
 }
