@@ -95,7 +95,9 @@ window.addEventListener('DOMContentLoaded', event => {
                                     + '<strong class="text-gray-dark my-2 p-4">' + '비밀 댓글입니다. ' + '</strong>'
                                     + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
                                 + '</div>'
-                                 + `<button type="button" class="btnModifies btn text-primary " data-rid="${r.replyNo}">수정하기</button>`
+                                // TODO: 유저 번호 받으면 활성화하여 이벤트 리스너 만들기
+                                 + `<button disabled type="button" class="btnModifies btn text-gray" data-rid="${r.replyNo}">수정하기</button>`
+                             +'</div>'
                              +'</div>'
                         + '</div>'
                     + '</div>'
