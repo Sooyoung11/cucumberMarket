@@ -2,8 +2,12 @@ package com.sohwakmo.cucumbermarket.domain;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +17,7 @@ import java.util.Set;
 @Builder
 @Getter
 @ToString
+@DynamicInsert
 @SequenceGenerator(name = "MEMBERS_SEQ_GEN",sequenceName = "MEMBERS_SEQ", allocationSize = 1)
 public class Member {
 
@@ -26,7 +31,7 @@ public class Member {
     private String memberId; // 2자 이상
 
     @NotNull
-    @Size(min = 8, max = 20, message = "비밀번호는 8자이상 20자 이하입니다.")
+    @Size(min = 8, max = 255, message = "비밀번호는 8자이상 20자 이하입니다.")
     @Column(nullable = false)
     private String password;
 
@@ -57,7 +62,16 @@ public class Member {
     @Column(name= "email_auth")
     private Integer emailAuth;
 
+
+    @ColumnDefault("0")
     private Integer grade;
+
+    @ColumnDefault("'/images/mypage/default.jpg'")
+    private String userImgUrl;
+
+    @ColumnDefault("'default.jpg'")
+    private String userImgName;
+
 
 
     @ElementCollection(fetch = FetchType.LAZY)
@@ -67,12 +81,6 @@ public class Member {
         roles.add(role);
         return this;
     }
-    private boolean deleted;
-    private String userImgUrl;
-    private String userImgName;
-
-    //Spring security 사용시 적용 예정
-    //private Set<MemberRole> roles = new HashSet<>();
 
     // 회원정보 수정 업데이트
     public Member memberUpdate( String name, String nickname, String password, String address, String phone, String email){

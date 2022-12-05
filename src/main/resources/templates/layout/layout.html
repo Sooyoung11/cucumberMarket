@@ -48,11 +48,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">sub</a>
                         </li>
+                        <th:block sec:authorize="isAuthenticated()">
                         <li class="nav-item">
-                            <input name="member_id" value="testUser1" readonly/>
+                        <span class="text-info" name="member_id" sec:authentication="name" readonly/>
+                            <a class="nav-link " th:href="@{/mypage/mymain?memberNo={no} (no= ${#authentication.principal.memberNo})}" tabindex="-1" aria-disabled="true">마이페이지</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " th:href="@{/mypage/mymain?memberNo={no} (no=1)}" tabindex="-1" aria-disabled="true">마이페이지</a>
+                        </th:block>
                         </li>
                     </ul>
                 </nav>
