@@ -20,10 +20,14 @@ span>p{display: inline;}
 input{display:inline-block; width: 420px;}
 #memberId,#password,#password2,#name,#nickname,#sample4_postcode,
 #sample4_roadAddress,#sample4_jibunAddress,#sample4_detailAddress,
-#phone,#email{border: none; font-size: 14px;}
+#phone,#email,#emailKey{border: none; font-size: 14px;}
 #lblAddress{display: block;}
-#postcode{width: 300px; display: inline-block; margin-left: 12px;}     
+#postcode{width: 300px; display: inline-block; margin-left: 12px; float: left;}     
 #sample4_postcode{width: 240px;}
-#btnPostcode{width: 168px; height: 48px;
+#btnPostcode,#btnAuthcode{width: 168px; height: 48px;
      font-size: 14px; float: left;}
+#roadAddressSpan{display: inline-block;}
+#emailSpan{width: 300px; display: inline-block; margin-right: 12px; float: left;}
+#email{width: 240px;}
+#emailKeySpan{display: inline-block;}
 #btnSubmit{font-size: 15px;  margin: 56px auto; width: 480px; height: 48px;}

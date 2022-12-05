@@ -14,8 +14,10 @@ public class MemberRegisterDto {
     private String name;
     private String nickname;
     private String address;
-    private Integer phone;
+    private String phone;
     private String email;
+    private String emailKey;
+    private Integer emailAuth;
 
     public Member toEntity(){
         return Member.builder()
@@ -26,6 +28,8 @@ public class MemberRegisterDto {
                 .address(address)
                 .phone(phone)
                 .email(email)
+                .emailKey(emailKey)
+                .emailAuth(emailAuth)
                 .build()
                 .addRole(MemberRole.USER);
     }

@@ -23,5 +23,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     Optional<Member> findByNickname(String nickname);
 
     @EntityGraph(attributePaths = "roles")
+    Optional<Member> findByEmail(String email);
+
+    @EntityGraph(attributePaths = "roles")
     Member save(MemberRegisterDto dto);
 }

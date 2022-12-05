@@ -59,6 +59,15 @@ public class MemberController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/member/check_email")
+    @ResponseBody
+    public ResponseEntity<String> checkEmail(String email){
+        log.info("checkEmail(email= {})", email);
+
+        String result= memberService.checkEmail(email);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/member/join")
     public String join(MemberRegisterDto dto){
         log.info("join(dto= {}) POST", dto);
@@ -66,4 +75,6 @@ public class MemberController {
         memberService.registerMember(dto);
         return "redirect:/login";
     }
+
+
 }

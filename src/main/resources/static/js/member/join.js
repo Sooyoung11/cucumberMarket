@@ -116,6 +116,45 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // 이메일 체크
+    const emailInput = document.querySelector('#email');
+    const emailOk = document.querySelector('#emailOk');
+    const emailNok = document.querySelector('#emailNok');
+    const emailNok2 = document.querySelector('#emailNok2');
+    const btnAuthcode= document.querySelector('#btnAuthcode');
+    const email = emailInput.value;
+
+    emailInput.addEventListener('change', function () {
+        axios
+        .get('/member/check_email?email='+ email)
+        .then(res => { displayCheckEmail(res.data) })
+        .catch(err => { console.log(err); });
+    });
+
+    function displayCheckEmail(data) {
+        if (data == 'emailOk') {
+            emailOk.className = '';
+            emailNok.className = 'd-none';
+            emailNok2.className = 'd-none';
+            btnAuthcode.classList.remove('disabled');
+            btnAuthcode.classList.remove('btn-outline-success');
+            btnAuthcode.classList.add('btn-success');
+            btnSubmit.classList.remove('disabled');
+        } else {
+            emailOk.className = 'd-none';
+            emailNok.className = '';
+            emailNok2.className = '';
+            btnAuthcode.classList.remove('btn-success');
+            btnAuthcode.classList.add('disabled');
+            btnAuthcode.classList.add('btn-outline-success');
+            btnSubmit.classList.add('disabled');
+        }
+    }
+
+    function sendEmail(email){
+
+    }
+
 
 
 });

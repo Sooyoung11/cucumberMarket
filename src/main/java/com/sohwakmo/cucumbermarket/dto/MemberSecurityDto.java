@@ -16,13 +16,13 @@ public class MemberSecurityDto extends User {
     private String name;
     private String nickname;
     private String address;
-    private Integer phone;
+    private String phone;
     private String email;
     private Integer grade;
 
 //    @Override
     public MemberSecurityDto(String memberId, String password, String name,
-                             String nickname, String address, Integer phone,
+                             String nickname, String address, String phone,
                              String email, Integer grade,
                              Collection<? extends GrantedAuthority> authorities) {
         super(memberId, password, authorities);

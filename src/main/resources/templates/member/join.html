@@ -68,11 +68,9 @@
                             <input type="password" id="password2" name="password2" required />
                             <span id="password2Ok" class="d-none">
                                 <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
-                                <!-- 안전 아이콘 -->
                             </span>
                             <span id="password2Nok" class="d-none">
                                 <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
-                                <!-- 사용불가 아이콘 -->
                             </span>
                         </span>
                         <div id="password2Nok2" class="d-none">
@@ -114,13 +112,13 @@
                 <div class="mt-4">
                     <div>
                         <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
-                        <div>
+                        <div class="mb-2">
+                            <input type="button" id="btnPostcode" class="btn btn-outline-success btn-lg" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
                             <span class="form-control form-control-lg mb-2" id="postcode">
                                 <input type="text" id="sample4_postcode" placeholder="우편번호">
                             </span>
-                            <input type="button" id="btnPostcode" class="btn btn-outline-success btn-lg" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
                         </div>
-                        <span class="form-control form-control-lg mb-2">
+                        <span class="form-control form-control-lg mb-2" id="roadAddressSpan">
                             <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
                         </span>
                         <span class="form-control form-control-lg mb-2">
@@ -150,14 +148,33 @@
 
                 <!-- 이메일 -->
                 <div class="mt-4">
-                    <label for="phone" class="form-label" id="lblEmail">이메일</label>
-                    <span class="form-control form-control-lg">
-                        <input type="email" id="email" name="email" required />
-                    </span>
-                    <div id="emailNok" class="d-none">
-                        <p class="text-danger">필수 정보입니다.</p>
+                    <div>
+                        <label for="phone" class="form-label" id="lblEmail">이메일</label>
+                        <div class="mb-2">
+                            <span class="form-control form-control-lg" id="emailSpan">
+                                <input type="email" id="email" name="email" required />
+                                <span id="emailOk" class="d-none">
+                                    <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                                </span>
+                                <span id="emailNok" class="d-none">
+                                    <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                                </span>
+                            </span>
+                            <input type="button" id="btnAuthcode" class="btn btn-outline-success btn-lg disabled" onclick="sendEmail()" value="인증코드 받기">
+                        </div>
+                        <div id="emailNok2" class="d-none">
+                            <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
+                        </div>
+                        <span class="form-control form-control-lg mt-2" id="emailKeySpan">
+                            <input type="text" id="emailKey" name="emailKey" placeholder="인증코드 입력" required />
+                            <span id="emailKeyOk" class="d-none">
+                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                            </span>
+                            <span id="emailKeyNok" class="d-none">
+                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                            </span>
+                        </span>
                     </div>
-                    <!-- 이메일 확인 코드 -->
                 </div>
 
                 <!-- 가입하기 버튼 -->

@@ -27,6 +27,9 @@ dependencies {
 	// Thymeleaf에 layout 기능을 추가하기 위해서.
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
 
+	// 인증 메일 발송
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	// Thymeleaf의 Spring Security 확장 기능
