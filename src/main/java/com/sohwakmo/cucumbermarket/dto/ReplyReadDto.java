@@ -25,7 +25,7 @@ public class ReplyReadDto {
     public static ReplyReadDto fromEntity(Reply entity) {
         return ReplyReadDto.builder()
                 .replyNo(entity.getReplyNo()).postNo(entity.getPost().getPostNo()).replyContent(entity.getReplyContent()).replier(entity.getReplier())
-                .createdTime(entity.getCreatedTime()).modifiedTime(entity.getModifiedTime()).secretReply(entity.isSecretReply())
+                .createdTime(entity.getCreatedTime()).modifiedTime(entity.getModifiedTime()).secretReply(entity.isSecretReply()).replyNo(entity.getReplyNo())
                 .build();
     }
 

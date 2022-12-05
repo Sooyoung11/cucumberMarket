@@ -77,29 +77,46 @@ window.addEventListener('DOMContentLoaded', event => {
 
         // 비밀 댓글 출력 구분
         for(let r of data){
-            str += '<div class="col">'
-                    + '<div class="card">'
-                        + '<div class="card-header">'
-                            + '<h5 class="form-control" >' + r.replier + '</h5>'
-                        + '</div>'
-                        + '<div class="card-body text-secondary">';
+
+
+                str +=
+                    '<h6 class="my-2 p-3">' + '작성자 : ' + r.replier + '</h6>'
+
+                    +'<div class="d-flex text-muted pt-3">'
+                        + '<div class="pb-3 mb-0 small 1h-sm border-bottom w-100">'
+
+
 
             if(r.secretReply != false ){ // 비밀 체크 했을 때
-                        str +=  '<p class="card-text">' + ' 비밀 댓글입니다. ' + '</p>'
-                                + '<p class="card-text">'  + r.modifiedTime + '</p>'
+
+                str +=
+                             '<div class="d-flex justify-content-between">'
+                                + '<div>'
+                                    + '<strong class="text-gray-dark my-2 p-4">' + '비밀 댓글입니다. ' + '</strong>'
+                                    + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
                                 + '</div>'
-                                + '</div>'
-                                + '</div>'
+                                 + `<button type="button" class="btnModifies btn text-primary " data-rid="${r.replyNo}">수정하기</button>`
+                             +'</div>'
+                        + '</div>'
+                    + '</div>'
+
+
+
             } else { // 비밀 체크 하지 않을 때
-                        str +=  '<p class="card-text">' + r.replyContent + '</p>'
-                            + '<p class="card-text"> ' + r.modifiedTime + '</p>'
-                            + '</div>'
-                            + '<div class="card-footer">'
-                            + `<button type="button" class="btnModifies btn btn-outline-primary" data-rid="${r.replyNo}">수정</button>`
-                            + '</div>'
-                            + '</div>'
-                            + '</div>'
+                str +=
+                             '<div class="d-flex justify-content-between">'
+                                + '<div>'
+                                    + '<strong class="text-gray-dark my-2 p-4">' + r.replyContent + '</strong>'
+                                    + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
+                                + '</div>'
+                                 + `<button type="button" class="btnModifies btn text-primary" " data-rid="${r.replyNo}">수정하기</button>`
+                            +'</div>'
+                        + '</div>'
+                    + '</div>'
+
             }
+
+
 
         }
         divReplies.innerHTML = str;
