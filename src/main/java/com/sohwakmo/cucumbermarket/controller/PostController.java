@@ -110,5 +110,4 @@ public class    PostController {
         attrs.addAttribute("postNo",postNo);
         return "redirect:/post/detail";
     }
-
 }

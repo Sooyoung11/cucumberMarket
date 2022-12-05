@@ -83,3 +83,63 @@ deleteImage02Button.addEventListener("click", function () {
       console.log(error);
     });
 });
+
+const modifyFile01 = document.querySelector("#modifyFile01");
+modifyFile01.addEventListener("change", function () {
+  const postNo = document.querySelector("#postNo").value;
+
+  console.log(modifyFile01.files[0]);
+  let file = modifyFile01.files[0];
+  console.log(file);
+  console.log(postNo);
+
+  const data = { file: file };
+
+  axios
+    .put("/post/reply/1" + postNo, data, {
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      },
+    })
+    .then((response) => {
+      // alert("사진이 변경되었습니다.");
+      console.log(response.data);
+      console.log(image1.src);
+      image1.src = "http://localhost:8889/" + response.data;
+      console.log(image1.src);
+      // location.reload();
+    })
+    .catch((error) => {
+      //handle error
+    });
+});
+
+const modifyFile02 = document.querySelector("#modifyFile02");
+modifyFile02.addEventListener("change", function () {
+  const postNo = document.querySelector("#postNo").value;
+
+  console.log(modifyFile02.files[0]);
+  let file = modifyFile02.files[0];
+  console.log(file);
+  console.log(postNo);
+
+  const data = { file: file };
+
+  axios
+    .put("/post/reply/2" + postNo, data, {
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      },
+    })
+    .then((response) => {
+      // alert("사진이 변경되었습니다.");
+      console.log(response.data);
+      console.log(image1.src);
+      image1.src = "http://localhost:8889/" + response.data;
+      console.log(image1.src);
+      // location.reload();
+    })
+    .catch((error) => {
+      //handle error
+    });
+});

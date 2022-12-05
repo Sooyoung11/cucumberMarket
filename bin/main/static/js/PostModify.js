@@ -26,26 +26,120 @@ modifyButton.addEventListener("click", function () {
 
 const image1 = document.querySelector("#image1");
 image1.addEventListener("click", function () {
-  let deleteModifyNav = document.querySelector("#deleteModifyNav");
-  if (deleteModifyNav.style.display == "none") {
-    deleteModifyNav.style.display = "block";
+  let deleteModifyImage01Nav = document.querySelector(
+    "#deleteModifyImage01Nav"
+  );
+  if (deleteModifyImage01Nav.style.display == "none") {
+    deleteModifyImage01Nav.style.display = "block";
   } else {
-    deleteModifyNav.style.display = "none";
+    deleteModifyImage01Nav.style.display = "none";
   }
 });
 
-const deleteImageButton = document.querySelector("#deleteImageButton");
-deleteImageButton.addEventListener("click", function () {
-  let image1src = image1.src;
-  image1src = image1src.substr(28);
-  console.log(image1src);
+const image2 = document.querySelector("#image2");
+image2.addEventListener("click", function () {
+  let deleteModifyImage02Nav = document.querySelector(
+    "#deleteModifyImage02Nav"
+  );
+  if (deleteModifyImage02Nav.style.display == "none") {
+    deleteModifyImage02Nav.style.display = "block";
+  } else {
+    deleteModifyImage02Nav.style.display = "none";
+  }
+});
+
+const deleteImage01Button = document.querySelector("#deleteImage01Button");
+deleteImage01Button.addEventListener("click", function () {
+  let imageSrc = image1.src;
+  console.log(imageSrc);
+  imageSrc = imageSrc.substr(28);
+  console.log(imageSrc);
 
   axios
-    .delete("/post/reply/" + image1src)
+    .delete("/post/reply/" + imageSrc)
     .then((response) => {
-      console.log(response);
+      alert("사진이 삭제되었습니다.");
+      location.reload();
     })
     .catch((error) => {
       console.log(error);
+    });
+});
+
+const deleteImage02Button = document.querySelector("#deleteImage02Button");
+deleteImage02Button.addEventListener("click", function () {
+  let imageSrc = image2.src;
+  console.log(imageSrc);
+  imageSrc = imageSrc.substr(28);
+  console.log(imageSrc);
+
+  axios
+    .delete("/post/reply/" + imageSrc)
+    .then((response) => {
+      alert("사진이 삭제되었습니다.");
+      location.reload();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+const modifyFile01 = document.querySelector("#modifyFile01");
+modifyFile01.addEventListener("change", function () {
+  const postNo = document.querySelector("#postNo").value;
+
+  console.log(modifyFile01.files[0]);
+  let file = modifyFile01.files[0];
+  console.log(file);
+  console.log(postNo);
+
+  const data = { file: file };
+
+  axios
+    .put("/post/reply/1" + postNo, data, {
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      },
+    })
+    .then((response) => {
+      // alert("사진이 변경되었습니다.");
+      console.log(response.data);
+      console.log(image1.src);
+      image1.src = "http://localhost:8889/" + response.data;
+      console.log(image1.src);
+      // location.reload();
+    })
+    .catch((error) => {
+      //handle error
+    });
+});
+
+const modifyFile02 = document.querySelector("#modifyFile02");
+modifyFile02.addEventListener("change", function () {
+  const postNo = document.querySelector("#postNo").value;
+
+  console.log(modifyFile02.files[0]);
+  let file = modifyFile02.files[0];
+  console.log(file);
+  console.log(postNo);
+
+  const data = { file: file };
+
+  axios
+    .put("/post/reply/2" + postNo, data, {
+      headers: {
+        "Content-Type": `multipart/form-data`,
+      },
+    })
+    .then((response) => {
+      // alert("사진이 변경되었습니다.");
+      console.log(response.data);
+      console.log(image1.src);
+      image1.src = "http://localhost:8889/" + response.data;
+      console.log(image1.src);
+      // location.reload();
+    })
+    .catch((error) => {
+      //handle error
     });
 });

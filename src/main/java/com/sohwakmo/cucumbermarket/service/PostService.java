@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Service
@@ -90,7 +91,7 @@ public class PostService {
 
 
     private  String saveImage(MultipartFile files) throws IOException {
-        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files";
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
         UUID uuid = UUID.randomUUID();
 
@@ -132,9 +133,30 @@ public class PostService {
      */
     private void extractImage(String imageSrc) throws IOException {
         // 경로는 능동적으로 변경
-        Path filePath = Paths.get("/Users/byeonjuhwan/Desktop/cucumberMarket/src/main/resources/static/files/" + imageSrc);
+        Path filePath = Paths.get("E:\\cucumberMarket\\src\\main\\resources\\static\\files\\" + imageSrc);
         Files.delete(filePath);
     }
+
+    @Transactional()
+    public String modifyImage01(Post post, MultipartFile data)throws Exception {
+        String fileName = saveImage(data);
+        extractImage(post.getImageName01());
+        log.info(fileName);
+        post.setImageName01(fileName);
+        post.setImageUrl01("/files/"+fileName);
+        return "files/"+fileName;
+    }
+
+    @Transactional()
+    public String modifyImage02(Post post, MultipartFile data)throws Exception {
+        String fileName = saveImage(data);
+        extractImage(post.getImageName02());
+        log.info(fileName);
+        post.setImageName02(fileName);
+        post.setImageUrl02("/files/"+fileName);
+        return "files/"+fileName;
+    }
+
 }
 
 

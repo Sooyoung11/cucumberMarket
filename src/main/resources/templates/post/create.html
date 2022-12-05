@@ -24,7 +24,7 @@
       <div>
         <form th:object="${post}" id="form" enctype="multipart/form-data">
           <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
-          <input type="hidden" name="memberNo" th:value="${1}" />
+          <input type="hidden" name="memberNo" th:value="${5}" />
           <input type="hidden" name="clickCount" th:value="0" />
           <input
             type="text"
@@ -48,7 +48,7 @@
           <nav class="navbar bg-light">
             <div class="imageButton">
               <label for="chooseFile">
-                <img src="/images/사진넣기.png"/>
+                <img src="/images/사진넣기.png" />
               </label>
             </div>
             <input
@@ -56,29 +56,21 @@
               type="file"
               name="files"
               id="chooseFile"
-              onchange="fileUpload()"
               style="display: none"
             />
           </nav>
           <div class="form-floating my-2">
-            <div
-              contenteditable
-              class="fake_textarea form-control"
-              id="postContent"
-              style="width: 100%; height: 10%"
-            >
-              <!-- <input type="text" th:value="${post.content}" name="content"/> -->
-              <!-- <span name="content" th:text="${post.content}"></span> -->
-
-              <textarea
+            <textarea
               class="form-control"
-              th:value="${post.content}" name="content"
-              >
+              placeholder="내용을 입력해 주세요."
+              id="postContent"
+              style="height: 200px"
+              th:field="*{content}"
+              th:value="${post.content}"
+            >
+            </textarea>
 
-              </textarea>
-            </div>
-            <!-- <label for="postContent">내용을 입력하세요.</label>
-            <label for="postContent"> <img src="/images/사진넣기.png" /></label> -->
+            <label for="postContent">내용을 입력하세요.</label>
           </div>
         </form>
       </div>

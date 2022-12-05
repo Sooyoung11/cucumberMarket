@@ -19,7 +19,8 @@
         <tbody>
           <tr
             th:each="list : ${list}"
-            th:onclick="|location.href='@{/post/detail(postNo=${list.postNo})}'|"
+            th:onclick="|location.href='@{/post/detail(postNo=${list.postNo},clickCount=${list.clickCount})}'|"
+            id="clickCount"
           >
             <td th:text="${list.postNo}"></td>
             <td th:text="${list.title}"></td>
@@ -100,4 +101,5 @@
       </ul>
     </nav>
   </div>
+  <th:block layout:fragment="script"><!--자바스크립트 작성--> </th:block>
 </html>

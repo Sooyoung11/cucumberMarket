@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   insertPostButton.addEventListener("click", checkTexts);
   function checkTexts() {
     const title = document.querySelector("#title").value;
-    const content = document.querySelector("#postContent").innerText;
+    const content = document.querySelector("#postContent").value;
     console.log(content);
 
     if (title == "") {
@@ -21,20 +21,4 @@ window.addEventListener("DOMContentLoaded", (event) => {
     form.method = "post";
     form.submit();
   }
-
-
-  function fileUpload(){
-		var fileInput = document.querySelector("#chooseFile");
-
-		for( var i=0; i<fileInput.length; i++ ){
-			if( fileInput[i].files.length > 0 ){
-				for( var j = 0; j < fileInput[i].files.length; j++ ){
-					console.log(fileInput[i].files[j].name); // 파일명 출력
-				}
-			}
-		}
-
-	}
- 
-
 });

@@ -6,6 +6,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   function checkTexts() {
     const title = document.querySelector("#title").value;
     const content = document.querySelector("#postContent").value;
+    console.log(content);
 
     if (title == "") {
       alert("제목을 입력해주세요.");

@@ -52,13 +52,19 @@
                 조치가 진행될 수 있습니다.
               </p>
             </div>
-            <nav class="navbar navbar-light bg-light">
-              <div class="container">
-                <a class="navbar-brand" href="#" type="button">
-                  <img src="" />
-                  <input multiple="multiple" type="file" name="files" />
-                </a>
+            <nav class="navbar bg-light">
+              <div class="imageButton">
+                <label for="chooseFile">
+                  <img src="/images/사진넣기.png" />
+                </label>
               </div>
+              <input
+                multiple="multiple"
+                type="file"
+                name="files"
+                id="chooseFile"
+                style="display: none"
+              />
             </nav>
             <div class="form-floating my-2">
               <textarea
@@ -70,22 +76,58 @@
                 th:value="${post.content}"
                 name="content"
               ></textarea>
-              <div th:classappend="${post.imageUrl01 == ''} ? 'hidden'">
+              <div
+                th:classappend="${post.imageUrl01 == ''} ? 'hidden'"
+                id="image01div"
+              >
                 <img
                   id="image1"
                   th:src="@{${post.imageUrl01}}"
                   th:value="${post.imageUrl01}"
                 />
-                <div id="deleteModifyNav" style="display: none">
+                <div id="deleteModifyImage01Nav" style="display: none">
                   <ul>
                     <li>
-                      <button type="button" id="deleteImageButton">삭제</button>
+                      <button type="button" id="deleteImage01Button">
+                        삭제
+                      </button>
+                    </li>
+                    <li>
+                      <div class="imageButton">
+                        <label for="modifyFile01">수정</label>
+                      </div>
+                      <input
+                        type="file"
+                        name="file"
+                        id="modifyFile01"
+                        style="display: none"
+                      />
                     </li>
                   </ul>
                 </div>
               </div>
               <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
                 <img id="image2" th:src="@{${post.imageUrl02}}" />
+                <div id="deleteModifyImage02Nav" style="display: none">
+                  <ul>
+                    <li>
+                      <button type="button" id="deleteImage02Button">
+                        삭제
+                      </button>
+                    </li>
+                    <li>
+                      <div class="imageButton">
+                        <label for="modifyFile02">수정</label>
+                      </div>
+                      <input
+                        type="file"
+                        name="file"
+                        id="modifyFile02"
+                        style="display: none"
+                      />
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

@@ -22,7 +22,7 @@
       </div>
       <!--제목, 버튼-->
       <div>
-        <form th:object="${post}" id="form"  enctype="multipart/form-data">
+        <form th:object="${post}" id="form" enctype="multipart/form-data">
           <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
           <input type="hidden" name="memberNo" th:value="${5}" />
           <input type="hidden" name="clickCount" th:value="0" />
@@ -45,23 +45,32 @@
               조치가 진행될 수 있습니다.
             </p>
           </div>
-          <nav class="navbar navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" href="#" type="button">
-                  <img src=""/>
-                  <input multiple="multiple" type="file" name="files"/>
-                </a>
+          <nav class="navbar bg-light">
+            <div class="imageButton">
+              <label for="chooseFile">
+                <img src="/images/사진넣기.png" />
+              </label>
             </div>
+            <input
+              multiple="multiple"
+              type="file"
+              name="files"
+              id="chooseFile"
+              style="display: none"
+            />
           </nav>
           <div class="form-floating my-2">
             <textarea
               class="form-control"
-              placeholder="내용을 입력해주세요."
+              placeholder="내용을 입력해 주세요."
               id="postContent"
               style="height: 200px"
               th:field="*{content}"
               th:value="${post.content}"
-            ></textarea>
+            >
+            </textarea>
+
+            <label for="postContent">내용을 입력하세요.</label>
           </div>
         </form>
       </div>
@@ -69,6 +78,8 @@
   </div>
 
   <th:block layout:fragment="script">
+    <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script th:src="@{/js/create.js}"></script>
   </th:block>
 </html>
