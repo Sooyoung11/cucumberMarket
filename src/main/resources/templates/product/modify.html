@@ -13,9 +13,7 @@
       <form id="formModify" enctype="multipart/form-data">
 
         <div class="my-2 mb-3">
-          <label for="productNo" class="form-label fst-italic">번호</label>
-          <input id="productNo" class="form-control"
-                 type="text" name="productNo" th:value="${product.productNo}" readonly />
+          <input id="productNo" type="hidden" name="productNo" th:value="${product.productNo}" readonly /> <!--번호 -->
         </div>
 
         <div class="my-2 mb-3">
