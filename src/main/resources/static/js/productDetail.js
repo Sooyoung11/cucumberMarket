@@ -1,0 +1,14 @@
+window.addEventListener("DOMContentLoaded", (event) => {
+    const form = document.querySelector("#form");
+
+    const detailDelete = document.querySelector('#detailDelete');
+    detailDelete.addEventListener('click', function() {
+    const result = confirm('삭제하시겠습니까?')
+        if(result) {
+            form.action = '/product/delete'
+            form.method = 'post';
+            form.submit();
+        }
+    });
+
+});

@@ -152,7 +152,13 @@ public class ProductService {
 
             return entity.getProductNo();
         }
+
+    public Integer delete(Integer productNo) {
+        productRepository.deleteById(productNo);
+
+        return productNo;
     }
+}
 
 
 

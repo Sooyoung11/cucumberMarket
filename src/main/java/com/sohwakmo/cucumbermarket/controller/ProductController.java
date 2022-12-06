@@ -186,5 +186,15 @@ public class ProductController {
             return "redirect:/product/detail?productNo=" + dto.getProductNo();
         }
 
+        @PostMapping("/delete")
+        public String delete(Integer productNo) {
+            log.info("delete(productNo={})", productNo);
+            productService.delete(productNo);
+
+            return "redirect:/product/list";
+        }
+
+       // @PostMapping("/modify")
+       // public String modify(Integer id, Model model)
     }
 
