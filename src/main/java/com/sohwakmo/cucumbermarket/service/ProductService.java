@@ -3,9 +3,7 @@ package com.sohwakmo.cucumbermarket.service;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
-import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
-import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductRepository;
@@ -41,18 +39,18 @@ public class ProductService {
 
 
     @Transactional
-    public Product update(Integer productNo) { // 상품 클릭 수 update
-        log.info("update(productNo = {})", productNo);
+    public Product detail(Integer productNo) {
+        log.info("detail(productNo = {})", productNo);
 
-        Product entity = productRepository.findById(productNo).get();
-        log.info("entity = {}", entity);
-        entity.updateClickCount(entity.getClickCount()+1);
-        log.info("entity = {}", entity);
+        Product product = productRepository.findById(productNo).get();
+        log.info("product = {}", product);
+        product.updateClickCount(product.getClickCount()+1);
+        log.info("product = {}", product);
 
-        Member member = memberRepository.findById(entity.getMember().getMemberNo()).get();
-        log.info("member = {}", member);
+//        Member member = memberRepository.findById(product.getMember().getMemberNo()).get();
+//        log.info("member = {}", member);
 
-        return entity;
+        return product;
     }
 
     public List<Product> search(String keyword) {
@@ -135,32 +133,19 @@ public class ProductService {
 
         return productsList;
     }
-    public Product create(ProductCreateDto dto) { // 상품 등록
-            log.info("create(dto={})", dto);
-
-            Product entity = productRepository.save(dto.toEntity());
-
-            return entity;
-        }
 
     @Transactional
-    public Integer update(ProductUpdateDto dto) { // 상품 업데이트.
-            log.info("update(dto={})", dto);
+    public List<Product> myProductListRead(Integer memberNo) {
+        log.info("myProductListRead(memberNo = {})", memberNo);
 
-            Product entity = productRepository.findById(dto.getProductNo()).get();
-            Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
-            log.info("newProduct={}");
-            return entity.getProductNo();
-        }
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member = {}", member);
 
-    public Integer delete(Integer productNo) {
-            log.info("deleteProduct(productNo={})", productNo);
+        List<Product> list = productRepository.findByMember(member);
+        log.info("list = {}", list);
 
-            productRepository.deleteById(productNo);
+        return list;
+    }
 
-            return productNo;
-        }
+
 }
-
-
-
