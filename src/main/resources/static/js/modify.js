@@ -8,6 +8,74 @@ const btnSubmit = document.querySelector('#btnSubmit');
 const passwordConfirm = document.querySelector('#passwordConfirm');
 const password = document.querySelector('#password');
 const passwordCheck = document.querySelector('#passwordCheck');
+const totalAddress = document.querySelector('#totalAddress');
+const detailAddress = document.getElementById("sample4_detailAddress");
+
+
+const btnPostcode = document.querySelector('#btnPostcode');
+btnPostcode.addEventListener('click', sample4_execDaumPostcode);
+passwordValueCheck();
+//본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+function sample4_execDaumPostcode() {
+
+    const postcode = document.getElementById('sample4_postcode');
+    const roadAddress = document.getElementById("sample4_roadAddress");
+    const jibunAddress = document.getElementById("sample4_jibunAddress");
+
+    postcode.className="form-control my-2";
+    roadAddress.className="form-control my-2";
+    jibunAddress.className="form-control my-2";
+    detailAddress.className="form-control my-2";
+    totalAddress.className="form-control d-none";
+
+
+// daum 주소 API
+    new daum.Postcode({
+        oncomplete: function(data) {
+
+            var roadAddr = data.roadAddress; // 도로명 주소 변수
+            var extraRoadAddr = ''; // 참고 항목 변수
+
+            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                extraRoadAddr += data.bname;
+            }
+
+            if(data.buildingName !== '' && data.apartment === 'Y'){
+                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+
+            if(extraRoadAddr !== ''){
+                extraRoadAddr = ' (' + extraRoadAddr + ')';
+            }
+
+            postcode.value = data.zonecode;
+            roadAddress.value = roadAddr;
+            jibunAddress.value = data.jibunAddress;
+            totalAddress.value = data.roadnameCode+" "+ data.roadAddress+ " ";
+            console.log("totalAddress"+totalAddress);
+
+            if(roadAddr !== ''){
+                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+            } else {
+                document.getElementById("sample4_extraAddress").value = '';
+            }
+            var guideTextBox = document.getElementById("guide");
+
+            if(data.autoRoadAddress) {
+                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                guideTextBox.style.display = 'block';
+            } else if(data.autoJibunAddress) {
+                var expJibunAddr = data.autoJibunAddress;
+                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                guideTextBox.style.display = 'block';
+            } else {
+                guideTextBox.innerHTML = '';
+                guideTextBox.style.display = 'none';
+            }
+        }
+    }).open();
+}
 
 //비밀번호 일치, 불일치 체크
 function passwordValueCheck() {
@@ -40,17 +108,22 @@ passwordConfirm.addEventListener('change', function () {
 })
 
 form.addEventListener("submit", function (e) {
-    if (form.name.value == '' || form.nickname.value == '' || form.address.value == '' || form.phone.value == '' || form.email.value == '') {
+    if (form.name.value == '' || form.nickname.value == '' || totalAddress == '' || form.phone.value == '' || form.email.value == '') {
         alert('사용자 정보를 모두 입력해주세요');
         e.preventDefault();
         form.name.focus();
         return;
     }
 
+
     const result = confirm("정말 수정하시겠습니까?");
     if (result) {
+        // 최종 주소필드
+        totalAddress.value += detailAddress.value;
+
         form.action = '/mypage/update';
         form.method = 'post';
         form.submit();
     }
 })
+

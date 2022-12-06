@@ -5,7 +5,7 @@
 
 window.addEventListener('DOMContentLoaded', function () {
 
-    const btnSubmit = document.querySelector('#btnSubmit');
+    const btnModifySubmit = document.querySelector('#btnModifySubmit');
 
     // 아이디 체크
     const memberIdInput = document.querySelector('#memberId');
@@ -25,11 +25,11 @@ window.addEventListener('DOMContentLoaded', function () {
         if (data == 'memberIdOk') {
             memberIdOk.className = '';
             memberIdNok.className = 'd-none';
-            btnSubmit.classList.remove('disabled');
+            btnModifySubmit.classList.remove('disabled');
         } else {
             memberIdOk.className = 'd-none';
             memberIdNok.className = '';
-            btnSubmit.classList.add('disabled');
+            btnModifySubmit.classList.add('disabled');
         }
     }
 
@@ -52,12 +52,12 @@ window.addEventListener('DOMContentLoaded', function () {
             passwordOk.className = '';
             passwordNok.className = 'd-none';
             passwordNok2.className = 'd-none';
-            btnSubmit.classList.remove('disabled');
+            btnModifySubmit.classList.remove('disabled');
         } else {
             passwordOk.className = 'd-none';
             passwordNok.className = '';
             passwordNok2.className = '';
-            btnSubmit.classList.add('disabled');
+            btnModifySubmit.classList.add('disabled');
         }
     }
 
@@ -81,12 +81,12 @@ window.addEventListener('DOMContentLoaded', function () {
             password2Ok.className = '';
             password2Nok.className = 'd-none';
             password2Nok2.className = 'd-none';
-            btnSubmit.classList.remove('disabled');
+            btnModifySubmit.classList.remove('disabled');
         } else {
             password2Ok.className = 'd-none';
             password2Nok.className = '';
             password2Nok2.className = '';
-            btnSubmit.classList.add('disabled');
+            btnModifySubmit.classList.add('disabled');
         }
     }
 
@@ -108,11 +108,11 @@ window.addEventListener('DOMContentLoaded', function () {
         if (data == 'nicknameOk') {
             nicknameOk.className = '';
             nicknameNok.className = 'd-none';
-            btnSubmit.classList.remove('disabled');
+            btnModifySubmit.classList.remove('disabled');
         } else {
             nicknameOk.className = 'd-none';
             nicknameNok.className = '';
-            btnSubmit.classList.add('disabled');
+            btnModifySubmit.classList.add('disabled');
         }
     }
 
@@ -139,7 +139,7 @@ window.addEventListener('DOMContentLoaded', function () {
             btnAuthcode.classList.remove('disabled');
             btnAuthcode.classList.remove('btn-outline-success');
             btnAuthcode.classList.add('btn-success');
-            btnSubmit.classList.remove('disabled');
+            btnModifySubmit.classList.remove('disabled');
         } else {
             emailOk.className = 'd-none';
             emailNok.className = '';
@@ -147,9 +147,17 @@ window.addEventListener('DOMContentLoaded', function () {
             btnAuthcode.classList.remove('btn-success');
             btnAuthcode.classList.add('disabled');
             btnAuthcode.classList.add('btn-outline-success');
-            btnSubmit.classList.add('disabled');
+            btnModifySubmit.classList.add('disabled');
         }
     }
+
+    btnModifySubmit.addEventListener('click', function (e) {
+        e.preventDefault();
+        const result = confirm("정말 수정하시겠습니까?");
+        if(result){
+
+        }
+    })
 
     const btnPostcode = document.querySelector('#btnPostcode');
     btnPostcode.addEventListener('click', sample4_execDaumPostcode);
