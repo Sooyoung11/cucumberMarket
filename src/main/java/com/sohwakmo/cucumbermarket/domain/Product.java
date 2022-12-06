@@ -1,6 +1,7 @@
 package com.sohwakmo.cucumbermarket.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @NoArgsConstructor
@@ -18,9 +19,11 @@ public class Product extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @Size(max = 50)
     @Column(nullable = false)
     private String title;
 
+    @Size(min = 5)
     @Column(nullable = false)
     private String content;
 
@@ -30,27 +33,35 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private String category;
 
-    @Column //조회수
+    @Column(columnDefinition = "integer default 0") //조회수
     private Integer clickCount;
 
-    @Column
+
     private boolean status; // 거래상태
 
-    @Column
+
     private String photoUrl1;
 
-    @Column
+
     private String photoUrl2;
 
-    @Column
+
     private String photoUrl3;
 
-    @Column
+
     private String photoUrl4;
 
-    @Column
     private String photoUrl5;
 
+    private String photoName1;
+
+    private String photoName2;
+
+    private String photoName3;
+
+    private String photoName4;
+
+    private String photoName5;
     @Column
     private Integer likeCount;
 
@@ -65,5 +76,21 @@ public class Product extends BaseTimeEntity {
 
         return this;
     }
+
+        public com.sohwakmo.cucumbermarket.domain.Product update(Integer clickCount) {
+            this.clickCount = clickCount;
+
+            return this;
+        }
+
+        public com.sohwakmo.cucumbermarket.domain.Product update(String title, String content, Integer price, String category) {
+            this.title = title;
+            this.content = content;
+            this.price = price;
+            this.category = category;
+
+            return this;
+        }
+
 
 }

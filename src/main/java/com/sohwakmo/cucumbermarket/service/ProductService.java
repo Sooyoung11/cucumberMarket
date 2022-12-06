@@ -3,7 +3,9 @@ package com.sohwakmo.cucumbermarket.service;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
+import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
+import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductRepository;
@@ -133,6 +135,24 @@ public class ProductService {
 
         return productsList;
     }
+        public Product create(ProductCreateDto dto) { // 상품 등록
+            log.info("create(dto={})", dto);
+
+            Product entity = productRepository.save(dto.toEntity());
+
+            return entity;
+        }
+
+        @Transactional
+        public Integer update(ProductUpdateDto dto) { // 상품 업데이트
+            log.info("update(dto={})", dto);
+
+            Product entity = productRepository.findById(dto.getProductNo()).get();
+            entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
+
+            return entity.getProductNo();
+        }
+    }
 
 
-}
+
