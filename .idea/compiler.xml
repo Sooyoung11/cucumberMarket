@@ -11,6 +11,6 @@
         <module name="cucumbermarket.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17" />
+    <bytecodeTargetLevel target="16" />
   </component>
 </project>

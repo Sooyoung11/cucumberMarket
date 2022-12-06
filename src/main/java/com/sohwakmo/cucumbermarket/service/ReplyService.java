@@ -36,6 +36,7 @@ public class ReplyService {
         log.info("selectById=(postNo={})", postNo);
 
         List<Reply> list = replyRepository.findByPostPostNoOrderByReplyNoDesc(postNo);
+        log.info("Service List={}", list);
 
         return list.stream().map(ReplyReadDto::fromEntity).toList();
     }
@@ -67,4 +68,5 @@ public class ReplyService {
 
         return reply.getReplyNo();
     }
+
 }

@@ -1,7 +1,9 @@
 package com.sohwakmo.cucumbermarket.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,9 +32,15 @@ public class Reply extends BaseTimeEntity {
 
     private boolean secretReply; // 비밀 답글
 
+    @ColumnDefault("0")
+    private Integer likeCount; // 댓글 좋아요
+
     public Reply update(String replyContent) {
         this.replyContent = replyContent;
         return this;
     }
-
+    public Reply likeCount(Integer likeCount){
+        this.likeCount = likeCount;
+        return this;
+    }
 }

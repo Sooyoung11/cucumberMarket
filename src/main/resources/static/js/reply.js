@@ -30,13 +30,18 @@ window.addEventListener('DOMContentLoaded', event => {
         let secretReply = document.getElementById('secretReply').checked;
         console.log(secretReply);
 
+        // 좋아요 댓글 기능
+        // const likeCount = document.querySelector('#likeCount').value;
+        // console.log(likeCount);
+
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
         // java {} 은 배열, javascript {} 은 object.
         const data = {
             postNo: postNo, // 댓글이 달릴 포스트 아이디(번호)
             replyContent: replyContent, // 댓글 내용
             replier: replier, // 댓글 작성자
-            secretReply: secretReply // 비밀 댓글
+            secretReply: secretReply, // 비밀 댓글
+            // likeCount: likeCount // 좋아요 카운트
         };
 
 
@@ -69,6 +74,8 @@ window.addEventListener('DOMContentLoaded', event => {
             });
     }
 
+
+
     function updateReplyList(data) {
         // 댓글들의 배열(data)을 html 영역에 보일 수 있도록 html 코드를 작성.
         const divReplies = document.querySelector('#replies');
@@ -90,16 +97,22 @@ window.addEventListener('DOMContentLoaded', event => {
             if(r.secretReply != false ){ // 비밀 체크 했을 때
 
                 str +=
-                             '<div class="d-flex justify-content-between">'
-                                + '<div>'
-                                    + '<strong class="text-gray-dark my-2 p-4">' + '비밀 댓글입니다. ' + '</strong>'
-                                    + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
+                            '<div class="d-flex justify-content-between">'
+                                 + '<div>'
+                                        + '<strong class="text-gray-dark  p-4">' + '비밀 댓글입니다.' + '</strong>'
                                 + '</div>'
-                                // TODO: 유저 번호 받으면 활성화하여 이벤트 리스너 만들기
-                                 + `<button disabled type="button" class="btnModifies btn text-gray" data-rid="${r.replyNo}">수정하기</button>`
-                             +'</div>'
-                             +'</div>'
-                        + '</div>'
+                                // TODO: version2 에서 공감 버튼 만들기
+                                +'<div class="inline ">'
+                                    + `<button type="likeButton" id="likeButton" class="btn btn-outline-dark my-2" > + '👍' +  r.likeCount + </button>`
+                                // TODO: 싫어요 기능도 가능하면 추가해보기
+                                    // + `<button type="button" class="btn btn-outline-dark my-2" >👎</button>`
+                                +'</div>'
+                            +'</div>'
+                    + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
+                    + `<button type="button" class=" btn text-gray" " data-rid="${r.replyNo}">수정하기</button>`
+                    // TODO: version2 에서 대댓글 기능 구현하기
+                    + `<button type="button" class=" btn text-gray" " data-rid="${r.replyNo}">답글보기</button>`
+                    + '</div>'
                     + '</div>'
 
 
@@ -108,20 +121,40 @@ window.addEventListener('DOMContentLoaded', event => {
                 str +=
                              '<div class="d-flex justify-content-between">'
                                 + '<div>'
-                                    + '<strong class="text-gray-dark my-2 p-4">' + r.replyContent + '</strong>'
-                                    + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
+                                    + '<strong class="text-gray-dark  p-4">' + r.replyContent + '</strong>'
                                 + '</div>'
-                                 + `<button type="button" class="btnModifies btn text-primary" " data-rid="${r.replyNo}">수정하기</button>`
+                                // TODO: version2 에서 공감 버튼 만들기
+                                + `<button type="likeButton" class="btn btn-outline-dark" id="likeButton" >👍 r.likeCount <p id="clickedCountText"></p></button>`
                             +'</div>'
+                    + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
+                    + `<button type="button" class="btnModifies btn text-primary" " data-rid="${r.replyNo}">수정하기</button>`
+                    // TODO: version2 에서 대댓글 기능 구현하기
+                    + `<button type="button" class=" btn text-primary" " data-rid="${r.replyNo}">답글보기</button>`
                         + '</div>'
                     + '</div>'
 
             }
-
-
-
         }
         divReplies.innerHTML = str;
+
+        // [좋아요 카운트 기능]
+        const likeButton = document.querySelectorAll('.likeButton');
+        likeButton.forEach(btn => {
+            btn.addEventListener('click', likeCount);
+        });
+
+        function likeCount() {
+            this.clickedCount = 0;
+
+            const likeButton = document.querySelector('.likeButton');
+            const clickedCountText = document.querySelector('.clickedCountText');
+
+            // 화살표 함수로 이벤트 리스너 정의
+            likeButton.addEventListener('click', () => {
+                this.clickedCount += 1;
+                clickedCountText.textContent = this.clickedCount;
+            });
+        }
 
         // [수정] 버튼들이 HTML 요소로 만들어진 이후에, [수정] 버튼에 이벤트 리스너를 등록.
         const buttons = document.querySelectorAll('.btnModifies');

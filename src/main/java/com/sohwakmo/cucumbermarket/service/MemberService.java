@@ -11,6 +11,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public Member findMemberByMemberNo(Integer memberNo) {
-        return memberRepository.findById(memberNo).orElse(null);
+        return memberRepository.findById(1).orElse(null);
     }
 }
