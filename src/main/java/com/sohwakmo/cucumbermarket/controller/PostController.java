@@ -77,7 +77,6 @@ public class    PostController {
 
     @PostMapping("/create")
     public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
-
         Member member = memberService.findMemberByMemberNo(memberNo);
         log.info(member.toString());
         Post post = PostCreateDto.builder()

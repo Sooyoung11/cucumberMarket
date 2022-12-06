@@ -148,6 +148,13 @@ const chooseFile = document.querySelector("#chooseFile");
 chooseFile.addEventListener("change", function () {
   const postNo = document.querySelector("#postNo").value;
 
+  let files = chooseFile.files;
+  console.log(files.length);
+  if (files.length > 2) {
+    alert("사진은 2장이상 추가 못합니다!");
+    return;
+  }
+
   let file = chooseFile.files[0];
   const data = { file: file };
   console.log(data);
