@@ -4,7 +4,13 @@ window.addEventListener('DOMContentLoaded', function() {
     const interested     = document.querySelector("#interested");
     const nointerested   = document.querySelector("#nointerested");
 
-    checkIsInterestedProduct();
+    console.log(productMemberNo);
+
+    if (productMemberNo == memberNo) {
+        console.log("관심 목록 등록 버튼 없음")
+    } else {
+        checkIsInterestedProduct();
+    }
 
     nointerested.addEventListener('click', function () {
         axios
