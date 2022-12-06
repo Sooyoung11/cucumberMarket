@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     const result = confirm('삭제하시겠습니까?')
         if(result) {
-            form.action = '/product/delete';
+            form.action = '/product/delete';//
             form.method = 'post';
             form.submit();
         }

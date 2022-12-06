@@ -135,18 +135,31 @@ public class ProductService {
 
         return productsList;
     }
+
+    @Transactional
+    public List<Product> myProductListRead(Integer memberNo) {
+        log.info("myProductListRead(memberNo = {})", memberNo);
+
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member = {}", member);
+
+        List<Product> list = productRepository.findByMember(member);
+        log.info("list = {}", list);
+
+        return list;
+    }
+
     public Product create(ProductCreateDto dto) { // 상품 등록
-            log.info("create(dto={})", dto);
+        log.info("create(dto={})", dto);
 
-            Product entity = productRepository.save(dto.toEntity());
+        Product entity = productRepository.save(dto.toEntity());
 
-            return entity;
-        }
+        return entity;
+    }
 
     @Transactional
     public Integer update(ProductUpdateDto dto) { // 상품 업데이트.
             log.info("update(dto={})", dto);
-
             Product entity = productRepository.findById(dto.getProductNo()).get();
             Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
             log.info("newProduct={}");

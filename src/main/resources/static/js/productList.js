@@ -3,13 +3,7 @@ window.addEventListener('DOMContentLoaded', function() {
     const interested     = document.querySelector("#interested");
     const nointerested   = document.querySelector("#nointerested");
 
-    console.log(productMemberNo);
-
-    if (productMemberNo == memberNo) {
-        console.log("관심 목록 등록 버튼 없음")
-    } else {
-        checkIsInterestedProduct();
-    }
+    checkIsInterestedProduct();
 
     nointerested.addEventListener('click', function () {
         axios

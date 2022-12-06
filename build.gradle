@@ -1,12 +1,12 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'org.springframework.boot' version '3.0.0'
+	id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'com.sohwakmo'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '17'
 
 configurations {
 	compileOnly {
@@ -27,21 +27,11 @@ dependencies {
 	// Thymeleaf에 layout 기능을 추가하기 위해서.
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.1.0'
 
-	// 인증 메일 발송
-	implementation 'org.springframework.boot:spring-boot-starter-mail'
-
-	// Spring Security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// Thymeleaf의 Spring Security 확장 기능
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.7.5'
-	runtimeOnly 'com.oracle.database.jdbc:ojdbc8:21.7.0.0'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
 	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.5'
-	// Spring Security Test
-	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {

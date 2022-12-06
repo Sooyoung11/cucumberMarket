@@ -95,9 +95,8 @@
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-                const memberNo  = 1; // 로그인한 사람의 memberNo로 바뀌어야 함.
+                const memberNo  = [[ ${ member.memberNo } ]]; // 로그인한 사람의 memberNo로 바뀌어야 함.
                 const productNo = [[ ${ product.productNo } ]];
-                const productMemberNo = [[ ${ member.memberNo } ]];
         </script>
         <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
         <script th:src="@{/js/productDetail.js }" th:inline="javascript"></script>
