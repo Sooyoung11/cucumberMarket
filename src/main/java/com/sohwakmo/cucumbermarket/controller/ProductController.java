@@ -169,12 +169,13 @@ public class ProductController {
         }
 
         @GetMapping("/modify")
-        public void modify(Integer productNo, Model model) {
+        public String modify(Integer productNo, Model model) {
             log.info("modify(productNo={})", productNo);
 
             Product product = productService.read(productNo);
-
             model.addAttribute("product", product);
+
+            return "/product/modify";
         }
 
         @PostMapping("/update")
@@ -194,7 +195,11 @@ public class ProductController {
             return "redirect:/product/list";
         }
 
-       // @PostMapping("/modify")
-       // public String modify(Integer id, Model model)
+
+
+
+
+
+
     }
 

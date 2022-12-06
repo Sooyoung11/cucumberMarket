@@ -135,7 +135,7 @@ public class ProductService {
 
         return productsList;
     }
-        public Product create(ProductCreateDto dto) { // 상품 등록
+    public Product create(ProductCreateDto dto) { // 상품 등록
             log.info("create(dto={})", dto);
 
             Product entity = productRepository.save(dto.toEntity());
@@ -143,21 +143,23 @@ public class ProductService {
             return entity;
         }
 
-        @Transactional
-        public Integer update(ProductUpdateDto dto) { // 상품 업데이트
+    @Transactional
+    public Integer update(ProductUpdateDto dto) { // 상품 업데이트
             log.info("update(dto={})", dto);
 
             Product entity = productRepository.findById(dto.getProductNo()).get();
-            entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
-
+            Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
+            log.info("newProduct={}");
             return entity.getProductNo();
         }
 
     public Integer delete(Integer productNo) {
-        productRepository.deleteById(productNo);
+            log.info("deleteProduct(productNo={})", productNo);
 
-        return productNo;
-    }
+            productRepository.deleteById(productNo);
+
+            return productNo;
+        }
 }
 
 

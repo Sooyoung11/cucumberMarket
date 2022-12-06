@@ -10,7 +10,7 @@
     </div>
 
     <div class="list-group list-group-flush">
-      <form id="formModify" method="post" th:object="${product}" enctype="multipart/form-data">
+      <form id="formModify" enctype="multipart/form-data">
 
         <div class="my-2 mb-3">
           <label for="productNo" class="form-label fst-italic">번호</label>
@@ -25,8 +25,8 @@
         </div>
         <div class="mb-3">
           <label for="content" class="form-label fst-italic" >내용</label>
-          <textarea row="5" cols="80" id="content" class="form-control"
-                    name="content" th:value="${product.content }" ></textarea>
+          <textarea id="content" class="form-control"
+                    name="content" th:text="${product.content }" ></textarea>
         </div>
         <div class="mb-3">
           <label for="price" class="form-label fst-italic">가격</label>
@@ -38,8 +38,7 @@
         </div>
         <div class="mb-3">
           <label for="category" class="form-label fst-italic">카테고리</label>
-          <select id="category" class="form-select" name="category" th:value="${product.category }">
-            <option value="0">카테고리 선택</option>
+          <select id="category" class="form-select" name="category" th:value="${product.category}">
             <option value="1">디지털기기</option>
             <option value="2">생활가전/주방</option>
             <option value="3">유아용품</option>
@@ -69,14 +68,8 @@
 </div>
 
 <th:block layout:fragment="script">
-
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    const memberNo  = [[ ${ member.memberNo } ]]; // 로그인한 사람의 memberNo로 바뀌어야 함.
-    const productNo = [[ ${ product.productNo } ]];
-  </script>
-  <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
-
+  <script th:src="@{ /js/productModify.js }"></script>
 </th:block>
 
 </html>
