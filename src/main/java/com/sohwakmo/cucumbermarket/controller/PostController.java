@@ -7,7 +7,7 @@ import com.sohwakmo.cucumbermarket.dto.PostReadDto;
 import com.sohwakmo.cucumbermarket.dto.PostUpdateDto;
 import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.PostService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
