@@ -2,14 +2,12 @@ package com.sohwakmo.cucumbermarket.controller;
 
 import com.sohwakmo.cucumbermarket.domain.Post;
 import com.sohwakmo.cucumbermarket.service.PostService;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -47,4 +45,16 @@ public class PostRegisterController {
         return ResponseEntity.ok(fileName);
     }
 
+    @PutMapping("/3{postNo}")
+    public ResponseEntity<String>insertImage(@PathVariable Integer postNo, @RequestParam("file") @RequestBody MultipartFile data) throws Exception {
+        log.info("data={}", data);
+        log.info("postNo={}", postNo);
+        Post post = postService.findPostByPostNo(postNo);
+        if (post.getImageUrl01() != null && post.getImageUrl02() != null) {
+            return ResponseEntity.ok("사진은 2장까지 가능합니다!!");
+        } else {
+            String result = postService.insertImage(post, data);
+            return ResponseEntity.ok(result);
+        }
+    }
 }

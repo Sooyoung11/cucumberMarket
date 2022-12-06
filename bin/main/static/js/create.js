@@ -21,4 +21,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
     form.method = "post";
     form.submit();
   }
+
+  const chooseFile = document.querySelector("#chooseFile");
+  chooseFile.addEventListener("change", function () {
+    let file = chooseFile.files;
+    console.log(file.length);
+    if (file.length == 3) {
+      alert("사진은 2장까지 가능합니다!!");
+      return;
+    }
+  });
 });
