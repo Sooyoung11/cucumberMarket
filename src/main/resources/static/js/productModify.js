@@ -8,7 +8,7 @@ updateButton.addEventListener('click', function(){
     const category = document.querySelector('#category').value;
     if(title == '' || content == '' || price == '' || category == '') {
             alert('전부 입력해주세요.')
-        return;
+            return;
     }
     const result = confirm('삭제하시겠습니까?')
     if(result) {

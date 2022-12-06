@@ -33,7 +33,7 @@ public class Product extends BaseTimeEntity {
     @Column(nullable = false)
     private String category;
 
-    @Column(columnDefinition = "integer default 0") //조회수
+    @Column(columnDefinition = "integer default 0") //조회수.
     private Integer clickCount;
 
 

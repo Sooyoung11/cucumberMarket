@@ -144,7 +144,7 @@ public class ProductService {
         }
 
     @Transactional
-    public Integer update(ProductUpdateDto dto) { // 상품 업데이트
+    public Integer update(ProductUpdateDto dto) { // 상품 업데이트.
             log.info("update(dto={})", dto);
 
             Product entity = productRepository.findById(dto.getProductNo()).get();
