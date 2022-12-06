@@ -31,12 +31,11 @@ public class ReplyService {
 
         return  reply.getReplyNo();
     }
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<ReplyReadDto> selectByid(Integer postNo) { // 댓글 list 보기 기능
         log.info("selectById=(postNo={})", postNo);
 
         List<Reply> list = replyRepository.findByPostPostNoOrderByReplyNoDesc(postNo);
-        log.info("Service List={}", list);
 
         return list.stream().map(ReplyReadDto::fromEntity).toList();
     }
@@ -68,5 +67,4 @@ public class ReplyService {
 
         return reply.getReplyNo();
     }
-
 }

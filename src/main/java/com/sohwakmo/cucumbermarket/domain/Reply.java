@@ -43,4 +43,5 @@ public class Reply extends BaseTimeEntity {
         this.likeCount = likeCount;
         return this;
     }
+
 }

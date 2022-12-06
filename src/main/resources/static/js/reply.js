@@ -31,8 +31,8 @@ window.addEventListener('DOMContentLoaded', event => {
         console.log(secretReply);
 
         // 좋아요 댓글 기능
-        // const likeCount = document.querySelector('#likeCount').value;
-        // console.log(likeCount);
+        const likeCount = document.querySelector('#likeCount').value;
+        console.log(likeCount);
 
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
         // java {} 은 배열, javascript {} 은 object.
@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', event => {
             replyContent: replyContent, // 댓글 내용
             replier: replier, // 댓글 작성자
             secretReply: secretReply, // 비밀 댓글
-            // likeCount: likeCount // 좋아요 카운트
+            likeCount: likeCount // 좋아요 카운트
         };
 
 
@@ -103,9 +103,7 @@ window.addEventListener('DOMContentLoaded', event => {
                                 + '</div>'
                                 // TODO: version2 에서 공감 버튼 만들기
                                 +'<div class="inline ">'
-                                    + `<button type="likeButton" id="likeButton" class="btn btn-outline-dark my-2" > + '👍' +  r.likeCount + </button>`
-                                // TODO: 싫어요 기능도 가능하면 추가해보기
-                                    // + `<button type="button" class="btn btn-outline-dark my-2" >👎</button>`
+
                                 +'</div>'
                             +'</div>'
                     + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
@@ -124,7 +122,8 @@ window.addEventListener('DOMContentLoaded', event => {
                                     + '<strong class="text-gray-dark  p-4">' + r.replyContent + '</strong>'
                                 + '</div>'
                                 // TODO: version2 에서 공감 버튼 만들기
-                                + `<button type="likeButton" class="btn btn-outline-dark" id="likeButton" >👍 r.likeCount <p id="clickedCountText"></p></button>`
+                    + '<button type="button" id="likeButton" class="likeButton btn btn-outline-dark my-2"  >' + '👍 ' + '<p id="count">' + 0 + '</p>'+  '</button>'
+                                 // + '<button type="button" id="likeButton" class="likeButton btn btn-outline-dark my-2"  data-rid="${r.replyNo}" >' + '👍 ' + r.likeCount +  '</button>'
                             +'</div>'
                     + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
                     + `<button type="button" class="btnModifies btn text-primary" " data-rid="${r.replyNo}">수정하기</button>`
@@ -140,21 +139,11 @@ window.addEventListener('DOMContentLoaded', event => {
         // [좋아요 카운트 기능]
         const likeButton = document.querySelectorAll('.likeButton');
         likeButton.forEach(btn => {
-            btn.addEventListener('click', likeCount);
+            btn.addEventListener('click', likeCountFunction);
         });
 
-        function likeCount() {
-            this.clickedCount = 0;
 
-            const likeButton = document.querySelector('.likeButton');
-            const clickedCountText = document.querySelector('.clickedCountText');
 
-            // 화살표 함수로 이벤트 리스너 정의
-            likeButton.addEventListener('click', () => {
-                this.clickedCount += 1;
-                clickedCountText.textContent = this.clickedCount;
-            });
-        }
 
         // [수정] 버튼들이 HTML 요소로 만들어진 이후에, [수정] 버튼에 이벤트 리스너를 등록.
         const buttons = document.querySelectorAll('.btnModifies');
@@ -234,6 +223,30 @@ window.addEventListener('DOMContentLoaded', event => {
                         replyModal.hide();
                     });
             }
+        }
+
+        // [좋아요 클릭시 카운트 함수]
+        function likeCountFunction(event) {
+            console.log(event);
+            const replyNo = modalreplyId.value;
+
+            let likeCount = document.getElementById('count');
+            let val = likeCount.innerHTML;
+            val++;
+            console.log(val);
+            likeCount.innerText = val;
+
+
+            // 해당 댓글 아이디의 댓글 객체를 Ajax GET 방식으로 요청.
+        //     const data = { val : val };
+        //     axios
+        //         .get('/api/reply/'+ replyNo, data) // Ajax PUT 요청 전송
+        //         .then(response => {
+        //             alert('#' + response.data + ' 성공');
+        //             readAllReplies();
+        //         }) // HTTP 200 OK 응답
+        //         .catch(err => { console.log(err) }); // 실패 응답 처리
+        //
         }
 
     }
