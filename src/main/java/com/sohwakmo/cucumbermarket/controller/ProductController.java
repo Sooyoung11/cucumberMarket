@@ -11,9 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
@@ -153,55 +157,66 @@ public class ProductController {
         return "/product/interested";
     }
 
-
-
-        @GetMapping("/create")
-        public void create() {
-            log.info("create()");
-
-        }
-
-        @PostMapping("/create")
-        public String create(ProductCreateDto dto, RedirectAttributes attrs) {
-            log.info("create(dto={})", dto);
-            Product entity = productService.create(dto);
-            attrs.addFlashAttribute("createdId", entity.getProductNo());
-
-            return "redirect:/product/list";
-        }
-
-        @GetMapping("/modify")
-        public String modify(Integer productNo, Model model) {
-            log.info("modify(productNo={})", productNo);
-
-            Product product = productService.read(productNo);
-            model.addAttribute("product", product);
-
-            return "/product/modify";
-        }
-
-        @PostMapping("/update")
-        public String update(ProductUpdateDto dto) {
-            log.info("update(dto={})", dto);
-
-            Integer productNo = productService.update(dto);
-
-            return "redirect:/product/detail?productNo=" + dto.getProductNo();
-        }
-
-        @PostMapping("/delete")
-        public String delete(Integer productNo) {
-            log.info("delete(productNo={})", productNo);
-            productService.delete(productNo);
-
-            return "redirect:/product/list";
-        }
-
-
-
-
-
-
+    // 상품 등록 페이지 이동
+    @GetMapping("/create")
+    public void create() {
+        log.info("create()");
 
     }
+
+    //상품 등록
+    @PostMapping("/create")
+    public String create(ProductCreateDto dto, RedirectAttributes attrs) {
+        log.info("create(dto={})", dto);
+        Product entity = productService.create(dto);
+        attrs.addFlashAttribute("createdId", entity.getProductNo());
+
+        return "redirect:/product/list";
+    }
+
+    // 상품 수정 페이지로 이동
+    @GetMapping("/modify")
+    public String modify(Integer productNo, Model model) {
+        log.info("modify(productNo={})", productNo);
+
+        Product product = productService.read(productNo);
+        model.addAttribute("product", product);
+
+        return "/product/modify";
+    }
+
+    // 상품 수정
+    @PostMapping("/update")
+    public String update(ProductUpdateDto dto) {
+        log.info("update(dto={})", dto);
+
+        Integer productNo = productService.update(dto);
+
+        return "redirect:/product/detail?productNo=" + dto.getProductNo();
+    }
+
+    // 상품 삭제//
+    @PostMapping("/delete")
+    public String delete(Integer productNo) {
+        log.info("delete(productNo={})", productNo);
+        productService.delete(productNo);
+
+        return "redirect:/product/list";
+    }
+
+
+    // 이미지
+    @PostMapping("/upload")
+    public String imgUpload(@RequestParam("files") MultipartFile file) throws Exception {
+
+
+        String orginalName = file.getOriginalFilename();
+        String filePath = "/upload";
+
+        File dest = new File(filePath);
+        file.transferTo(dest);  // 파일 업로드 작업 수행
+
+        return orginalName;
+    }
+}
 

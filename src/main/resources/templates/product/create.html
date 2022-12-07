@@ -13,18 +13,18 @@
       <form method="post" enctype="multipart/form-data">
         <div class="my-2 mb-3">
           <label for="title" class="form-label fst-italic">제목</label>
-          <input id="title" class="form-control"
+          <input id="title" class="form-control" maxlength="50"
                  type="text" name="title" placeholder="제목을 입력해 주세요." required autofocus />
         </div>
         <div class="mb-3">
           <label for="content" class="form-label fst-italic" >내용</label>
-          <textarea rows="5" cols="80" id="content" class="form-control"
+          <textarea rows="5" cols="80" id="content" class="form-control" minlength="5"
                     name="content" placeholder="내용을 입력해 주세요." required ></textarea>
         </div>
         <div class="mb-3">
           <label for="price" class="form-label fst-italic">가격</label>
           <div class="my-2 input-group">
-            <input  id="price" class="form-control"
+            <input  id="price" class="form-control" size="10"
                     type="number" name="price" placeholder="가격을 입력해 주세요." required />
             <span class="input-group-text">원</span>
           </div>
@@ -46,10 +46,10 @@
             <option value="8">취미/게임/음반</option>
             <option value="9">도서</option>
             <option value="10">반려동물용품</option>
-          </select>
+          </select> <!-- -->
         </div>
         <div class="my-2 input-group mb-3">
-          <input id="imgUpload" class="form-control"
+          <input id="imgUpload" class="form-control" name="photoUrl1"
                  type="file" name="imgUpload" multiple="multiple"/>
         </div>
         <div class="my-2 input-group mb-3">

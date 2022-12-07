@@ -7,7 +7,7 @@
   <div class="card mw-50" style="display: block; width:1000px; margin:0 auto;">
     <div class="list-group-item text-center fw-normal p-3 mb-2 bg-secondary text-dark bg-opacity-10" >
       <h1>상품 수정 </h1>
-    </div>
+    </div> <!-- -->
 
     <div class="list-group list-group-flush">
       <form id="formModify" enctype="multipart/form-data">
@@ -18,12 +18,12 @@
 
         <div class="my-2 mb-3">
           <label for="title" class="form-label fst-italic">제목</label>
-          <input id="title" class="form-control"
+          <input id="title" class="form-control" maxlength="50"
                  type="text" name="title" th:value="${product.title }" autofocus />
         </div>
         <div class="mb-3">
           <label for="content" class="form-label fst-italic" >내용</label>
-          <textarea id="content" class="form-control"
+          <textarea id="content" class="form-control" minlength="5"
                     name="content" th:text="${product.content }" ></textarea>
         </div>
         <div class="mb-3">

@@ -13,10 +13,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -173,6 +176,19 @@ public class ProductService {
 
             return productNo;
         }
+
+        //이미지
+    public void saveImg(Product product, MultipartFile file) throws Exception {
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/images/product/";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + file.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+
+        productRepository.save(product);
+    }
 }
 
 

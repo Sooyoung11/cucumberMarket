@@ -3,6 +3,7 @@ package com.sohwakmo.cucumbermarket.domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
