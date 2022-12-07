@@ -187,13 +187,6 @@ public class ProductService {
         return product;
     }
 
-    public Product create(ProductCreateDto dto) { // 상품 등록
-        log.info("create(dto={})", dto);
-
-        Product entity = productRepository.save(dto.toEntity());
-
-        return entity;
-    }
 
     @Transactional
     public Integer update(ProductUpdateDto dto) { // 상품 업데이트.

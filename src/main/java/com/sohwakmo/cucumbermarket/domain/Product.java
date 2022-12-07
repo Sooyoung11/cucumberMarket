@@ -12,7 +12,7 @@ import lombok.*;
 @SequenceGenerator(name = "PRODUCTS_SEQ_GEN", sequenceName = "PRODUCTS_SEQ", allocationSize = 1)
 public class Product extends BaseTimeEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTS_SEQ_GEN")
     private Integer productNo;
 
     @ManyToOne(fetch = FetchType.LAZY)
