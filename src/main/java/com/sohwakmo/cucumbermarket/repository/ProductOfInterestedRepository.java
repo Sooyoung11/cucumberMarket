@@ -19,4 +19,10 @@ public interface ProductOfInterestedRepository  extends JpaRepository<ProductOfI
     // select * from products_of_interested where member_no = ?
     List<ProductOfInterested> findByMember(Member Member);
 
+    // select * from products_of_interested where product_no = ?
+    ProductOfInterested findByProduct(Product product);
+
+    // delete table products_of_interested where product_no = ?
+    void deleteByProduct(Product product);
+
 }

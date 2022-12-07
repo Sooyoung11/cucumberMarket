@@ -200,12 +200,20 @@ public class ProductService {
     public Integer delete(Integer productNo) {
             log.info("deleteProduct(productNo={})", productNo);
 
-//            Product product = productRepository.findById(productNo).get();
-//            log.info("product = {}", product);
-//
-//            productOfInterestedRepository.deleteById(product);
+            Product product = productRepository.findById(productNo).get();
+            log.info("product = {}", product);
 
-            productRepository.deleteById(productNo);
+            ProductOfInterested interestedProduct = productOfInterestedRepository.findByProduct(product);
+            log.info("interestedProduct = {}", interestedProduct);
+
+            if (interestedProduct != null) { // 찜 목록에 데이터가 있는 경우
+                log.info("not null");
+                productOfInterestedRepository.deleteById(interestedProduct.getNo()); // 찜 목록에 상품 번호 전부 삭제
+                productRepository.deleteById(productNo); // 상품 테이블 해당 번호로 삭제
+            } else { // 찜 목록에 데이터가 없는 경우
+                log.info("null");
+            }
+
 
             return productNo;
         }
