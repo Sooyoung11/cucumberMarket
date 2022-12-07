@@ -152,6 +152,41 @@ public class ProductService {
         return list;
     }
 
+    @Transactional
+    public void dealStatusIng(Integer productNo, Integer boughtMemberNo) {
+        log.info("dealStatusIng(productNo = {}, boughtMemberNo = {})", productNo, boughtMemberNo);
+
+        Product product = productRepository.findById(productNo).get();
+        log.info("product = {}", product);
+
+        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
+        log.info("boughtMember = {}", boughtMember);
+
+        product.updateStatusAndBoughtMemberNo(false, null);
+    }
+
+    @Transactional
+    public void dealStatusDone(Integer productNo, Integer boughtMemberNo) {
+        log.info("dealStatusDone(productNo = {}, boughtMemberNo = {})", productNo, boughtMemberNo);
+
+        Product product = productRepository.findById(productNo).get();
+        log.info("product = {}", product);
+
+        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
+        log.info("boughtMember = {}", boughtMember);
+
+        product.updateStatusAndBoughtMemberNo(true, boughtMember);
+    }
+
+    public Product isDealStatus(Integer productNo) {
+        log.info("isDealStatus(productNo = {})", productNo);
+
+        Product product = productRepository.findById(productNo).get();
+        log.info("product = {}", product);
+
+        return product;
+    }
+
     public Product create(ProductCreateDto dto) { // 상품 등록
         log.info("create(dto={})", dto);
 
@@ -189,6 +224,9 @@ public class ProductService {
 
         productRepository.save(product);
     }
+
+
+
 }
 
 

@@ -69,6 +69,14 @@ public class Product extends BaseTimeEntity {
         return this;
     }
 
+    public Product updateStatusAndBoughtMemberNo(boolean status, Member boughtMemberNo) {
+        this.status = status;
+        this.boughtMemberNo = boughtMemberNo;
+
+        return this;
+    }
+
+
     public Product update(Integer clickCount) {
         this.clickCount = clickCount;
 

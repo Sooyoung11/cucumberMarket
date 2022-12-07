@@ -126,7 +126,7 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("interested")
+    @GetMapping("/interested")
     public String interestedPage(Integer memberNo, Model model) {
         log.info("interestedPage(memberNo = {})", memberNo);
 
@@ -189,12 +189,52 @@ public class ProductController {
         return "/product/myList";
     }
 
+    @GetMapping("/ing")
+    @ResponseBody
+    public ResponseEntity<String> dealStatusIng(Integer productNo, Integer boughtMemberNo) {
+        log.info("dealStatusIng(productNo = {}, boughtMemberNo = {})", productNo, boughtMemberNo);
+
+        productService.dealStatusIng(productNo, boughtMemberNo);
+
+        return ResponseEntity.ok("hello");
+    }
+
+    @GetMapping("/done")
+    @ResponseBody
+    public ResponseEntity<String> dealStatusDone(Integer productNo, Integer boughtMemberNo) {
+        log.info("dealStatusDone(productNo = {}, boughtMemberNo = {})", productNo, boughtMemberNo);
+
+        productService.dealStatusDone(productNo, boughtMemberNo);
+
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/isDealStatus")
+    @ResponseBody
+    public ResponseEntity<String> isDealStatus(Integer productNo) {
+        log.info("isDealStatus(productNo = {})", productNo);
+
+        Product product = productService.isDealStatus(productNo);
+        log.info("product = {}", product.getBoughtMemberNo());
+
+        String result;
+        if (product.getBoughtMemberNo() == null) {
+            result = "nok";
+        } else {
+            result = "ok";
+        }
+        log.info("result = {}", result);
+
+        return ResponseEntity.ok(result);
+    }
+
     // 상품 등록 페이지 이동
     @GetMapping("/create")
     public void create() {
         log.info("create()");
 
     }
+
     //상품 등록
     @PostMapping("/create")
     public String create(ProductCreateDto dto, RedirectAttributes attrs) {
@@ -203,6 +243,7 @@ public class ProductController {
         attrs.addFlashAttribute("createdId", entity.getProductNo());
         return "redirect:/product/list";
     }
+
     // 상품 수정 페이지로 이동
     @GetMapping("/modify")
     public String modify(Integer productNo, Model model) {

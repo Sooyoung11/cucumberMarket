@@ -15,4 +15,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByMember(Member member);
 
+
 }

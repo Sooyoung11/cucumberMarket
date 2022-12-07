@@ -42,6 +42,17 @@
             </div>
 
             <div class="container text-center my-4">
+
+
+                <div class="row d-none" id="dealStatus">
+                    <div class="col-4">
+                        <select name="status" class="form-control" id="selectOption">
+                            <option value="ing">거래 중</option>
+                            <option value="done">거래 완료</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col">
                         <p>조회수 : <span th:text="${ product.clickCount }"></span></p>
@@ -76,8 +87,10 @@
 
                 </div>
                 <input type="hidden" th:value="${product.productNo}" name="productNo" />  <!-- 번호 필요해서 추가했어요! -->
-                <div class="my-2">
+                <div class="my-2 d-none" id="btnChat">
                     <a class="btn btn-primary" th:href="@{ # }">채팅하기</a>
+                </div>
+                <div class="my-2 d-none" id="btnUpdateAndDelete">
                     <button type="button" id="detailUpdate" class="btn btn-outline-info">수정</button>   <!--버튼 두개 추가해놨어요 -->
                     <button type="button" id="detailDelete" class="btn btn-outline-secondary">삭제</button>
                 </div>
@@ -90,12 +103,13 @@
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-                const memberNo  = 1; // 로그인한 사람의 memberNo로 바뀌어야 함.
-                const productNo = [[ ${ product.productNo } ]];
+                const memberNo = 1; // 로그인한 사람의 memberNo로 바뀌어야 함.
+                const productNo = [[ ${ product.productNo } ]]; // 상품 번호
                 const productMemberNo = [[ ${ member.memberNo } ]]; // 해당 상품 등록한 memberNo;
+                const boughtMemberNo = 4; // 상품 사간 사람의 번호가 들어갈 예정
         </script>
         <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
-        <script th:src="@{/js/productDetail.js }" th:inline="javascript"></script>
+        <script th:src="@{ /js/productDetail.js }" th:inline="javascript"></script>
     </th:block>
 
 </html>
