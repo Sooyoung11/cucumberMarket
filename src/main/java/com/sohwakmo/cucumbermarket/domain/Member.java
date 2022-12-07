@@ -11,6 +11,10 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +26,7 @@ import java.util.Set;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
     private Integer memberNo; // Primary Key
 
     @NotNull

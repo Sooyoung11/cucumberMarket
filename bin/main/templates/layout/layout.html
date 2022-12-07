@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <html>
 <head>
@@ -14,27 +13,9 @@
     <div id="wrapper">
 
         <!-- header -->
-        <header>
+        <section>
             <div class="text-center">
-                <div id="topNav">
-                    <div id="topNavWrap">
-                        <ul>
-                            <th:block sec:authorize="isAnonymous()">
-                                <li><a th:href="@{ /member/join }">회원가입</a></li>
-                                <li><a th:href="@{ /login }">로그인</a></li>
-                            </th:block>
-                            <th:block sec:authorize="isAuthenticated()">
-                                <li>
-                                    <a th:href="@{ /logout }">
-                                        <span sec:authentication="name"></span>
-                                        로그아웃
-                                    </a>
-                                </li>
-                            </th:block>
-                        </ul>
-                    </div>
-                </div>
-                <h1><a href="#">오이마켓</a></h1>
+            <h1><a href="#">오이마켓</a></h1>
 
                 <!-- Nav -->
                 <nav id="nav">
@@ -48,17 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#">sub</a>
                         </li>
-                        <th:block sec:authorize="isAuthenticated()">
                         <li class="nav-item">
-                        <span class="text-info" name="member_id" sec:authentication="name" readonly/>
-                            <a class="nav-link " th:href="@{/mypage/mymain?memberNo={no} (no= ${#authentication.principal.memberNo})}" tabindex="-1" aria-disabled="true">마이페이지</a>
-                        </li>
-                        </th:block>
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">sub</a>
                         </li>
                     </ul>
                 </nav>
             </div>
-        </header>
+        </section>
 
 
         <section id="content" layout:fragment="content">
@@ -90,4 +67,5 @@
     </th:block>
 
 </body>
+
 </html>
