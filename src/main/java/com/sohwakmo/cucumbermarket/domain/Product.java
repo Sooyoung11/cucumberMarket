@@ -33,25 +33,30 @@ public class Product extends BaseTimeEntity {
     @Column(columnDefinition = "integer default 0") //조회수.
     private Integer clickCount;
 
-    @Column
     private boolean status; // 거래상태
 
-    @Column
     private String photoUrl1;
 
-    @Column
     private String photoUrl2;
 
-    @Column
     private String photoUrl3;
 
-    @Column
     private String photoUrl4;
 
-    @Column
     private String photoUrl5;
 
-    @Column
+    private String photoName1;
+
+    private String photoName2;
+
+    private String photoName3;
+
+    private String photoName4;
+
+    private String photoName5;
+
+
+    @Column(columnDefinition = "integer default 0")
     private Integer likeCount;
 
     @ManyToOne(fetch = FetchType.LAZY)

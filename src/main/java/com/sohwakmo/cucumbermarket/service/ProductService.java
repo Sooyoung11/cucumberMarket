@@ -104,6 +104,8 @@ public class ProductService {
     public String checkInterestedProduct(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("checkInterestedProduct(dto = {})", dto);
 
+        log.info("test = {}" ,dto.getMemberNo() );
+
         Member member = memberRepository.findById(dto.getMemberNo()).get();
         log.info("member = {}", member);
         Product product = productRepository.findById(dto.getProductNo()).get();
@@ -152,14 +154,6 @@ public class ProductService {
         return list;
     }
 
-    public Product create(ProductCreateDto dto) { // 상품 등록
-        log.info("create(dto={})", dto);
-
-        Product entity = productRepository.save(dto.toEntity());
-
-        return entity;
-    }
-
     @Transactional
     public Integer update(ProductUpdateDto dto) { // 상품 업데이트.
             log.info("update(dto={})", dto);
@@ -172,23 +166,50 @@ public class ProductService {
     public Integer delete(Integer productNo) {
             log.info("deleteProduct(productNo={})", productNo);
 
+//            Product product = productRepository.findById(productNo).get();
+//            log.info("product = {}", product);
+//
+//            productOfInterestedRepository.deleteById(product);
+
             productRepository.deleteById(productNo);
 
             return productNo;
         }
 
         //이미지
-    public void saveImg(Product product, MultipartFile file) throws Exception {
-        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/images/product/";
+    public Product create(ProductCreateDto dto, MultipartFile file) throws Exception {
+        log.info("create(dto={})", dto);
+         // dto -> entity
+        String projectFilePath = "/images/product/"+file.getOriginalFilename();
+        log.info("projectFilePath={}", projectFilePath);
 
-        UUID uuid = UUID.randomUUID();
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images\\product";  // 저장할 경로 지정
+        log.info("productPath()" + projectPath);
+        File saveFile = new File(projectPath, file.getOriginalFilename());
+        file.transferTo(saveFile);
+        dto.setPhotoUrl1(projectFilePath);
+        dto.setPhotoName1(file.getOriginalFilename());
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+        Member member = memberRepository.findById(dto.getMemberNo()).get();
+        Product product = Product.builder()
+                .member(member)
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .price(dto.getPrice())
+                .category(dto.getCategory())
+                .clickCount(dto.getClickCount())
+                .likeCount(dto.getLikeCount())
+                .photoUrl1(dto.getPhotoUrl1()).photoUrl2(dto.getPhotoUrl2()).photoUrl3(dto.getPhotoUrl3()).photoUrl4(dto.getPhotoUrl4())
+                .photoUrl5(dto.getPhotoUrl5())
+                .photoName1(dto.getPhotoName1()).photoName2(dto.getPhotoName2()).photoName3(dto.getPhotoName3()).photoName4(dto.getPhotoName4()).photoName5(dto.getPhotoName5())
+                .build();
 
-        File saveFile = new File(projectPath, fileName);
+        product = productRepository.save(product);
 
-        productRepository.save(product);
+        return product;
     }
+
+
 }
 
 

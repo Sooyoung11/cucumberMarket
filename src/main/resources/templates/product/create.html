@@ -10,8 +10,9 @@
     </div>
 
     <div class="list-group list-group-flush">
-      <form method="post" enctype="multipart/form-data">
+      <form method="post" enctype="multipart/form-data" action="/product/create">
         <div class="my-2 mb-3">
+          <input type="hidden" name="memberNo" th:value="${3}" />    <!-- 멤버 -->
           <label for="title" class="form-label fst-italic">제목</label>
           <input id="title" class="form-control" maxlength="50"
                  type="text" name="title" placeholder="제목을 입력해 주세요." required autofocus />
@@ -30,6 +31,7 @@
           </div>
           <div>
               <input type="hidden" name="clickCount" th:value="0"/>    <!-- 조회수 0으로 시작.. -->
+              <input type="hidden" name="likeCount" th:value="0" />    <!-- 찜 0으로 시작 -->
           </div>
         </div>
         <div class="mb-3">
@@ -46,18 +48,25 @@
             <option value="8">취미/게임/음반</option>
             <option value="9">도서</option>
             <option value="10">반려동물용품</option>
-          </select> <!-- -->
+          </select>
         </div>
-<!--        <div class="my-2 input-group mb-3">-->
-<!--          <input id="imgUpload" class="form-control" name="photoUrl1"-->
-<!--                 type="file" name="imgUpload" multiple="multiple/form-data"/>-->
-<!--        </div>-->
         <div class="my-2 input-group mb-3">
-          <input type="submit" class="btn btn-outline-info" value="등록" />
+          <input id="imgUpload" class="form-control" name="imgFile"
+                 type="file" multiple="multiple/form-data"/>
+        </div>
+        <div class="my-2 input-group mb-3">
+          <button type="submit" class="btn btn-outline-info">등록</button>
           <a class="btn btn-outline-secondary" href="/product/list">취소</a>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<th:block layout:fragment="script">
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script th:src="@{ /js/productCreate.js }" th:inline="javascript"></script>
+</th:block>
 </html>
