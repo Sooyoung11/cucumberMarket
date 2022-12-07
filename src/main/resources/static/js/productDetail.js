@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
     const detailDelete = document.querySelector('#detailDelete');
     detailDelete.addEventListener('click', function () {
-
+        //document.querySelector()
     const result = confirm('삭제하시겠습니까?')
         if(result) {
             form.action = '/product/delete';//

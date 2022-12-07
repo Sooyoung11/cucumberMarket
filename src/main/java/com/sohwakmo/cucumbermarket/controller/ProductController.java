@@ -230,18 +230,20 @@ public class ProductController {
 
     // 상품 등록 페이지 이동
     @GetMapping("/create")
-    public void create() {
+    public String create() {
         log.info("create()");
 
+        return "product/create";
     }
 
     //상품 등록
     @PostMapping("/create")
-    public String create(ProductCreateDto dto, RedirectAttributes attrs) {
+    public String create(ProductCreateDto dto, @RequestParam("imgFile") MultipartFile products) throws  Exception {
         log.info("create(dto={})", dto);
-        Product entity = productService.create(dto);
-        attrs.addFlashAttribute("createdId", entity.getProductNo());
+        Product entity = productService.create(dto, products);
+
         return "redirect:/product/list";
+
     }
 
     // 상품 수정 페이지로 이동
@@ -267,22 +269,13 @@ public class ProductController {
     @PostMapping("/delete")
     public String delete(Integer productNo) {
         log.info("delete(productNo={})", productNo);
+
         productService.delete(productNo);
 
         return "redirect:/product/list";
     }
-    // 이미지
-    @PostMapping("/upload")
-    public String imgUpload(@RequestParam("files") MultipartFile file) throws Exception {
 
-        String orginalName = file.getOriginalFilename();
-        String filePath = "/upload";
 
-        File dest = new File(filePath);
-        file.transferTo(dest);  // 파일 업로드 작업 수행
-
-        return orginalName;
-    }
 
 }
 

@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 @Getter
 @ToString
-@SequenceGenerator(name = "MEMBERS_SEQ_GEN",sequenceName = "MEMBERS_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "MEMBERS_SEQ_GEN",sequenceName = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
 
     @Id
