@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{ layout/layout.html }"
+>
+  <div layout:fragment="content">
+    <div class="container">
+      <!-- Content here -->
+      <form th:object="${post}" id="form" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-8">
+            <h2>글 수정</h2>
+          </div>
+
+          <div class="col-4 text-end">
+            <button type="button" class="btn btn-primary" id="modifyButton">
+              수정
+            </button>
+            <a type="button" class="btn btn-primary" th:href="@{/post/list}"
+              >취소</a
+            >
+          </div>
+
+          <!--제목, 버튼-->
+          <div>
+            <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
+            <input
+              type="hidden"
+              name="postNo"
+              th:value="${post.postNo}"
+              id="postNo"
+            />
+            <input type="hidden" name="memberNo" th:value="5" />
+            <input
+              type="text"
+              class="form-control my-2"
+              id="title"
+              aria-describedby="emailHelp"
+              th:field="*{title}"
+              placeholder="제목을 입력해 주세요."
+              th:value="${post.title}"
+              name="title"
+            />
+            <div class="border border-secondary">
+              <p class="m-2">
+                게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이
+                없으시길 바랍니다.
+              </p>
+              <p class="m-2">
+                규정을 위반한 게시글은 무통보 삭제될 수 있으며, 추가적인 제재
+                조치가 진행될 수 있습니다.
+              </p>
+            </div>
+            <nav class="navbar bg-light">
+              <div class="imageButton">
+                <label for="chooseFile" id="insertImage">
+                  <img src="/images/사진넣기.png" />
+                </label>
+              </div>
+              <input
+                multiple="multiple"
+                type="file"
+                name="files"
+                id="chooseFile"
+                style="display: none"
+              />
+            </nav>
+            <div class="form-floating my-2">
+              <textarea
+                class="form-control"
+                placeholder="내용을 입력해주세요."
+                id="postContent"
+                style="height: 200px"
+                th:field="*{content}"
+                th:value="${post.content}"
+                name="content"
+              ></textarea>
+              <div
+                th:classappend="${post.imageUrl01 == ''} ? 'hidden'"
+                id="image01div"
+              >
+                <img
+                  id="image1"
+                  th:src="@{${post.imageUrl01}}"
+                  th:value="${post.imageUrl01}"
+                />
+                <div id="deleteModifyImage01Nav" style="display: none">
+                  <ul>
+                    <li>
+                      <button type="button" id="deleteImage01Button">
+                        삭제
+                      </button>
+                    </li>
+                    <li>
+                      <div class="imageButton">
+                        <label for="modifyFile01">수정</label>
+                      </div>
+                      <input
+                        type="file"
+                        name="file"
+                        id="modifyFile01"
+                        style="display: none"
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
+                <img id="image2" th:src="@{${post.imageUrl02}}" />
+                <div id="deleteModifyImage02Nav" style="display: none">
+                  <ul>
+                    <li>
+                      <button type="button" id="deleteImage02Button">
+                        삭제
+                      </button>
+                    </li>
+                    <li>
+                      <div class="imageButton">
+                        <label for="modifyFile02">수정</label>
+                      </div>
+                      <input
+                        type="file"
+                        name="file"
+                        id="modifyFile02"
+                        style="display: none"
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <th:block layout:fragment="script">
+    <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/PostModify.js}"></script>
+  </th:block>
+</html>

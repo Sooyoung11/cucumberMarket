@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{ layout/layout }">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Blog Home - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+
+    </head>
+    <body>
+    <div layout:fragment="content">
+        <!-- Page content-->
+        <div class="container">
+            <div class="row">
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- image widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">사용자 정보</div>
+                        <div class="card-body">
+                            <div class="container">
+                                <!-- img container -->
+                                <!-- image show -->
+<!--                                <div class="image-show" id="image-show"></div>-->
+<!--                                <div class="image-upload" id="image-upload">-->
+<!--                                    <form th:action="@{/mypage/img_upload}" method="post" enctype="multipart/form-data">-->
+<!--                                        <label for="imageFile" class="form-label">사용자 이미지</label>-->
+<!--                                        <input type="file" class="form-control" id="imageFile" name="userImageFile" accept="image/*" onchange="loadFile(this)">-->
+<!--                                    </form>-->
+
+<!--                                    <div class="fileContainer">-->
+<!--                                        <div class="buttonContainer">-->
+<!--                                            <div class="submitButton" id="submitButton">사진수정</div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="profile-left">-->
+<!--                                    <div class="profile-img-wrap story-border"-->
+<!--                                         onclick="popup('.modal-image')">-->
+
+<!--                                        <form id="userProfileImageForm">-->
+<!--                                            <input type="file" name="profileImageFile" style="display: none;"-->
+<!--                                                   id="userProfileImageInput" />-->
+<!--                                        </form>-->
+<!--                                        <div class="box image-show" id="image-show">-->
+<!--                                        <img class="profile" src="" th:src="@{/images/mypage/darwin.png}"-->
+<!--                                             onerror="this.src='/images/person.jpeg'" id="userProfileImage" />-->
+<!--                                        </div>-->
+<!--                                        <div class="my-3">-->
+<!--                                            <input type="file" class="form-control" id="imageFile" name="userImageFile" accept="image/*" onchange="loadFile(this)"/>-->
+<!--                                            <div id="submitButton">사진 수정</div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- userInfo entries-->
+                <div class="col-lg-8">
+                    <!-- Featured blog post-->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>사용자 프로필 수정</h4>
+                        </div>
+                        <div class="card-body">
+                            <form id="formModify">
+                                <div class="my-2">
+                                    <input type="hidden" id="memberNo" name="memberNo" th:value="${userProfile.memberNo}"  readonly/>
+                                    <label for="name" class="form-label">사용자 이름</label>
+                                    <input id="name" class="form-control" name="name" type="text" th:value="${userProfile.name}" autofocus/>
+                                </div>
+                                <div class="my-2">
+                                    <label for="nickname" class="form-label">닉네임</label>
+                                    <input id="nickname" class="form-control" name="nickname" type="text" th:value="${userProfile.nickname}" />
+                                </div>
+                                <div class="my-2">
+                                    <label for="password" class="form-label">비밀번호</label>
+                                    <input id="password" class="form-control" name="password" type="password" th:value="${userProfile.password}" />
+                                    <div class="my-2 d-none" id="passwordCheck">
+                                        <p class="text-danger">비밀번호는 8~20자리를 입력해주세요.</p>
+                                    </div>
+                                    <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
+                                    <input id="passwordConfirm" class="form-control" type="password" th:value="${userProfile.password}" disabled />
+                                    <div class="my-2 d-none" id="passwordMatched">
+                                        <p class="text-success">비밀번호가 일치합니다.</p>
+                                    </div>
+                                    <div class="my-2 d-none" id="passwordMismatched">
+                                        <p class="text-danger">비밀번호가 일치하지 않습니다.</p>
+                                    </div>
+                                </div>
+<!--                                <div class="my-2">-->
+<!--                                    <label for="address" class="form-label">주소</label>-->
+<!--                                    <input id="address" class="form-control" style="display: inline-block" name="address" type="text" th:value="${userProfile.address}" />-->
+<!--&lt;!&ndash;                                    <input type="button" id="btnPostcode" style="display: inline-block" class="btn btn-outline-success btn-lg" value="우편번호 찾기">&ndash;&gt;-->
+<!--                                </div>-->
+                                <!--주소 -->
+                                <div class="mt-4">
+                                    <div>
+                                        <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
+                                        <input id="totalAddress" class="form-control" style="display: inline-block" name="address" type="text" th:value="${userProfile.address}"/>
+                                        <div class="mb-2">
+                                            <input type="button" id="btnPostcode" class="btn btn-outline-success form-control-lg" value="우편번호 찾기">
+                                            <span id="postcode">
+                                                <input type="text" id="sample4_postcode" class="form-control d-none" placeholder="우편번호">
+                                            </span>
+                                        </div>
+                                        <span id="roadAddressSpan" class="my-2">
+                                            <input type="text" id="sample4_roadAddress" class="form-control d-none" placeholder="도로명주소">
+                                        </span>
+                                        <span class="my-2">
+                                            <input type="text" id="sample4_jibunAddress" class="form-control d-none" placeholder="지번주소" >
+                                        </span>
+                                        <span id="guide" style="color:#999;display:none"></span>
+                                        <span class="my-2" >
+                                            <input type="text" id="sample4_detailAddress" class="form-control d-none" placeholder="상세주소">
+                                         </span>
+                                        <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="d-none">
+                                    </div>
+                                </div>
+
+                                <div class="my-2">
+                                    <label for="phone" class="form-label">핸드폰 번호</label>
+                                    <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
+                                </div>
+                                <div class="my-2">
+                                    <label for="email" class="form-label">이메일</label>
+                                    <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />
+                                </div>
+                                <div class="my-2 display:inline">
+                                <input type="submit" id="btnSubmit" class="form-control btn btn-success disabled" value="수정완료"/>
+                                <input type="button" onClick="history.go(-1)" class="form-control btn btn-success" value="취소"/>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <!-- Core theme JS-->
+        <script th:src="@{/js/scripts.js}"></script>
+        <script th:src="@{/js/modify.js}"></script>
+
+
+        <!--<script th:src="@{/js/index.js}"></script>-->
+
+    </div>
+    </body>
+</html>

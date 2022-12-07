@@ -81,4 +81,8 @@ public class MemberService {
 
         return entity;
     }
+
+    public Member findMemberByMemberNo(Integer memberNo) {
+        return memberRepository.findById(1).orElse(null);
+    }
 }
