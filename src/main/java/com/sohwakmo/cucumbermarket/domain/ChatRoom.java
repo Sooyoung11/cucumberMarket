@@ -1,15 +1,12 @@
 package com.sohwakmo.cucumbermarket.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@Entity
+@Entity(name = "CHAT_ROOM")
 public class ChatRoom {
 
     @Id
@@ -18,5 +15,7 @@ public class ChatRoom {
 
     private String roomId;
 
-    private Message message;
+
+
+//    private Message message;
 }

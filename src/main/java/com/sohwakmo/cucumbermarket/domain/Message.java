@@ -1,8 +1,9 @@
 package com.sohwakmo.cucumbermarket.domain;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,20 +12,20 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Message {
-
     @Id
     private String roomId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private ChatRoom chatRoom;
+
     private String message;
 
-    @Column
     private String sendMessage;
 
-    @Column
     private String receivedMessage;
 
     @CreationTimestamp
