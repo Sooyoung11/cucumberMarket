@@ -23,24 +23,29 @@
         <h1 th:text="${room.member.nickname}"></h1>
       </div>
       <div>
-        <div id="msgArea" class="col"></div>
-        <div class="col-6">
-          <div class="input-group mb-3">
-            <input type="text" id="message" class="form-control" />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary"
-                type="button"
-                id="button-send"
-              >
-                전송
-              </button>
-            </div>
+        <div id="msgArea" class="col">
+          <div th:each="messages : ${messages}">
+            <b th:text="${messages.message}"></b>
           </div>
         </div>
       </div>
-      <div class="col-6"></div>
+      <div class="col-6">
+        <div class="input-group mb-3">
+          <input type="text" id="message" class="form-control" />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="button-send"
+            >
+              전송
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="col-6"></div>
+
     <!-- JavaScript -->
     <script th:src="@{/webjars/sockjs-client/1.1.2/sockjs.min.js}"></script>
     <script th:src="@{/webjars/stomp-websocket/2.3.3-1/stomp.min.js}"></script>
