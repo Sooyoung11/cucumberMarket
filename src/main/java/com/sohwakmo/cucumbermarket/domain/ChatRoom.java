@@ -10,12 +10,10 @@ import lombok.NoArgsConstructor;
 public class ChatRoom {
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
-
     private String roomId;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 
 //    private Message message;
 }

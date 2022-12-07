@@ -16,8 +16,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 public class Message {
+
     @Id
     private String roomId;
+
+    private String writer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ChatRoom chatRoom;
