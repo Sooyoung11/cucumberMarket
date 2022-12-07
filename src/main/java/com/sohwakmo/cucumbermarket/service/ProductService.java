@@ -44,18 +44,18 @@ public class ProductService {
 
 
     @Transactional
-    public Product update(Integer productNo) { // 상품 클릭 수 update
-        log.info("update(productNo = {})", productNo);
+    public Product detail(Integer productNo) {
+        log.info("detail(productNo = {})", productNo);
 
-        Product entity = productRepository.findById(productNo).get();
-        log.info("entity = {}", entity);
-        entity.updateClickCount(entity.getClickCount()+1);
-        log.info("entity = {}", entity);
+        Product product = productRepository.findById(productNo).get();
+        log.info("product = {}", product);
+        product.updateClickCount(product.getClickCount()+1);
+        log.info("product = {}", product);
 
-        Member member = memberRepository.findById(entity.getMember().getMemberNo()).get();
-        log.info("member = {}", member);
+//        Member member = memberRepository.findById(product.getMember().getMemberNo()).get();
+//        log.info("member = {}", member);
 
-        return entity;
+        return product;
     }
 
     public List<Product> search(String keyword) {

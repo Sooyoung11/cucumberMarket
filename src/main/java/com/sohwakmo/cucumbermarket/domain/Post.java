@@ -2,8 +2,6 @@ package com.sohwakmo.cucumbermarket.domain;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 
@@ -20,13 +18,11 @@ public class Post extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "POSTS_SEQ_GEN")
     private Integer postNo; // Primary Key(고유키)
 
-    @NotNull
-    @Size(min = 2,max = 30,message = "제목은 2자 이상 30자 이하입니다")
+
     @Column(nullable = false, unique = true)
     private String title;
 
-    @NotNull
-    @Size(min = 2,max = 300,message = "내용은 2자 이상 300자 이하입니다")
+
     @Column(nullable = false, unique = true)
     private String content;
 

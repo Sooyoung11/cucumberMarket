@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class ProductCreateDto {
-    private String title; //
+    private String title;
     private String content;
     private Integer price;
     private String category;
