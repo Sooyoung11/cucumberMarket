@@ -1,4 +1,3 @@
-
 window.addEventListener('DOMContentLoaded', function() {
 
     const interested     = document.querySelector("#interested");

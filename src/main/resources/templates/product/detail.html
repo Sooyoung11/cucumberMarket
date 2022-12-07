@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{ layout/layout.html }">
+      layout:decorate="~{ layout/layout.html }" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
 
-    <div layout:fragment="content" class="container text-center">
-        <h1>detail</h1>
-
+<div layout:fragment="content" class="container text-center">
+    <h1>detail</h1>
+    <form id="form">         <!-- form id 사용하려고 추가해놨어요! -->
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
 
@@ -31,11 +32,13 @@
                     <img th:src="@{ ${ product.photoUrl5 } }" class="d-block w-100" alt="...">
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -47,28 +50,29 @@
                     <p>조회수 : <span th:text="${ product.clickCount }"></span></p>
                 </div>
                 <div class="col">
-                    <p>지역 : <span  th:text="${ member.address }"></span></p>
+                    <p>지역 : <span th:text="${ member.address }"></span></p>
                 </div>
                 <div class="col">
-                    <p>작성자 : <span  th:text="${ member.nickname }"></span></p>
+                    <p>작성자 : <span th:text="${ member.nickname }"></span></p>
                 </div>
                 <div class="col">
-                    <p>찜 : <span  th:text="${ product.likeCount }"></span></p>
+                    <p>찜 : <span th:text="${ product.likeCount }"></span></p>
                 </div>
             </div>
+            <input type="hidden" th:value="${product.productNo}" name="productNo" />  <!-- 번호 필요해서 추가했어요! -->
             <div class="card-body">
                 <div class="my-2">
-                    <p>제목 : <span  th:text="${ product.title }"></span></p>
+                    <p>제목 : <span th:text="${ product.title }"></span></p>
                 </div>
                 <div class="my-2">
-                    <p>내용 : <span  th:text="${ product.content }"></span></p>
+                    <p>내용 : <span th:text="${ product.content }"></span></p>
                 </div>
                 <div class="my-2">
-                    <p>작성 시간  : <span  th:text="${ product.createdTime }"></span></p>
+                    <p>작성 시간 : <span th:text="${ product.createdTime }"></span></p>
                 </div>
 
                 <div class="col my-2 d-none" id="interested">
-                    <img th:src="@{ /images/product/interested.png }" width="50px">
+                        <img th:src="@{ /images/product/interested.png }" width="50px">  제 컴퓨터에서 사진 인식이 안돼서 우선 빼놨습니다!!
                 </div>
                 <div class="col my-2 d-none" id="nointerested">
                     <img th:src="@{ /images/product/nointerested.png }" width="50px">
@@ -78,14 +82,16 @@
 
             <div class="my-2">
                 <a class="btn btn-primary" th:href="@{ # }">채팅하기</a>
+                <button type="button" id="detailUpdate" class="btn btn-outline-info">수정</button>   <!--버튼 두개 추가해놨어요 -->
+                <button type="button" id="detailDelete" class="btn btn-outline-secondary">삭제</button>
             </div>
         </div>
+    </form>
+
+</div> <!-- content -->
 
 
-    </div> <!-- content -->
-
-
-    <th:block layout:fragment="script">
+<th:block layout:fragment="script">
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
@@ -94,7 +100,7 @@
                 const productMemberNo = [[ ${ member.memberNo } ]]; // 해당 상품 등록한 memberNo;
         </script>
         <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
-
+        <script th:src="@{/js/productDetail.js }" th:inline="javascript"></script>
     </th:block>
 
 </html>

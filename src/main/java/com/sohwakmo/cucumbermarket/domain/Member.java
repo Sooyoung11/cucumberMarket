@@ -1,8 +1,6 @@
 package com.sohwakmo.cucumbermarket.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -18,33 +16,31 @@ public class Member {
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
     private Integer memberNo; // Primary Key
 
-    @NotNull
+
     @Column(nullable = false, unique = true)
-    @Size(min = 2, max = 20, message = "아이디는 2자이상 20자 이하입니다.")
     private String memberId; // 2자 이상
 
-    @NotNull
-    @Size(min = 8, max = 20, message = "비밀번호는 8자이상 20자 이하입니다.")
+
     @Column(nullable = false)
     private String password;
 
-    @NotNull
+
     @Column(nullable = false)
     private String name;
 
-    @NotNull
+
     @Column(nullable = false, unique = true)
     private String nickname;
 
-    @NotNull
+
     @Column(nullable = false)
     private String address;
 
-    @NotNull
+
     @Column(nullable = false)
     private Integer phone;
 
-    @NotNull
+
     @Column(unique = true, nullable = false)
     private String email;
 
