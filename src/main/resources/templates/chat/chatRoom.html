@@ -59,6 +59,10 @@
                 let roomName = [[${room.member.nickname}]];
                 let roomId = [[${room.roomId}]];
                 let username = [[${room.member.nickname}]];
+                const date = new Date();
+                console.log('locale string(ko-kr): ' + date.toLocaleString('ko-kr'));
+                let nowDate = date.toLocaleString('ko-kr');
+                console.log(nowDate);
                 let msgArea = document.querySelector("#msgArea");
 
                 console.log(roomName + ", " + roomId + ", " + username);
@@ -106,7 +110,7 @@
                   let message = document.getElementById("message");
 
                   console.log(username + ":" + message.value);
-                  stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username}));
+                  stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate}));
                   message.value = '';
                 })
             });

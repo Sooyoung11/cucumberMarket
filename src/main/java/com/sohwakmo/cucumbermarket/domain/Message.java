@@ -20,7 +20,7 @@ public class Message {
     private String message;
     private String writer;
     private String receiver;
-    private LocalDateTime sendTime;
+    private String sendTime;
     private String roomId;
 
     public Message update(String roomId) {

@@ -41,14 +41,14 @@ public class ChatRoomService {
 
     @Transactional
     public List<Message> getAllMessages(String roomId) {
-        List<Message> message = messageRepository.findByRoomId(roomId);
+        List<Message> message = messageRepository.findByRoomIdOrderByIdDesc(roomId);
         if(message==null){
             Message newMessage = new Message();
             newMessage.setRoomId(roomId);
             messageRepository.save(newMessage);
-            log.info("massage={}",newMessage);
+            log.info("massageSave={}",newMessage);
         }
-        List<Message> messageList = messageRepository.findByRoomId(roomId).stream().toList();
+        List<Message> messageList = messageRepository.findByRoomIdOrderByIdDesc(roomId).stream().toList();
         log.info("messageList={}",messageList);
         return messageList;
     }
