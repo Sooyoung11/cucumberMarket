@@ -113,20 +113,20 @@
                     <div>
                         <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
                         <div class="mb-2">
-                            <input type="button" id="btnPostcode" class="btn btn-outline-success btn-lg" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+                            <input type="button" id="btnPostcode" class="btn btn-success btn-lg" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
                             <span class="form-control form-control-lg mb-2" id="postcode">
-                                <input type="text" id="sample4_postcode" placeholder="우편번호">
+                                <input type="text" id="sample4_postcode" placeholder="우편번호" required >
                             </span>
                         </div>
                         <span class="form-control form-control-lg mb-2" id="roadAddressSpan">
-                            <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+                            <input type="text" id="sample4_roadAddress" placeholder="도로명주소" required >
                         </span>
                         <span class="form-control form-control-lg mb-2" id="jibunAddressSpan">
-                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" name="address">
+                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" name="address" required >
                         </span>
                         <span id="guide" style="color:#999;font-size:13px;display:none"></span>
                         <span class="form-control form-control-lg mb-2" id="detailAddressSpan">
-                            <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+                            <input type="text" id="sample4_detailAddress" placeholder="상세주소" required >
                         </span>
                         <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="d-none">
                         <div id="addressNok" class="d-none">
@@ -160,7 +160,7 @@
                                     <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
                                 </span>
                             </span>
-                            <input type="button" id="btnAuthcode" class="btn btn-outline-success btn-lg disabled" value="인증코드 받기">
+                            <input type="button" id="btnAuthcode" class="btn btn-success btn-lg disabled" value="인증코드 받기">
                         </div>
                         <div id="emailNok2" class="d-none">
                             <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
