@@ -31,3 +31,7 @@ input{display:inline-block; width: 420px;}
 #email{width: 240px;}
 #emailKeySpan{display: inline-block;}
 #btnSubmit{font-size: 15px;  margin: 56px auto; width: 480px; height: 48px;}
+#memberId,#password,#password2,#name,#nickname,#sample4_postcode,
+#sample4_roadAddress,#sample4_jibunAddress,#sample4_detailAddress,
+#phone,#email,#emailKey:focus{outline: none;}
+#memberIdSpan{border-color: #008000;}

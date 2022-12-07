@@ -1,10 +1,7 @@
 package com.sohwakmo.cucumbermarket.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -50,12 +47,10 @@ public class Member{
     @Column(nullable = false, name= "email_key")
     private String emailKey;
 
-
     @Column(name= "email_auth")
     private Integer emailAuth;
 
     private Integer grade;
-
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default

@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function () {
     passwordInput.addEventListener('change', function () {
         const password = passwordInput.value;
         axios
-        .get('/member/check_password?password='+ password)
+        .get('/member/check_password?password='+password)
         .then(res => { displayCheckPassword(res.data) })
         .catch(err => { console.log(err); });
     });
@@ -122,15 +122,16 @@ window.addEventListener('DOMContentLoaded', function () {
     const emailNok = document.querySelector('#emailNok');
     const emailNok2 = document.querySelector('#emailNok2');
     const btnAuthcode= document.querySelector('#btnAuthcode');
-    const email = emailInput.value;
 
     emailInput.addEventListener('change', function () {
+        const email= emailInput.value;
+        console.log(email);
         axios
         .get('/member/check_email?email='+ email)
         .then(res => { displayCheckEmail(res.data) })
         .catch(err => { console.log(err); });
     });
-
+    
     function displayCheckEmail(data) {
         if (data == 'emailOk') {
             emailOk.className = '';
@@ -151,10 +152,140 @@ window.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function sendEmail(email){
+    // 인증코드 발송
+    let authCode= '';
+    btnAuthcode.addEventListener('click', function(){
+        axios
+        .get('/member/sendEmail?email='+emailInput.value)
+        .then(function(res){
+            console.log(res.data);
+            authCode= res.data;
+            console.log('sendEmail=> authCode='+authCode);
+        })
+        .catch(err => { console.log(err); });
+    })
+    
+    // 인증코드 체크
+    const emailKeyInput= document.querySelector('#emailKey');
+    const emailKeyOk = document.querySelector('#emailKeyOk');
+    const emailKeyNok = document.querySelector('#emailKeyNok');
+    const emailKeyNok2 = document.querySelector('#emailKeyNok2');
 
+    emailKeyInput.addEventListener('change', function () {
+        console.log('emailAuth=> authCode='+authCode)
+        const emailKey= emailKeyInput.value;
+        axios
+        .get('/member/emailAuth?authCode='+authCode+'&&emailKey='+emailKey)
+        .then(res => { displayCheckEmailKey(res.data) })
+        .catch(err => { console.log(err); });
+    });
+
+    function displayCheckEmailKey(data) {
+        if (data == 'emailKeyOk') {
+            emailKeyOk.className = '';
+            emailKeyNok.className = 'd-none';
+            emailKeyNok2.className = 'd-none';
+            btnSubmit.classList.remove('disabled');
+        } else {
+            emailKeyOk.className = 'd-none';
+            emailKeyNok.className = '';
+            emailKeyNok2.className = '';
+            btnSubmit.classList.add('disabled');
+        }
     }
 
+
+    // focus-blur
+    memberIdInput.addEventListener('focus', function(){
+        document.querySelector('#memberIdSpan').style.borderColor= '#008000';
+    })
+    memberIdInput.addEventListener('blur', function(){
+        document.querySelector('#memberIdSpan').style.borderColor= '#ced4da';
+    })
+
+    passwordInput.addEventListener('focus', function(){
+        document.querySelector('#passwordSpan').style.borderColor= '#008000';
+    })
+    passwordInput.addEventListener('blur', function(){
+        document.querySelector('#passwordSpan').style.borderColor= '#ced4da';
+    })
+
+    password2Input.addEventListener('focus', function(){
+        document.querySelector('#password2Span').style.borderColor= '#008000';
+    })
+    password2Input.addEventListener('blur', function(){
+        document.querySelector('#password2Span').style.borderColor= '#ced4da';
+    })
+
+    const nameInput= document.querySelector('#name');
+    nameInput.addEventListener('focus', function(){
+        document.querySelector('#nameSpan').style.borderColor= '#008000';
+    })
+    nameInput.addEventListener('blur', function(){
+        document.querySelector('#nameSpan').style.borderColor= '#ced4da';
+    })
+
+    nicknameInput.addEventListener('focus', function(){
+        document.querySelector('#nicknameSpan').style.borderColor= '#008000';
+    })
+    nicknameInput.addEventListener('blur', function(){
+        document.querySelector('#nicknameSpan').style.borderColor= '#ced4da';
+    })
+    
+    const postcodeInput= document.querySelector('#sample4_postcode');
+    postcodeInput.addEventListener('focus', function(){
+        document.querySelector('#postcode').style.borderColor= '#008000';
+    })
+    postcodeInput.addEventListener('blur', function(){
+        document.querySelector('#postcode').style.borderColor= '#ced4da';
+    })
+
+    const roadAddressInput= document.querySelector('#sample4_roadAddress');
+    roadAddressInput.addEventListener('focus', function(){
+        document.querySelector('#roadAddressSpan').style.borderColor= '#008000';
+    })
+    roadAddressInput.addEventListener('blur', function(){
+        document.querySelector('#roadAddressSpan').style.borderColor= '#ced4da';
+    })
+
+    const jibunAddressInput= document.querySelector('#sample4_jibunAddress');
+    jibunAddressInput.addEventListener('focus', function(){
+        document.querySelector('#jibunAddressSpan').style.borderColor= '#008000';
+    })
+    jibunAddressInput.addEventListener('blur', function(){
+        document.querySelector('#jibunAddressSpan').style.borderColor= '#ced4da';
+    })
+
+    const detailAddressInput= document.querySelector('#sample4_detailAddress');
+    detailAddressInput.addEventListener('focus', function(){
+        document.querySelector('#detailAddressSpan').style.borderColor= '#008000';
+    })
+    detailAddressInput.addEventListener('blur', function(){
+        document.querySelector('#detailAddressSpan').style.borderColor= '#ced4da';
+    })
+
+    const phoneInput= document.querySelector('#phone');
+    phoneInput.addEventListener('focus', function(){
+        document.querySelector('#phoneSpan').style.borderColor= '#008000';
+    })
+    nicknameInput.addEventListener('blur', function(){
+        document.querySelector('#phoneSpan').style.borderColor= '#ced4da';
+    })
+
+    emailInput.addEventListener('focus', function(){
+        document.querySelector('#emailSpan').style.borderColor= '#008000';
+    })
+    emailInput.addEventListener('blur', function(){
+        document.querySelector('#emailSpan').style.borderColor= '#ced4da';
+    })
+
+    emailKeyInput.addEventListener('focus', function(){
+        document.querySelector('#emailKeySpan').style.borderColor= '#008000';
+    })
+    emailKeyInput.addEventListener('blur', function(){
+        document.querySelector('#emailKeySpan').style.borderColor= '#ced4da';
+    })
+    
 
 
 });
