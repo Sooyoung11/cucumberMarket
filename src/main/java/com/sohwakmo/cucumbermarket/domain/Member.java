@@ -1,7 +1,9 @@
 package com.sohwakmo.cucumbermarket.domain;
 
+
 import jakarta.persistence.*;
 import lombok.*;
+
 
 @Entity
 @NoArgsConstructor
@@ -13,7 +15,7 @@ import lombok.*;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator = "MEMBERS_SEQ_GEN")
     private Integer memberNo; // Primary Key
 
 

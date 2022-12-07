@@ -1,7 +1,9 @@
 package com.sohwakmo.cucumbermarket.domain;
 
+
 import jakarta.persistence.*;
 import lombok.*;
+
 
 @Entity(name = "POST")
 @NoArgsConstructor

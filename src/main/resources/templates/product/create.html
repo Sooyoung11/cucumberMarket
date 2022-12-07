@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ layout/layout.html }">
+
+<div layout:fragment="content">
+  <div class="card mw-50" style="display: block; width:1000px; margin:0 auto;">
+    <div class="list-group-item text-center fw-normal p-3 mb-2 bg-secondary text-dark bg-opacity-10" >
+      <h1>상품 등록</h1>
+    </div>
+
+    <div class="list-group list-group-flush">
+      <form method="post" enctype="multipart/form-data">
+        <div class="my-2 mb-3">
+          <label for="title" class="form-label fst-italic">제목</label>
+          <input id="title" class="form-control" maxlength="50"
+                 type="text" name="title" placeholder="제목을 입력해 주세요." required autofocus />
+        </div>
+        <div class="mb-3">
+          <label for="content" class="form-label fst-italic" >내용</label>
+          <textarea rows="5" cols="80" id="content" class="form-control" minlength="5"
+                    name="content" placeholder="내용을 입력해 주세요." required ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label fst-italic">가격</label>
+          <div class="my-2 input-group">
+            <input  id="price" class="form-control" size="10"
+                    type="number" name="price" placeholder="가격을 입력해 주세요." required />
+            <span class="input-group-text">원</span>
+          </div>
+          <div>
+              <input type="hidden" name="clickCount" th:value="0"/>    <!-- 조회수 0으로 시작.. -->
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label fst-italic">카테고리</label>
+          <select id="category" class="form-select" name="category">
+            <option value="0">카테고리 선택</option>
+            <option value="1">디지털기기</option>
+            <option value="2">생활가전/주방</option>
+            <option value="3">유아용품</option>
+            <option value="4">여성패션/잡화</option>
+            <option value="5">남성패션/잡화</option>
+            <option value="6">뷰티/미용</option>
+            <option value="7">스포츠/레저</option>
+            <option value="8">취미/게임/음반</option>
+            <option value="9">도서</option>
+            <option value="10">반려동물용품</option>
+          </select> <!-- -->
+        </div>
+        <div class="my-2 input-group mb-3">
+          <input id="imgUpload" class="form-control" name="photoUrl1"
+                 type="file" name="imgUpload" multiple="multiple"/>
+        </div>
+        <div class="my-2 input-group mb-3">
+          <input type="submit" class="btn btn-outline-info" value="등록" />
+          <a class="btn btn-outline-secondary" href="/product/list">취소</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</html>

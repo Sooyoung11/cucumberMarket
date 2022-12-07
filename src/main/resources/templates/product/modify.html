@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{ layout/layout.html }">
+
+<div layout:fragment="content">
+  <div class="card mw-50" style="display: block; width:1000px; margin:0 auto;">
+    <div class="list-group-item text-center fw-normal p-3 mb-2 bg-secondary text-dark bg-opacity-10" >
+      <h1>상품 수정 </h1>
+    </div> <!-- -->
+
+    <div class="list-group list-group-flush">
+      <form id="formModify" enctype="multipart/form-data">
+
+        <div class="my-2 mb-3">
+          <input id="productNo" type="hidden" name="productNo" th:value="${product.productNo}" readonly /> <!--번호 -->
+        </div>
+
+        <div class="my-2 mb-3">
+          <label for="title" class="form-label fst-italic">제목</label>
+          <input id="title" class="form-control" maxlength="50"
+                 type="text" name="title" th:value="${product.title }" autofocus />
+        </div>
+        <div class="mb-3">
+          <label for="content" class="form-label fst-italic" >내용</label>
+          <textarea id="content" class="form-control" minlength="5"
+                    name="content" th:text="${product.content }" ></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label fst-italic">가격</label>
+          <div class="my-2 input-group">
+            <input  id="price" class="form-control"
+                    type="number" name="price" th:value="${product.price}" />
+            <span class="input-group-text">원</span>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label fst-italic">카테고리</label>
+          <select id="category" class="form-select" name="category" th:value="${product.category}">
+            <option value="1">디지털기기</option>
+            <option value="2">생활가전/주방</option>
+            <option value="3">유아용품</option>
+            <option value="4">여성패션/잡화</option>
+            <option value="5">남성패션/잡화</option>
+            <option value="6">뷰티/미용</option>
+            <option value="7">스포츠/레저</option>
+            <option value="8">취미/게임/음반</option>
+            <option value="9">도서</option>
+            <option value="10">반려동물용품</option>
+          </select>
+        </div>
+        <div class="my-2 input-group mb-3">
+          <input id="imgUpload" class="form-control"
+                 type="file" name="imgUpload" multiple="multiple"/>
+        </div>
+        <div class="my-2 input-group mb-3" style="margin-bottom: 10px;">
+          <button type="button" class="btn btn-outline-info" id="updateButtonOk">수정 완료</button>
+          <a class="btn btn-outline-secondary" type="button" href="/product/list">취소</a>
+        </div>
+      </form>
+
+      <div style="margin-bottom: 100px;"></div>
+
+    </div>
+  </div>
+</div>
+
+<th:block layout:fragment="script">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script th:src="@{ /js/productModify.js }"></script>
+</th:block>
+
+</html>

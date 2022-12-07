@@ -33,39 +33,29 @@ public class Product extends BaseTimeEntity {
     @Column(columnDefinition = "integer default 0") //조회수.
     private Integer clickCount;
 
-
+    @Column
     private boolean status; // 거래상태
 
-
+    @Column
     private String photoUrl1;
 
-
+    @Column
     private String photoUrl2;
 
-
+    @Column
     private String photoUrl3;
 
-
+    @Column
     private String photoUrl4;
 
+    @Column
     private String photoUrl5;
 
-    private String photoName1;
-
-    private String photoName2;
-
-    private String photoName3;
-
-    private String photoName4;
-
-    private String photoName5;
     @Column
     private Integer likeCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Member boughtMemberNo;
-
-
 
     public Product updateClickCount(Integer clickCount) {
         this.clickCount = clickCount;
@@ -79,20 +69,20 @@ public class Product extends BaseTimeEntity {
         return this;
     }
 
-        public com.sohwakmo.cucumbermarket.domain.Product update(Integer clickCount) {
-            this.clickCount = clickCount;
+    public Product update(Integer clickCount) {
+        this.clickCount = clickCount;
 
-            return this;
-        }
+        return this;
+    }
 
-        public com.sohwakmo.cucumbermarket.domain.Product update(String title, String content, Integer price, String category) {
-            this.title = title;
-            this.content = content;
-            this.price = price;
-            this.category = category;
+    public Product update(String title, String content, Integer price, String category) {
+        this.title = title;
+        this.content = content;
+        this.price = price;
+        this.category = category;
 
-            return this;
-        }
+        return this;
+    }
 
 
 }

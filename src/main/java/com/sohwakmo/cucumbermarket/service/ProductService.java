@@ -13,10 +13,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,6 +41,7 @@ public class ProductService {
 
         return productRepository.findById(productNo).get();
     }
+
 
     @Transactional
     public Product detail(Integer productNo) {
@@ -158,25 +162,33 @@ public class ProductService {
 
     @Transactional
     public Integer update(ProductUpdateDto dto) { // 상품 업데이트.
-        log.info("update(dto={})", dto);
-
-        Product entity = productRepository.findById(dto.getProductNo()).get();
-        Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
-        log.info("newProduct={}");
-        return entity.getProductNo();
-    }
+            log.info("update(dto={})", dto);
+            Product entity = productRepository.findById(dto.getProductNo()).get();
+            Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
+            log.info("newProduct={}");
+            return entity.getProductNo();
+        }
 
     public Integer delete(Integer productNo) {
-        log.info("deleteProduct(productNo={})", productNo);
+            log.info("deleteProduct(productNo={})", productNo);
 
-        productRepository.deleteById(productNo);
+            productRepository.deleteById(productNo);
 
-        return productNo;
+            return productNo;
+        }
+
+        //이미지
+    public void saveImg(Product product, MultipartFile file) throws Exception {
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/images/product/";
+
+        UUID uuid = UUID.randomUUID();
+
+        String fileName = uuid + "_" + file.getOriginalFilename();
+
+        File saveFile = new File(projectPath, fileName);
+
+        productRepository.save(product);
     }
-
-
-
-
 }
 
 
