@@ -21,9 +21,6 @@ window.addEventListener('DOMContentLoaded', event => {
         const replier = document.querySelector('#replier').value;
         // 댓글 내용을 찾음.
         const replyContent = document.querySelector('#replyContent').value;
-        // 멤버 번호 찾음.
-        const memberNo = document.querySelector('#memberNo').value;
-        console.log(memberNo);
 
         // 댓글 작성자와 내용은 비어있으면 안됨.
         if (replier == '' || replyContent == '') {
@@ -42,7 +39,6 @@ window.addEventListener('DOMContentLoaded', event => {
             replyContent: replyContent, // 댓글 내용
             replier: replier, // 댓글 작성자
             secretReply: secretReply, // 비밀 댓글
-            memberNo: memberNo,// 멤버 번호
             likeCount: 0 // 좋아요 카운트
 
         };
@@ -55,6 +51,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 alert('# ' + response.data + '댓글 작성 성공');
                 clearInputs(); // 댓글 작성자와 내용을 삭제.
                 readAllReplies(); // 댓글 목록을 다시 요청.
+
             }) // 성공 응답을 받았을 때
             .catch(error => {
                 console.log(error);
@@ -63,7 +60,6 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
     function clearInputs() {
-        document.querySelector('#replier').value = '';
         document.querySelector('#replyContent').value = '';
     }
 
@@ -110,8 +106,12 @@ window.addEventListener('DOMContentLoaded', event => {
                     +'</div>'
                     +'</div>'
                     + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
-                    + `<button type="button" class=" btn text-gray"  data-rid="${r.replyNo}">수정하기</button>`
-                    + '</div>'
+
+                    if(r.replier == loginUser) {
+                         str += `<button type="button" class="btnModifies btn text-gray"  data-rid="${r.replyNo}">수정하기</button>`
+                    }
+
+                   str += '</div>'
                     + '</div>'
 
 
@@ -126,9 +126,13 @@ window.addEventListener('DOMContentLoaded', event => {
                     + `<button type="button" id="likeButton" class="likeButton btn btn-outline-dark my-2"  data-rid="${r.replyNo}" >` + '👍 ' + r.likeCount +  '</button>'
                     +'</div>'
                     + '<div class="text-gray-dark my-2 p-4">' + r.modifiedTime +'</div>'
-                    + `<button type="button" class="btnModifies btn text-primary"  data-rid="${r.replyNo}">수정하기</button>`
+
+                        if(r.replier == loginUser) {
+                            str += `<button type="button" class="btnModifies btn text-primary"  data-rid="${r.replyNo}">수정하기</button>`
+                        }
+
                     // TODO: version2 에서 대댓글 기능 구현하기
-                    + `<button type="button" class="btnReReply btn text-primary" " data-rid="${r.replyNo}">`+ '답글보기' + '</button>'
+                     str += `<button type="button" class="btnReReply btn text-primary" " data-rid="${r.replyNo}">`+ '답글보기' + '</button>'
 
                 if(r.replyNo == testint){
                     str +=
