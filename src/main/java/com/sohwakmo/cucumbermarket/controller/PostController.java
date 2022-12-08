@@ -84,9 +84,13 @@ public class    PostController {
                 .title(dto.getTitle()).content(dto.getContent()).clickCount(dto.getClickCount()).member(member).build().toEntity();
         for (MultipartFile multipartFile : files) {
             log.info("files={}", files);
-            Post newPost=postService.createPost(post,multipartFile);
+            log.info("multipartFile={}",multipartFile);
+            if(multipartFile.isEmpty()){ // 사진을 넣지않고 제목 내용만 입력한경우
+                Post newPost = postService.createPost(post);
+            }else{ // 사진도 넣은경우
+                Post newPost=postService.createPost(post,multipartFile);
+            }
         }
-
         return "redirect:/post/list";
     }
 
