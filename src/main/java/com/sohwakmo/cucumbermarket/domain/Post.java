@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString(exclude = {"member"})
-@SequenceGenerator(name = "POST_SEQ_GEN",sequenceName = "POST_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "POSTS_SEQ_GEN",sequenceName = "POST_SEQ", allocationSize = 1)
 public class Post extends BaseTimeEntity {
 
     @Id
