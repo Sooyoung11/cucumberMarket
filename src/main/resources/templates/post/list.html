@@ -90,7 +90,7 @@
         </li>
         <li
           class="page-item"
-          th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled'"
+          th:classappend="${list.totalPages <= list.pageable.pageNumber + 1} ? 'disabled'"
         >
           <a
             class="page-link"
