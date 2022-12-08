@@ -124,6 +124,8 @@
               class="form-control"
               id="replier"
               placeholder="작성자"
+              th:value="${#authentication.principal.nickname}"
+              readonly
             />
           </div>
         </div>
