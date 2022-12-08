@@ -12,20 +12,24 @@
             <input type="hidden" th:value="${post.postNo}" name="id" />
 
             <div>
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                id="modify"
+              <th:block
+                th:if="${nickname}==${#authentication.principal.nickname}"
               >
-                수정
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-secondary"
-                id="delete"
-              >
-                삭제
-              </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  id="modify"
+                >
+                  수정
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  id="delete"
+                >
+                  삭제
+                </button>
+              </th:block>
               <button
                 type="button"
                 class="btn btn-outline-secondary float-right"
@@ -109,12 +113,13 @@
             name="postNo"
             th:value="${post.postNo}"
           />
-        </div><div class="col-4">
+        </div>
+        <div class="col-4">
           <input
-                  type="hidden"
-                  id="memberNo"
-                  name="memberNo"
-                  th:value="${#authentication.principal.memberNo}"
+            type="hidden"
+            id="memberNo"
+            name="memberNo"
+            th:value="${#authentication.principal.memberNo}"
           />
         </div>
         <div class="card-header">
@@ -152,7 +157,7 @@
       <hr />
 
       <!-- 댓글 리스트 -->
-      <div id="replies" class="my-2 p-3 bg-body rounded shadow-sm" ></div>
+      <div id="replies" class="my-2 p-3 bg-body rounded shadow-sm"></div>
 
       <!-- Modal -->
       <div
