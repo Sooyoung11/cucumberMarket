@@ -101,13 +101,22 @@
 
     <th:block layout:fragment="script">
 
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-                const memberNo = 1; // 로그인한 사람의 memberNo로 바뀌어야 함.
-                const productNo = [[ ${ product.productNo } ]]; // 상품 번호
-                const productMemberNo = [[ ${ member.memberNo } ]]; // 해당 상품 등록한 memberNo;
-                const boughtMemberNo = 4; // 상품 사간 사람의 번호가 들어갈 예정
+                let memberNo          = [[${#authentication.principal.memberNo} ]]; // 로그인한 사람의 memberNo
+                let productNo         = [[ ${ product.productNo } ]];               // 상품 번호
+                let productMemberNo   = [[ ${ member.memberNo } ]];                 // 상품 등록한 memberNo;
+                let boughtMemberNo    = 2;                                          // 상품 구매자 memberNo 들어갈 예정
+
+                if (memberNo == null) { // 로그인한 아이디가 없다면
+                    window.location.href = "/login";
+                }
+
+                console.log(memberNo);
+                console.log(productNo);
+                console.log(productMemberNo);
+                console.log(boughtMemberNo);
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
         <script th:src="@{ /js/productDetail.js }" th:inline="javascript"></script>
     </th:block>
