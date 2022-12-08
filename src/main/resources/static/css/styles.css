@@ -153,8 +153,7 @@ h6, .h6 {
 }
 
 p {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
 abbr[title],
@@ -174,14 +173,13 @@ address {
 
 ol,
 ul {
-  padding-left: 2rem;
+  margin: 0;padding: 0;
 }
 
 ol,
 ul,
 dl {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0;padding: 0;
 }
 
 ol ol,
@@ -236,11 +234,7 @@ sup {
 }
 
 a {
-  color: #0d6efd;
-  text-decoration: underline;
-}
-a:hover {
-  color: #0a58ca;
+  text-decoration: none;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
