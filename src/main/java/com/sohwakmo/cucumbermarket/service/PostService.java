@@ -2,11 +2,13 @@ package com.sohwakmo.cucumbermarket.service;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Post;
+import com.sohwakmo.cucumbermarket.domain.Reply;
 import com.sohwakmo.cucumbermarket.dto.PostReadDto;
 import com.sohwakmo.cucumbermarket.dto.PostUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.PostRepository;
 
+import com.sohwakmo.cucumbermarket.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,8 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+
+    private  final ReplyRepository replyRepository;
 
     @Transactional(readOnly = true)
     /**
@@ -89,6 +93,10 @@ public class PostService {
 
 
     public void deletePost(Integer id) {
+        List<Reply>list = replyRepository.findByPostPostNoOrderByReplyNoDesc(id).stream().toList();
+        for(Reply r : list){
+            replyRepository.delete(r);
+        }
         postRepository.deleteById(id);
     }
 
