@@ -42,7 +42,7 @@ public class PostService {
      * @return 결과 페이지들을 리턴
      */
     public List<PostReadDto> searchPost(String searchText){
-        List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText);
+        List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText,searchText);
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
             Member member = memberRepository.findById(p.getMember().getMemberNo()).get();

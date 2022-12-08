@@ -22,13 +22,11 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
-
     @Column(nullable = false)
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY) // 다대일 관계(relation)
     private Member member;
-
 
     @ColumnDefault("0")
     private Integer clickCount;
