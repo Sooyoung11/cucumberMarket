@@ -3,12 +3,7 @@ package com.sohwakmo.cucumbermarket.domain;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-
 import javax.persistence.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity(name = "POST")
 @NoArgsConstructor
