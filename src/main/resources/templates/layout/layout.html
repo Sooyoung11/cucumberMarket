@@ -6,88 +6,94 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>cucumberMarket</title>
+    <title>오이마켓 | CUCUMBER MARKET</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dokdo&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/layout.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
+
 <body>
-
-    <div id="wrapper">
-
-        <!-- header -->
-        <header>
-            <div class="text-center">
-                <div id="topNav">
-                    <div id="topNavWrap">
-                        <ul>
-                            <th:block sec:authorize="isAnonymous()">
-                                <li><a th:href="@{ /member/join }">회원가입</a></li>
-                                <li><a th:href="@{ /login }">로그인</a></li>
-                            </th:block>
-                            <th:block sec:authorize="isAuthenticated()">
-                                <li>
-                                    <a th:href="@{ /logout }">
-                                        <span sec:authentication="name"></span>
-                                        로그아웃
-                                    </a>
-                                </li>
-                            </th:block>
-                        </ul>
-                    </div>
-                </div>
-                <h1><a href="#">오이마켓</a></h1>
-
-                <!-- Nav -->
-                <nav id="nav">
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">sub</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">sub</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">sub</a>
-                        </li>
-                        <th:block sec:authorize="isAuthenticated()">
-                        <li class="nav-item">
-                        <span class="text-info" name="member_id" sec:authentication="name" readonly/>
-                            <a class="nav-link " th:href="@{/mypage/mymain?memberNo={no} (no= ${#authentication.principal.memberNo})}" tabindex="-1" aria-disabled="true">마이페이지</a>
-                        </li>
+<div id="wrapper">
+    <!-- header -->
+    <header>
+        <div id="wrap">
+            <!--topNav-->
+            <div id="topNav">
+                <div id="topNavWrap">
+                    <ul>
+                        <li id="topNavFL"><a th:href="@{ / }">HOME</a></li>
+                        <th:block sec:authorize="isAnonymous()">
+                            <li><a th:href="@{ /member/join }">회원가입</a></li>
+                            <li><a th:href="@{ /login }">로그인</a></li>
                         </th:block>
-                        </li>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <li>
+                                <a th:href="@{ /logout }">
+                                    <span sec:authentication="name"></span>
+                                    로그아웃
+                                </a>
+                            </li>
+                        </th:block>
                     </ul>
-                </nav>
-            </div>
-        </header>
+                </div>
+            </div> <!--end.topNav-->
+            
+            <!-- Nav -->
+            <h1><a href="#">오이마켓</a></h1>
+            <nav id="nav">
+                <ul class="nav justify-content-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">sub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">sub</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">sub</a>
+                    </li>
+                    <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                    <span class="text-info" name="member_id" sec:authentication="name" readonly/>
+                        <a class="nav-link " th:href="@{/mypage/mymain?memberNo={no} (no= ${#authentication.principal.memberNo})}" tabindex="-1" aria-disabled="true">마이페이지</a>
+                    </li>
+                    </th:block>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
 
-        <section id="content" layout:fragment="content">
-        </section>
+    <section id="content" layout:fragment="content">
+    </section>
 
-        <!-- Footer -->
-        <footer class="text-center text-white relative-bottom" style="background-color: #92eb34;">
-            <!-- Grid container -->
-            <div class="container p-4"></div>
-            <!-- Grid container -->
+    <!-- Footer -->
+    <footer class="text-center text-white relative-bottom" style="background-color: #92eb34;">
+        <!-- Grid container -->
+        <div class="container p-4"></div>
+        <!-- Grid container -->
 
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: #34eb6e">
-                © 2020 Copyright:
-                <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-            </div>
-            <!-- Copyright -->
-        </footer>
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: #34eb6e">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
 
-    </div>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <th:block layout:fragment="script">
-        <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<th:block layout:fragment="script">
+    <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!--        &lt;!&ndash; 댓글 관련 자바스크립트 함수/코드들을 작성한 스크립트 파일 &ndash;&gt;-->
 <!--        <script th:src="@{/js/reply.js}"></script>-->
 <!--&lt;!&ndash;        <script th:src="@{/js/PostDetail.js}"></script>&ndash;&gt;-->
-    </th:block>
+</th:block>
 
 </body>
 </html>

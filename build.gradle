@@ -28,7 +28,7 @@ dependencies {
 
 	// 인증 메일 발송
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-//	implementation 'javax.mail:javax.mail-api:1.6.2'
+	implementation 'javax.mail:javax.mail-api:1.6.2'
 
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'

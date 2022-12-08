@@ -5,11 +5,8 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,11 +27,9 @@ public class Member {
 
     @NotNull
     @Column(nullable = false, unique = true)
-    @Size(min = 2, max = 20, message = "아이디는 2자이상 20자 이하입니다.")
     private String memberId; // 2자 이상
 
     @NotNull
-    @Size(min = 8, max = 255, message = "비밀번호는 8자이상 20자 이하입니다.")
     @Column(nullable = false)
     private String password;
 

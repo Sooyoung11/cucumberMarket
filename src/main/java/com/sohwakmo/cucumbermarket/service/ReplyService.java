@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -37,7 +38,7 @@ public class ReplyService {
 
         List<Reply> list = replyRepository.findByPostPostNoOrderByReplyNoDesc(postNo);
 
-        return list.stream().map(ReplyReadDto::fromEntity).toList();
+        return list.stream().map(ReplyReadDto::fromEntity).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true) // detail 화면 보기 기능
