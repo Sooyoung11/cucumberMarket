@@ -57,6 +57,13 @@ public class PostService {
          return post;
     }
 
+    /**
+     * 사진을 넣고 작성을한경우
+     * @param post 제목, 내용
+     * @param files 사진
+     * @return 변경된 객체
+     * @throws Exception 사진이 있냐 없냐 에따라 exception 발생
+     */
     public Post createPost(Post post, MultipartFile files)throws Exception{
         String fileName = saveImage(files); // 이미지 생성,저장 메서드
 
@@ -67,6 +74,15 @@ public class PostService {
             post.setImageUrl02("/files/"+fileName);
             post.setImageName02(fileName);
         }
+        return postRepository.save(post);
+    }
+
+    /**
+     * 사진을 넣지않는 일반적인 게시물
+     * @param post 제목,내용
+     * @return 변경된 게시물 객체
+     */
+    public Post createPost(Post post){
         return postRepository.save(post);
     }
 

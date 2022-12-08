@@ -76,7 +76,7 @@
                 th:text="${post.content}"
               >
               </textarea>
-              <div th:classappend="${post.imageUrl01 == ''} ? 'hidden'">
+              <div th:classappend="${post.imageUrl01 == null} ? 'hidden'">
                 <img th:src="@{${post.imageUrl01}}" />
               </div>
               <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
