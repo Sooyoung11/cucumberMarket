@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
@@ -34,7 +34,7 @@ public class MemberController {
 
     @GetMapping("/member/check_password")
     @ResponseBody
-    public ResponseEntity<String> checkPassword(String password){
+    public ResponseEntity<String> checkPassword(@RequestParam String password){
         log.info("checkPassword(password= {})", password);
 
         String result= memberService.checkPassword(password);

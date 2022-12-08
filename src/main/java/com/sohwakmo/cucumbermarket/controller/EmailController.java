@@ -5,8 +5,9 @@ import com.sohwakmo.cucumbermarket.service.EmailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
@@ -16,21 +17,31 @@ public class EmailController {
 
     @Autowired
     private final EmailService emailService;
+    private final EmailServiceImpl emailServiceImpl;
 
-    @PostMapping("/member/check_emailkey")
-    public void emailConfirm(String email) throws Exception {
-        log.info("emailConfirm(email= {}) POST", email);
-        emailService.sendEmail(email);
+    /*
+    @PostMapping("/member/sendEmail")
+    public String sendEmail(@RequestParam String email) throws Exception {
+        log.info("sendEmail(email= {})", email);
+        String code= emailService.sendEmail(email);
+        return code;
+    }*/
+
+    @GetMapping("/member/sendEmail")
+    @ResponseBody
+    public String sendEmail(String email) throws Exception {
+        log.info("sendEmail(email= {})", email);
+        String code= emailService.sendEmail(email);
+        log.info("sendEmail(code= {}", code);
+        return code;
     }
 
-    @PostMapping("/member/verifyCode")
+    @GetMapping("/member/emailAuth")
     @ResponseBody
-    public int verifyCode(String code){
-        log.info("verifyCode(code= {} POST", code);
-        int result= 0;
-        if(EmailServiceImpl.emailKey.equals(code)){
-            result= 1;
-        }
-        return result;
+    public ResponseEntity<String> checkEmailKey(String authCode, String emailKey){
+        log.info("checkEmailKey(authCode= {}, emailKey= {}",authCode, emailKey);
+
+        String result= emailServiceImpl.checkEmailKey(authCode, emailKey);
+        return ResponseEntity.ok(result);
     }
 }

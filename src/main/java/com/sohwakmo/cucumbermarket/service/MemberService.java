@@ -50,7 +50,7 @@ public class MemberService {
     }
 
     public String checkNickname(String nickname){
-        log.info("checkNickname= {})", nickname);
+        log.info("checkNickname(nickname= {})", nickname);
 
         Optional<Member> result= memberRepository.findByNickname(nickname);
         if(result.isPresent()){
@@ -61,7 +61,7 @@ public class MemberService {
     }
 
     public String checkEmail(String email){
-        log.info("checkEmail= {})", email);
+        log.info("checkEmail(email= {})", email);
 
         Optional<Member> result= memberRepository.findByEmail(email);
         if(result.isPresent()){

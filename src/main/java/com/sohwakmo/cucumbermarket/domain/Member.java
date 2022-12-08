@@ -4,12 +4,10 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.*;
 
-import javax.validation.constraints.Size;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
 
 @Entity
 @NoArgsConstructor
@@ -26,7 +24,6 @@ public class Member {
     private Integer memberNo; // Primary Key
 
     @Column(nullable = false, unique = true)
-    @Size(min = 2, max = 20, message = "아이디는 2자이상 20자 이하입니다.")
     private String memberId; // 2자 이상
 
     @Column(nullable = false)
@@ -61,7 +58,6 @@ public class Member {
 
     @ColumnDefault("'default.jpg'")
     private String userImgName;
-
 
 
     @ElementCollection(fetch = FetchType.LAZY)
