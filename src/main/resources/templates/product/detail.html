@@ -103,7 +103,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-                const memberNo = 1; // 로그인한 사람의 memberNo로 바뀌어야 함.
+                const memberNo = [[${#authentication.principal.memberNo}]]; // 로그인한 사람의 memberNo로 바뀌어야 함.
                 const productNo = [[ ${ product.productNo } ]]; // 상품 번호
                 const productMemberNo = [[ ${ member.memberNo } ]]; // 해당 상품 등록한 memberNo;
                 const boughtMemberNo = 4; // 상품 사간 사람의 번호가 들어갈 예정
