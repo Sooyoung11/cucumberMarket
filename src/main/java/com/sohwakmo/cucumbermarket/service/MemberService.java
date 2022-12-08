@@ -83,6 +83,6 @@ public class MemberService {
     }
 
     public Member findMemberByMemberNo(Integer memberNo) {
-        return memberRepository.findById(1).orElse(null);
+        return memberRepository.findById(memberNo).orElse(null);
     }
 }
