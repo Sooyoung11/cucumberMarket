@@ -23,7 +23,6 @@
       <!--제목, 버튼-->
       <div>
         <form th:object="${post}" id="form" enctype="multipart/form-data">
-          <!-- //TODO 로그인한 회원 멤버넘버로 바꿔야함!!!-->
           <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}"/>
           <input type="hidden" name="clickCount" th:value="0" />
           <input
