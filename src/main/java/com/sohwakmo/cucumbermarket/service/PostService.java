@@ -148,7 +148,7 @@ public class PostService {
      */
     private void extractImage(String imageSrc) throws IOException {
         // 경로는 능동적으로 변경
-        Path filePath = Paths.get("E:\\cucumberMarket\\src\\main\\resources\\static\\files\\" + imageSrc);
+        Path filePath = Paths.get(System.getProperty("user.dir")+"\\src\\main\\resources\\static\\files\\" + imageSrc);
         Files.delete(filePath);
     }
 
