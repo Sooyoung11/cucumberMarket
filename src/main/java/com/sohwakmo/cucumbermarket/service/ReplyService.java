@@ -1,10 +1,12 @@
 package com.sohwakmo.cucumbermarket.service;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Post;
 import com.sohwakmo.cucumbermarket.domain.Reply;
 import com.sohwakmo.cucumbermarket.dto.ReplyReadDto;
 import com.sohwakmo.cucumbermarket.dto.ReplyRegisterDto;
 import com.sohwakmo.cucumbermarket.dto.ReplyUpdateDto;
+import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.PostRepository;
 import com.sohwakmo.cucumbermarket.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +24,14 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
+    private final MemberRepository memberRepository;
 
     public Integer create(ReplyRegisterDto dto) { // 댓글 create 기능
         log.info("dto={}", dto);
 
         Post post = postRepository.findById(dto.getPostNo()).get();
-        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).secretReply(dto.isSecretReply()).build();
+        Member member = memberRepository.findById(dto.getMemberNo()).get();
+        Reply reply = Reply.builder().post(post).member(member).replyContent(dto.getReplyContent()).replier(dto.getReplier()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
         reply = replyRepository.save(reply);
 
         return  reply.getReplyNo();
@@ -67,5 +71,15 @@ public class ReplyService {
         // @Transactional이 적용된 경우에 메서드 실행이 끝날 때 DB에 자동으로 save됨.
 
         return reply.getReplyNo();
+    }
+
+    @Transactional
+    public Integer updateLike( Integer likeCount) { // 댓글 좋아요 기능
+
+        Reply reply = replyRepository.findById(likeCount).get();
+        Integer a = reply.getLikeCount()+1;
+        reply = reply.likeCount(a);
+
+        return a;
     }
 }

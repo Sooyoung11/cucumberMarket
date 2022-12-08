@@ -1,5 +1,6 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Reply;
 import com.sohwakmo.cucumbermarket.dto.ReplyReadDto;
 import com.sohwakmo.cucumbermarket.dto.ReplyRegisterDto;
 import com.sohwakmo.cucumbermarket.dto.ReplyUpdateDto;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpClient;
 import java.util.List;
 
 @Slf4j
@@ -64,5 +66,14 @@ public class ReplyController {
         Integer result = replyService.update(dto);
 
         return ResponseEntity.ok(result);
+    }
+
+    @PatchMapping("/{replyNo}") // 댓글 좋아요 update
+    public ResponseEntity<Integer> updateLike(@PathVariable Integer replyNo){
+        log.info("reply={}",replyNo);
+
+        Integer result = replyService.updateLike(replyNo);
+
+        return  ResponseEntity.ok(result);
     }
 }
