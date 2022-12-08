@@ -1,11 +1,14 @@
 package com.sohwakmo.cucumbermarket.domain;
 
-import jakarta.persistence.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 
 @Data
 @NoArgsConstructor

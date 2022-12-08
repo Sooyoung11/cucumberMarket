@@ -21,8 +21,8 @@ public class ChatRoomService {
     private  final MessageRepository messageRepository;
     private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
-    public List<ChatRoom> getAllChatList(String memberId) {
-        Member member = memberRepository.findByMemberId(memberId);
+    public List<ChatRoom> getAllChatList(Integer memberNo) {
+        Member member = memberRepository.findById(memberNo).get();
         log.info(member.toString());
         List<ChatRoom> list = chatRoomRepository.findByMember(member);
         log.info("list = {}", list);
