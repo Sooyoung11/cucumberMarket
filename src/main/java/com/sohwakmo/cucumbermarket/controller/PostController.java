@@ -40,11 +40,15 @@ public class    PostController {
         final int start = (int)pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), list.size());
         final Page<PostReadDto> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
-        int startPage = Math.max(1, page.getPageable().getPageNumber() - 9);
-        int endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
+        int strtPage=1;
+        int endPage=1;
+        if(list.size()!=0) {
+            strtPage = Math.max(1, page.getPageable().getPageNumber() - 9);
+            endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
+        }
         int a = page.getPageable().getPageNumber();
         model.addAttribute("list", page);
-        model.addAttribute("startPage", startPage);
+        model.addAttribute("startPage", strtPage);
         model.addAttribute("endPage", endPage);
         return "/post/list";
     }

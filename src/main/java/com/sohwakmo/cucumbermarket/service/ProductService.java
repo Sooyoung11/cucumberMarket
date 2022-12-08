@@ -212,8 +212,8 @@ public class ProductService {
                 productRepository.deleteById(productNo); // 상품 테이블 해당 번호로 삭제
             } else { // 찜 목록에 데이터가 없는 경우
                 log.info("null");
+                productRepository.deleteById(productNo); // 상품 테이블 해당 번호로 삭제
             }
-
 
             return productNo;
         }

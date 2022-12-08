@@ -12,7 +12,7 @@
     <div class="list-group list-group-flush">
       <form method="post" enctype="multipart/form-data" action="/product/create">
         <div class="my-2 mb-3">
-          <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />
+          <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />    <!-- 멤버 -->
           <label for="title" class="form-label fst-italic">제목</label>
           <input id="title" class="form-control" maxlength="50"
                  type="text" name="title" placeholder="제목을 입력해 주세요." required autofocus />
