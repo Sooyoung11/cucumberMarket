@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message,Integer> {
-    List<Message> findByRoomIdOrderByIdDesc(String roomId);
+    List<Message> findByRoomId(String roomId);
 
 }

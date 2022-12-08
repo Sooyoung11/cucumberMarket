@@ -19,7 +19,6 @@ public class Message {
     private long id;
     private String message;
     private String writer;
-    private String receiver;
     private String sendTime;
     private String roomId;
 

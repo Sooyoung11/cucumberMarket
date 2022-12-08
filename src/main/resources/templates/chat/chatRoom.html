@@ -25,7 +25,24 @@
       <div>
         <div id="msgArea" class="col">
           <div th:each="messages : ${messages}">
-            <b th:text="${messages.message}"></b>
+            <th:block th:if="${messages.writer == 'test'}">
+              <div class="col-6">
+                <div class="alert alert-secondary">
+                  <b
+                    th:text="${messages.writer}+' : ' + ${messages.message}"
+                  ></b>
+                </div>
+              </div>
+            </th:block>
+            <th:block th:if="${messages.writer != 'test'}">
+              <div class="col-6">
+                <div class="alert alert-warning">
+                  <b
+                    th:text="${messages.writer}+' : ' + ${messages.message}"
+                  ></b>
+                </div>
+              </div>
+            </th:block>
           </div>
         </div>
       </div>
@@ -103,18 +120,29 @@
                    //3. send(path, header, message)로 메세지를 보낼 수 있음
                 //    stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}))
                 });
+                document.getElementById("message").addEventListener("keyup", function(e) {
+                  if (e.keyCode === 13) {
+                    let message = document.getElementById("message");
 
+                    console.log(username + ":" + message.value);
+                    stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate}));
+                    message.value = '';
+                    $("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
+                  }
+                });
 
-                const sendButton = document.querySelector("#button-send")
-                sendButton.addEventListener("click",function(e){
-                  let message = document.getElementById("message");
+            const sendButton = document.querySelector("#button-send")
+                    sendButton.addEventListener("click",function(e){
+                    let message = document.getElementById("message");
 
-                  console.log(username + ":" + message.value);
-                  stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate}));
-                  message.value = '';
-                })
+                    console.log(username + ":" + message.value);
+                    stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate}));
+                    message.value = '';
+                    $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
             });
+          })
     </script>
+    <script></script>
     <!-- JavaScript Bundle with Popper -->
     <script
       th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js}"
