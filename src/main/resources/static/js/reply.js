@@ -4,9 +4,11 @@
  */
 
 window.addEventListener('DOMContentLoaded', event => {
+
     // HTML 의 Document Object들이 모두 로딩이 끝난 후에 코드들이 실행될 수 있도록 하기 위해서.
     readAllReplies(); // 포스트 상세 페이지가 로딩된 후 댓글 목록 화면 출력.
 
+    let testint = 0;
     // btnReplyRegister 버튼을 찾고 이벤트 리스너를 등록.
     const btnReplyRegister = document.querySelector('#btnReplyRegister');
     btnReplyRegister.addEventListener('click', registerNewReply);
@@ -19,6 +21,9 @@ window.addEventListener('DOMContentLoaded', event => {
         const replier = document.querySelector('#replier').value;
         // 댓글 내용을 찾음.
         const replyContent = document.querySelector('#replyContent').value;
+        // 멤버 번호 찾음.
+        const memberNo = document.querySelector('#memberNo').value;
+        console.log(memberNo);
 
         // 댓글 작성자와 내용은 비어있으면 안됨.
         if (replier == '' || replyContent == '') {
@@ -30,10 +35,6 @@ window.addEventListener('DOMContentLoaded', event => {
         let secretReply = document.getElementById('secretReply').checked;
         console.log(secretReply);
 
-        // 좋아요 댓글 기능
-        const likeCount = document.querySelector('#likeCount').value;
-        console.log(likeCount);
-
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
         // java {} 은 배열, javascript {} 은 object.
         const data = {
@@ -41,10 +42,12 @@ window.addEventListener('DOMContentLoaded', event => {
             replyContent: replyContent, // 댓글 내용
             replier: replier, // 댓글 작성자
             secretReply: secretReply, // 비밀 댓글
-            likeCount: likeCount // 좋아요 카운트
+            memberNo: memberNo,// 멤버 번호
+            likeCount: 0 // 좋아요 카운트
+
         };
 
-
+        console.log(data);
         // Axios 라이브러리를 사용해서 Ajax POST 요청을 보냄.
         axios.post('/api/reply', data)
             .then(response => {
@@ -75,41 +78,41 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 
-
     function updateReplyList(data) {
         // 댓글들의 배열(data)을 html 영역에 보일 수 있도록 html 코드를 작성.
         const divReplies = document.querySelector('#replies');
 
+
         let str = ''; // div 안에 들어갈 HTML 코드
+
 
         // 비밀 댓글 출력 구분
         for(let r of data){
 
 
-                str +=
-                    '<h6 class="my-2 p-3">' + '작성자 : ' + r.replier + '</h6>'
+            str +=
+                '<h6 class="my-2 p-3">' + '작성자 : ' + r.replier + '</h6>'
 
-                    +'<div class="d-flex text-muted pt-3">'
-                        + '<div class="pb-3 mb-0 small 1h-sm border-bottom w-100">'
+                +'<div class="d-flex text-muted pt-3">'
+                + '<div class="pb-3 mb-0 small 1h-sm border-bottom w-100">'
 
 
 
             if(r.secretReply != false ){ // 비밀 체크 했을 때
 
                 str +=
-                            '<div class="d-flex justify-content-between">'
-                                 + '<div>'
-                                        + '<strong class="text-gray-dark  p-4">' + '비밀 댓글입니다.' + '</strong>'
-                                + '</div>'
-                                // TODO: version2 에서 공감 버튼 만들기
-                                +'<div class="inline ">'
+                    '<div class="d-flex justify-content-between">'
+                    + '<div>'
+                    + '<strong class="text-gray-dark  p-4">' + '비밀 댓글입니다.' + '</strong>'
+                    + '</div>'
+                    +'<div class="inline ">'
 
-                                +'</div>'
-                            +'</div>'
+                    +'</div>'
+                    +'</div>'
                     + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
-                    + `<button type="button" class=" btn text-gray" " data-rid="${r.replyNo}">수정하기</button>`
+                    + `<button type="button" class=" btn text-gray"  data-rid="${r.replyNo}">수정하기</button>`
                     // TODO: version2 에서 대댓글 기능 구현하기
-                    + `<button type="button" class=" btn text-gray" " data-rid="${r.replyNo}">답글보기</button>`
+                    + `<button type="button" class=" btn text-gray"  data-rid="${r.replyNo}">답글보기</button>`
                     + '</div>'
                     + '</div>'
 
@@ -117,24 +120,62 @@ window.addEventListener('DOMContentLoaded', event => {
 
             } else { // 비밀 체크 하지 않을 때
                 str +=
-                             '<div class="d-flex justify-content-between">'
-                                + '<div>'
-                                    + '<strong class="text-gray-dark  p-4">' + r.replyContent + '</strong>'
-                                + '</div>'
-                                // TODO: version2 에서 공감 버튼 만들기
-                    + '<button type="button" id="likeButton" class="likeButton btn btn-outline-dark my-2"  >' + '👍 ' + '<p id="count">' + 0 + '</p>'+  '</button>'
-                                 // + '<button type="button" id="likeButton" class="likeButton btn btn-outline-dark my-2"  data-rid="${r.replyNo}" >' + '👍 ' + r.likeCount +  '</button>'
-                            +'</div>'
-                    + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
-                    + `<button type="button" class="btnModifies btn text-primary" " data-rid="${r.replyNo}">수정하기</button>`
+                    '<div class="d-flex justify-content-between">'
+                    + '<div>'
+                    + '<strong class="text-gray-dark  p-4">' + r.replyContent + '</strong>'
+                    + '</div>'
+                    // TODO: version2 에서 공감 버튼 만들기
+                    + `<button type="button" id="likeButton" class="likeButton btn btn-outline-dark my-2"  data-rid="${r.replyNo}" >` + '👍 ' + r.likeCount +  '</button>'
+                    +'</div>'
+                    + '<div class="text-gray-dark my-2 p-4">' + r.modifiedTime +'</div>'
+                    + `<button type="button" class="btnModifies btn text-primary"  data-rid="${r.replyNo}">수정하기</button>`
                     // TODO: version2 에서 대댓글 기능 구현하기
-                    + `<button type="button" class=" btn text-primary" " data-rid="${r.replyNo}">답글보기</button>`
-                        + '</div>'
+                    + `<button type="button" class="btnReReply btn text-primary" " data-rid="${r.replyNo}">`+ '답글보기' + '</button>'
+
+                if(r.replyNo == testint){
+                    str +=
+                        `<hr />
+                                <!-- 댓글 작성하기 -->
+                                  <div class="card border-gray my-5">
+                                        <div class="card-header">
+                                            <div class="col-4">
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="replier"
+                                                    placeholder="작성자"/>
+                                            </div>
+                                        </div>
+                                        <div class="card-body row">
+                                            <div class="col-10">
+                                                <textarea
+                                                    class="form-control"
+                                                    id="replyContent"
+                                                    placeholder="댓글 작성"></textarea>
+                                            </div>
+                                            <div class="col-2">
+                                                <button class="btn btn-primary" id="btnReReplyRegister">등록</button>
+                                                <div class="form-inline">
+                                                    <div>
+                                                        비밀댓글
+                                                        <input type="checkbox" id="secretReply" name="secretReply" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            <hr />`
+                }
+
+                str += '</div>'
                     + '</div>'
 
             }
         }
         divReplies.innerHTML = str;
+
+
 
         // [좋아요 카운트 기능]
         const likeButton = document.querySelectorAll('.likeButton');
@@ -142,8 +183,26 @@ window.addEventListener('DOMContentLoaded', event => {
             btn.addEventListener('click', likeCountFunction);
         });
 
+        // [좋아요 클릭시 카운트 함수]
+        function likeCountFunction(event) {
+
+            const replyNo = event.target.getAttribute('data-rid');
+            console.log(replyNo);
+
+            // 해당 댓글 아이디의 댓글 객체를 Ajax patch 방식으로 요청.
+            axios
+                .patch('/api/reply/' + replyNo)
+                .then(response => {(response.data);
+                    readAllReplies(); })
+                .catch(error => {console.log(error)});
+        }
 
 
+        // [대댓글 기능]
+        const ReButton = document.querySelectorAll('.btnReReply');
+        ReButton.forEach(btn => {
+            btn.addEventListener('click', ReReply);
+        });
 
         // [수정] 버튼들이 HTML 요소로 만들어진 이후에, [수정] 버튼에 이벤트 리스너를 등록.
         const buttons = document.querySelectorAll('.btnModifies');
@@ -193,10 +252,10 @@ window.addEventListener('DOMContentLoaded', event => {
                         alert('#' + response.data + ' 댓글 삭제 성공');
                         readAllReplies();
                     }) // HTTP 200 OK 응답
-                      .catch(err => { console.log(err) }) // 실패 응답 처리
-                      .then(function () { // 성공 또는 실패 처리 후 항상 실행할 코드
-                            replyModal.hide();
-                       });
+                    .catch(err => { console.log(err) }) // 실패 응답 처리
+                    .then(function () { // 성공 또는 실패 처리 후 항상 실행할 코드
+                        replyModal.hide();
+                    });
             }
         }
 
@@ -225,31 +284,29 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         }
 
-        // [좋아요 클릭시 카운트 함수]
-        function likeCountFunction(event) {
-            console.log(event);
-            const replyNo = modalreplyId.value;
 
-            let likeCount = document.getElementById('count');
-            let val = likeCount.innerHTML;
-            val++;
-            console.log(val);
-            likeCount.innerText = val;
+        // 대댓글 작성하기
+        function ReReply(event) {
+            const replyNo = event.target.getAttribute('data-rid');
 
+            testint = replyNo;
+            readAllReplies();
 
-            // 해당 댓글 아이디의 댓글 객체를 Ajax GET 방식으로 요청.
-        //     const data = { val : val };
-        //     axios
-        //         .get('/api/reply/'+ replyNo, data) // Ajax PUT 요청 전송
-        //         .then(response => {
-        //             alert('#' + response.data + ' 성공');
-        //             readAllReplies();
-        //         }) // HTTP 200 OK 응답
-        //         .catch(err => { console.log(err) }); // 실패 응답 처리
-        //
+            // [대댓글 등록 기능]
+            // const btnReReply = document.querySelector('#btnReReplyRegister');
+            // btnReReply.addEventListener('click', btnReReplyFunction);
+            //
+            // // 대댓글 등록 버튼
+            // function btnReReplyFunction(event) {
+            //     console.log(event);
+            // }
         }
 
+
+
     }
+
+
 
 
 });

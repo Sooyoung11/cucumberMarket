@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,7 +26,7 @@ public class ReplyService {
         log.info("dto={}", dto);
 
         Post post = postRepository.findById(dto.getPostNo()).get();
-        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).secretReply(dto.isSecretReply()).build();
+        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
         reply = replyRepository.save(reply);
 
         return  reply.getReplyNo();
@@ -38,7 +37,7 @@ public class ReplyService {
 
         List<Reply> list = replyRepository.findByPostPostNoOrderByReplyNoDesc(postNo);
 
-        return list.stream().map(ReplyReadDto::fromEntity).collect(Collectors.toList());
+        return list.stream().map(ReplyReadDto::fromEntity).toList();
     }
 
     @Transactional(readOnly = true) // detail 화면 보기 기능
@@ -67,5 +66,15 @@ public class ReplyService {
         // @Transactional이 적용된 경우에 메서드 실행이 끝날 때 DB에 자동으로 save됨.
 
         return reply.getReplyNo();
+    }
+
+    @Transactional
+    public Integer updateLike( Integer likeCount) { // 댓글 좋아요 기능
+
+        Reply reply = replyRepository.findById(likeCount).get();
+        Integer a = reply.getLikeCount()+1;
+        reply = reply.likeCount(a);
+
+        return a;
     }
 }

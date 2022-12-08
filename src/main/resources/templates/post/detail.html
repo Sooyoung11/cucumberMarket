@@ -109,6 +109,13 @@
             name="postNo"
             th:value="${post.postNo}"
           />
+        </div><div class="col-4">
+          <input
+                  type="hidden"
+                  id="memberNo"
+                  name="memberNo"
+                  th:value="${#authentication.principal.memberNo}"
+          />
         </div>
         <div class="card-header">
           <div class="col-4">
