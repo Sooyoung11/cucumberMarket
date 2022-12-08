@@ -48,7 +48,15 @@
           </div>
           <div class="form-control">
             <span th:text="${nickname}">작성자</span>
-            <button>1대1채팅</button>
+            <th:block
+              th:if="${nickname}!=${#authentication.principal.nickname}"
+            >
+              <a
+                type="button"
+                th:href="@{/chat/chatRoom(roomId=${#authentication.principal.nickname})}"
+                >채팅하기</a
+              >
+            </th:block>
           </div>
           <div class="form-control">
             <span

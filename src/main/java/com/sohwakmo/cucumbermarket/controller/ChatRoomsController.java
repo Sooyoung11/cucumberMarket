@@ -30,7 +30,6 @@ public class ChatRoomsController {
     @GetMapping("/list")
     public String showChatList(Integer memberNo, Model model){
         log.info("memberId={}",memberNo);
-        // TODO 채팅
         List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
         model.addAttribute("list",list);
         return "/chat/chatList";
