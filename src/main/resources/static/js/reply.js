@@ -111,8 +111,6 @@ window.addEventListener('DOMContentLoaded', event => {
                     +'</div>'
                     + '<div class="text-gray-dark my-2 p-4">' +r.modifiedTime +'</div>'
                     + `<button type="button" class=" btn text-gray"  data-rid="${r.replyNo}">수정하기</button>`
-                    // TODO: version2 에서 대댓글 기능 구현하기
-                    + `<button type="button" class=" btn text-gray"  data-rid="${r.replyNo}">답글보기</button>`
                     + '</div>'
                     + '</div>'
 
