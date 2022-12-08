@@ -3,21 +3,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout }">
     <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Blog Home - Start Bootstrap Template</title>
-
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link th:href="@{/css/styles.css}" rel="stylesheet" />
+        <title>오이마켓 | 마이페이지</title>
     </head>
-    <body>
+
     <div layout:fragment="content">
         <!-- Page content-->
-        <div class="container">
+
             <div class="row">
                 <!-- Side widgets-->
                 <div class="col-lg-4">
@@ -27,7 +18,7 @@
                             <h6 class="m-0 font-weight-bold text-primary">사용자 정보</h6>
                         </div>
                         <div class="card-body">
-                            <div class="container">
+
 
                                 <div style="display: inline-block; margin: 0 5px;  float: right;">
                                     <a href="#">
@@ -92,7 +83,7 @@
                                     </div>
                                 </div>
 
-                            </div>
+
                         </div>
                     </div>
 
@@ -217,9 +208,10 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
+    </div>
             <!--Mypage Test END -->
-        </div>
+
 
         <!--modal start -->
         <div class="modal" tabindex="-1" id="profileImageModal">
@@ -267,5 +259,5 @@
         <script th:src="@{/js/profile.js}"></script>
         <!--<script th:src="@{/js/index.js}"></script>-->
     </th:block>
-    </body>
+
 </html>
