@@ -9,8 +9,9 @@
     display: inline-block;}
 
 #navUlL{margin: 0; padding: 0; float: left;}
-#navUlL li{text-decoration: none; float: left; margin-left: 40px;}
-#navUlL li a{display: inline-block; height: 100%; text-decoration: none; color: #333; font-size: 14px; font-weight: 600; line-height: 80px;}
+#navUlL li{text-decoration: none; float: left; margin-left: 52px;}
+#navUlL li a{display: inline-block; height: 100%; text-decoration: none; color: #333;
+    font-size: 15px; font-weight: 600; line-height: 80px;}
 
 #navUlR{margin: 0; padding: 0; float: right;}
 #navUlR li{float: right; margin-left: 16px;}

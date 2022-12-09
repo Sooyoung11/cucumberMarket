@@ -152,16 +152,26 @@ window.addEventListener('DOMContentLoaded', function () {
 
     // 인증코드 발송
     let authCode= '';
-    btnAuthcode.addEventListener('click', function(){
-        axios
-        .get('/member/sendEmail?email='+emailInput.value)
-        .then(function(res){
-            console.log(res.data);
-            authCode= res.data;
-            console.log('sendEmail=> authCode='+authCode);
-        })
-        .catch(err => { console.log(err); });
-    })
+    const btnAuth= document.querySelector('#btnAuth');
+    btnAuthcode.addEventListener('click', function (event) {
+        event.preventDefault();
+		const result = confirm('입력하신 주소로 인증코드를 발송할까요?');
+		if (result) {
+            axios
+            .get('/member/sendEmail?email='+emailInput.value)
+            .then(function(res){
+                console.log(res.data);
+                authCode= res.data;
+                console.log('sendEmail=> authCode='+authCode);
+                btnAuth.classList.remove('disabled');
+            })
+            .catch(err => {
+                btnAuth.classList.add('disabled');
+                alert('잘못된 주소입니다. 확인 후 다시 입력해주세요.');
+                return;
+            });
+		}
+	});
     
     // 인증코드 체크
     const emailKeyInput= document.querySelector('#emailKey');
