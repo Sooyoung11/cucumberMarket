@@ -11,13 +11,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductOfInterestedRepository  extends JpaRepository<ProductOfInterested, Integer> {
-    Optional<ProductOfInterested> findByMemberAndProduct(Member member, Product product);
+    Optional<ProductOfInterested> findByMemberAndProduct(Integer member, Product product);
 
     // delete table products_of_interested where member_no = ? and product_no = ?
-    void deleteByMemberAndProduct(Member member, Product product);
+    void deleteByMemberAndProduct(Integer member, Product product);
 
     // select * from products_of_interested where member_no = ?
-    List<ProductOfInterested> findByMember(Member Member);
+    List<ProductOfInterested> findByMember(Integer Member);
 
     // select * from products_of_interested where product_no = ?
     ProductOfInterested findByProduct(Product product);

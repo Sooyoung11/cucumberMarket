@@ -33,7 +33,8 @@ public class ProductService {
     public List<Product> read() { // 전체 상품 목록
         log.info("read()");
 
-        return productRepository.findAll();
+//        return productRepository.findAll();
+        return productRepository.findByStatusOrderByProductNoDesc(false);
     }
 
     public Product read(Integer productNo) { // 상품 조회
@@ -61,7 +62,8 @@ public class ProductService {
     public List<Product> search(String keyword) {
         log.info("search(keyword = {})", keyword);
 
-        List<Product> list = productRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByProductNoDesc(keyword, keyword);
+//        List<Product> list = productRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByProductNoDesc(keyword, keyword, keyword);
+        List<Product> list = productRepository.searchByKeyword(false, keyword, keyword, keyword);
         log.info("list = {}", list);
 
         return list;
@@ -71,14 +73,19 @@ public class ProductService {
     public void addInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("addInterested(dto = {}", dto);
 
-        Member member = memberRepository.findById(dto.getMemberNo()).get();
-        log.info("member = {}", member);
+//        Member member = memberRepository.findById(dto.getMemberNo()).get();
+//        log.info("member = {}", member);
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
+//        ProductOfInterested entity = ProductOfInterested.builder()
+//                        .member(member).product(product)
+//                        .build();
+//        log.info("entity = {}", entity);
+
         ProductOfInterested entity = ProductOfInterested.builder()
-                        .member(member).product(product)
-                        .build();
+                .member(dto.getMemberNo()).product(product)
+                .build();
         log.info("entity = {}", entity);
 
         productOfInterestedRepository.save(entity); // DB에 insert
@@ -91,25 +98,25 @@ public class ProductService {
     public void deleteInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("deleteInterested(dto = {})", dto);
 
-        Member member = memberRepository.findById(dto.getMemberNo()).get();
-        log.info("member = {}", member);
+//        Member member = memberRepository.findById(dto.getMemberNo()).get();
+//        log.info("member = {}", member);
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
         product.updateLikeCount(product.getLikeCount()-1);
 
-        productOfInterestedRepository.deleteByMemberAndProduct(member, product);
+        productOfInterestedRepository.deleteByMemberAndProduct(dto.getMemberNo(), product);
     }
 
     public String checkInterestedProduct(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("checkInterestedProduct(dto = {})", dto);
 
-        Member member = memberRepository.findById(dto.getMemberNo()).get();
-        log.info("member = {}", member);
+//        Member member = memberRepository.findById(dto.getMemberNo()).get();
+//        log.info("member = {}", member);
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
-        Optional<ProductOfInterested> result = productOfInterestedRepository.findByMemberAndProduct(member, product);
+        Optional<ProductOfInterested> result = productOfInterestedRepository.findByMemberAndProduct(dto.getMemberNo(), product);
         if (result.isPresent()) {
             log.info("result = {}", result);
             return "ok";
@@ -124,10 +131,10 @@ public class ProductService {
     public List<Product> interestedRead(Integer memberNo) {
         log.info("interested(memberNo = {})", memberNo);
 
-        Member member = memberRepository.findById(memberNo).get();
-        log.info("member = {}", member);
+//        Member member = memberRepository.findById(memberNo).get();
+//        log.info("member = {}", member);
 
-        List<ProductOfInterested> list = productOfInterestedRepository.findByMember(member);
+        List<ProductOfInterested> list = productOfInterestedRepository.findByMember(memberNo);
         log.info("list = {}", list);
 
         List<Product> productsList = new ArrayList<>();
@@ -172,10 +179,10 @@ public class ProductService {
         Product product = productRepository.findById(productNo).get();
         log.info("product = {}", product);
 
-        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
-        log.info("boughtMember = {}", boughtMember);
+//        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
+//        log.info("boughtMember = {}", boughtMember);
 
-        product.updateStatusAndBoughtMemberNo(true, boughtMember);
+        product.updateStatusAndBoughtMemberNo(true, boughtMemberNo);
     }
 
     public Product isDealStatus(Integer productNo) {

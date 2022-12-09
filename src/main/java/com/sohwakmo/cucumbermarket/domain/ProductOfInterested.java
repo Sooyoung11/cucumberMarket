@@ -17,8 +17,7 @@ public class ProductOfInterested {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PRODUCTS_OF_INTERESTED_SEQ_GEN")
     private Integer no;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member member;
+    private Integer member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;

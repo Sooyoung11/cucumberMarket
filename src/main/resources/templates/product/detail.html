@@ -16,19 +16,19 @@
 
 
                     <div class="carousel-item active" th:if="${ product.photoUrl1 } != null">
-                        <img th:src="@{ ${ product.photoUrl1 } }" class="d-block w-100" alt="...">
+                        <img th:src="@{ ${ product.photoUrl1 } }" class="d-block " alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl2 } != null">
-                        <img th:src="@{ ${ product.photoUrl2 } }" class="d-block w-100" alt="...">
+                        <img th:src="@{ ${ product.photoUrl2 } }" class="d-block " alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl3 } != null">
-                        <img th:src="@{ ${ product.photoUrl3 } }" class="d-block w-100" alt="...">
+                        <img th:src="@{ ${ product.photoUrl3 } }" class="d-block " alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl4 } != null">
-                        <img th:src="@{ ${ product.photoUrl4 } }" class="d-block w-100" alt="...">
+                        <img th:src="@{ ${ product.photoUrl4 } }" class="d-block " alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl5 } != null">
-                        <img th:src="@{ ${ product.photoUrl5 } }" class="d-block w-100" alt="...">
+                        <img th:src="@{ ${ product.photoUrl5 } }" class="d-block " alt="...">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -75,7 +75,10 @@
                         <p>내용 : <span  th:text="${ product.content }"></span></p>
                     </div>
                     <div class="my-2">
-                        <p>작성 시간  : <span  th:text="${ product.createdTime }"></span></p>
+                        <p>가격 : <span  th:text="${ product.price }"></span></p>
+                    </div>
+                    <div class="my-2">
+                        <p>작성 시간 : <span class="text-muted" th:text="${ #temporals.format(product.createdTime, 'yyyy-MM-dd HH:mm:ss') }"></span></p>
                     </div>
 
                     <div class="col my-2 d-none" id="interested">
@@ -96,20 +99,24 @@
                 </div>
             </div>
         </form>
+
+        <div class="container text-center my-4">
+            지도 들어갈 예정
+
+        </div>
+
     </div> <!-- content -->
 
 
     <th:block layout:fragment="script">
+        <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
                 let memberNo          = [[${#authentication.principal.memberNo} ]]; // 로그인한 사람의 memberNo
                 let productNo         = [[ ${ product.productNo } ]];               // 상품 번호
                 let productMemberNo   = [[ ${ member.memberNo } ]];                 // 상품 등록한 memberNo;
                 let boughtMemberNo    = 2;                                          // 상품 구매자 memberNo 들어갈 예정
-
-                if (memberNo == null) { // 로그인한 아이디가 없다면
-                    window.location.href = "/login";
-                }
 
                 console.log(memberNo);
                 console.log(productNo);

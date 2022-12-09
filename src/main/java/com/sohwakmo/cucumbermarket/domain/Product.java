@@ -61,8 +61,7 @@ public class Product extends BaseTimeEntity {
     @Column(columnDefinition = "integer default 0")
     private Integer likeCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Member boughtMemberNo;
+    private Integer boughtMemberNo;
 
     public Product updateClickCount(Integer clickCount) {
         this.clickCount = clickCount;
@@ -76,7 +75,7 @@ public class Product extends BaseTimeEntity {
         return this;
     }
 
-    public Product updateStatusAndBoughtMemberNo(boolean status, Member boughtMemberNo) {
+    public Product updateStatusAndBoughtMemberNo(boolean status, Integer boughtMemberNo) {
         this.status = status;
         this.boughtMemberNo = boughtMemberNo;
 

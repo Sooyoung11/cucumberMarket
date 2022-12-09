@@ -94,6 +94,14 @@ public class ProductController {
         log.info(productsList.toString());
         log.info("list={}", list);
 
+        String result;
+        if( list.size() == 0) { // 검색 결과가 없으면
+            result = "nok";
+        } else {
+            result = "ok";
+        }
+        model.addAttribute("result", result);
+
         model.addAttribute("list", productsList);
 
         return "/product/list";
@@ -215,7 +223,7 @@ public class ProductController {
         log.info("isDealStatus(productNo = {})", productNo);
 
         Product product = productService.isDealStatus(productNo);
-        log.info("product = {}", product.getBoughtMemberNo());
+        log.info("product(BoughtMemberNo = {})", product.getBoughtMemberNo());
 
         String result;
         if (product.getBoughtMemberNo() == null) {

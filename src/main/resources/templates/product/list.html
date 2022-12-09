@@ -19,6 +19,7 @@
                         <div class="col-2">
                             <input type="submit" class="btn btn-outline-info" value="검색" />
                             <a class="btn btn-outline-secondary" th:href="@{/product/create}" >상품 등록</a>
+                            <a class="btn btn-outline-secondary" th:href="@{/product/list}" >전체 검색</a>
                         </div>
                     </div>
                 </form>
@@ -40,19 +41,31 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${ p.title  }"></h5>
                                 <p class="card-text" th:text="${ p.content }"></p>
+                                <p class="card-text" th:text="${ p.price }"></p>
                                 <p class="card-text">
-                                    <small class="text-muted" th:text="${ p.createdTime }"></small>
+                                    <small class="text-muted" th:text="${ #temporals.format(p.createdTime, 'yyyy-MM-dd HH:mm:ss') }"></small>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <th:block th:if="${ result } == 'ok'">
+                <p>있음ㄴ</p>
+            </th:block>
+
+            <th:block th:if="${ result } == 'nok' ">
+                <p>검색 결과가 없습니다.</p>
+            </th:block>
+
+
+        </div> <!-- container -->
     </div> <!-- layout:fragment="content" -->
 
     <th:block layout:fragment="script">
+
+
 <!--        <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>-->
 
     </th:block>
