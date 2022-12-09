@@ -148,11 +148,13 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             찜목록</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <input type="number" id="likesList" style="border: 0" value="0건" readonly/>
-                                        건</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800" style="display: inline-block">
+                                            <a th:href="@{/product/interested?memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                                <input type="number" width="100px" id="myInterestedList" style="text-align:right; border:none; font-weight: bold; font-size: large" size="15" value="*" readonly/>
+                                            </a>건
+                                        </div>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="display: inline-block">
                                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
@@ -170,12 +172,16 @@
                                             판매내역</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             <label for="proceedingList" class="form-label align-content-center">진행중</label>
-                                            <input type="number" id="proceedingList" style="border: 0" value="" readonly/>
+                                            <a th:href="@{/product/ing?}">
+                                                <input type="number" id="proceedingList" style="border: 0" value="" readonly/>
+                                            </a>
                                             건
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             <label for="completedList" class="form-label align-content-center">거래완료</label>
-                                            <input type="number" id="completedList" style="border: 0" value="" readonly/>
+                                            <a th:href="@{/product/done}">
+                                                <input type="number" id="completedList" style="border: 0" value="" readonly/>
+                                            </a>
                                             건
                                         </div>
                                     </div>
@@ -196,7 +202,9 @@
                                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                             구매내역</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                            <input type="number" id="purchaseList" style="border: 0" value="0건" readonly/>
+                                            <a th:href="@{/product/isDealStatus}">
+                                                <input type="number" id="purchaseList" style="border: 0" value="0건" readonly/>
+                                            </a>
                                             건
                                         </div>
                                     </div>
@@ -257,6 +265,7 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script th:src="@{/js/scripts.js}"></script>
         <script th:src="@{/js/profile.js}"></script>
+        <script th:src="@{/js/member/mypage.js}"></script>
         <!--<script th:src="@{/js/index.js}"></script>-->
     </th:block>
 
