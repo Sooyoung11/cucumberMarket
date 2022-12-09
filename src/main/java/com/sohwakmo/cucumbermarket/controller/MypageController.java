@@ -5,6 +5,7 @@ import com.sohwakmo.cucumbermarket.dto.MypageUpdateDto;
 import com.sohwakmo.cucumbermarket.service.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.io.File;
 public class MypageController {
 
     private final MypageService mypageService;
+    private final PasswordEncoder passwordEncoder;
     @GetMapping("/mymain")
     public void mypage(Integer memberNo, Model model){
 
@@ -42,6 +44,7 @@ public class MypageController {
     public String update(MypageUpdateDto dto){
         log.info("update(dto={})", dto);
 
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         Integer memberNo = mypageService.update(dto);
 
         return "redirect:/mypage/mymain?memberNo="+ memberNo;
