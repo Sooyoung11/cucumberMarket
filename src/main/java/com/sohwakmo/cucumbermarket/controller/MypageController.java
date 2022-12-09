@@ -1,16 +1,13 @@
 package com.sohwakmo.cucumbermarket.controller;
 
-import com.sohwakmo.cucumbermarket.domain.Member;
+import com.sohwakmo.cucumbermarket.dto.MypageReadDto;
 import com.sohwakmo.cucumbermarket.dto.MypageUpdateDto;
 import com.sohwakmo.cucumbermarket.service.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.Banner;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 
@@ -26,7 +23,7 @@ public class MypageController {
 
         log.info("mypage(memberNo={})", memberNo);
 
-        Member loginUser = mypageService.loadProfile(memberNo);
+        MypageReadDto loginUser = mypageService.loadProfile(memberNo);
         log.info(loginUser.toString());
         model.addAttribute("userProfile", loginUser);
 
@@ -35,7 +32,8 @@ public class MypageController {
     @GetMapping("/modify")
     public void moodify(Integer memberNo, Model model){
         log.info("modify(memberId={})", memberNo);
-        Member userInfo = mypageService.loadProfile(memberNo);
+        MypageReadDto userInfo = mypageService.loadProfile(memberNo);
+        log.info("modifyReadDto={}", userInfo);
 
         model.addAttribute("userProfile", userInfo);
     }
@@ -55,5 +53,6 @@ public class MypageController {
     public void uploadFile(@RequestParam("uploadfile") File uploadfile, Model model){
         log.info("uploadFile(uploadfile={})", uploadfile);
     }
+
 
 }

@@ -99,13 +99,13 @@
                                 </div>
                                 <div class="my-2">
                                     <label for="password" class="form-label">비밀번호</label>
-                                    <input id="password" class="form-control" name="password" type="password" th:value="${userProfile.password}" />
+                                    <input id="password" class="form-control" name="password" type="password" maxlength='20' th:value="${userProfile.password}" />
                                     <div class="my-2 d-none" id="passwordCheck">
                                         <p class="text-danger">비밀번호는 8~20자리를 입력해주세요.</p>
                                     </div>
                                     <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
-                                    <input id="passwordConfirm" class="form-control" type="password" th:value="${userProfile.password}" disabled />
-                                    <div class="my-2 d-none" id="passwordMatched">
+                                    <input id="passwordConfirm" class="form-control" type="password" maxlength="20" th:value="${userProfile.password}" disabled />
+                                    <div class="my-2 d-none" id="passwordMatched" >
                                         <p class="text-success">비밀번호가 일치합니다.</p>
                                     </div>
                                     <div class="my-2 d-none" id="passwordMismatched">
@@ -146,9 +146,39 @@
                                     <label for="phone" class="form-label">핸드폰 번호</label>
                                     <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
                                 </div>
-                                <div class="my-2">
-                                    <label for="email" class="form-label">이메일</label>
-                                    <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />
+<!--                                <div class="my-2">-->
+<!--                                    <label for="email" class="form-label">이메일</label>-->
+<!--                                    <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />-->
+<!--                                </div>-->
+                                <!-- 이메일 -->
+                                <div class="mt-4">
+                                    <div>
+                                        <label for="email" class="form-label" id="lblEmail">이메일</label>
+                                        <div class="mb-2">
+                                            <input type="email" id="email" name="email" class="form-control" th:value="${userProfile.email}" required />
+                                                <span id="emailOk" class="d-none">
+                                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                                                </span>
+                                                <span id="emailNok" class="d-none">
+                                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                                                </span>
+                                                <input type="button" id="btnAuthcode" class="btn btn-success btn-lg disabled" value="인증코드 받기">
+                                        </div>
+                                        <div id="emailNok2" class="d-none">
+                                            <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
+                                        </div>
+                                            <input type="hidden" id="emailKey" class="form-control" name="emailKey" placeholder="인증코드 입력" required />
+                                            <span id="emailKeyOk" class="d-none">
+                                            <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                                            </span>
+                                            <span id="emailKeyNok" class="d-none">
+                                            <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                                            </span>
+
+                                        <div id="emailKeyNok2" class="d-none">
+                                            <p class="text-danger">인증코드가 일치하지 않습니다.</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="my-2 display:inline">
                                 <input type="submit" id="btnSubmit" class="form-control btn btn-success disabled" value="수정완료"/>
