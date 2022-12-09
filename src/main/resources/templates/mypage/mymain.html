@@ -262,11 +262,23 @@
     <script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
     <!-- Core theme JS-->
     <th:block layout:fragment="script">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script th:src="@{/js/scripts.js}"></script>
-        <script th:src="@{/js/profile.js}"></script>
-        <script th:src="@{/js/member/mypage.js}"></script>
-        <!--<script th:src="@{/js/index.js}"></script>-->
+      <script
+        src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      ></script>
+      <script th:src="@{/js/scripts.js}"></script>
+      <script th:src="@{/js/profile.js}"></script>
+      <!--<script th:src="@{/js/index.js}"></script>-->
+      <script>
+        const checkChatList = document.querySelector("#checkChatList");
+        checkChatList.addEventListener("click", function () {
+          const memberNo = document.querySelector("#memberNo").value;
+          window.open(
+            "/chat/list?memberNo=" + memberNo,
+            "PopupNew",
+            "width=500,height=600,menu-bar=yes,toolbar=yes"
+          );
+        });
+      </script>
     </th:block>
-
+  </body>
 </html>
