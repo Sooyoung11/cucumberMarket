@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -22,15 +21,28 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
     public List<ChatRoom> getAllChatList(Integer memberNo) {
-        Member member = memberRepository.findById(memberNo).get();
+        Member member = memberRepository.findById(memberNo).get(); // 차은우가담김
         log.info(member.toString());
-        List<ChatRoom> list = chatRoomRepository.findByMember(member);
+        List<ChatRoom> list = chatRoomRepository.findByMemberOrRoomId(member,member.getNickname()); // 차은우랑, 차은우가 담김
         log.info("list = {}", list);
         return list;
     }
 
-    public ChatRoom getRoomByRoomId(String roomId) {
-        return chatRoomRepository.findById(roomId).get();
+    @Transactional
+    //TODO 여기 중복 메서드 따로빼기
+    public ChatRoom getRoomByRoomId(String roomId, Integer memberNo, String nickname) {
+        List<ChatRoom> chatRoom = chatRoomRepository.findByRoomIdOrMemberMemberNo(roomId,memberNo);
+        Member member = memberRepository.findById(memberNo).orElse(null);
+        Member member1 = memberRepository.findByNickname(nickname).orElse(null);
+        for(ChatRoom c : chatRoom){
+            if (c.getMember().getMemberNo().equals(member1.getMemberNo())){
+                return c;
+            }else{
+                c= new ChatRoom(roomId,member1);
+                return c;
+            }
+        }
+        return null;
     }
 
     @Transactional
@@ -40,16 +52,29 @@ public class ChatRoomService {
     }
 
     @Transactional
-    public List<Message> getAllMessages(String roomId) {
-        List<Message> message = messageRepository.findByRoomId(roomId);
+    public List<Message> getAllMessages(String roomId, String nickname) {
+        Member member = memberRepository.findByNickname(nickname).get();
+        List<Message> message = messageRepository.findByRoomIdAndMessageNumOrderById(roomId,member.getMemberNo());
         if(message==null){
             Message newMessage = new Message();
             newMessage.setRoomId(roomId);
             messageRepository.save(newMessage);
             log.info("massageSave={}",newMessage);
         }
-        List<Message> messageList = messageRepository.findByRoomId(roomId).stream().toList();
+        List<Message> messageList = messageRepository.findByRoomIdAndMessageNumOrderById(roomId, member.getMemberNo()).stream().toList();
         log.info("messageList={}",messageList);
         return messageList;
+    }
+
+    public ChatRoom setUser(String roomId) {
+        Member member = memberRepository.findByNickname(roomId).orElse(null);
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElse(null);
+        chatRoom.setMember(member);
+        return chatRoom;
+    }
+
+    public String getLoginedName(Integer memberNo) {
+        Member member = memberRepository.findById(memberNo).orElse(null);
+        return member.getNickname();
     }
 }

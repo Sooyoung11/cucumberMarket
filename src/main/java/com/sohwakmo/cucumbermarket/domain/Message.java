@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @NoArgsConstructor
-@SequenceGenerator(name = "POST_SEQ_GEN",sequenceName = "MESSAGE_SEQ", allocationSize = 1)
+@SequenceGenerator(name = "MESSAGE_SEQ_GEN",sequenceName = "MESSAGE_SEQ", allocationSize = 1)
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MESSAGE_SEQ_GEN")
@@ -17,6 +17,7 @@ public class Message {
     private String message;
     private String writer;
     private String sendTime;
+    private Integer messageNum;
     private String roomId;
 
     public Message update(String roomId) {

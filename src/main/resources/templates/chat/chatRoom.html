@@ -20,23 +20,32 @@
   <body>
     <div class="container">
       <div class="col-6">
-        <h1 th:text="${room.member.nickname}"></h1>
+        <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
+          <h1 th:text="${room.roomId}"></h1>
+        </th:block>
+        <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
+          <h1 th:text="${nickname}"></h1>
+        </th:block>
       </div>
       <div>
         <div id="msgArea" class="col">
           <div th:each="messages : ${messages}">
-            <th:block th:if="${messages.writer == 'test'}">
+            <th:block
+              th:if="${messages.writer}==${#authentication.principal.nickname}"
+            >
               <div class="col-6">
-                <div class="alert alert-secondary">
+                <div class="alert alert-warning">
                   <b
                     th:text="${messages.writer}+' : ' + ${messages.message}"
                   ></b>
                 </div>
               </div>
             </th:block>
-            <th:block th:if="${messages.writer != 'test'}">
+            <th:block
+              th:if="${messages.writer}!=${#authentication.principal.nickname}"
+            >
               <div class="col-6">
-                <div class="alert alert-warning">
+                <div class="alert alert-secondary">
                   <b
                     th:text="${messages.writer}+' : ' + ${messages.message}"
                   ></b>
@@ -73,9 +82,10 @@
     ></script>
     <script th:inline="javascript">
       window.addEventListener("DOMContentLoaded", () => {
-                let roomName = [[${room.member.nickname}]];
+                let roomName = [[${nickname}]];
                 let roomId = [[${room.roomId}]];
-                let username = [[${room.member.nickname}]];
+                let username = [[${#authentication.principal.nickname}]];
+                let messageNum=[[${nicknameNum}]];
                 const date = new Date();
                 console.log('locale string(ko-kr): ' + date.toLocaleString('ko-kr'));
                 let nowDate = date.toLocaleString('ko-kr');
@@ -101,7 +111,7 @@
                        let message = content.message;
                        if(writer == username){
                            str = "<div class='col-6'>";
-                           str += "<div class='alert alert-secondary'>";
+                          str += "<div class='alert alert-warning'>";
                            str += "<b>" + writer + " : " + message + "</b>";
                            str += "</div></div>";
                            $("#msgArea").append(str);
@@ -109,7 +119,7 @@
                        }
                        else{
                            str = "<div class='col-6'>";
-                           str += "<div class='alert alert-warning'>";
+                            str += "<div class='alert alert-secondary'>";
                            str += "<b>" + writer + " : " + message + "</b>";
                            str += "</div></div>";
                            $("#msgArea").append(str);
@@ -125,9 +135,9 @@
                     let message = document.getElementById("message");
 
                     console.log(username + ":" + message.value);
-                    stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate}));
+                    stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate,messageNum:messageNum}));
                     message.value = '';
-                    $("#msgArea").scrollTop($("#msgArea")[0].scrollHeight);
+
                   }
                 });
 
@@ -136,9 +146,9 @@
                     let message = document.getElementById("message");
 
                     console.log(username + ":" + message.value);
-                    stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate}));
+                    stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate,messageNum:messageNum}));
                     message.value = '';
-                    $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
+
             });
           })
     </script>

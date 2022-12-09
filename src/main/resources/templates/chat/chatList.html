@@ -22,12 +22,22 @@
     <div class="container">
       <div>
         <ul th:each="room : ${list}">
-          <li>
-            <a
-              th:href="@{/chat/chatRoom(roomId=${room.roomId})}"
-              th:text="${room.member.nickname}"
-            ></a>
-          </li>
+          <th:block th:if="${room.roomId} != ${nickName}">
+            <li>
+              <a
+                th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${room.member.memberNo})}"
+                th:text="${room.roomId}"
+              ></a>
+            </li>
+          </th:block>
+          <th:block th:if="${room.roomId} == ${nickName}">
+            <li>
+              <a
+                th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${memberNo})}"
+                th:text="${room.member.nickname}"
+              ></a>
+            </li>
+          </th:block>
         </ul>
       </div>
     </div>

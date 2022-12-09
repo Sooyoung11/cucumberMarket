@@ -1,6 +1,8 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Message;
+import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.MessageRepository;
 import com.sohwakmo.cucumbermarket.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MessageController {
     private final ChatRoomService chatRoomService;
+    private final MemberRepository memberRepository;
     private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
 
     @MessageMapping(value = "/chat/enter")
@@ -27,6 +30,7 @@ public class MessageController {
         message.setWriter(message.getWriter());
         message.setSendTime(message.getSendTime());
         message.setMessage(message.getMessage());
+        message.setMessageNum(message.getMessageNum());
         chatRoomService.saveMessage(message);
         template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
