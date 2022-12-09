@@ -35,14 +35,13 @@ public class ChatRoomService {
         Member member = memberRepository.findById(memberNo).orElse(null);
         Member member1 = memberRepository.findByNickname(nickname).orElse(null);
         for(ChatRoom c : chatRoom){
-            if (c.getMember().getMemberNo().equals(member1.getMemberNo())){
-                return c;
-            }else{
-                c= new ChatRoom(roomId,member1);
+            if(c.getMember().getMemberNo().equals(member1.getMemberNo())) {
                 return c;
             }
         }
-        return null;
+        ChatRoom c = new ChatRoom(roomId,member1);
+        chatRoomRepository.save(c);
+        return c;
     }
 
     @Transactional
