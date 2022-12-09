@@ -3,7 +3,7 @@
 #wrap{margin:0 auto; padding: 0; max-width: 768px; min-width: 480px;}
 #header{margin: 0 auto; padding: 24px 0 12px 0;}
 #logoWrap{text-align: center;}
-#logoText>a{font-family: 'Dokdo', cursive; font-size: 64px; color: green;
+#logoText>a{font-family: 'Dokdo', cursive; font-size: 64px; color: #198754;
 line-height: .6em; text-decoration: none;}
 #joinForm{margin: 0 auto; width:480px;}
 .form-label{padding-left: 8px; font-size: 14px; font-weight: 600;}
@@ -18,14 +18,14 @@ input{display:inline-block; width: 420px;}
 #lblAddress{display: block;}
 #postcode{width: 300px; display: inline-block; margin-left: 12px; float: left;}     
 #sample4_postcode{width: 240px;}
-#btnPostcode,#btnAuthcode{width: 168px; height: 48px;
+#btnPostcode,#btnAuthcode{width: 168px; height: 42px;
      font-size: 14px; float: left;}
 #roadAddressSpan{display: inline-block;}
 #emailSpan{width: 300px; display: inline-block; margin-right: 12px; float: left;}
 #email{width: 240px;}
 #emailKeySpan{display: inline-block;}
-#btnSubmit{font-size: 15px;  margin: 56px auto; width: 480px; height: 48px;}
+#btnSubmit{font-size: 15px;  margin: 56px auto; width: 480px; height: 42px;}
 #memberId,#password,#password2,#name,#nickname,#sample4_postcode,
 #sample4_roadAddress,#sample4_jibunAddress,#sample4_detailAddress,
 #phone,#email,#emailKey:focus{outline: none;}
-#memberIdSpan{border-color: #008000;}
+#memberIdSpan{border-color: #198754;}

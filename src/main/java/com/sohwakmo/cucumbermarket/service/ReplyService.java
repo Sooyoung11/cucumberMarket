@@ -24,14 +24,12 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
-    private final MemberRepository memberRepository;
 
     public Integer create(ReplyRegisterDto dto) { // 댓글 create 기능
         log.info("dto={}", dto);
 
         Post post = postRepository.findById(dto.getPostNo()).get();
-        Member member = memberRepository.findById(dto.getMemberNo()).get();
-        Reply reply = Reply.builder().post(post).member(member).replyContent(dto.getReplyContent()).replier(dto.getReplier()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
+        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
         reply = replyRepository.save(reply);
 
         return  reply.getReplyNo();

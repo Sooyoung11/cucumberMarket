@@ -2,11 +2,13 @@ package com.sohwakmo.cucumbermarket.service;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Post;
+import com.sohwakmo.cucumbermarket.domain.Reply;
 import com.sohwakmo.cucumbermarket.dto.PostReadDto;
 import com.sohwakmo.cucumbermarket.dto.PostUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.PostRepository;
 
+import com.sohwakmo.cucumbermarket.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,8 @@ public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
 
+    private  final ReplyRepository replyRepository;
+
     @Transactional(readOnly = true)
     /**
      * 내용, 제목으로 검색해서 결과를 페이지로 가져오기
@@ -38,7 +42,7 @@ public class PostService {
      * @return 결과 페이지들을 리턴
      */
     public List<PostReadDto> searchPost(String searchText){
-        List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText);
+        List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText,searchText);
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
             Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
@@ -89,6 +93,10 @@ public class PostService {
 
 
     public void deletePost(Integer id) {
+        List<Reply>list = replyRepository.findByPostPostNoOrderByReplyNoDesc(id).stream().toList();
+        for(Reply r : list){
+            replyRepository.delete(r);
+        }
         postRepository.deleteById(id);
     }
 
