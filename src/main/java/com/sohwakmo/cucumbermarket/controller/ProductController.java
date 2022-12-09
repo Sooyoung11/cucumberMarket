@@ -158,10 +158,8 @@ public class ProductController {
     }
 
     @GetMapping("/myList")
-    public String myList(Model model) {
+    public String myList(Integer memberNo, Model model) {
         log.info("myList()");
-
-        Integer memberNo = 1;
 
         List<Product> list = productService.myProductListRead(memberNo);
         log.info("list = {}", list);
@@ -275,6 +273,13 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
+//    @GetMapping("/mySalesList")
+//    public void mySalesList(Integer memberNo){
+//        log.info("mySalesList(memberNo={})", memberNo);
+//
+//        List<Product> list = productService.mySalesList(memberNo);
+//
+//    }
 
 
 }

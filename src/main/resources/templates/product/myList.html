@@ -8,6 +8,13 @@
         ${ memberNo };
 
         <div id="productList" >
+            <div>
+                <select id="myProductListSelect" class="form-select" aria-label="Default select example">
+                    <option selected value="1">전체보기</option>
+                    <option value="2">진행중</option>
+                    <option value="3">거래완료</option>
+                </select>
+            </div>
             <div class="card-group row h-75 my-5" th:each="products : ${ list }">
                 <div th:each="p : ${products}" class="col-4" >
                     <div class="card" >
@@ -30,12 +37,13 @@
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
 
     <th:block layout:fagment="script">
-
+    <script th:src="@{/js/myProductList.js}"></script>
     </th:block>
 
 </html>

@@ -2,7 +2,7 @@
  * mypage interested Count, ,,,
  */
 
-window.addEventListener('DOMContentLoaded', function () {
+
     console.log("mypageJS 들어옴!!");
     const memberNo = document.querySelector('#memberNo').value;
     console.log("memberNo="+memberNo);
@@ -20,4 +20,3 @@ window.addEventListener('DOMContentLoaded', function () {
             })
     }
 
-})

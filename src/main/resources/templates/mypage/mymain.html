@@ -4,6 +4,7 @@
       layout:decorate="~{ layout/layout }">
     <head>
         <title>오이마켓 | 마이페이지</title>
+        <link th:href="@{/css/styles.css}" rel="stylesheet" />
     </head>
 
     <div layout:fragment="content">
@@ -172,14 +173,14 @@
                                             판매내역</div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             <label for="proceedingList" class="form-label align-content-center">진행중</label>
-                                            <a th:href="@{/product/ing?}">
+                                            <a th:href="@{/product/myList?memberNo={no} (no=${#authentication.principal.memberNo})}">
                                                 <input type="number" id="proceedingList" style="border: 0" value="" readonly/>
                                             </a>
                                             건
                                         </div>
                                         <div class="h5 mb-0 font-weight-bold text-gray-800">
                                             <label for="completedList" class="form-label align-content-center">거래완료</label>
-                                            <a th:href="@{/product/done}">
+                                            <a th:href="@{/product/myList?memberNo={no} (no=${#authentication.principal.memberNo})}">
                                                 <input type="number" id="completedList" style="border: 0" value="" readonly/>
                                             </a>
                                             건
@@ -264,8 +265,8 @@
     <th:block layout:fragment="script">
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script th:src="@{/js/scripts.js}"></script>
-        <script th:src="@{/js/member/profile.js}"></script>
-        <script th:src="@{/js/member/mypage.js}"></script>
+        <!--<script th:src="@{/js/member/mypage.js}"></script>-->
+        <script th:src="@{/js/profile.js}"></script>
         <!--<script th:src="@{/js/index.js}"></script>-->
     </th:block>
 
