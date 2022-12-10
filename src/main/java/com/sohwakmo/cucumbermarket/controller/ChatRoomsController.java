@@ -26,10 +26,13 @@ public class ChatRoomsController {
     private final MessageRepository messageRepository;
     private final MemberRepository memberRepository;
 
-    @GetMapping
-    public String gotoChatList(){
-        return "/chat/chat";
-    }
+
+    /**
+     * 마이페이지에서 채팅 리스트의 목록을 불러온다.
+     * @param memberNo 회원 번호를 받아서정보를 가져온다.
+     * @param model 
+     * @return 채팅리스트
+     */
     @GetMapping("/list")
     public String showChatList(Integer memberNo, Model model){
         log.info("memberId={}",memberNo);

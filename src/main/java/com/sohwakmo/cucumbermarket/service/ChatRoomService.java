@@ -29,7 +29,6 @@ public class ChatRoomService {
     }
 
     @Transactional
-    //TODO 여기 중복 메서드 따로빼기
     public ChatRoom getRoomByRoomId(String roomId, Integer memberNo, String nickname) {
         List<ChatRoom> chatRoom = chatRoomRepository.findByRoomIdOrMemberMemberNo(roomId,memberNo);
         Member member = memberRepository.findById(memberNo).orElse(null);

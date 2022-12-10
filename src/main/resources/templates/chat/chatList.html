@@ -18,24 +18,26 @@
     />
   </head>
   <body>
-    <h1>채팅방목록</h1>
+    <h1 style="text-align: center;">채팅방목록</h1>
     <div class="container">
       <div>
-        <ul th:each="room : ${list}">
+        <ul th:each="room : ${list}" class="list-group">
           <th:block th:if="${room.roomId} != ${nickName}">
-            <li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <a
                 th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${room.member.memberNo})}"
                 th:text="${room.roomId}"
               ></a>
+              <span class="badge badge-primary badge-pill">14</span>
             </li>
           </th:block>
           <th:block th:if="${room.roomId} == ${nickName}">
-            <li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
               <a
                 th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${memberNo})}"
                 th:text="${room.member.nickname}"
               ></a>
+              <span class="badge badge-primary badge-pill">14</span>
             </li>
           </th:block>
         </ul>

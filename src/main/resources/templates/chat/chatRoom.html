@@ -19,12 +19,12 @@
   </head>
   <body>
     <div class="container">
-      <div class="col-6">
+      <div class="text-center">
         <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
-          <h1 th:text="${room.roomId}"></h1>
+          <h1 th:text="${room.roomId}" style="text-align:center"></h1>
         </th:block>
         <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
-          <h1 th:text="${nickname}"></h1>
+          <h1 th:text="${nickname}" style="text-align:center"></h1>
         </th:block>
       </div>
       <div>
@@ -33,7 +33,7 @@
             <th:block
               th:if="${messages.writer}==${#authentication.principal.nickname}"
             >
-              <div class="col-6">
+              <div class="d-flex justify-content-end mb-2">
                 <div class="alert alert-warning">
                   <b
                     th:text="${messages.writer}+' : ' + ${messages.message}"
@@ -44,7 +44,7 @@
             <th:block
               th:if="${messages.writer}!=${#authentication.principal.nickname}"
             >
-              <div class="col-6">
+              <div class="d-flex justify-content-start mb-2">
                 <div class="alert alert-secondary">
                   <b
                     th:text="${messages.writer}+' : ' + ${messages.message}"
@@ -55,12 +55,12 @@
           </div>
         </div>
       </div>
-      <div class="col-6">
+      <div>
         <div class="input-group mb-3">
-          <input type="text" id="message" class="form-control" />
+          <input type="text" id="message" class="form-control mx-2" placeholder="메시지 보내기" />
           <div class="input-group-append">
             <button
-              class="btn btn-outline-secondary"
+              class="btn btn-outline-secondary mr-3"
               type="button"
               id="button-send"
             >
