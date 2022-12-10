@@ -271,11 +271,13 @@
       <script>
         const checkChatList = document.querySelector("#checkChatList");
         checkChatList.addEventListener("click", function () {
+          let _left = Math.ceil(( window.screen.width - 500 )/2);
+          let _top = Math.ceil(( window.screen.height - 600 )/2)
           const memberNo = document.querySelector("#memberNo").value;
           window.open(
             "/chat/list?memberNo=" + memberNo,
             "PopupNew",
-            "width=500,height=600,menu-bar=yes,toolbar=yes"
+            "width=500,height=600,left="+_left+",top="+_top
           );
         });
       </script>
