@@ -82,6 +82,7 @@
     ></script>
     <script th:inline="javascript">
       window.addEventListener("DOMContentLoaded", () => {
+                document.documentElement.scrollTop = document.body.scrollHeight;
                 let roomName = [[${nickname}]];
                 let roomId = [[${room.roomId}]];
                 let username = [[${#authentication.principal.nickname}]];
@@ -110,20 +111,23 @@
                        let str = '';
                        let message = content.message;
                        if(writer == username){
-                           str = "<div class='col-6'>";
+                           str = "<div class='d-flex justify-content-end mb-2'>";
                           str += "<div class='alert alert-warning'>";
                            str += "<b>" + writer + " : " + message + "</b>";
                            str += "</div></div>";
                            $("#msgArea").append(str);
-
+                           $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
+                           document.documentElement.scrollTop = document.body.scrollHeight;
                        }
                        else{
-                           str = "<div class='col-6'>";
+                           str = "<div class='d-flex justify-content-start mb-2'>";
                             str += "<div class='alert alert-secondary'>";
                            str += "<b>" + writer + " : " + message + "</b>";
                            str += "</div></div>";
                            $("#msgArea").append(str);
-                       }
+                           $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
+                           document.documentElement.scrollTop = document.body.scrollHeight;
+                       }  
                    });
 
 
