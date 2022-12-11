@@ -29,16 +29,16 @@ public class ReplyService {
         log.info("dto={}", dto);
 
         Post post = postRepository.findById(dto.getPostNo()).get();
-        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
+        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).parent(dto.getParent()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
         reply = replyRepository.save(reply);
 
         return  reply.getReplyNo();
     }
     @Transactional(readOnly = true)
-    public List<ReplyReadDto> selectByid(Integer postNo) { // 댓글 list 보기 기능
-        log.info("selectById=(postNo={})", postNo);
+    public List<ReplyReadDto> selectByid(Integer postNo, Integer parent) { // 댓글 list 보기 기능
+        log.info("selectById=(postNo={},parent={})", postNo, parent);
 
-        List<Reply> list = replyRepository.findByPostPostNoOrderByReplyNoDesc(postNo);
+        List<Reply> list = replyRepository.findByPostPostNoAndParentOrderByReplyNoDesc(postNo, parent);
 
         return list.stream().map(ReplyReadDto::fromEntity).collect(Collectors.toList());
     }

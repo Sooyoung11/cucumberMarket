@@ -29,11 +29,11 @@ public class ReplyController {
         return ResponseEntity.ok(replyNo);
     }
 
-    @GetMapping("/all/{postNo}") // POST 게시물에 달린 모든 댓글 list 보기
-    public ResponseEntity<List<ReplyReadDto>> readAllReplies(@PathVariable Integer postNo, boolean secret_reply) {
-        log.info("readAllReplies(postNo={})", postNo);
+    @GetMapping("/all") // POST 게시물에 달린 모든 댓글 list 보기
+    public ResponseEntity<List<ReplyReadDto>> readAllReplies(Integer postNo,Integer parent) {
+        log.info("readAllReplies(postNo={}, parent={})", postNo,parent);
 
-        List<ReplyReadDto> list = replyService.selectByid(postNo);
+        List<ReplyReadDto> list =  replyService.selectByid(postNo, parent);
         log.info("# of list = {} ", list.size());
 
         return ResponseEntity.ok(list);

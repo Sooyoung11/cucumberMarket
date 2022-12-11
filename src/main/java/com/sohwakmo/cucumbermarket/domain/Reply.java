@@ -9,20 +9,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@ToString(exclude = {"post","member"}) // 필드 post, member는 toString()에서 제외
-@Entity(name = "REPLIES") // 테이블명
-@SequenceGenerator(name = "REPLIES_SEQ_GEN", sequenceName = "REPLIES_SEQ", allocationSize = 1)
+@ToString(exclude = {"post"}) // 필드 post, member는 toString()에서 제외
+@Entity(name = "REPLY") // 테이블명
+@SequenceGenerator(name = "REPLY_SEQ_GEN", sequenceName = "REPLY_SEQ", allocationSize = 1)
 public class Reply extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REPLIES_SEQ_GEN")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "REPLY_SEQ_GEN")
     private Integer replyNo; // Reply 고유키
 
     @ManyToOne(fetch = FetchType.LAZY) // 다대일 관계
     private Post post;
-
-    @ManyToOne(fetch = FetchType.LAZY) // 다대일 관계
-    private Member member;
 
     @Column(nullable = false, length = 1000)
     private String replyContent; // reply 내용
@@ -34,6 +31,9 @@ public class Reply extends BaseTimeEntity {
 
     @ColumnDefault("0")
     private Integer likeCount; // 댓글 좋아요
+
+    @Column
+    private Integer parent; // 댓글, 대댓글 구분
 
     public Reply update(String replyContent) {
         this.replyContent = replyContent;
