@@ -21,10 +21,10 @@
     <div class="container">
       <div class="text-center">
         <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
-          <h1 th:text="${room.roomId}" style="text-align:center"></h1>
+          <h1 th:text="${room.roomId}" style="text-align: center"></h1>
         </th:block>
         <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
-          <h1 th:text="${nickname}" style="text-align:center"></h1>
+          <h1 th:text="${nickname}" style="text-align: center"></h1>
         </th:block>
       </div>
       <div>
@@ -35,15 +35,16 @@
             >
               <div class="d-flex justify-content-end mb-2">
                 <div class="alert alert-warning">
-                  <b
-                    th:text="${messages.writer}+' : ' + ${messages.message}"
-                  ></b>
+                  <b th:text="${messages.message}"></b>
                 </div>
               </div>
             </th:block>
             <th:block
               th:if="${messages.writer}!=${#authentication.principal.nickname}"
             >
+              <div class="d-flex justify-content-start">
+                <span th:text="${messages.writer}"></span>
+              </div>
               <div class="d-flex justify-content-start mb-2">
                 <div class="alert alert-secondary">
                   <b
@@ -57,7 +58,12 @@
       </div>
       <div>
         <div class="input-group mb-3">
-          <input type="text" id="message" class="form-control mx-2" placeholder="메시지 보내기" />
+          <input
+            type="text"
+            id="message"
+            class="form-control mx-2"
+            placeholder="메시지 보내기"
+          />
           <div class="input-group-append">
             <button
               class="btn btn-outline-secondary mr-3"
@@ -113,7 +119,7 @@
                        if(writer == username){
                            str = "<div class='d-flex justify-content-end mb-2'>";
                           str += "<div class='alert alert-warning'>";
-                           str += "<b>" + writer + " : " + message + "</b>";
+                           str += "<b>" + message + "</b>";
                            str += "</div></div>";
                            $("#msgArea").append(str);
                            $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
@@ -127,7 +133,7 @@
                            $("#msgArea").append(str);
                            $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
                            document.documentElement.scrollTop = document.body.scrollHeight;
-                       }  
+                       }
                    });
 
 
