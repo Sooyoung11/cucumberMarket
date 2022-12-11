@@ -60,6 +60,16 @@ public class ChatRoomService {
             log.info("massageSave={}",newMessage);
         }
         List<Message> messageList = messageRepository.findByRoomIdAndMessageNumOrderById(roomId, member.getMemberNo()).stream().toList();
+        for(Message m : messageList){
+            String sendTime = m.getSendTime();
+            if (sendTime.length() == 24) {
+                sendTime = sendTime.substring(sendTime.length() - 10, sendTime.length() - 3);
+                m.setSendTime(sendTime);
+            }else if(sendTime.length()==25){
+                sendTime = sendTime.substring(sendTime.length() - 11, sendTime.length() - 3);
+                m.setSendTime(sendTime);
+            }
+        }
         log.info("messageList={}",messageList);
         return messageList;
     }

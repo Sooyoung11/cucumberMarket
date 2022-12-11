@@ -34,6 +34,7 @@
               th:if="${messages.writer}==${#authentication.principal.nickname}"
             >
               <div class="d-flex justify-content-end mb-2">
+                <span class="mr-1" th:text="${messages.sendTime}"></span>
                 <div class="alert alert-warning">
                   <b th:text="${messages.message}"></b>
                 </div>
@@ -47,10 +48,9 @@
               </div>
               <div class="d-flex justify-content-start mb-2">
                 <div class="alert alert-secondary">
-                  <b
-                    th:text="${messages.writer}+' : ' + ${messages.message}"
-                  ></b>
+                  <b th:text="${messages.message}"></b>
                 </div>
+                <span class="ml-1" th:text="${messages.sendTime}"></span>
               </div>
             </th:block>
           </div>
