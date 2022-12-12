@@ -6,10 +6,21 @@ header {
   height: 75px;
   padding: 1rem;
   color: white;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(3, 252, 152, 0.8);
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 999;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+}
+
+body {
+  padding-bottom: 50px;
 }
