@@ -165,7 +165,19 @@ public class ProductService {
 
         return list;
     }
+    
+    //마이페이지 구매목록
+    public List<Product> buyMyListRead(Integer memberNo) {
+        log.info("buyMyListRead(memberNo={})", memberNo);
 
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member={}", member);
+
+        //구매자 완성되면 넣을 수 있음
+       // List<Product> list = productRepository.findByboughtMemberNo(memberNo);
+
+        return null;
+    }
 
     @Transactional
     public List<Product> myProductListRead(Integer memberNo) {
@@ -276,7 +288,8 @@ public class ProductService {
 
     };
 
-    
+   
+
 
 }
 

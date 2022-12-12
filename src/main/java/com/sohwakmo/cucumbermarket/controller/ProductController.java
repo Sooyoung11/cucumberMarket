@@ -184,6 +184,7 @@ public class ProductController {
         return "/product/myList";
     }
 
+    //마이페이지 판매목록(진행중, 거래완료) 호출
     @GetMapping("/myList/searchStatus")
     public String searchStatus(Integer myProductListSelect, Integer memberNo, Model model){
         log.info("searchStatus(myProductListSelect={}, memberNo={})", myProductListSelect, memberNo);
@@ -224,6 +225,18 @@ public class ProductController {
 
         return "/product/myList";
     }
+
+    //마이페이지 구매목록 호출
+    @GetMapping("/myList/buyMylist")
+    public String buyMylist(Integer memberNo, Model model){
+        log.info("buyMyList(member={})", memberNo);
+        List<Product> list = productService.buyMyListRead(memberNo);
+        log.info("list = {}", list);
+
+        return "/product/myList";
+
+    }
+
 
     @GetMapping("/ing")
     @ResponseBody

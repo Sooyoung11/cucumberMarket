@@ -9,6 +9,7 @@
 
         <div id="productList" >
                 <div>
+                    <!--마이페이지 판매목록(진행중, 거래완료) select list-->
                     <form th:action="@{/product/myList/searchStatus}" method="GET">
                         <select id="myProductListSelect" name="myProductListSelect" class="form-select" aria-label="Default select example" onchange="this.form.submit()">
                             <option>상태 선택</option>
