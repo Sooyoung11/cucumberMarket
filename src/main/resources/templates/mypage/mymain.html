@@ -147,7 +147,7 @@
                                         <input type="number" width="100px" id="myInterestedList"
                                                style="text-align:right; border:none; font-weight: bold; font-size: large"
                                                size="15" value="*" readonly/>
-                                    </a>건
+                                    </a>
                                 </div>
                             </div>
                             <div class="col-auto" style="display: inline-block">
@@ -170,17 +170,19 @@
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <label for="proceedingList" class="form-label align-content-center">진행중</label>
-                                    <a th:href="@{/product/myList?memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="proceedingList" style="border: 0" value="" readonly/>
+                                    <a th:href="@{/product/myList/searchStatus?myProductListSelect=2&memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <input type="hidden" name="myProductListSelect" value="2">
+                                        <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}">
+                                        <input type="number" id="proceedingList" style="text-align:right; border:none; font-weight: bold; font-size: large"value="*" readonly/>
                                     </a>
-                                    건
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <label for="completedList" class="form-label align-content-center">거래완료</label>
-                                    <a th:href="@{/product/myList?memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="completedList" style="border: 0" value="" readonly/>
+                                    <a th:href="@{/product/myList/searchStatus?myProductListSelect=3&memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <param name="myProductListSelect" value="3">
+                                        <param name="memberNo" th:value="${#authentication.principal.memberNo}">
+                                        <input type="number" id="completedList" style="text-align:right; border:none; font-weight: bold; font-size: large" value="*" readonly/>
                                     </a>
-                                    건
                                 </div>
                             </div>
                             <div class="col-auto">

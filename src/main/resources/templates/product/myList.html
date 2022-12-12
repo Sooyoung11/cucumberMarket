@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{ layout/layout.html }">
+      layout:decorate="~{ layout/layout }">
 
-    <div layout:fragment="content" class="container text-center">
+    <div layout:fragment="content">
         <h1>내 목록 페이지</h1>
         ${ memberNo };
 
         <div id="productList" >
-            <div>
-                <select id="myProductListSelect" class="form-select" aria-label="Default select example">
-                    <option selected value="1">전체보기</option>
-                    <option value="2">진행중</option>
-                    <option value="3">거래완료</option>
-                </select>
-            </div>
+                <div>
+                    <form th:action="@{/product/myList/searchStatus}" method="GET">
+                        <select id="myProductListSelect" name="myProductListSelect" class="form-select" aria-label="Default select example" onchange="this.form.submit()">
+                            <option>상태 선택</option>
+                            <option value="1">전체보기</option>
+                            <option value="2">진행중</option>
+                            <option value="3">거래완료</option>
+                        </select>
+                        <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />
+                    </form>
+                </div>
             <div class="card-group row h-75 my-5" th:each="products : ${ list }">
                 <div th:each="p : ${products}" class="col-4" >
                     <div class="card" >
@@ -42,8 +46,13 @@
 
     </div>
 
-    <th:block layout:fagment="script">
-    <script th:src="@{/js/myProductList.js}"></script>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
+
+    <th:block layout:fragment="script">
+
     </th:block>
 
 </html>

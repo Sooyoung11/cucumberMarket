@@ -12,13 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -187,6 +184,47 @@ public class ProductController {
         return "/product/myList";
     }
 
+    @GetMapping("/myList/searchStatus")
+    public String searchStatus(Integer myProductListSelect, Integer memberNo, Model model){
+        log.info("searchStatus(myProductListSelect={}, memberNo={})", myProductListSelect, memberNo);
+
+        List<Product> list = null;
+        if(myProductListSelect == 1){
+            list = productService.myProductListRead(memberNo);
+            log.info("myProductListRead list = {}", list);
+
+        }else if(myProductListSelect == 2){
+            list = productService.proceedListRead(memberNo);
+            log.info("proceedListRead list = {}", list);
+
+        }else {
+            list = productService.completedListRead(memberNo);
+            log.info("completedListRead list = {}", list);
+        }
+
+        List<List<Product>> productsList = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            products.add(list.get(i));
+
+            if ((i + 1) % 3 == 0) {
+                productsList.add(products);
+                products = new ArrayList<>();
+            }
+        }
+        if (products.size() > 0) {
+            productsList.add(products);
+        }
+
+        log.info(productsList.toString());
+        log.info("list={}", list);
+
+        model.addAttribute("list", productsList);
+
+        return "/product/myList";
+    }
+
     @GetMapping("/ing")
     @ResponseBody
     public ResponseEntity<String> dealStatusIng(Integer productNo, Integer boughtMemberNo) {
@@ -273,13 +311,6 @@ public class ProductController {
         return "redirect:/product/list";
     }
 
-//    @GetMapping("/mySalesList")
-//    public void mySalesList(Integer memberNo){
-//        log.info("mySalesList(memberNo={})", memberNo);
-//
-//        List<Product> list = productService.mySalesList(memberNo);
-//
-//    }
 
 
 }
