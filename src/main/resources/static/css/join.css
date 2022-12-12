@@ -18,8 +18,8 @@ input{display:inline-block; width: 420px;}
 #lblAddress{display: block;}
 #postcode{width: 300px; display: inline-block; margin-left: 12px;}     
 #sample4_postcode{width: 240px;}
-#btnPostcode,#btnAuthcode,#btnAuth{width: 168px; height: 42px;
-     font-size: 14px; float: left;}
+#btnPostcode{width: 168px; height: 42px; font-size: 14px; float: left;}
+#btnAuthcode,#btnAuth{width: 168px; height: 42px; font-size: 14px; float: right;}
 #roadAddressSpan{display: inline-block;}
 #emailSpan,#emailKeySpan{width: 300px; display: inline-block; margin-right: 12px;}
 #email,#emailKey{width: 240px;}
