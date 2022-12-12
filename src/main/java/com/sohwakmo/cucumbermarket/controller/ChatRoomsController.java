@@ -34,7 +34,7 @@ public class ChatRoomsController {
      * @return 채팅리스트
      */
     @GetMapping("/list")
-    public String showChatList(Integer memberNo,Model model){ // 멤버넘버로 닉네임도 찾아서 채팅방리스트에서 메세지 리시트도 받아야함
+    public String showChatList(Integer memberNo,Model model){ // 멤버넘버로 닉네임도 찾아서 채팅방리스트에서 메세지 리시트도 받아야함.
         log.info("memberId={}",memberNo);
         List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
         String memberNickname = chatRoomService.getLoginedName(memberNo);
@@ -58,7 +58,7 @@ public class ChatRoomsController {
         List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
         String memberNickname = chatRoomService.getLoginedName(memberNo);
         for(ChatRoom c : list){
-            c.setMessage(chatRoomService.getRecentMessage(c.getMember().getMemberNo()));
+            c.setMessage(chatRoomService.getRecentMessage(c.getMember().getMemberNo())); // 마지막으로 받거나 전달한 메세지가 무엇인지 알아내서 세팅한다.
         }
         model.addAttribute("list",list);
         model.addAttribute("memberNo",memberNo);
@@ -69,6 +69,7 @@ public class ChatRoomsController {
 
     @GetMapping("/chatRoom")
     public void getRoom(String roomId,String nickname,Integer memberNo,Model model){
+        chatRoomService.setLastCheckUser(roomId,nickname,memberNo); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
         ChatRoom chatRoom = chatRoomService.getRoomByRoomId(roomId,memberNo,nickname);
         List<Message> loadMessage = chatRoomService.getAllMessages(roomId,nickname);
         log.info(chatRoom.toString());

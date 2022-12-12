@@ -25,6 +25,8 @@ public class ChatRoom {
 
     private String message;
 
+    private String lastEnterName;
+
 
     public ChatRoom(String roomId, Member member) {
         this.roomId = roomId;

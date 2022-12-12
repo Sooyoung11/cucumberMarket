@@ -90,4 +90,16 @@ public class ChatRoomService {
         List<Message> messages = messageRepository.findByMessageNumOrderByIdDesc(memberNo);
         return String.valueOf(messages.get(0).getMessage());
     }
+
+    /**
+     * 채팅방에 누가 제일 마지막에 들어갔는지 세팅한다.
+     * @param roomId 채팅방이름
+     * @param nickname 컬럼에 채워질 이름
+     */
+    public void setLastCheckUser(String roomId, String nickname, Integer memberNo) {
+        Member member = memberRepository.findByNickname(nickname).get();
+        Member lastEnterMember = memberRepository.findById(memberNo).get(); // 마지막으로 들어간 사람의 이름을 얻는다
+        ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(roomId, member.getMemberNo());
+        chatRoom.setLastEnterName(lastEnterMember.getNickname());
+    }
 }
