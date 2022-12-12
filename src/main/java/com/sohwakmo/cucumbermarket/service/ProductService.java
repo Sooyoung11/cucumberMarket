@@ -170,13 +170,10 @@ public class ProductService {
     public List<Product> buyMyListRead(Integer memberNo) {
         log.info("buyMyListRead(memberNo={})", memberNo);
 
-        Member member = memberRepository.findById(memberNo).get();
-        log.info("member={}", member);
+        List<Product> list = productRepository.findByBoughtMemberNo(memberNo);
+        log.info("list = {}", list);
 
-        //구매자 완성되면 넣을 수 있음
-       // List<Product> list = productRepository.findByboughtMemberNo(memberNo);
-
-        return null;
+        return list;
     }
 
     @Transactional
@@ -212,10 +209,10 @@ public class ProductService {
         Product product = productRepository.findById(productNo).get();
         log.info("product = {}", product);
 
-        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
-        log.info("boughtMember = {}", boughtMember);
+//        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
+//        log.info("boughtMember = {}", boughtMember);
 
-        product.updateStatusAndBoughtMemberNo(true, boughtMember);
+        product.updateStatusAndBoughtMemberNo(true, boughtMemberNo);
     }
 
     public Product isDealStatus(Integer productNo) {

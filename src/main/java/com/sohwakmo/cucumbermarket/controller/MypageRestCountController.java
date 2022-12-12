@@ -58,4 +58,19 @@ public class MypageRestCountController {
 
         return ResponseEntity.ok(completedCount);
     }
+
+    @GetMapping("/buyMyList/{memberNo}")
+    public ResponseEntity<Integer> buyMyListCount(@PathVariable Integer memberNo){
+        log.info("buyMyListCount(memberNo={})", memberNo);
+        Integer buyMyListCount = 0;
+
+        List<Product> list = productService.buyMyListRead(memberNo);
+        log.info("#of buyMyList size={}", list.size());
+
+        if(list.size() != 0){
+            buyMyListCount = list.size();
+        }
+
+        return ResponseEntity.ok(buyMyListCount);
+    }
 }

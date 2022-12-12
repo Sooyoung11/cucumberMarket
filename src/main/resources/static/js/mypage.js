@@ -17,6 +17,22 @@
     const completedList = document.querySelector('#completedList');
     countCompletedList(memberNo);
 
+    //구매목록 불러오기
+    const purchaseList = document.querySelector('#purchaseList');
+    countPurchaseList(memberNo);
+
+    //구매목록 count 불러오는 함수
+    function countPurchaseList(memberNo){
+        axios.get('/api/mypage/count/buyMyList/'+memberNo)
+            .then(response =>{
+                console.log("buyMyListCount "+response.data)
+                purchaseList.value = response.data;
+            })
+            .catch(error =>{
+                console.log(error);
+            })
+    }
+
     //판매목록(거래완료) count 불러오는 함수
     function countCompletedList(memberNo){
         axios.get('/api/mypage/count/completed/'+memberNo)

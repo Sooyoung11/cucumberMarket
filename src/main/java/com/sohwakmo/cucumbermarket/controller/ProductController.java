@@ -228,13 +228,33 @@ public class ProductController {
 
     //마이페이지 구매목록 호출
     @GetMapping("/myList/buyMylist")
-    public String buyMylist(Integer memberNo, Model model){
-        log.info("buyMyList(member={})", memberNo);
+    public String buyMylist(Integer myProductListSelect, Integer memberNo, Model model){
+        log.info("buyMyList(myProductListSelect={}, member={})", myProductListSelect, memberNo);
+
         List<Product> list = productService.buyMyListRead(memberNo);
         log.info("list = {}", list);
 
-        return "/product/myList";
+        List<List<Product>> productsList = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
 
+        for (int i = 0; i < list.size(); i++) {
+            products.add(list.get(i));
+
+            if ((i + 1) % 3 == 0) {
+                productsList.add(products);
+                products = new ArrayList<>();
+            }
+        }
+        if (products.size() > 0) {
+            productsList.add(products);
+        }
+
+        log.info(productsList.toString());
+        log.info("list={}", list);
+
+        model.addAttribute("list", productsList);
+
+        return "/product/myList";
     }
 
 

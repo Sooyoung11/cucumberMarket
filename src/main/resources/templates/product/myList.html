@@ -12,10 +12,11 @@
                     <!--마이페이지 판매목록(진행중, 거래완료) select list-->
                     <form th:action="@{/product/myList/searchStatus}" method="GET">
                         <select id="myProductListSelect" name="myProductListSelect" class="form-select" aria-label="Default select example" onchange="this.form.submit()">
-                            <option>상태 선택</option>
+                            <option>선택</option>
                             <option value="1">전체보기</option>
                             <option value="2">진행중</option>
                             <option value="3">거래완료</option>
+                            <option value="4">구매내역</option>
                         </select>
                         <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />
                     </form>
