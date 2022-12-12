@@ -16,7 +16,7 @@ public class ReplyUpdateDto {
     }
 
     public Reply toEntityByCount() {
-        return Reply.builder().replyNo(replyNo).likeCount(likeCount).build();
+        return Reply.builder().replyNo(replyNo).build();
     }
 
 }

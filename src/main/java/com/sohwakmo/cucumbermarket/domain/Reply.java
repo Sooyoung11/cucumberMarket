@@ -35,6 +35,9 @@ public class Reply extends BaseTimeEntity {
     @Column
     private Integer parent; // 댓글, 대댓글 구분
 
+    @ColumnDefault("0") // 댓글은 0, 대댓글은 댓글의 번호
+    private Integer parentReplyNo; // 대댓글의 댓글 번호 구분
+
     public Reply update(String replyContent) {
         this.replyContent = replyContent;
         return this;

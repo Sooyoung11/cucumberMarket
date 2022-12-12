@@ -3,11 +3,14 @@ package com.sohwakmo.cucumbermarket.service;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Post;
 import com.sohwakmo.cucumbermarket.domain.Reply;
+import com.sohwakmo.cucumbermarket.domain.ReplyOfLike;
+import com.sohwakmo.cucumbermarket.dto.ReplyOfLikeDto;
 import com.sohwakmo.cucumbermarket.dto.ReplyReadDto;
 import com.sohwakmo.cucumbermarket.dto.ReplyRegisterDto;
 import com.sohwakmo.cucumbermarket.dto.ReplyUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.PostRepository;
+import com.sohwakmo.cucumbermarket.repository.ReplyOfLikeRepository;
 import com.sohwakmo.cucumbermarket.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,12 +28,13 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
+    private final ReplyOfLikeRepository replyOfLikeRepository;
 
     public Integer create(ReplyRegisterDto dto) { // 댓글 create 기능
         log.info("dto={}", dto);
 
         Post post = postRepository.findById(dto.getPostNo()).get();
-        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).parent(dto.getParent()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
+        Reply reply = Reply.builder().post(post).replyContent(dto.getReplyContent()).replier(dto.getReplier()).parent(dto.getParent()).parentReplyNo(dto.getParentReplyNo()).secretReply(dto.isSecretReply()).likeCount(dto.getLikeCount()).build();
         reply = replyRepository.save(reply);
 
         return  reply.getReplyNo();
@@ -39,6 +44,16 @@ public class ReplyService {
         log.info("selectById=(postNo={},parent={})", postNo, parent);
 
         List<Reply> list = replyRepository.findByPostPostNoAndParentOrderByReplyNoDesc(postNo, parent);
+
+        return list.stream().map(ReplyReadDto::fromEntity).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReplyReadDto> selectByReplyNo(Integer replyNo, Integer parent) { // 대댓글 list 보기 기능
+        log.info("selectByReplyNo=(replyNo={},parent={})", replyNo, parent);
+
+        List<Reply> list = replyRepository.findByParentReplyNoAndParentOrderByReplyNoDesc(replyNo, parent);
+        log.info("list3={}", list);
 
         return list.stream().map(ReplyReadDto::fromEntity).collect(Collectors.toList());
     }
@@ -72,12 +87,31 @@ public class ReplyService {
     }
 
     @Transactional
-    public Integer updateLike( Integer likeCount) { // 댓글 좋아요 기능
+    public Integer updateLike(ReplyOfLikeDto dto) { // 댓글 좋아요 기능
 
-        Reply reply = replyRepository.findById(likeCount).get();
-        Integer a = reply.getLikeCount()+1;
-        reply = reply.likeCount(a);
+        Reply reply = replyRepository.findById(dto.getReplyNo()).get();
+        log.info("reply={}",reply);
+        String replier = dto.getReplier();
+        Integer replyNo = reply.getReplyNo();
+        log.info("getReplyNo={}",replyNo);
 
-        return a;
+        ReplyOfLike replyOfLike = ReplyOfLike.builder().replyNo(replyNo).replier(dto.getReplier()).build();
+
+        log.info("replyNo={},replier={}",replyNo, replier);
+        Optional<ReplyOfLike> result = replyOfLikeRepository.findByReplyNoAndReplier(replyNo, replier);
+
+        log.info("resultList6={}",result.isPresent());
+        if(result.isPresent()) {
+            Integer a = reply.getLikeCount() - 1;
+            reply = reply.likeCount(a);
+            replyOfLikeRepository.deleteById(result.get().getNo());
+
+        } else {
+            Integer a = reply.getLikeCount() + 1;
+            reply = reply.likeCount(a);
+            replyOfLikeRepository.save(replyOfLike);
+        }
+
+        return 0;
     }
 }

@@ -45,8 +45,9 @@ window.addEventListener('DOMContentLoaded', event => {
             replyContent: replyContent, // 댓글 내용
             replier: replier, // 댓글 작성자
             secretReply: secretReply, // 비밀 댓글
-            likeCount: 0, // 좋아요 카운트
-            parent: 0 // 댓글로 구분
+            parent: 0, // 댓글로 구분
+            likeCount: 0, // 좋아요
+            parentReplyNo: 0 // 댓글의 상위 번호 없음.
         };
 
         // Axios 라이브러리를 사용해서 Ajax POST 요청을 보냄.
@@ -67,6 +68,7 @@ window.addEventListener('DOMContentLoaded', event => {
     function clearInputs() {
         // replyContent 초기화
         document.querySelector('#replyContent').value = '';
+        document.querySelector('#rereplyContent').value = '';
     }
 
     // 댓글 select문
@@ -135,6 +137,8 @@ window.addEventListener('DOMContentLoaded', event => {
                 }
 
                 str += `<button type="button" class="btnReReply btn text-primary" " data-rid="${r.replyNo}">` + '답글보기' + '</button>'
+                 + '</div>'
+                    + '</div>'
 
                 // 선택한 댓글의 대댓글 작성하기
                 if (r.replyNo == getReplyNo) {
@@ -151,7 +155,7 @@ window.addEventListener('DOMContentLoaded', event => {
                                                     placeholder="댓글 작성"></textarea>
                                             </div>
                                             <div class="col-2">
-                                                <button class="btn btn-primary" id="btnReReplyRegister">등록</button>
+                                                <button class="btn btn-primary" id="btnReReplyRegister" data-rid="${r.replyNo}">등록</button>
                                                 <div class="form-inline">
                                                     <div>
                                                         비밀댓글
@@ -181,10 +185,11 @@ window.addEventListener('DOMContentLoaded', event => {
         function likeCountFunction(event) {
 
             const replyNo = event.target.getAttribute('data-rid');
+            const replier = loginUser;
 
             // 해당 댓글 아이디의 댓글 객체를 Ajax patch 방식으로 요청.
             axios
-                .patch('/api/reply/' + replyNo)
+                .patch('/api/reply/?replyNo=' + replyNo + '&replier=' + replier)
                 .then(response => {
                     (response.data);
                     readAllReplies();
@@ -207,7 +212,6 @@ window.addEventListener('DOMContentLoaded', event => {
         });
 
         function getReply(event) {
-            alert('수정완료');
             // console.log(event); // 이벤트가 발생한 타켓 -> 버튼
             // 클릭된 버튼의 data-rid 속성값을 읽음.
             const rid = event.target.getAttribute('data-rid');
@@ -291,20 +295,19 @@ window.addEventListener('DOMContentLoaded', event => {
         }
 
 
-        // 대댓글 리스트 출력
+        // 대댓글 작성
         function ReReply(event) {
-            const replyNo = event.target.getAttribute('data-rid');
+
+            let replyNo = event.target.getAttribute('data-rid');
 
             if (getReplyNo != 0) {
                 getReplyNo = 0;
                 readAllReplies();
-
             } else {
                 getReplyNo = replyNo;
                 readAllReReplies();
                 readAllReplies();
             }
-
 
         }
 
@@ -313,8 +316,10 @@ window.addEventListener('DOMContentLoaded', event => {
         btnReReply.addEventListener('click', btnReReplyFunction);
 
         // 대댓글 등록 함수
-        function btnReReplyFunction() {
+        function btnReReplyFunction(event) {
 
+            // 댓글의 번호
+            const replyNo = event.target.getAttribute('data-rid');
             // 댓글 작성자 찾음.
             const replier = loginUser;
             // 댓글 내용을 찾음.
@@ -337,8 +342,9 @@ window.addEventListener('DOMContentLoaded', event => {
                 replyContent: replyContent, // 댓글 내용
                 replier: replier, // 댓글 작성자
                 secretReply: secretReply, // 비밀 댓글
-                likeCount: 0, // 좋아요 카운트
-                parent: 1 // 대댓글 구분
+                parent: 1, // 대댓글 구분
+                parentReplyNo: replyNo, // 대댓글 상위 댓글 번호
+                likeCount: 0 // 좋아요 널값 대신
             };
 
             console.log(data);
@@ -348,7 +354,7 @@ window.addEventListener('DOMContentLoaded', event => {
                     console.log(response);
                     alert('# ' + response.data + '댓글 작성 성공');
                     clearInputs(); // 댓글 작성자와 내용을 삭제.
-                    readAllReReplies(data); // 댓글 목록을 다시 요청.
+                    readAllReReplies(); // 댓글 목록을 다시 요청.
 
                 }) // 성공 응답을 받았을 때
                 .catch(error => {
@@ -359,17 +365,13 @@ window.addEventListener('DOMContentLoaded', event => {
         }
 
         // 대댓글 리스트
-        function readAllReReplies() {
-
-            // 선택한 postNO 가져오기
-            let postNo = 0;
-            postNo = getPostNo;
+        function readAllReReplies(event) {
 
             // 대댓글 구분하기
             let parent = 1;
 
             axios
-                .get('/api/reply/all?postNo=' + postNo + '&parent=' + parent) // Ajax GET 요청 보냄.
+                .post('/api/reply/all?parentReplyNo=' + getReplyNo + '&parent=' + parent) // Ajax GET 요청 보냄.
                 .then(response => {
                     updateReReplyList(response.data); // 대댓글 리스트 html로 그리기
                 })
@@ -380,7 +382,6 @@ window.addEventListener('DOMContentLoaded', event => {
         }
 
         function updateReReplyList(data) {
-
             const divReReplies = document.querySelector('#rereplise');
 
             let str = ''; // div 안에 들어갈 HTML 코드
@@ -421,6 +422,7 @@ window.addEventListener('DOMContentLoaded', event => {
                     str +=
                         '</div>'
                         + '<hr />'
+
                 }
             }
             divReReplies.innerHTML = str;
