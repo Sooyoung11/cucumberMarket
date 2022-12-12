@@ -1,0 +1,15 @@
+header {
+  position: sticky;
+  top: 0;
+  margin-bottom: 1em;
+
+  height: 75px;
+  padding: 1rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.8);
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 999;
+}

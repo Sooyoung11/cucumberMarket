@@ -12,4 +12,6 @@ public class ReplyRegisterDto {
     private String replier;
     private boolean secretReply;
     private Integer likeCount;
+    private Integer parent;
+    private Integer parentReplyNo;
 }

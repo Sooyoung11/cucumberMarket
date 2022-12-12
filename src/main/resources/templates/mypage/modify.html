@@ -16,6 +16,7 @@
     </head>
     <body>
     <div layout:fragment="content">
+
         <!-- Page content-->
         <div class="container">
             <div class="row">
@@ -25,42 +26,54 @@
                     <div class="card mb-4">
                         <div class="card-header">사용자 정보</div>
                         <div class="card-body">
-                            <div class="container">
-                                <!-- img container -->
-                                <!-- image show -->
-<!--                                <div class="image-show" id="image-show"></div>-->
-<!--                                <div class="image-upload" id="image-upload">-->
-<!--                                    <form th:action="@{/mypage/img_upload}" method="post" enctype="multipart/form-data">-->
-<!--                                        <label for="imageFile" class="form-label">사용자 이미지</label>-->
-<!--                                        <input type="file" class="form-control" id="imageFile" name="userImageFile" accept="image/*" onchange="loadFile(this)">-->
-<!--                                    </form>-->
-
-<!--                                    <div class="fileContainer">-->
-<!--                                        <div class="buttonContainer">-->
-<!--                                            <div class="submitButton" id="submitButton">사진수정</div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="profile-left">-->
-<!--                                    <div class="profile-img-wrap story-border"-->
-<!--                                         onclick="popup('.modal-image')">-->
-
-<!--                                        <form id="userProfileImageForm">-->
-<!--                                            <input type="file" name="profileImageFile" style="display: none;"-->
-<!--                                                   id="userProfileImageInput" />-->
-<!--                                        </form>-->
-<!--                                        <div class="box image-show" id="image-show">-->
-<!--                                        <img class="profile" src="" th:src="@{/images/mypage/darwin.png}"-->
-<!--                                             onerror="this.src='/images/person.jpeg'" id="userProfileImage" />-->
-<!--                                        </div>-->
-<!--                                        <div class="my-3">-->
-<!--                                            <input type="file" class="form-control" id="imageFile" name="userImageFile" accept="image/*" onchange="loadFile(this)"/>-->
-<!--                                            <div id="submitButton">사진 수정</div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-
+                            <!-- img container -->
+                            <!-- image show -->
+                            <div>
+                                <img class="user_img" alt="..." id="userProfileImage"/>
                             </div>
+                            <!--                                    <div class="my-2">-->
+                            <!--                                        <a class="btn btn-primary form-control" id="profileImageChange" >사진수정</a>-->
+                            <!--                                    </div>-->
+                            <div class="container my-3 align-content-center" >
+                                <a class="btn btn-secondary btn-icon-split" id="profileImageChange">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </span>
+                                    <span class="text">  사진 수정  </span>
+                                </a>
+                            </div>
+                            <div class="my-2">
+                                <label class="form-label">매너온도</label>
+                                <!-- Tasks Card Example -->
+                                <div>
+                                    <div class="card border-left-info shadow h-100 py-2">
+                                        <div class="card-body">
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col mr-2">
+                                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">매너온도
+                                                    </div>
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col-auto">
+                                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="progress progress-sm mr-2">
+                                                                <div class="progress-bar bg-info" role="progressbar"
+                                                                     style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                                     aria-valuemax="100"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -86,13 +99,13 @@
                                 </div>
                                 <div class="my-2">
                                     <label for="password" class="form-label">비밀번호</label>
-                                    <input id="password" class="form-control" name="password" type="password" th:value="${userProfile.password}" />
+                                    <input id="password" class="form-control" name="password" type="password" maxlength='20' th:value="${userProfile.password}" />
                                     <div class="my-2 d-none" id="passwordCheck">
                                         <p class="text-danger">비밀번호는 8~20자리를 입력해주세요.</p>
                                     </div>
                                     <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
-                                    <input id="passwordConfirm" class="form-control" type="password" th:value="${userProfile.password}" disabled />
-                                    <div class="my-2 d-none" id="passwordMatched">
+                                    <input id="passwordConfirm" class="form-control" type="password" maxlength="20" th:value="${userProfile.password}" disabled />
+                                    <div class="my-2 d-none" id="passwordMatched" >
                                         <p class="text-success">비밀번호가 일치합니다.</p>
                                     </div>
                                     <div class="my-2 d-none" id="passwordMismatched">
@@ -133,9 +146,39 @@
                                     <label for="phone" class="form-label">핸드폰 번호</label>
                                     <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
                                 </div>
-                                <div class="my-2">
-                                    <label for="email" class="form-label">이메일</label>
-                                    <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />
+<!--                                <div class="my-2">-->
+<!--                                    <label for="email" class="form-label">이메일</label>-->
+<!--                                    <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />-->
+<!--                                </div>-->
+                                <!-- 이메일 -->
+                                <div class="mt-4">
+                                    <div>
+                                        <label for="email" class="form-label" id="lblEmail">이메일</label>
+                                        <div class="mb-2">
+                                            <input type="email" id="email" name="email" class="form-control" th:value="${userProfile.email}" required />
+                                                <span id="emailOk" class="d-none">
+                                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                                                </span>
+                                                <span id="emailNok" class="d-none">
+                                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                                                </span>
+                                                <input type="button" id="btnAuthcode" class="btn btn-success btn-lg disabled" value="인증코드 받기">
+                                        </div>
+                                        <div id="emailNok2" class="d-none">
+                                            <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
+                                        </div>
+                                            <input type="hidden" id="emailKey" class="form-control" name="emailKey" placeholder="인증코드 입력" required />
+                                            <span id="emailKeyOk" class="d-none">
+                                            <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                                            </span>
+                                            <span id="emailKeyNok" class="d-none">
+                                            <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                                            </span>
+
+                                        <div id="emailKeyNok2" class="d-none">
+                                            <p class="text-danger">인증코드가 일치하지 않습니다.</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="my-2 display:inline">
                                 <input type="submit" id="btnSubmit" class="form-control btn btn-success disabled" value="수정완료"/>
@@ -154,7 +197,8 @@
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <!-- Core theme JS-->
         <script th:src="@{/js/scripts.js}"></script>
-        <script th:src="@{/js/modify.js}"></script>
+        <script th:src="@{/js/profileModify.js}"></script>
+        <script th:src="@{/js/profile.js}"></script>
 
 
         <!--<script th:src="@{/js/index.js}"></script>-->

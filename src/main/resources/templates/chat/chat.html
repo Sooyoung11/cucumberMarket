@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <button type="button" id="gotoChat">채팅</button>
+  </body>
+
+  <script>
+    const gotoChat = document.querySelector("#gotoChat");
+    gotoChat.addEventListener("click", function () {
+      window.open(
+        "/chat/list?memberId=test",
+        "PopupNew",
+        "width=500,height=600,menu-bar=yes,toolbar=yes"
+      );
+    });
+  </script>
+</html>

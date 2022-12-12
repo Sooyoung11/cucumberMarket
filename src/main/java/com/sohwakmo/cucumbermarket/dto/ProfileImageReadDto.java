@@ -19,4 +19,6 @@ public class ProfileImageReadDto {
                 .userImgName(entity.getUserImgName())
                 .build();
     }
+
+
 }
