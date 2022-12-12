@@ -48,6 +48,25 @@ public class ChatRoomsController {
     }
 
 
+    /**
+     * 물품 게시물에서 거래완료로 변경 했을시 나오는 팝업창에서 채팅 리스트를 띄움
+     * @param memberNo 유저번호로 채팅방 리스트를 가져온다.
+     * @return 채팅방 리스트가 있는 페이지로 이동.
+     */
+    @GetMapping("/productChatList")
+    public void showProductChatList(Integer memberNo,Model model){
+        List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
+        String memberNickname = chatRoomService.getLoginedName(memberNo);
+        for(ChatRoom c : list){
+            c.setMessage(chatRoomService.getRecentMessage(c.getMember().getMemberNo()));
+        }
+        model.addAttribute("list",list);
+        model.addAttribute("memberNo",memberNo);
+        model.addAttribute("nickName", memberNickname);
+    }
+
+
+
     @GetMapping("/chatRoom")
     public void getRoom(String roomId,String nickname,Integer memberNo,Model model){
         ChatRoom chatRoom = chatRoomService.getRoomByRoomId(roomId,memberNo,nickname);
