@@ -106,6 +106,80 @@ password.addEventListener('change', function () {
 passwordConfirm.addEventListener('change', function () {
     passwordValueCheck();
 })
+// 이메일 체크
+const emailInput = document.querySelector('#email');
+const emailOk = document.querySelector('#emailOk');
+const emailNok = document.querySelector('#emailNok');
+const emailNok2 = document.querySelector('#emailNok2');
+const btnAuthcode= document.querySelector('#btnAuthcode');
+
+emailInput.addEventListener('change', function () {
+    const email= emailInput.value;
+    console.log(email);
+    axios
+        .get('/member/check_email?email='+ email)
+        .then(res => { displayCheckEmail(res.data) })
+        .catch(err => { console.log(err); });
+});
+
+function displayCheckEmail(data) {
+    if (data == 'emailOk') {
+        emailOk.className = '';
+        emailNok.className = 'd-none';
+        emailNok2.className = 'd-none';
+        btnAuthcode.classList.remove('disabled');
+        btnSubmit.classList.remove('disabled');
+    } else {
+        emailOk.className = 'd-none';
+        emailNok.className = '';
+        emailNok2.className = '';
+        btnAuthcode.classList.add('disabled');
+        btnSubmit.classList.add('disabled');
+    }
+}
+const emailKeyInput= document.querySelector('#emailKey');
+// 인증코드 발송
+let authCode= '';
+btnAuthcode.addEventListener('click', function(){
+    emailKeyInput.type='text';
+    axios
+        .get('/member/sendEmail?email='+emailInput.value)
+        .then(function(res){
+            console.log(res.data);
+            authCode= res.data;
+            console.log('sendEmail=> authCode='+authCode);
+        })
+        .catch(err => { console.log(err); });
+})
+
+// 인증코드 체크
+
+const emailKeyOk = document.querySelector('#emailKeyOk');
+const emailKeyNok = document.querySelector('#emailKeyNok');
+const emailKeyNok2 = document.querySelector('#emailKeyNok2');
+
+emailKeyInput.addEventListener('change', function () {
+    console.log('emailAuth=> authCode='+authCode)
+    const emailKey= emailKeyInput.value;
+    axios
+        .get('/member/emailAuth?authCode='+authCode+'&&emailKey='+emailKey)
+        .then(res => { displayCheckEmailKey(res.data) })
+        .catch(err => { console.log(err); });
+});
+
+function displayCheckEmailKey(data) {
+    if (data == 'emailKeyOk') {
+        emailKeyOk.className = '';
+        emailKeyNok.className = 'd-none';
+        emailKeyNok2.className = 'd-none';
+        btnSubmit.classList.remove('disabled');
+    } else {
+        emailKeyOk.className = 'd-none';
+        emailKeyNok.className = '';
+        emailKeyNok2.className = '';
+        btnSubmit.classList.add('disabled');
+    }
+}
 
 form.addEventListener("submit", function (e) {
     if (form.name.value == '' || form.nickname.value == '' || totalAddress == '' || form.phone.value == '' || form.email.value == '') {
