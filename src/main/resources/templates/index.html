@@ -58,21 +58,28 @@
 		<!--productSection-->
 		<div id="productSection">
 			<div id="productSectionWrap" class="container">
+
+				<!--isAnonymous-->
 				<th:block sec:authorize="isAnonymous()">
-					<div id="popularProduct">
+					
+					<div id="popularProduct" class="sectionTitle">
 						<h1>중고거래 인기매물</h1>
 						<h4>오이마켓 회원이 되어 가깝고 따뜻한 거래를 경험해보세요.</h4>
 					</div>
-					<div id="popularProductList">
-						<div class="row row-cols-2 row-cols-4 mr-3"><!--row-->
+
+					<div id="popularProductList" class="productList">
+						<!--row-->
+						<div class="row row-cols-2 row-cols-4">
 							<!--product-->
 							<div id="popularProduct1" class="product col card">
-								<div id="product1img" class="productImg card-img-top">
-									<img th:src="@{assets/img/bird-wildlife_WMBIVCVEUG.webp}" alt="매물사진" >
+								<!--productImg-->
+								<div id="popularProduct1img" class="productImg card-img-top">
+									<img th:src="@{assets/img/lavender-7638368_960_720.jpg}" alt="매물사진" >
 								</div>
+								<!--productInfo-->
 								<div id="popularProduct1info" class="productInfo card-body">
 									<p id="popularProduct1title" class="productTitle card-title">
-										<!--productTitle-->제목
+										<!--productTitle-->
 									</p>
 									<p id="popularProduct1price" class="productPrice card-title">
 										<!--productPrice-->가격
@@ -86,15 +93,187 @@
 								</div>
 							</div><!--end.product-->
 
+							<!--product-->
+							<div id="popularProduct2" class="product col card">
+								<!--productImg-->
+								<div id="popularProduct2img" class="productImg card-img-top">
+									<img th:src="@{assets/img/snow-7634083_960_720.jpg}" alt="매물사진" >
+								</div>
+								<!--productInfo-->
+								<div id="popularProduct2info" class="productInfo card-body">
+									<p id="popularProduct2title" class="productTitle card-title">
+										<!--productTitle-->제목
+									</p>
+									<p id="popularProduct2price" class="productPrice card-title">
+										<!--productPrice-->가격
+									</p>
+									<p id="popularProduct2add" class="productAdd card-text">
+										<!--productAddress-->주소
+									</p>
+									<p id="popularProduct2like" class="productLike card-text">
+										<!--productLike-->찜
+									</p>
+								</div>
+							</div><!--end.product-->
+
+							<!--product-->
+							<div id="popularProduct3" class="product col card">
+								<!--productImg-->
+								<div id="popularProduct3img" class="productImg card-img-top">
+									<img th:src="@{assets/img/lavender-7638368_960_720.jpg}" alt="매물사진" >
+								</div>
+								<!--productInfo-->
+								<div id="popularProduct3info" class="productInfo card-body">
+									<p id="popularProduct3title" class="productTitle card-title">
+										<!--productTitle-->제목
+									</p>
+									<p id="popularProduct3price" class="productPrice card-title">
+										<!--productPrice-->가격
+									</p>
+									<p id="popularProduct3add" class="productAdd card-text">
+										<!--productAddress-->주소
+									</p>
+									<p id="popularProduct3like" class="productLike card-text">
+										<!--productLike-->찜
+									</p>
+								</div>
+							</div><!--end.product-->
+
+							<!--product-->
+							<div id="popularProduct4" class="product col card">
+								<!--productImg-->
+								<div id="popularProduct4img" class="productImg card-img-top">
+									<img th:src="@{assets/img/snow-7634083_960_720.jpg}" alt="매물사진" >
+								</div>
+								<!--productInfo-->
+								<div id="popularProduct4info" class="productInfo card-body">
+									<p id="popularProduct4title" class="productTitle card-title">
+										<!--productTitle-->제목
+									</p>
+									<p id="popularProduct4price" class="productPrice card-title">
+										<!--productPrice-->가격
+									</p>
+									<p id="popularProduct4add" class="productAdd card-text">
+										<!--productAddress-->주소
+									</p>
+									<p id="popularProduct4like" class="productLike card-text">
+										<!--productLike-->찜
+									</p>
+								</div>
+							</div><!--end.product-->
+
 						</div><!--end.row-->
 					</div>
+					
 				</th:block><!--end.isAnonymous-->
+
+				<!--isAuthenticated-->
 				<th:block sec:authorize="isAuthenticated()">
-						<div id="productListTitle">
-							<h1>우리 동네 중고 직거래 마켓</h1>
-							<h4><span sec:authentication="name"></span>님의 동네 주민들과<br>
-								가깝고 따뜻한 거래를 지금 경험해보세요.</h4>
-						</div>
+						
+					<div id="areaPopularProduct" class="sectionTitle">
+						<h1>우리 동네 중고 직거래 마켓</h1>
+						<h4><span sec:authentication="name"></span>님의 동네 주민들과
+							가깝고 따뜻한 거래를 지금 경험해보세요.</h4>
+					</div>
+
+					<div id="areaPopularProductList" class="productList">
+						<!--row-->
+						<div class="row row-cols-2 row-cols-4 mr-3">
+							<!--product-->
+							<div id="areaPopularProduct1" class="product col card">
+								<!--productImg-->
+								<div id="areaPopularProduct1img" class="productImg card-img-top">
+									<img th:src="@{assets/img/snow-7634083_960_720.jpg}" alt="매물사진" >
+								</div>
+								<!--productInfo-->
+								<div id="areaPopularProduct1info" class="productInfo card-body">
+									<p id="areaPopularProduct1title" class="productTitle card-title">
+										<!--productTitle-->제목
+									</p>
+									<p id="areaPopularProduct1price" class="productPrice card-title">
+										<!--productPrice-->가격
+									</p>
+									<p id="areaPopularProduct1add" class="productAdd card-text">
+										<!--productAddress-->주소
+									</p>
+									<p id="areaPopularProduct1like" class="productLike card-text">
+										<!--productLike-->찜
+									</p>
+								</div>
+							</div><!--end.product-->
+
+							<!--product-->
+							<div id="areaPopularProduct2" class="product col card">
+								<!--productImg-->
+								<div id="areaPopularProduct2img" class="productImg card-img-top">
+									<img th:src="@{assets/img/lavender-7638368_960_720.jpg}" alt="매물사진" >
+								</div>
+								<!--productInfo-->
+								<div id="areaPopularProduct2info" class="productInfo card-body">
+									<p id="areaPopularProduct2title" class="productTitle card-title">
+										<!--productTitle-->제목
+									</p>
+									<p id="areaPopularProduct2price" class="productPrice card-title">
+										<!--productPrice-->가격
+									</p>
+									<p id="areaPopularProduct2add" class="productAdd card-text">
+										<!--productAddress-->주소
+									</p>
+									<p id="areaPopularProduct2like" class="productLike card-text">
+										<!--productLike-->찜
+									</p>
+								</div>
+							</div><!--end.product-->
+
+							<!--product-->
+							<div id="areaPopularProduct3" class="product col card">
+								<!--productImg-->
+								<div id="areaPopularProduct3img" class="productImg card-img-top">
+									<img th:src="@{assets/img/snow-7634083_960_720.jpg}" alt="매물사진" >
+								</div>
+								<!--productInfo-->
+								<div id="areaPopularProduct3info" class="productInfo card-body">
+									<p id="areaPopularProduct3title" class="productTitle card-title">
+										<!--productTitle-->제목
+									</p>
+									<p id="areaPopularProduct3price" class="productPrice card-title">
+										<!--productPrice-->가격
+									</p>
+									<p id="areaPopularProduct3add" class="productAdd card-text">
+										<!--productAddress-->주소
+									</p>
+									<p id="areaPopularProduct3like" class="productLike card-text">
+										<!--productLike-->찜
+									</p>
+								</div>
+							</div><!--end.product-->
+
+							<!--product-->
+							<div id="areaPopularProduct4" class="product col card">
+								<!--productImg-->
+								<div id="areaPopularProduct4img" class="productImg card-img-top">
+									<img th:src="@{assets/img/lavender-7638368_960_720.jpg}" alt="매물사진" >
+								</div>
+								<!--productInfo-->
+								<div id="areaPopularProduct4info" class="productInfo card-body">
+									<p id="areaPopularProduct4title" class="productTitle card-title">
+										<!--productTitle-->제목
+									</p>
+									<p id="areaPopularProduct4price" class="productPrice card-title">
+										<!--productPrice-->가격
+									</p>
+									<p id="areaPopularProduct4add" class="productAdd card-text">
+										<!--productAddress-->주소
+									</p>
+									<p id="areaPopularProduct4like" class="productLike card-text">
+										<!--productLike-->찜
+									</p>
+								</div>
+							</div><!--end.product-->
+
+						</div><!--end.row-->
+					</div>
+
 				</th:block><!--end.isAuthenticated-->
 			</div>
 		</div><!--end.productSection-->

@@ -2,10 +2,15 @@
 .carousel-item img{width: 100%; height: 400px; background-color: #666;}
 
 /*productSection*/
-#productSection{margin-top: 140px;}
-#popularProduct{text-align: center; margin-bottom: 40px;}
-#popularProduct h1{font-family: 'BMYEONSUNG';}
-#popularProduct h4{font-size: 16px;}
-.card{margin: 0; padding: 0;}
-.card-img-top{width: 100%;}
-.card-img-top img{width: 100%; display: block; border-radius: 4px 4px 0 0;}
+#productSection{margin-top: 120px;}
+.sectionTitle{text-align: center; margin-bottom: 40px;}
+.sectionTitle h1{font-family: 'Dokdo'; font-size: 40px; margin-bottom: -3px;}
+.sectionTitle h4{font-size: 16px;}
+.card{margin: 0; padding: 0; width: 306px; border: 0;}
+.card-img-top{width: 100%; height: 306px; position: relative;}
+.card-img-top img{width: 100%; height: 100%;
+    position: absolute; top: 0; left: 0;
+    transform: translate(50, 50); object-fit: cover;
+    border-radius: 4px; margin: auto;}
+.product{margin-right: 32px;}
+#popularProduct4, #areaPopularProduct4{margin-right: 0;}
