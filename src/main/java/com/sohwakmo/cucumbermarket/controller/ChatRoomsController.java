@@ -34,10 +34,13 @@ public class ChatRoomsController {
      * @return 채팅리스트
      */
     @GetMapping("/list")
-    public String showChatList(Integer memberNo, Model model){
+    public String showChatList(Integer memberNo,Model model){ // 멤버넘버로 닉네임도 찾아서 채팅방리스트에서 메세지 리시트도 받아야함
         log.info("memberId={}",memberNo);
         List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
         String memberNickname = chatRoomService.getLoginedName(memberNo);
+        for(ChatRoom c : list){
+            c.setMessage(chatRoomService.getRecentMessage(c.getMember().getMemberNo()));
+        }
         model.addAttribute("list",list);
         model.addAttribute("memberNo",memberNo);
         model.addAttribute("nickName", memberNickname);
@@ -54,6 +57,7 @@ public class ChatRoomsController {
         Integer nicknameNum = member.getMemberNo();
         model.addAttribute("room", chatRoom);
         model.addAttribute("nickname",nickname);
+        model.addAttribute("memberNo", memberNo);
         model.addAttribute("nicknameNum",nicknameNum);
         model.addAttribute("messages", loadMessage);
     }
