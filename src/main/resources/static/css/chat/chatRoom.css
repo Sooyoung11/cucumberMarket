@@ -1,6 +1,7 @@
 header {
   position: sticky;
   top: 0;
+  margin-bottom: 1em;
 
   height: 75px;
   padding: 1rem;

@@ -102,10 +102,8 @@
                 let roomId = [[${room.roomId}]];
                 let username = [[${#authentication.principal.nickname}]];
                 let messageNum=[[${nicknameNum}]];
-                const date = new Date();
-                console.log('locale string(ko-kr): ' + date.toLocaleString('ko-kr'));
-                let nowDate = date.toLocaleString('ko-kr');
-                console.log(nowDate);
+
+
                 let msgArea = document.querySelector("#msgArea");
 
                 console.log(roomName + ", " + roomId + ", " + username);
@@ -125,22 +123,33 @@
                        let writer = content.writer;
                        let str = '';
                        let message = content.message;
+                       let sendTime = content.sendTime;
+                       if(sendTime.length==24){
+                        sendTime=sendTime.slice(sendTime.length-10,sendTime.length-3);
+                        }else{
+                        sendTime=sendTime.slice(sendTime.length-11,sendTime.length-3);
+                        }
                        if(writer == username){
                            str = "<div class='d-flex justify-content-end mb-2'>";
-                          str += "<div class='alert alert-warning'>";
+                           str+="<span class='mr-1'>"+sendTime+"</span>"
+                           str += "<div class='alert alert-warning'>";
                            str += "<b>" + message + "</b>";
                            str += "</div></div>";
                            $("#msgArea").append(str);
-                           $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
                            document.documentElement.scrollTop = document.body.scrollHeight;
                        }
                        else{
-                           str = "<div class='d-flex justify-content-start mb-2'>";
-                            str += "<div class='alert alert-secondary'>";
-                           str += "<b>" + writer + " : " + message + "</b>";
-                           str += "</div></div>";
+                           str = "<div class='d-flex justify-content-start'>"
+                           str += "<span>"+writer+"</span>"
+                           str += "</div>"
+                           str += "<div class='d-flex justify-content-start mb-2'>";
+                           str += "<div class='alert alert-secondary'>";
+                           str += "<b>" + message + "</b>";
+                           str += "</div>"
+                           str += "<span class='ml-1'>"+sendTime+"</span>"
+                           str += "</div>";
+
                            $("#msgArea").append(str);
-                           $('#msgArea').scrollTop($('#msgArea')[0].scrollHeight);
                            document.documentElement.scrollTop = document.body.scrollHeight;
                        }
                    });
@@ -152,6 +161,8 @@
                 document.getElementById("message").addEventListener("keyup", function(e) {
                   if (e.keyCode === 13) {
                     let message = document.getElementById("message");
+                    const date = new Date();
+                    let nowDate = date.toLocaleString('ko-kr');
 
                     console.log(username + ":" + message.value);
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate,messageNum:messageNum}));
@@ -163,6 +174,8 @@
             const sendButton = document.querySelector("#button-send")
                     sendButton.addEventListener("click",function(e){
                     let message = document.getElementById("message");
+                    const date = new Date();
+                    let nowDate = date.toLocaleString('ko-kr');
 
                     console.log(username + ":" + message.value);
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate,messageNum:messageNum}));
