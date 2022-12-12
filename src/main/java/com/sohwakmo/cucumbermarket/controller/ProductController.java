@@ -244,7 +244,7 @@ public class ProductController {
 
     //상품 등록
     @PostMapping("/create")
-    public String create(ProductCreateDto dto, @RequestParam("imgFile") MultipartFile products) throws  Exception {
+    public String create(ProductCreateDto dto, @RequestParam("imgFile") MultipartFile products) throws Exception {
         log.info("create(dto={})", dto);
         Product entity = productService.create(dto, products);
 

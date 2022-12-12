@@ -249,6 +249,7 @@ public class ProductService {
                 .photoUrl1(dto.getPhotoUrl1()).photoUrl2(dto.getPhotoUrl2()).photoUrl3(dto.getPhotoUrl3()).photoUrl4(dto.getPhotoUrl4())
                 .photoUrl5(dto.getPhotoUrl5())
                 .photoName1(dto.getPhotoName1()).photoName2(dto.getPhotoName2()).photoName3(dto.getPhotoName3()).photoName4(dto.getPhotoName4()).photoName5(dto.getPhotoName5())
+                .dealAddress(dto.getDealAddress())
                 .build();
         product = productRepository.save(product);
         return product;

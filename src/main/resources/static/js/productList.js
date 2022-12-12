@@ -21,11 +21,12 @@ window.addEventListener('DOMContentLoaded', function() {
         .get('/product/addInterested?memberNo=' + memberNo + '&productNo=' + productNo)
         .then(response => {
             checkIsInterestedProduct();
-            let result = confirm("관심 목록에 추가되었습니다. 관심 목록 페이지로 가시겠습니까?");
-            console.log(result);
-            if (result) {
-                window.location.href = "/product/interested?memberNo=" + memberNo;
-            }
+            alert("관심 목록에 추가되었습니다.");
+//            let result = confirm("관심 목록에 추가되었습니다. 관심 목록 페이지로 가시겠습니까?");
+//            console.log(result);
+//            if (result) {
+//                window.location.href = "/product/interested?memberNo=" + memberNo;
+//            }
          })
         .catch(err => { console.log(err); });
     });

@@ -63,6 +63,8 @@ public class Product extends BaseTimeEntity {
 
     private Integer boughtMemberNo;
 
+    private String dealAddress;
+
     public Product updateClickCount(Integer clickCount) {
         this.clickCount = clickCount;
 
