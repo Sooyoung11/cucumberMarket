@@ -17,3 +17,11 @@ h1 {
   height: 100%;
   object-fit: cover;
 }
+
+.user_img {
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  margin: auto;
+  display: block;
+}
