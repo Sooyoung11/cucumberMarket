@@ -138,23 +138,7 @@ public class ProductController {
         List<Product> list = productService.interestedRead(memberNo);
         log.info("list = {}", list);
 
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
+        List<List<Product>> productsList = listRead(list);
 
         model.addAttribute("memberNo", memberNo);
         model.addAttribute("list", productsList);
@@ -169,23 +153,7 @@ public class ProductController {
         List<Product> list = productService.myProductListRead(memberNo);
         log.info("list = {}", list);
 
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
+        List<List<Product>> productsList = listRead(list);
 
         model.addAttribute("list", productsList);
 
@@ -198,49 +166,35 @@ public class ProductController {
         log.info("searchStatus(myProductListSelect={}, memberNo={})", myProductListSelect, memberNo);
 
         List<Product> list = null;
-        if(myProductListSelect == 1){
-            list = productService.myProductListRead(memberNo);
-            log.info("myProductListRead list = {}", list);
+        switch (myProductListSelect){
+            case 1:
+                list = productService.myProductListRead(memberNo);
+                log.info("myProductListRead list = {}", list);
+                break;
+            case 2:
+                list = productService.proceedListRead(memberNo);
+                log.info("proceedListRead list = {}", list);
+                break;
+            case 3:
+                list = productService.completedListRead(memberNo);
+                log.info("completedListRead list = {}", list);
+                break;
+            case 4:
+                list = productService.buyMyListRead(memberNo);
+                log.info("list = {}", list);
+                break;
 
-        }else if(myProductListSelect == 2){
-            list = productService.proceedListRead(memberNo);
-            log.info("proceedListRead list = {}", list);
-
-        }else {
-            list = productService.completedListRead(memberNo);
-            log.info("completedListRead list = {}", list);
         }
 
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
+        List<List<Product>> productsList = listRead(list);
 
         model.addAttribute("list", productsList);
 
         return "/product/myList";
     }
 
-    //마이페이지 구매목록 호출
-    @GetMapping("/myList/buyMylist")
-    public String buyMylist(Integer myProductListSelect, Integer memberNo, Model model){
-        log.info("buyMyList(myProductListSelect={}, member={})", myProductListSelect, memberNo);
-
-        List<Product> list = productService.buyMyListRead(memberNo);
-        log.info("list = {}", list);
+    //ListRead() 함수
+    public List<List<Product>> listRead(List<Product> list){
 
         List<List<Product>> productsList = new ArrayList<>();
         List<Product> products = new ArrayList<>();
@@ -260,9 +214,7 @@ public class ProductController {
         log.info(productsList.toString());
         log.info("list={}", list);
 
-        model.addAttribute("list", productsList);
-
-        return "/product/myList";
+        return productsList;
     }
 
 

@@ -21,6 +21,24 @@
     const purchaseList = document.querySelector('#purchaseList');
     countPurchaseList(memberNo);
 
+    //매너온도 불러오기
+    const userGrade =document.querySelector('#userGrade');
+    const userTemp = document.querySelector('#userTemp');
+    checkMyTemp(memberNo);
+
+    //매너온도 값 불러오는 함수
+    function checkMyTemp(memberNo){
+        axios.get('/api/mypage/count/checkTemp/'+memberNo)
+            .then(response => {
+                console.log("checkMyTemp" +response.data);
+                userGrade.innerHTML=response.data;
+                userTemp.style="width:"+response.data+"%"
+            })
+            .catch(error =>{
+                console.log(error);
+            })
+    }
+
     //구매목록 count 불러오는 함수
     function countPurchaseList(memberNo){
         axios.get('/api/mypage/count/buyMyList/'+memberNo)
@@ -69,4 +87,6 @@
                 console.log(error);
             })
     }
+
+
 
