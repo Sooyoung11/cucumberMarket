@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fa-solid fa-temperature-three-quarters"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -143,17 +143,19 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     찜목록
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" style="display: inline-block">
                                     <a th:href="@{/product/interested?memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <p>
                                         <input type="number" width="100px" id="myInterestedList"
-                                               style="text-align:right; border:none; font-weight: bold; font-size: large"
-                                               size="15" value="*" readonly/>
+                                               style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;"
+                                               value="*" readonly/>건
+                                        </p>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="col-auto" style="display: inline-block">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -169,23 +171,28 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     판매내역
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-money-bill"></i>
+                                    </div>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
                                     <label for="proceedingList" class="form-label align-content-center">진행중</label>
                                     <a th:href="@{/product/myList/searchStatus?myProductListSelect=2&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="proceedingList" style="text-align:right; border:none; font-weight: bold; font-size: large" value="*" readonly/>
+                                        <input type="number" id="proceedingList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
                                     </a>
+                                    </p>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
                                     <label for="completedList" class="form-label align-content-center">거래완료</label>
                                     <a th:href="@{/product/myList/searchStatus?myProductListSelect=3&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="completedList" style="text-align:right; border:none; font-weight: bold; font-size: large" value="*" readonly/>
+                                        <input type="number" id="completedList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
                                     </a>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -200,16 +207,19 @@
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                     구매내역
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </div>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
                                     <a th:href="@{/product/myList/searchStatus?myProductListSelect=4&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="purchaseList" style="text-align:right; border:none; font-weight: bold; font-size: large" value="*" readonly/>
+                                        <input type="number" id="purchaseList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
                                     </a>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                            </div>
+
                         </div>
                     </div>
                 </div>
