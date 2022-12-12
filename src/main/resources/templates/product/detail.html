@@ -5,105 +5,104 @@
 
     <div layout:fragment="content" class="container text-center">
         <h1>detail</h1>
-        <form id="form">         <!-- form id 사용하려고 추가해놨어요! -->
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
+                 <!-- form id 사용하려고 추가해놨어요! -->
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
 
-                    <div class="carousel-item active"
-                         th:if="${ product.photoUrl1 } == null and ${ product.photoUrl2 } == null and ${ product.photoUrl3 } == null and ${ product.photoUrl4 } == null and ${ product.photoUrl5 } == null">
-                        <img th:src="@{ /images/product/noimg.png }" class="d-block w-100" alt="...">
-                    </div>
-
-
-                    <div class="carousel-item active" th:if="${ product.photoUrl1 } != null">
-                        <img th:src="@{ ${ product.photoUrl1 } }" class="d-block " alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl2 } != null">
-                        <img th:src="@{ ${ product.photoUrl2 } }" class="d-block " alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl3 } != null">
-                        <img th:src="@{ ${ product.photoUrl3 } }" class="d-block " alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl4 } != null">
-                        <img th:src="@{ ${ product.photoUrl4 } }" class="d-block " alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl5 } != null">
-                        <img th:src="@{ ${ product.photoUrl5 } }" class="d-block " alt="...">
-                    </div>
+                <div class="carousel-item active"
+                     th:if="${ product.photoUrl1 } == null and ${ product.photoUrl2 } == null and ${ product.photoUrl3 } == null and ${ product.photoUrl4 } == null and ${ product.photoUrl5 } == null">
+                    <img th:src="@{ /images/product/noimg.png }" class="d-block w-100" alt="...">
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+
+
+                <div class="carousel-item active" th:if="${ product.photoUrl1 } != null">
+                    <img th:src="@{ ${ product.photoUrl1 } }" class="d-block " alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl2 } != null">
+                    <img th:src="@{ ${ product.photoUrl2 } }" class="d-block " alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl3 } != null">
+                    <img th:src="@{ ${ product.photoUrl3 } }" class="d-block " alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl4 } != null">
+                    <img th:src="@{ ${ product.photoUrl4 } }" class="d-block " alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl5 } != null">
+                    <img th:src="@{ ${ product.photoUrl5 } }" class="d-block " alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div class="container text-center my-4">
+
+
+            <div class="row d-none" id="dealStatus">
+                <div class="col-4">
+                    <select name="status" class="form-control" id="selectOption">
+                        <option value="ing">거래 중</option>
+                        <option value="done">거래 완료</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="container text-center my-4">
-
-
-                <div class="row d-none" id="dealStatus">
-                    <div class="col-4">
-                        <select name="status" class="form-control" id="selectOption">
-                            <option value="ing">거래 중</option>
-                            <option value="done">거래 완료</option>
-                        </select>
-                    </div>
+            <div class="row">
+                <div class="col">
+                    <p>조회수 : <span th:text="${ product.clickCount }"></span></p>
+                </div>
+                <div class="col">
+                    <p>지역 : <span  th:text="${ member.address }"></span></p>
+                </div>
+                <div class="col">
+                    <p>작성자 : <span  th:text="${ member.nickname }"></span></p>
+                </div>
+                <div class="col">
+                    <p>찜 : <span  th:text="${ product.likeCount }"></span></p>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="my-2">
+                    <p>제목 : <span  th:text="${ product.title }"></span></p>
+                </div>
+                <div class="my-2">
+                    <p>내용 : <span  th:text="${ product.content }"></span></p>
+                </div>
+                <div class="my-2">
+                    <p>가격 : <span  th:text="${ product.price }"></span></p>
+                </div>
+                <div class="my-2">
+                    <p>작성 시간 : <span class="text-muted" th:text="${ #temporals.format(product.createdTime, 'yyyy-MM-dd HH:mm:ss') }"></span></p>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <p>조회수 : <span th:text="${ product.clickCount }"></span></p>
-                    </div>
-                    <div class="col">
-                        <p>지역 : <span  th:text="${ member.address }"></span></p>
-                    </div>
-                    <div class="col">
-                        <p>작성자 : <span  th:text="${ member.nickname }"></span></p>
-                    </div>
-                    <div class="col">
-                        <p>찜 : <span  th:text="${ product.likeCount }"></span></p>
-                    </div>
+                <div class="col my-2 d-none" id="interested">
+                    <img th:src="@{ /images/product/interested.png }" width="50px">
                 </div>
-                <div class="card-body">
-                    <div class="my-2">
-                        <p>제목 : <span  th:text="${ product.title }"></span></p>
-                    </div>
-                    <div class="my-2">
-                        <p>내용 : <span  th:text="${ product.content }"></span></p>
-                    </div>
-                    <div class="my-2">
-                        <p>가격 : <span  th:text="${ product.price }"></span></p>
-                    </div>
-                    <div class="my-2">
-                        <p>작성 시간 : <span class="text-muted" th:text="${ #temporals.format(product.createdTime, 'yyyy-MM-dd HH:mm:ss') }"></span></p>
-                    </div>
+                <div class="col my-2 d-none" id="nointerested">
+                    <img th:src="@{ /images/product/nointerested.png }" width="50px">
+                </div>
 
-                    <div class="col my-2 d-none" id="interested">
-                        <img th:src="@{ /images/product/interested.png }" width="50px">
-                    </div>
-                    <div class="col my-2 d-none" id="nointerested">
-                        <img th:src="@{ /images/product/nointerested.png }" width="50px">
-                    </div>
-
-                </div>
-                <input type="hidden" th:value="${product.productNo}" name="productNo" />  <!-- 번호 필요해서 추가했어요! -->
-                <div class="my-2 d-none" id="btnChat">
-                    <a class="btn btn-primary" th:href="@{ # }">채팅하기</a>
-                </div>
+            </div>
+            <div class="my-2 d-none" id="btnChat">
+                <a class="btn btn-primary" th:href="@{ # }">채팅하기</a>
+            </div>
+            <form id="form">
                 <div class="my-2 d-none" id="btnUpdateAndDelete">
+                    <input type="hidden" th:value="${product.productNo}" name="productNo" />  <!-- 번호 필요해서 추가했어요! -->
                     <button type="button" id="detailUpdate" class="btn btn-outline-info">수정</button>   <!--버튼 두개 추가해놨어요 -->
                     <button type="button" id="detailDelete" class="btn btn-outline-secondary">삭제</button>
                 </div>
-            </div>
-        </form>
-
-        <div class="container text-center my-4">
-            지도 들어갈 예정
-
+            </form>
         </div>
+
+        <div id="map" style="width:1000px;height:400px;"></div>
+
 
     </div> <!-- content -->
 
@@ -113,16 +112,24 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
-                let memberNo          = [[${#authentication.principal.memberNo} ]]; // 로그인한 사람의 memberNo
-                let productNo         = [[ ${ product.productNo } ]];               // 상품 번호
-                let productMemberNo   = [[ ${ member.memberNo } ]];                 // 상품 등록한 memberNo;
-                let boughtMemberNo    = 2;                                          // 상품 구매자 memberNo 들어갈 예정
+            let memberNo          = [[${#authentication.principal.memberNo} ]]; // 로그인한 사람의 memberNo
+            let productNo         = [[ ${ product.productNo } ]];               // 상품 번호
+            let productMemberNo   = [[ ${ member.memberNo } ]];                 // 상품 등록한 memberNo;
+            let boughtMemberNo    = 2;                                          // 상품 구매자 memberNo 들어갈 예정
 
-                console.log(memberNo);
-                console.log(productNo);
-                console.log(productMemberNo);
-                console.log(boughtMemberNo);
+            console.log(memberNo);
+            console.log(productNo);
+            console.log(productMemberNo);
+            console.log(boughtMemberNo);
+
+            let dealLocation = '노원구 월계동'; // 거래 희망 장소가 들어갈 예정
         </script>
+
+        <!-- services 라이브러리 불러오기 -->
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aab8e4a9f5ce56e5b56f79f8c69bebcb&libraries=services"></script>
+        <!-- 지도 그리기 -->
+        <script th:src="@{ /js/productDetailKakaoMap.js }" th:inline="javascript"></script>
+
         <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
         <script th:src="@{ /js/productDetail.js }" th:inline="javascript"></script>
     </th:block>

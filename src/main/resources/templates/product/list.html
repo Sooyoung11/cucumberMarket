@@ -16,7 +16,7 @@
                         <div class="col-6">
                             <input type="text" class="form-control" name="keyword" placeholder="제목과 내용 검색" required autofocus />
                         </div>
-                        <div class="col-2">
+                        <div class="col-4">
                             <input type="submit" class="btn btn-outline-info" value="검색" />
                             <a class="btn btn-outline-secondary" th:href="@{/product/create}" >상품 등록</a>
                             <a class="btn btn-outline-secondary" th:href="@{/product/list}" >전체 검색</a>
@@ -43,7 +43,7 @@
                                 <p class="card-text" th:text="${ p.content }"></p>
                                 <p class="card-text" th:text="${ p.price }"></p>
                                 <p class="card-text">
-                                    <small class="text-muted" th:text="${ #temporals.format(p.createdTime, 'yyyy-MM-dd HH:mm:ss') }"></small>
+                                    <small class="text-muted" th:text="${ #temporals.format(p.createdTime, 'yyyy-MM-dd HH:mm') }"></small>
                                 </p>
                             </div>
                         </div>
