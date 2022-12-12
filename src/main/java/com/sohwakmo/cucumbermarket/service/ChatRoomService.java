@@ -85,4 +85,9 @@ public class ChatRoomService {
         Member member = memberRepository.findById(memberNo).orElse(null);
         return member.getNickname();
     }
+
+    public String getRecentMessage(Integer memberNo) {
+        List<Message> messages = messageRepository.findByMessageNumOrderByIdDesc(memberNo);
+        return String.valueOf(messages.get(0).getMessage());
+    }
 }

@@ -51,9 +51,19 @@
           </select>
         </div>
         <div class="my-2 input-group mb-3">
-          <input id="imgUpload" class="form-control" name="imgFile"
-                 type="file" multiple="multiple/form-data"/>
+          <input id="imgUpload1" class="form-control" name="imgFile" type="file" multiple="multiple/form-data"/>
         </div>
+
+        <div class="my-2 mb-3">
+          <p>거래 희망 장소</p>
+          <P>
+            우편번호 : <input type="text" id="openZip" name="openZip" style="width:80px; height:26px;" />
+            <button type="button" style="width:60px; height:32px;" onclick="openZipSearch()">검색</button><br>
+            주소 : <input type="text" id="dealAddress" name="dealAddress" style="width:300px; height:30px;" readonly /><br>
+          </P>
+
+        </div>
+
         <div class="my-2 input-group mb-3">
           <button type="submit" class="btn btn-outline-info">등록</button>
           <a class="btn btn-outline-secondary" href="/product/list">취소</a>
@@ -64,6 +74,18 @@
 </div>
 
 <th:block layout:fragment="script">
+  <!-- 우편번호 -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script>
+    function openZipSearch() {
+        new daum.Postcode({
+          oncomplete: function(data) {
+             document.querySelector("#openZip").value = data.zonecode;
+             document.querySelector("#dealAddress").value =  data.address;
+          }
+        }).open()
+    }
+  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 

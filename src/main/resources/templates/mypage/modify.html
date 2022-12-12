@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout }">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Blog Home - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link th:href="@{/css/styles.css}" rel="stylesheet" />
-
-    </head>
-    <body>
+<head>
+    <title>오이마켓 | 프로필 수정페이지</title>
+</head>
     <div layout:fragment="content">
-
-        <!-- Page content-->
-        <div class="container">
+          <!-- mypage start -->
             <div class="row">
-                <!-- Side widgets-->
+                <!-- 사용자 정보 start -->
                 <div class="col-lg-4">
-                    <!-- image widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">사용자 정보</div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">사용자 정보</h6>
+                        </div>
                         <div class="card-body">
-                            <!-- img container -->
-                            <!-- image show -->
+                            <!-- 사용자 프로필 사진 -->
                             <div>
                                 <img class="user_img" alt="..." id="userProfileImage"/>
                             </div>
-                            <!--                                    <div class="my-2">-->
-                            <!--                                        <a class="btn btn-primary form-control" id="profileImageChange" >사진수정</a>-->
-                            <!--                                    </div>-->
                             <div class="container my-3 align-content-center" >
                                 <a class="btn btn-secondary btn-icon-split" id="profileImageChange">
                                             <span class="icon text-white-50">
@@ -42,9 +27,9 @@
                                     <span class="text">  사진 수정  </span>
                                 </a>
                             </div>
+                            <!-- 매너온도 start -->
                             <div class="my-2">
                                 <label class="form-label">매너온도</label>
-                                <!-- Tasks Card Example -->
                                 <div>
                                     <div class="card border-left-info shadow h-100 py-2">
                                         <div class="card-body">
@@ -73,18 +58,17 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!-- 매너온도 end -->
                         </div>
                     </div>
-
-
                 </div>
-                <!-- userInfo entries-->
+                <!-- 사용자 정보 end -->
+
+                <!-- 사용자 프로필 start-->
                 <div class="col-lg-8">
-                    <!-- Featured blog post-->
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <h4>사용자 프로필 수정</h4>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">프로필 수정</h6>
                         </div>
                         <div class="card-body">
                             <form id="formModify">
@@ -112,11 +96,7 @@
                                         <p class="text-danger">비밀번호가 일치하지 않습니다.</p>
                                     </div>
                                 </div>
-<!--                                <div class="my-2">-->
-<!--                                    <label for="address" class="form-label">주소</label>-->
-<!--                                    <input id="address" class="form-control" style="display: inline-block" name="address" type="text" th:value="${userProfile.address}" />-->
-<!--&lt;!&ndash;                                    <input type="button" id="btnPostcode" style="display: inline-block" class="btn btn-outline-success btn-lg" value="우편번호 찾기">&ndash;&gt;-->
-<!--                                </div>-->
+
                                 <!--주소 -->
                                 <div class="mt-4">
                                     <div>
@@ -146,10 +126,7 @@
                                     <label for="phone" class="form-label">핸드폰 번호</label>
                                     <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
                                 </div>
-<!--                                <div class="my-2">-->
-<!--                                    <label for="email" class="form-label">이메일</label>-->
-<!--                                    <input id="email" class="form-control" name="email" type="email" th:value="${userProfile.email}" />-->
-<!--                                </div>-->
+
                                 <!-- 이메일 -->
                                 <div class="mt-4">
                                     <div>
@@ -189,20 +166,57 @@
                         </div>
                     </div>
                 </div>
+                <!-- 사용자 프로필 end -->
+        </div>
+        <!-- row:end -->
 
+        <!--modal start -->
+        <div class="modal" tabindex="-1" id="profileImageModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">사진 수정</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+                        <div>
+                            <label for="imageFile" class="form-label">사용자 이미지</label>
+                        </div>
+                        <div>
+                            <input type="hidden" id="modalMemberNo" readonly/>
+                            <!-- <label class="form-label">이미지 이름:</label>-->
+                            <input type="text" id="modalImgName" readonly/>
+                        </div>
+                        <div>
+                            <input type="file" class="form-control" id="imageFile" name="userProfileImage"
+                                   accept="image/*"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" id="modalBtnDelete" class="btn btn-primary">삭제</button>
+                        <button type="button" id="modalBtnUpdate" class="btn btn-primary">수정</button>
+                    </div>
+
+                </div>
             </div>
         </div>
+        <!--Modal end-->
+    </div>
+        <!-- content:end -->
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <!-- Core theme JS-->
-        <script th:src="@{/js/scripts.js}"></script>
-        <script th:src="@{/js/profileModify.js}"></script>
-        <script th:src="@{/js/profile.js}"></script>
+        <th:block layout:fragment="script">
+            <script
+                    src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script th:src="@{/js/profile.js}"></script>
+            <script th:src="@{/js/profileModify.js}"></script>
+        </th:block>
 
 
-        <!--<script th:src="@{/js/index.js}"></script>-->
-
-    </div>
-    </body>
 </html>

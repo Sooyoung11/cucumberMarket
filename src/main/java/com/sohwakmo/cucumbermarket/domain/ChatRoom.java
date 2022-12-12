@@ -22,8 +22,8 @@ public class ChatRoom {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Message message;
+
+    private String message;
 
 
     public ChatRoom(String roomId, Member member) {
