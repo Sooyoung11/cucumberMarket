@@ -27,7 +27,7 @@ public class ProductCreateDto {
 
     private Integer memberNo;
 
-
+    private String dealAddress;
 
 
 }

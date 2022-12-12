@@ -28,4 +28,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     // select * from PRODUCTS where status = 0;
     List<Product> findByStatusOrderByProductNoDesc(Boolean status);
+
+    List<Product> findByMemberAndStatus(Member member, boolean status);
+
+    List<Product> findByBoughtMemberNo(Integer boughtMemberNo);
 }

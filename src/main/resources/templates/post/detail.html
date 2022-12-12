@@ -227,8 +227,8 @@
     <script>
       const gotoChat = document.querySelector("#gotoChat");
       gotoChat.addEventListener("click", function () {
-
-        console.log(1)
+        let _left = Math.ceil(( window.screen.width - 500 )/2);
+        let _top = Math.ceil(( window.screen.height - 600 )/2)
         window.open(
           "/chat/chatRoom?memberNo=" + [[${ #authentication.principal.memberNo}]] +"&&roomId=[[${post.member.nickname}]]&&nickname=[[${#authentication.principal.nickname}]]",
           "PopupNew",

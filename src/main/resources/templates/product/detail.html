@@ -78,7 +78,7 @@
                     <p>가격 : <span  th:text="${ product.price }"></span></p>
                 </div>
                 <div class="my-2">
-                    <p>작성 시간 : <span class="text-muted" th:text="${ #temporals.format(product.createdTime, 'yyyy-MM-dd HH:mm:ss') }"></span></p>
+                    <p>작성 시간 : <span class="text-muted" th:text="${ #temporals.format(product.createdTime, 'yyyy-MM-dd HH:mm') }"></span></p>
                 </div>
 
                 <div class="col my-2 d-none" id="interested">
@@ -122,7 +122,7 @@
             console.log(productMemberNo);
             console.log(boughtMemberNo);
 
-            let dealLocation = '노원구 월계동'; // 거래 희망 장소가 들어갈 예정
+            let dealLocation = '[[ ${ product.dealAddress } ]]';
         </script>
 
         <!-- services 라이브러리 불러오기 -->
