@@ -6,6 +6,8 @@
         <title>오이마켓 | 마이페이지</title>
     </head>
 
+    <body>
+
 <div layout:fragment="content">
     <!-- mypage start -->
     <div class="row">
@@ -255,6 +257,7 @@
             </div>
         </div>
     </div>
+</div>
     <!--Modal end-->
 
     <!-- Bootstrap core JS-->
@@ -267,7 +270,7 @@
       ></script>
       <script th:src="@{/js/scripts.js}"></script>
       <script th:src="@{/js/profile.js}"></script>
-    <script th:src="@{/js/mypage.js}"></script>
+      <script th:src="@{/js/mypage.js}"></script>
       <!--<script th:src="@{/js/index.js}"></script>-->
       <script>
         const checkChatList = document.querySelector("#checkChatList");
@@ -283,5 +286,6 @@
         });
       </script>
     </th:block>
+    </body>
 
 </html>

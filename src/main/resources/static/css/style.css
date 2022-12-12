@@ -3,6 +3,12 @@
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
     font-weight: normal; font-style: normal;
 }*/
+@font-face {
+    font-family: 'BMYEONSUNG';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMYEONSUNG.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 *{margin: 0; padding: 0; font-size: 14px;}
 li{list-style: none;}
 a{text-decoration: none;}
