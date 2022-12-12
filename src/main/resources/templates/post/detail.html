@@ -48,7 +48,11 @@
           </div>
           <div class="form-control">
             <span th:text="${nickname}">작성자</span>
-            <button>1대1채팅</button>
+            <th:block
+              th:if="${nickname}!=${#authentication.principal.nickname}"
+            >
+              <a type="button" id="gotoChat">채팅하기</a>
+            </th:block>
           </div>
           <div class="form-control">
             <span
@@ -227,5 +231,17 @@
     <!-- 댓글 관련 자바스크립트 함수/코드들을 작성한 스크립트 파일 -->
     <script th:src="@{/js/reply.js}"></script>
     <script th:src="@{/js/PostDetail.js}"></script>
+    <script>
+      const gotoChat = document.querySelector("#gotoChat");
+      gotoChat.addEventListener("click", function () {
+
+        console.log(1)
+        window.open(
+          "/chat/chatRoom?memberNo=" + [[${ #authentication.principal.memberNo}]] +"&&roomId=[[${post.member.nickname}]]&&nickname=[[${#authentication.principal.nickname}]]",
+          "PopupNew",
+          "width=500,height=600,left="+_left+",top="+_top
+        );
+      });
+    </script>
   </th:block>
 </html>

@@ -2,10 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout }">
-<head>
-    <title>오이마켓 | 마이페이지</title>
-    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
-</head>
+    <head>
+        <title>오이마켓 | 마이페이지</title>
+    </head>
 
 <div layout:fragment="content">
     <!-- mypage start -->
@@ -17,8 +16,9 @@
                     <h6 class="m-0 font-weight-bold text-primary">사용자 정보</h6>
                 </div>
                 <div class="card-body">
+                    <!-- 채팅 -->
                     <div style="display: inline-block; margin: 0 5px;  float: right;">
-                        <a href="#">
+                        <a href="#" id="checkChatList">
                             <i class="fas fa-comments fa-2x text-gray-300"></i>
                         </a>
                     </div>
@@ -262,11 +262,26 @@
     <script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
     <!-- Core theme JS-->
     <th:block layout:fragment="script">
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script th:src="@{/js/scripts.js}"></script>
-        <script th:src="@{/js/mypage.js}"></script>
-        <script th:src="@{/js/profile.js}"></script>
-        <!--<script th:src="@{/js/index.js}"></script>-->
+      <script
+        src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      ></script>
+      <script th:src="@{/js/scripts.js}"></script>
+      <script th:src="@{/js/profile.js}"></script>
+    <script th:src="@{/js/mypage.js}"></script>
+      <!--<script th:src="@{/js/index.js}"></script>-->
+      <script>
+        const checkChatList = document.querySelector("#checkChatList");
+        checkChatList.addEventListener("click", function () {
+          let _left = Math.ceil(( window.screen.width - 500 )/2);
+          let _top = Math.ceil(( window.screen.height - 600 )/2)
+          const memberNo = document.querySelector("#memberNo").value;
+          window.open(
+            "/chat/list?memberNo=" + memberNo,
+            "PopupNew",
+            "width=500,height=600,left="+_left+",top="+_top
+          );
+        });
+      </script>
     </th:block>
 
 </html>
