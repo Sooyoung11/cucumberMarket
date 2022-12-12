@@ -146,6 +146,43 @@ public class ProductService {
         return productsList;
     }
 
+    //마이페이지 판매내역-진행중 검색
+    public List<Product> proceedListRead(Integer memberNo) {
+        log.info("proceedListRead(memberNo={})", memberNo);
+
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member={}", member);
+
+        List<Product> list = productRepository.findByMemberAndStatus(member,false);
+        log.info("proceeding list = {}", list);
+
+        return list;
+
+    }
+
+    //마이페이지 판매내역-거래완료 검색
+    public List<Product> completedListRead(Integer memberNo) {
+        log.info("completedListRead(memberNo={})",memberNo);
+
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member={}", member);
+
+        List<Product> list = productRepository.findByMemberAndStatus(member,true);
+        log.info("completed list = {}", list);
+
+        return list;
+    }
+    
+    //마이페이지 구매목록
+    public List<Product> buyMyListRead(Integer memberNo) {
+        log.info("buyMyListRead(memberNo={})", memberNo);
+
+        List<Product> list = productRepository.findByBoughtMemberNo(memberNo);
+        log.info("list = {}", list);
+
+        return list;
+    }
+
     @Transactional
     public List<Product> myProductListRead(Integer memberNo) {
         log.info("myProductListRead(memberNo = {})", memberNo);
@@ -255,6 +292,9 @@ public class ProductService {
         return product;
 
     };
+
+   
+
 
 }
 
