@@ -16,7 +16,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
     // btnReplyRegister 버튼(댓글 등록 버튼)을 찾고 이벤트 리스너를 등록.
-    const btnReplyRegister = document.querySelector('#btnReplyRegister');
+    const btnReplyRegister = document.querySelector('#btnReplyRegis');
     btnReplyRegister.addEventListener('click', registerNewReply);
 
     // 댓글 작성 함수
@@ -137,7 +137,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 }
 
                 str += `<button type="button" class="btnReReply btn text-primary" " data-rid="${r.replyNo}">` + '답글보기' + '</button>'
-                 + '</div>'
+                    + '</div>'
                     + '</div>'
 
                 // 선택한 댓글의 대댓글 작성하기
