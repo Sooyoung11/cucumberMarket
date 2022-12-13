@@ -247,6 +247,9 @@ public class ProductService {
             Product product = productRepository.findById(productNo).get();
             log.info("product = {}", product);
 
+            //매너온도 - 2.5
+            product.getMember().gradeUpdate(product.getMember().getGrade() - 2.5);
+
             ProductOfInterested interestedProduct = productOfInterestedRepository.findByProduct(product);
             log.info("interestedProduct = {}", interestedProduct);
 
@@ -275,6 +278,10 @@ public class ProductService {
         dto.setPhotoUrl1(projectFilePath);
         dto.setPhotoName1(file.getOriginalFilename());
         Member member = memberRepository.findById(dto.getMemberNo()).get();
+
+        //매너온도 + 2.5
+        member.gradeUpdate(member.getGrade()+2.5);
+
         Product product = Product.builder()
                 .member(member)
                 .title(dto.getTitle())

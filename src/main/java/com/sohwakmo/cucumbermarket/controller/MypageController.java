@@ -20,6 +20,8 @@ public class MypageController {
 
     private final MypageService mypageService;
     private final PasswordEncoder passwordEncoder;
+    
+    //마이페이지 호출
     @GetMapping("/mymain")
     public void mypage(Integer memberNo, Model model){
 
@@ -31,6 +33,7 @@ public class MypageController {
 
     }
 
+    //마이페이지 수정page 호출
     @GetMapping("/modify")
     public void moodify(Integer memberNo, Model model){
         log.info("modify(memberId={})", memberNo);
@@ -40,6 +43,7 @@ public class MypageController {
         model.addAttribute("userProfile", userInfo);
     }
 
+    //마이페이지 회원정보 수정
     @PostMapping("/update")
     public String update(MypageUpdateDto dto){
         log.info("update(dto={})", dto);
@@ -49,13 +53,7 @@ public class MypageController {
 
         return "redirect:/mypage/mymain?memberNo="+ memberNo;
     }
-
-
-
-    @PostMapping("/mymain/upload")
-    public void uploadFile(@RequestParam("uploadfile") File uploadfile, Model model){
-        log.info("uploadFile(uploadfile={})", uploadfile);
-    }
+    
 
 
 }
