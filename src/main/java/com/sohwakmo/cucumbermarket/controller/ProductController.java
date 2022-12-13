@@ -1,9 +1,11 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
 import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
+import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final MemberService memberService;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -267,20 +270,37 @@ public class ProductController {
 
     //상품 등록
     @PostMapping("/create")
-    public String create(ProductCreateDto dto, @RequestParam("imgFile") MultipartFile products) throws Exception {
-        log.info("create(dto={})", dto);
-        Product entity = productService.create(dto, products);
+    public String create(
+            @RequestParam(value = "imgFile", required = false) List<MultipartFile> imgFile,
+            ProductCreateDto dto, Integer memberNo) throws Exception {
 
+        log.info("imgFile={}", imgFile);
+        Member member = memberService.findMemberByMemberNo(memberNo);
+
+        Product product = ProductCreateDto.builder()
+                .title(dto.getTitle()).content(dto.getContent()).price(dto.getPrice()).category(dto.getCategory()).clickCount(dto.getClickCount()).likeCount(dto.getLikeCount()).member(member).build().toEntity();
+
+        for (MultipartFile multipartFile : imgFile) {
+            log.info("imgFile={}", imgFile);
+            log.info("multipartFile={}", multipartFile);
+
+            if (multipartFile.isEmpty()) {
+                Product products = productService.create(product);
+            } else {
+                Product products = productService.create(product, multipartFile);
+            }
+        }
         return "redirect:/product/list";
-
     }
 
     // 상품 수정 페이지로 이동
     @GetMapping("/modify")
     public String modify(Integer productNo, Model model) {
         log.info("modify(productNo={})", productNo);
+
         Product product = productService.read(productNo);
         model.addAttribute("product", product);
+
         return "/product/modify";
     }
 
@@ -303,8 +323,6 @@ public class ProductController {
 
         return "redirect:/product/list";
     }
-
-
 
 }
 

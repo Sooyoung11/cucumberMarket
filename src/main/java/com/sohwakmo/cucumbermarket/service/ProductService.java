@@ -235,9 +235,11 @@ public class ProductService {
     @Transactional
     public Integer update(ProductUpdateDto dto) { // 상품 업데이트.
             log.info("update(dto={})", dto);
+
             Product entity = productRepository.findById(dto.getProductNo()).get();
             Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
             log.info("newProduct={}");
+
             return entity.getProductNo();
         }
 
@@ -265,43 +267,49 @@ public class ProductService {
             return productNo;
         }
 
-     
-    public Product create(ProductCreateDto dto, MultipartFile file) throws Exception {
-        log.info("create(dto={})", dto);
-        // dto -> entity
+
+    public String saveImage(MultipartFile file) throws Exception {
         String projectFilePath = "/images/product/" + file.getOriginalFilename();
         log.info("projectFilePath={}", projectFilePath);
+
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images\\product";  // 저장할 경로 지정
         log.info("productPath()" + projectPath);
+
         File saveFile = new File(projectPath, file.getOriginalFilename());
+
         file.transferTo(saveFile);
-        dto.setPhotoUrl1(projectFilePath);
-        dto.setPhotoName1(file.getOriginalFilename());
-        Member member = memberRepository.findById(dto.getMemberNo()).get();
+        return file.getOriginalFilename();
+    }
 
-        //매너온도 + 2.5
-        member.gradeUpdate(member.getGrade()+2.5);
+    @Transactional
+    public Product create(Product product, MultipartFile file) throws Exception {
+        String fileName = saveImage(file);
 
-        Product product = Product.builder()
-                .member(member)
-                .title(dto.getTitle())
-                .content(dto.getContent())
-                .price(dto.getPrice())
-                .category(dto.getCategory())
-                .clickCount(dto.getClickCount())
-                .likeCount(dto.getLikeCount())
-                .photoUrl1(dto.getPhotoUrl1()).photoUrl2(dto.getPhotoUrl2()).photoUrl3(dto.getPhotoUrl3()).photoUrl4(dto.getPhotoUrl4())
-                .photoUrl5(dto.getPhotoUrl5())
-                .photoName1(dto.getPhotoName1()).photoName2(dto.getPhotoName2()).photoName3(dto.getPhotoName3()).photoName4(dto.getPhotoName4()).photoName5(dto.getPhotoName5())
-                .dealAddress(dto.getDealAddress())
-                .build();
-        product = productRepository.save(product);
-        return product;
+        if (product.getPhotoUrl1() == null) {
+            product.setPhotoUrl1("/images/product/" + fileName);
+            product.setPhotoName1(fileName);
+        } else if (product.getPhotoUrl2() == null) {
+            product.setPhotoUrl2("/images/product/" + fileName);
+            product.setPhotoName2(fileName);
+        } else if (product.getPhotoUrl3() == null) {
+            product.setPhotoUrl3("/images/product/" + fileName);
+            product.setPhotoName3(fileName);
+        } else if (product.getPhotoUrl4() == null) {
+            product.setPhotoUrl4("/images/product/" + fileName);
+            product.setPhotoName4(fileName);
+        } else if (product.getPhotoUrl5() == null) {
+            product.setPhotoUrl5("/images/product/" + fileName);
+            product.setPhotoName5(fileName);
+        } else if (product.getPhotoUrl1() == null && product.getPhotoUrl2() == null && product.getPhotoUrl3() == null && product.getPhotoUrl4() == product.getPhotoUrl5()) {
+            product.setPhotoUrl1("/images/product");
+        }
 
-    };
+        return productRepository.save(product);
+    }
 
-   
-
+    public Product create(Product product) {
+        return productRepository.save(product);
+    }
 
 }
 
