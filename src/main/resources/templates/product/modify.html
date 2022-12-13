@@ -37,22 +37,18 @@
         <div class="mb-3">
           <label for="category" class="form-label fst-italic">카테고리</label>
           <select id="category" class="form-select" name="category" th:value="${product.category}">
-            <option value="1">디지털기기</option>
-            <option value="2">생활가전/주방</option>
-            <option value="3">유아용품</option>
-            <option value="4">여성패션/잡화</option>
-            <option value="5">남성패션/잡화</option>
-            <option value="6">뷰티/미용</option>
-            <option value="7">스포츠/레저</option>
-            <option value="8">취미/게임/음반</option>
-            <option value="9">도서</option>
-            <option value="10">반려동물용품</option>
+            <option th:selected="${product.category}=='1'" value="1" >디지털기기</option>
+            <option th:selected="${product.category}=='2'" value="2">생활가전/주방</option>
+            <option th:selected="${product.category}=='3'" value="3">유아용품</option>
+            <option th:selected="${product.category}=='4'" value="4">여성패션/잡화</option>
+            <option th:selected="${product.category}=='5'" value="5">남성패션/잡화</option>
+            <option th:selected="${product.category}=='6'" value="6">뷰티/미용</option>
+            <option th:selected="${product.category}=='7'" value="7">스포츠/레저</option>
+            <option th:selected="${product.category}=='8'" value="8">취미/게임/음반</option>
+            <option th:selected="${product.category}=='9'" value="9">도서</option>
+            <option th:selected="${product.category}=='10'" value="10">반려동물용품</option>
           </select>
         </div>
-<!--        <div class="my-2 input-group mb-3">-->
-<!--          <input id="imgUpload" class="form-control"-->
-<!--                 type="file" name="imgUpload" multiple="multiple"/>-->
-<!--        </div>-->
         <div class="my-2 input-group mb-3" style="margin-bottom: 10px;">
           <button type="button" class="btn btn-outline-info" id="updateButtonOk">수정 완료</button>
           <a class="btn btn-outline-secondary" type="button" href="/product/list">취소</a>

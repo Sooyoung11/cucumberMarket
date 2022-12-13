@@ -10,7 +10,7 @@
     </div>
 
     <div class="list-group list-group-flush">
-      <form method="post" enctype="multipart/form-data" action="/product/create">
+      <form method="post" enctype="multipart/form-data" action="/product/create" name="join">
         <div class="my-2 mb-3">
           <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />    <!-- 멤버 -->
           <label for="title" class="form-label fst-italic">제목</label>
@@ -51,7 +51,8 @@
           </select>
         </div>
         <div class="my-2 input-group mb-3">
-          <input id="imgUpload1" class="form-control" name="imgFile" type="file" multiple="multiple/form-data"/>
+          <input id="imgUpload" class="form-control" name="imgFile"
+                 type="file" multiple="multiple" />
         </div>
 
         <div class="my-2 mb-3">

@@ -9,6 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @ToString
 @Entity(name = "PRODUCTS")
 @SequenceGenerator(name = "PRODUCTS_SEQ_GEN", sequenceName = "PRODUCTS_SEQ", allocationSize = 1)
@@ -35,6 +36,8 @@ public class Product extends BaseTimeEntity {
     @Column(columnDefinition = "integer default 0") //조회수.
     private Integer clickCount;
 
+    @Column(columnDefinition = "integer default 0")
+    private Integer likeCount;
     private boolean status; // 거래상태
 
     private String photoUrl1;
@@ -56,10 +59,6 @@ public class Product extends BaseTimeEntity {
     private String photoName4;
 
     private String photoName5;
-
-
-    @Column(columnDefinition = "integer default 0")
-    private Integer likeCount;
 
     private Integer boughtMemberNo;
 
@@ -99,6 +98,5 @@ public class Product extends BaseTimeEntity {
 
         return this;
     }
-
 
 }

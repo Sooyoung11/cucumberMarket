@@ -51,8 +51,8 @@ public class Member {
     @Column(name= "email_auth")
     private Integer emailAuth;
 
-    @ColumnDefault("0")
-    private Integer grade;
+    @ColumnDefault("36.5")
+    private Double grade;
 
     @ColumnDefault("'/images/mypage/default.jpg'")
     private String userImgUrl;
@@ -81,7 +81,7 @@ public class Member {
     }
 
     // 회원 등급 수정 업데이트
-    public Member gradeUpdate(Integer grade){
+    public Member gradeUpdate(Double grade){
         this.grade = grade;
         return this;
     }

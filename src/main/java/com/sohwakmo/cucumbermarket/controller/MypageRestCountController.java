@@ -1,6 +1,8 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
+import com.sohwakmo.cucumbermarket.service.MypageService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +18,9 @@ import java.util.List;
 public class MypageRestCountController {
 
     private final ProductService productService;
+    private final MypageService mypageService;
 
+    //마이페이지 찜목록 count
     @GetMapping("/interested/{memberNo}")
     public ResponseEntity<Integer> interestedCount (@PathVariable Integer memberNo){
         log.info("interestedCount(memberNo={})", memberNo);
@@ -31,6 +35,7 @@ public class MypageRestCountController {
         return ResponseEntity.ok(interestedCount);
     }
 
+    //마이페이지 판매목록-진행중 count
     @GetMapping("/proceeding/{memberNo}")
     public ResponseEntity<Integer> proceedingCount(@PathVariable Integer memberNo){
         log.info("proceedingCount(memberNo={})",memberNo);
@@ -45,6 +50,7 @@ public class MypageRestCountController {
         return ResponseEntity.ok(proceedingCount);
     }
 
+    //마이페이지 판매목록-거래완료 count
     @GetMapping("/completed/{memberNo}")
     public ResponseEntity<Integer> completedList(@PathVariable Integer memberNo){
         log.info("completedCount(memberNo={})", memberNo);
@@ -59,6 +65,7 @@ public class MypageRestCountController {
         return ResponseEntity.ok(completedCount);
     }
 
+    //마이페이지 구매목록 count
     @GetMapping("/buyMyList/{memberNo}")
     public ResponseEntity<Integer> buyMyListCount(@PathVariable Integer memberNo){
         log.info("buyMyListCount(memberNo={})", memberNo);
@@ -73,4 +80,17 @@ public class MypageRestCountController {
 
         return ResponseEntity.ok(buyMyListCount);
     }
+
+    //매너온도
+    @GetMapping("/checkTemp/{memberNo}")
+    public ResponseEntity<Double> checkMyTemp(@PathVariable Integer memberNo){
+        log.info("checkMyTemp(memberNo={})", memberNo);
+
+        Double myTemp = mypageService.readUserTemp(memberNo);
+        log.info("myTemp={}", myTemp);
+
+        return ResponseEntity.ok(myTemp);
+    }
+
+
 }

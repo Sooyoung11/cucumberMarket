@@ -23,12 +23,12 @@ public class MemberSecurityDto extends User {
     private String address;
     private String phone;
     private String email;
-    private Integer grade;
+    private Double grade;
 
 //    @Override
     public MemberSecurityDto(Integer memberNo, String memberId, String password, String name,
                              String nickname, String address, String phone,
-                             String email, Integer grade,
+                             String email, Double grade,
                              Collection<? extends GrantedAuthority> authorities) {
         super(memberId, password, authorities);
 

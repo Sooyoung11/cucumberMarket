@@ -6,6 +6,8 @@
         <title>오이마켓 | 마이페이지</title>
     </head>
 
+    <body>
+
 <div layout:fragment="content">
     <!-- mypage start -->
     <div class="row">
@@ -44,7 +46,6 @@
 
                     <!-- 매너온도 start -->
                     <div class="my-2">
-                        <label class="form-label">매너온도</label>
                         <div>
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
@@ -54,19 +55,21 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        <p> <span id="userGrade"></span>°</p>
+                                                    </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                        <div id="userTemp" class="progress-bar bg-info" role="progressbar"
+                                                             style="width: 37%"  aria-valuemin="0"
                                                              aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fa-solid fa-temperature-three-quarters"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -139,19 +142,21 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
                                     찜목록
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800" style="display: inline-block">
                                     <a th:href="@{/product/interested?memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <p>
                                         <input type="number" width="100px" id="myInterestedList"
-                                               style="text-align:right; border:none; font-weight: bold; font-size: large"
-                                               size="15" value="*" readonly/>
+                                               style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;"
+                                               value="*" readonly/>건
+                                        </p>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="col-auto" style="display: inline-block">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -161,29 +166,34 @@
 
             <!-- 판매목록 start -->
             <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
+                <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
                                     판매내역
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-money-bill"></i>
+                                    </div>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
                                     <label for="proceedingList" class="form-label align-content-center">진행중</label>
                                     <a th:href="@{/product/myList/searchStatus?myProductListSelect=2&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="proceedingList" style="text-align:right; border:none; font-weight: bold; font-size: large" value="*" readonly/>
+                                        <input type="number" id="proceedingList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
                                     </a>
+                                    </p>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
                                     <label for="completedList" class="form-label align-content-center">거래완료</label>
                                     <a th:href="@{/product/myList/searchStatus?myProductListSelect=3&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="completedList" style="text-align:right; border:none; font-weight: bold; font-size: large" value="*" readonly/>
+                                        <input type="number" id="completedList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
                                     </a>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -192,22 +202,25 @@
 
             <!-- 구매목록 start -->
             <div class="col-xl-4 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
                                     구매내역
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </div>
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    <a th:href="@{/product/myList/buyMylist?myProductListSelect=4&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                        <input type="number" id="purchaseList" style="text-align:right; border:none; font-weight: bold; font-size: large" value="*" readonly/>
+                                    <p>
+                                    <a th:href="@{/product/myList/searchStatus?myProductListSelect=4&memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <input type="number" id="purchaseList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
                                     </a>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -252,6 +265,7 @@
             </div>
         </div>
     </div>
+</div>
     <!--Modal end-->
 </div>
     <!-- fragment:content end-->
@@ -265,7 +279,7 @@
         src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
       ></script>
       <script th:src="@{/js/profile.js}"></script>
-    <script th:src="@{/js/mypage.js}"></script>
+      <script th:src="@{/js/mypage.js}"></script>
       <!--<script th:src="@{/js/index.js}"></script>-->
       <script>
         const checkChatList = document.querySelector("#checkChatList");
@@ -281,5 +295,6 @@
         });
       </script>
     </th:block>
+    </body>
 
 </html>

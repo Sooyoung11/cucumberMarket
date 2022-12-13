@@ -90,7 +90,7 @@
 
             </div>
             <div class="my-2 d-none" id="btnChat">
-                <a class="btn btn-primary" th:href="@{ # }">채팅하기</a>
+                <a class="btn btn-primary" id="gotoChat">채팅하기</a>
             </div>
             <form id="form">
                 <div class="my-2 d-none" id="btnUpdateAndDelete">
@@ -127,6 +127,18 @@
 
         <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
         <script th:src="@{ /js/productDetail.js }" th:inline="javascript"></script>
+        <script>
+            const gotoChat = document.querySelector("#gotoChat");
+            gotoChat.addEventListener("click", function () {
+              let _left = Math.ceil(( window.screen.width - 500 )/2);
+              let _top = Math.ceil(( window.screen.height - 600 )/2)
+              window.open(
+                "/chat/chatRoom?memberNo=" + [[${ #authentication.principal.memberNo}]] +"&&roomId=[[${member.nickname}]]&&nickname=[[${#authentication.principal.nickname}]]",
+                "PopupNew",
+                "width=500,height=600,left="+_left+",top="+_top
+              );
+            });
+          </script>
     </th:block>
 
 </html>

@@ -11,9 +11,8 @@ window.addEventListener('DOMContentLoaded', event => {
     const profileImageChange = document.querySelector('#profileImageChange');
     profileImageChange.addEventListener('click', getModal);
 
+    //모달창 호출
     function getModal(){
-
-
         axios
             .get('/api/profileImage/'+ memberNo)
             .then(response => {
@@ -30,6 +29,7 @@ window.addEventListener('DOMContentLoaded', event => {
     const profileImageModal = new bootstrap.Modal(divModal);
     let modalImgName = document.querySelector('#modalImgName');
 
+    //모달창 보여주기
     function showModal(profileImageData){
         modalImgName.value = profileImageData.userImgName;
 
@@ -43,6 +43,7 @@ window.addEventListener('DOMContentLoaded', event => {
     let files = null;
     let imageFile= null;
 
+    //이미지 수정
     modalImgUrl.addEventListener('change', function (event) {
         files = event.currentTarget.files;
 
@@ -100,6 +101,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
     modalBtnUpdate.addEventListener('click', updateImg);
 
+    //이미지 변경시 모달창의 이미지 이름 변경
     function updateImg(event){
         const modalMemberNo = memberNo;
 
@@ -129,6 +131,7 @@ window.addEventListener('DOMContentLoaded', event => {
         }
     }
 
+    //사용자 이미지 불러오기
     function readUserImage(){
         axios.get('/api/profileImage/userImage/' + memberNo)
             .then(response =>{
@@ -140,6 +143,7 @@ window.addEventListener('DOMContentLoaded', event => {
             })
     }
 
+    //이미지 보여주기 html 반영
     function imageView(data){
         const userProfileImage = document.querySelector('#userProfileImage');
 
