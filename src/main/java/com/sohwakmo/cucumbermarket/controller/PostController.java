@@ -35,7 +35,8 @@ public class    PostController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(size = 10, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(required = false,defaultValue = "")String searchText){
+    public String list(Model model, @PageableDefault(size = 10, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable,
+                       @RequestParam(required = false,defaultValue = "")String searchText){
         List<PostReadDto> list = postService.searchPost(searchText);
         final int start = (int)pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), list.size());

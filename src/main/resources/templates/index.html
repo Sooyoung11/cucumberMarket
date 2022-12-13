@@ -79,12 +79,12 @@
 								<!--productInfo-->
 								<div id="popularProduct1info" class="productInfo card-body">
 									<p id="popularProduct1title" class="productTitle card-title">
-										<!--productTitle-->
+										<!--productTitle-->제목
 									</p>
 									<p id="popularProduct1price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="popularProduct1add" class="productAdd card-text">
+									<p id="popularProduct1add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="popularProduct1like" class="productLike card-text">
@@ -107,7 +107,7 @@
 									<p id="popularProduct2price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="popularProduct2add" class="productAdd card-text">
+									<p id="popularProduct2add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="popularProduct2like" class="productLike card-text">
@@ -130,7 +130,7 @@
 									<p id="popularProduct3price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="popularProduct3add" class="productAdd card-text">
+									<p id="popularProduct3add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="popularProduct3like" class="productLike card-text">
@@ -153,7 +153,7 @@
 									<p id="popularProduct4price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="popularProduct4add" class="productAdd card-text">
+									<p id="popularProduct4add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="popularProduct4like" class="productLike card-text">
@@ -165,6 +165,10 @@
 						</div><!--end.row-->
 					</div>
 					
+					<!--btnMorePopularProduct-->
+					<div class="btnMore">
+						<div id="btnMorePopularProduct" class="btn btn-outline-success">인기매물 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+					</div>
 				</th:block><!--end.isAnonymous-->
 
 				<!--isAuthenticated-->
@@ -193,7 +197,7 @@
 									<p id="areaPopularProduct1price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="areaPopularProduct1add" class="productAdd card-text">
+									<p id="areaPopularProduct1add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="areaPopularProduct1like" class="productLike card-text">
@@ -216,7 +220,7 @@
 									<p id="areaPopularProduct2price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="areaPopularProduct2add" class="productAdd card-text">
+									<p id="areaPopularProduct2add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="areaPopularProduct2like" class="productLike card-text">
@@ -239,7 +243,7 @@
 									<p id="areaPopularProduct3price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="areaPopularProduct3add" class="productAdd card-text">
+									<p id="areaPopularProduct3add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="areaPopularProduct3like" class="productLike card-text">
@@ -262,7 +266,7 @@
 									<p id="areaPopularProduct4price" class="productPrice card-title">
 										<!--productPrice-->가격
 									</p>
-									<p id="areaPopularProduct4add" class="productAdd card-text">
+									<p id="areaPopularProduct4add" class="productAdd card-title">
 										<!--productAddress-->주소
 									</p>
 									<p id="areaPopularProduct4like" class="productLike card-text">
@@ -277,6 +281,31 @@
 				</th:block><!--end.isAuthenticated-->
 			</div>
 		</div><!--end.productSection-->
+
+		<!--bannerSection-->
+		<div id="bannerSection">
+			<div id="bannerSectionWrap" class="container">
+
+			</div>
+		</div><!--end.bannerSection-->
+
+		<!--postSection-->
+		<div id="postSection">
+			<div id="postSectionWrap" class="container">
+
+				<!--isAnonymous-->
+				<th:block sec:authorize="isAnonymous()">
+					
+					<div id="recentPost" class="sectionTitle">
+						<h1>이웃과 함께 하는 동네 생활</h1>
+						<h4>오이마켓 회원이 되어 우리 동네의 다양한 이야기를 나누어요.</h4>
+					</div>
+
+					<div id="recentPostList" class="postList">
+					</div>
+				</th:block><!--end.isAnonymous-->
+			</div>
+		</div><!--end.postSection-->
 
 
 	</div>
