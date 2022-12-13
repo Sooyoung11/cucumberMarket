@@ -268,10 +268,10 @@ public class ProductController {
 
     @GetMapping("/ing")
     @ResponseBody
-    public ResponseEntity<String> dealStatusIng(Integer productNo, Integer boughtMemberNo) {
-        log.info("dealStatusIng(productNo = {}, boughtMemberNo = {})", productNo, boughtMemberNo);
+    public ResponseEntity<String> dealStatusIng(Integer productNo) {
+        log.info("dealStatusIng(productNo = {})", productNo);
 
-        productService.dealStatusIng(productNo, boughtMemberNo);
+        productService.dealStatusIng(productNo);
 
         return ResponseEntity.ok("hello");
     }

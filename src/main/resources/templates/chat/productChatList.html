@@ -23,28 +23,6 @@
     <div class="container menu">
       <div>
         <ul th:each="room : ${list}" class="list-group" id="chatListGroup">
-          <th:block th:if="${room.roomId} != ${nickName}">
-            <li
-              class="list-group-item d-flex justify-content-between align-items-center"
-              id="user1"
-            >
-              <img src="/images/사진넣기.png" alt="photo" class="user_image" />
-              <a
-                style="display: block; text-decoration: none"
-                th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${room.member.memberNo})}"
-                th:text="${room.roomId}"
-              ></a>
-
-              <span th:text="${room.message}">eee</span>
-
-              <button
-                type="button"
-                class="btn btn-warning"
-                onclick="test('${room.member.memberNo}')"
-                th:text="#{잡았다..}"
-              ></button>
-            </li>
-          </th:block>
           <th:block th:if="${room.roomId} == ${nickName}">
             <li
               class="list-group-item d-flex justify-content-between align-items-center"
@@ -57,12 +35,13 @@
                 th:text="${room.member.nickname}"
                 id="detailChat"
               ></a>
-              <span th:text="${room.message}">eee</span>
+              <span th:text="${room.message}"></span>
 
               <button
                 type="button"
                 class="btn btn-warning"
-                onclick="test(this.value)"
+                th:value="${room.member.memberNo}"
+                th:onclick="test(this.value)"
               >
                 잡았다.
               </button>
@@ -79,7 +58,8 @@
     ></script>
     <script>
       function test(memberNo) {
-        console.log(memberNo);
+        opener.parentFunction(memberNo);
+        window.close();
       }
     </script>
   </body>

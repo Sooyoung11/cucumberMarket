@@ -33,7 +33,6 @@ public class ProductService {
     public List<Product> read() { // 전체 상품 목록
         log.info("read()");
 
-//        return productRepository.findAll();
         return productRepository.findByStatusOrderByProductNoDesc(false);
     }
 
@@ -53,16 +52,12 @@ public class ProductService {
         product.updateClickCount(product.getClickCount()+1);
         log.info("product = {}", product);
 
-//        Member member = memberRepository.findById(product.getMember().getMemberNo()).get();
-//        log.info("member = {}", member);
-
         return product;
     }
 
     public List<Product> search(String keyword) {
         log.info("search(keyword = {})", keyword);
 
-//        List<Product> list = productRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByProductNoDesc(keyword, keyword, keyword);
         List<Product> list = productRepository.searchByKeyword(false, keyword, keyword, keyword);
         log.info("list = {}", list);
 
@@ -73,15 +68,8 @@ public class ProductService {
     public void addInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("addInterested(dto = {}", dto);
 
-//        Member member = memberRepository.findById(dto.getMemberNo()).get();
-//        log.info("member = {}", member);
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
-
-//        ProductOfInterested entity = ProductOfInterested.builder()
-//                        .member(member).product(product)
-//                        .build();
-//        log.info("entity = {}", entity);
 
         ProductOfInterested entity = ProductOfInterested.builder()
                 .member(dto.getMemberNo()).product(product)
@@ -98,8 +86,6 @@ public class ProductService {
     public void deleteInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("deleteInterested(dto = {})", dto);
 
-//        Member member = memberRepository.findById(dto.getMemberNo()).get();
-//        log.info("member = {}", member);
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
@@ -111,8 +97,6 @@ public class ProductService {
     public String checkInterestedProduct(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
         log.info("checkInterestedProduct(dto = {})", dto);
 
-//        Member member = memberRepository.findById(dto.getMemberNo()).get();
-//        log.info("member = {}", member);
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
@@ -130,9 +114,6 @@ public class ProductService {
     @Transactional
     public List<Product> interestedRead(Integer memberNo) {
         log.info("interested(memberNo = {})", memberNo);
-
-//        Member member = memberRepository.findById(memberNo).get();
-//        log.info("member = {}", member);
 
         List<ProductOfInterested> list = productOfInterestedRepository.findByMember(memberNo);
         log.info("list = {}", list);
@@ -197,14 +178,12 @@ public class ProductService {
     }
 
     @Transactional
-    public void dealStatusIng(Integer productNo, Integer boughtMemberNo) {
-        log.info("dealStatusIng(productNo = {}, boughtMemberNo = {})", productNo, boughtMemberNo);
+    public void dealStatusIng(Integer productNo) {
+        log.info("dealStatusIng(productNo = {})", productNo);
 
         Product product = productRepository.findById(productNo).get();
         log.info("product = {}", product);
 
-        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
-        log.info("boughtMember = {}", boughtMember);
 
         product.updateStatusAndBoughtMemberNo(false, null);
     }
@@ -215,9 +194,6 @@ public class ProductService {
 
         Product product = productRepository.findById(productNo).get();
         log.info("product = {}", product);
-
-//        Member boughtMember = memberRepository.findById(boughtMemberNo).get();
-//        log.info("boughtMember = {}", boughtMember);
 
         product.updateStatusAndBoughtMemberNo(true, boughtMemberNo);
     }
