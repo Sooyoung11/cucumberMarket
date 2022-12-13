@@ -41,7 +41,7 @@ public class ProductController {
         for (int i = 0; i < list.size(); i++) {
             products.add(list.get(i));
 
-            if ((i + 1) % 3 == 0) {
+            if ((i + 1) % 5 == 0) {
                 productsList.add(products);
                 products = new ArrayList<>();
             }
