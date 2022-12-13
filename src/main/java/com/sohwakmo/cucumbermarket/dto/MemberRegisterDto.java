@@ -2,11 +2,15 @@ package com.sohwakmo.cucumbermarket.dto;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.MemberRole;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 public class MemberRegisterDto {
 
     private String memberId;
@@ -19,6 +23,8 @@ public class MemberRegisterDto {
     private String emailKey;
     private Integer emailAuth;
 
+    private String oauth;
+
     public Member toEntity(){
         return Member.builder()
                 .memberId(memberId)
@@ -30,6 +36,7 @@ public class MemberRegisterDto {
                 .email(email)
                 .emailKey(emailKey)
                 .emailAuth(emailAuth)
+                .oauth(oauth)
                 .build()
                 .addRole(MemberRole.USER);
     }

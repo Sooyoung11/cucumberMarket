@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>My Community 로그인</title>
+
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="header-container">
+      <a th:href="@{/index}">
+
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <form th:action="@{/login_post}" method="post">
+      <div>
+        <input type="text" name="username" placeholder="ID">
+      </div>
+      <div>
+        <input type="password" name="password" placeholder="Password">
+      </div>
+      <div>
+        <button type="submit">Login</button>
+        <a href="https://kauth.kakao.com/oauth/authorize?client_id=17f10af702d544834112ae55dc49d845&redirect_uri=http://localhost:8889/auth/kakao/callback&response_type=code"><img src="/images/kakao_login_button.png"></a>
+      </div>
+      <div>
+        <input type="checkbox" name="remember-me">
+        <label>자동 로그인</label>
+      </div>
+    </form>
+    <nav>
+      <a href="#">ID 찾기</a> |
+      <a href="#">Password 찾기</a>
+    </nav>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <a href="https://dev-gorany.tistory.com/">Blog</a> |
+    <a href="https://github.com/rhacnddl">Github</a>
+  </div>
+</footer>
+
+</body>
+</html>

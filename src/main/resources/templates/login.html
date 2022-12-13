@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>오이마켓 | 로그인</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+    <!--cucumberMarket 글씨체-->
+    <link rel="stylesheet" th:href="@{/css/join.css}">
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/signin.css}" rel="stylesheet">
+</head>
+<body class="text-center">
+
+<main class="form-signin">
+    <form th:action="@{/login_post}" method="post">
+        <div id="logoWrap">
+            <img src="" alt="">
+            <div id="logoText"><a th:href="@{ / }">cucumber<br>market</a></div>
+        </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" name="username" id="floatingInput" placeholder="User Id">
+                <label for="floatingInput">Id</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <div th:if="${error !=null}">
+                <p id="valid" class="alert alert-danger" th:text="${exception}"></p>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" style="margin-bottom: 5px" type="submit">Login</button>
+        <!--카카오 로그인 버튼-->
+        <a href="https://kauth.kakao.com/oauth/authorize?client_id=17f10af702d544834112ae55dc49d845&redirect_uri=http://localhost:8889/auth/kakao/callback&response_type=code"><img src="/images/kakao_login_medium_wide.png"></a>
+        <a class="w-100 btn btn-lg btn-primary" style="margin-top: 30px" th:href="@{/member/join}">회원가입</a>
+        <p class="mt-5 mb-3 text-muted">&copy; CucumberMarket</p>
+    </form>
+</main>
+
+
+
+</body>
+</html>
