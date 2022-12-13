@@ -15,6 +15,7 @@ const detailAddress = document.getElementById("sample4_detailAddress");
 const btnPostcode = document.querySelector('#btnPostcode');
 btnPostcode.addEventListener('click', sample4_execDaumPostcode);
 passwordValueCheck();
+
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 function sample4_execDaumPostcode() {
 
@@ -28,8 +29,6 @@ function sample4_execDaumPostcode() {
     detailAddress.className="form-control my-2";
     totalAddress.className="form-control d-none";
 
-
-// daum 주소 API
     new daum.Postcode({
         oncomplete: function(data) {
 
@@ -51,11 +50,12 @@ function sample4_execDaumPostcode() {
             postcode.value = data.zonecode;
             roadAddress.value = roadAddr;
             jibunAddress.value = data.jibunAddress;
-            totalAddress.value = data.roadnameCode+" "+ data.roadAddress+ " ";
+            //totalAddress.value = data.roadnameCode+" "+ data.roadAddress+ " ";
+            totalAddress.value = data.jibunAddress;
             console.log("totalAddress"+totalAddress);
 
             if(roadAddr !== ''){
-                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                document.getElementById("sample4_extraAddress").value = '';
             } else {
                 document.getElementById("sample4_extraAddress").value = '';
             }
@@ -192,12 +192,10 @@ form.addEventListener("submit", function (e) {
 
     const result = confirm("정말 수정하시겠습니까?");
     if (result) {
-        // 최종 주소필드
-        totalAddress.value += detailAddress.value;
-
         form.action = '/mypage/update';
         form.method = 'post';
         form.submit();
     }
 })
+
 

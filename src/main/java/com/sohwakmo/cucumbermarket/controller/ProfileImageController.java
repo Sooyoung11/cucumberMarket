@@ -21,6 +21,7 @@ public class ProfileImageController {
 
     private final MypageService mypageService;
 
+    //마이페이지 모달창에서 사용자 정보 불러오기
     @GetMapping("/{memberNo}")
     @ResponseBody
     public ResponseEntity<ProfileImageReadDto> changeImage(@PathVariable Integer memberNo){
@@ -30,6 +31,7 @@ public class ProfileImageController {
         return  ResponseEntity.ok(dto);
     }
 
+    //마이페이지 이미지 수정
     @PostMapping("/{modalMemberNo}")
     public ResponseEntity<Integer> updateImage(@PathVariable Integer modalMemberNo, @RequestBody ProfileImageReadDto dto) {
         log.info("updateImage(memberNo={}, dto={})", modalMemberNo, dto);
@@ -40,6 +42,7 @@ public class ProfileImageController {
         return ResponseEntity.ok(result);
     }
 
+    //마이페이지 이미지 업로드
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@RequestBody MultipartFile userProfileImage) throws IOException {
         log.info("uploadImage(file={})", userProfileImage);
@@ -52,6 +55,7 @@ public class ProfileImageController {
     }
 
 
+    //마이페이지 이미지 load
     @GetMapping("/userImage/{memberNo}")
     public ResponseEntity<ProfileImageReadDto> readUserImage(@PathVariable Integer memberNo){
         log.info("readUserImage(memberNo={})", memberNo);
