@@ -84,6 +84,10 @@ public class    PostController {
     public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
 
         Member member = memberService.findMemberByMemberNo(memberNo);
+
+        //매너온도 +1.5
+        member.gradeUpdate(member.getGrade()+1.5);
+
         log.info(member.toString());
         Post post = PostCreateDto.builder()
                 .title(dto.getTitle()).content(dto.getContent()).clickCount(dto.getClickCount()).member(member).build().toEntity();
@@ -99,9 +103,22 @@ public class    PostController {
         return "redirect:/post/list";
     }
 
+//    @PostMapping("/delete")
+//    public String delete(Integer id){
+//        postService.deletePost(id);
+//        return "redirect:/post/list";
+//    }
+
     @PostMapping("/delete")
-    public String delete(Integer id){
+    public String delete(Integer id, Integer memberNo){
+        log.info("delete(id={}, memberNo={})", id, memberNo);
+
+        //매너온도 -1.5
+        Member member = memberService.findMemberByMemberNo(memberNo);
+        member.gradeUpdate(member.getGrade()-1.5);
+
         postService.deletePost(id);
+
         return "redirect:/post/list";
     }
 
