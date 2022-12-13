@@ -40,6 +40,7 @@ public class ChatRoomsController {
         String memberNickname = chatRoomService.getLoginedName(memberNo);
         for(ChatRoom c : list){
             c.setMessage(chatRoomService.getRecentMessage(c.getMember().getMemberNo()));
+            c.setUnReadMessages(chatRoomService.checkUnReadMessages(c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
         }
         model.addAttribute("list",list);
         model.addAttribute("memberNo",memberNo);

@@ -3,6 +3,7 @@ package com.sohwakmo.cucumbermarket.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -26,6 +27,9 @@ public class ChatRoom {
     private String message;
 
     private String lastEnterName;
+
+    @ColumnDefault("0")
+    private Integer unReadMessages;
 
 
     public ChatRoom(String roomId, Member member) {

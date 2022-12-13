@@ -14,3 +14,12 @@
     border-radius: 4px; margin: auto;}
 .product{margin-right: 32px;}
 #popularProduct4, #areaPopularProduct4{margin-right: 0;}
+
+.btnMore{margin: 20px auto; text-align: center;}
+.btnMore div{padding: 12px 40px; border-radius: 40px; font-weight: 700;}
+
+/*bannerSection*/
+#bannerSection{width: 100%; height: 136px; background: #e6f3e6; margin-top: 80px;}
+
+/*postSection*/
+#postSection{margin-top: 100px;}
