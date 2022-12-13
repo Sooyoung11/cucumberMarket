@@ -23,6 +23,8 @@ public class ProductCreateDto {
 
     private List<MultipartFile> photoList;
 
+    private String dealAddress;
+
     public Product toEntity() {
         return Product.builder()
                 .member(member)
@@ -32,6 +34,7 @@ public class ProductCreateDto {
                 .category(category)
                 .clickCount(clickCount)
                 .likeCount(likeCount)
+                .dealAddress(dealAddress)
                 .build();
     }
 

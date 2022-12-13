@@ -281,7 +281,7 @@ public class ProductController {
         Member member = memberService.findMemberByMemberNo(memberNo);
 
         Product product = ProductCreateDto.builder()
-                .title(dto.getTitle()).content(dto.getContent()).price(dto.getPrice()).category(dto.getCategory()).clickCount(dto.getClickCount()).likeCount(dto.getLikeCount()).member(member).build().toEntity();
+                .title(dto.getTitle()).content(dto.getContent()).price(dto.getPrice()).category(dto.getCategory()).clickCount(dto.getClickCount()).likeCount(dto.getLikeCount()).dealAddress(dto.getDealAddress()).member(member).build().toEntity();
 
         for (MultipartFile multipartFile : imgFile) {
             log.info("imgFile={}", imgFile);
