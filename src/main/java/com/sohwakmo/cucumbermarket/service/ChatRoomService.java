@@ -98,7 +98,6 @@ public class ChatRoomService {
         return String.valueOf(messages.get(0).getMessage());
     }
 
-    @Transactional
     /**
      * 채팅방에 누가 제일 마지막에 들어갔는지 세팅한다.
      * @param roomId 채팅방이름
