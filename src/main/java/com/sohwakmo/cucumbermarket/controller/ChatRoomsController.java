@@ -39,8 +39,8 @@ public class ChatRoomsController {
         List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
         String memberNickname = chatRoomService.getLoginedName(memberNo);
         for(ChatRoom c : list){
-            c.setMessage(chatRoomService.getRecentMessage(c.getMember().getMemberNo()));
-            c.setUnReadMessages(chatRoomService.checkUnReadMessages(c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
+            c.setMessage(chatRoomService.getRecentMessage(c.getRoomId(),c.getMember().getMemberNo()));
+            c.setUnReadMessages(chatRoomService.checkUnReadMessages(c.getRoomId(),c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
         }
         model.addAttribute("list",list);
         model.addAttribute("memberNo",memberNo);
@@ -49,33 +49,14 @@ public class ChatRoomsController {
     }
 
 
-    /**
-     * 물품 게시물에서 거래완료로 변경 했을시 나오는 팝업창에서 채팅 리스트를 띄움
-     * @param memberNo 유저번호로 채팅방 리스트를 가져온다.
-     * @return 채팅방 리스트가 있는 페이지로 이동.
-     */
-    @GetMapping("/productChatList")
-    public void showProductChatList(Integer memberNo,Model model){
-        List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
-        String memberNickname = chatRoomService.getLoginedName(memberNo);
-        for(ChatRoom c : list){
-            c.setMessage(chatRoomService.getRecentMessage(c.getMember().getMemberNo())); // 마지막으로 받거나 전달한 메세지가 무엇인지 알아내서 세팅한다.
-        }
-        model.addAttribute("list",list);
-        model.addAttribute("memberNo",memberNo);
-        model.addAttribute("nickName", memberNickname);
-    }
-
-
-
     @GetMapping("/chatRoom")
     public void getRoom(String roomId,String nickname,Integer memberNo,Model model){
-        chatRoomService.setLastCheckUser(roomId,nickname,memberNo); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
         ChatRoom chatRoom = chatRoomService.getRoomByRoomId(roomId,memberNo,nickname);
         List<Message> loadMessage = chatRoomService.getAllMessages(roomId,nickname);
         log.info(chatRoom.toString());
         Member member = memberRepository.findByNickname(nickname).orElse(null);
         Integer nicknameNum = member.getMemberNo();
+        chatRoomService.setLastCheckUser(roomId,nickname,memberNo); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
         model.addAttribute("room", chatRoom);
         model.addAttribute("nickname",nickname);
         model.addAttribute("memberNo", memberNo);
