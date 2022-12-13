@@ -36,6 +36,11 @@ public class ProductService {
         return productRepository.findByStatusOrderByProductNoDesc(false);
     }
 
+    public List<Product> readByLikeCountDesc(){
+        log.info("readByLikeCountDesc()");
+        return productRepository.findByOrderByLikeCountDescProductNoDesc();
+    }
+
     public Product read(Integer productNo) { // 상품 조회
         log.info("read(productNo = {})", productNo);
 
