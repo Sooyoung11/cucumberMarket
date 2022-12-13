@@ -11,7 +11,11 @@
           <div>
             <input type="hidden" th:value="${post.postNo}" name="id" />
             <!-- 매너온도 값 불러오기 위해 -->
-            <input type="hidden" th:value="${#authentication.principal.memberNo}" name="memberNo" />
+            <input
+              type="hidden"
+              th:value="${#authentication.principal.memberNo}"
+              name="memberNo"
+            />
 
             <div>
               <th:block
@@ -97,12 +101,6 @@
               <!-- 이미지가 있다면 들어갈곳-->
               <img src="#" />
             </div>
-            <div>
-              <!-- //TODO 이 작성자가 작성한 게시물 더보기-->
-              <span>
-                <a href="#"></a>
-              </span>
-            </div>
           </div>
         </div>
       </form>
@@ -155,7 +153,7 @@
       <hr />
 
       <!-- 댓글 리스트 -->
-      <div id="replies" class="my-2 p-3 bg-body rounded shadow-sm" ></div>
+      <div id="replies" class="my-2 p-3 bg-body rounded shadow-sm"></div>
 
       <!-- Modal -->
       <div
