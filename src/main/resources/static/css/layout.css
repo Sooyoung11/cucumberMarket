@@ -26,3 +26,15 @@
 
 #section{width: 100%; height: auto; min-width: 1280px; margin: 0 auto; padding-top: 80px;}
 #sectionWrap{padding: 0;}
+
+body { height: 2000px; }
+
+.sideBanner {
+    position: absolute;
+    width: 150px;
+    height: 250px;
+    top: 50px;
+    margin: 50px;
+    background-color: #999900;
+    right: 0px;
+}

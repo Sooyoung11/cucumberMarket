@@ -6,6 +6,25 @@ window.addEventListener("DOMContentLoaded", function () {
   const btnChat = document.querySelector("#btnChat"); // 채팅하기 버튼
   const btnUpdateAndDelete = document.querySelector("#btnUpdateAndDelete"); // 수정 삭제 버튼
 
+  // 기본 위치(top)값
+  // var floatPosition = parseInt($(".sideBanner").css('top'))
+  //
+  // // scroll 인식
+  // $(window).scroll(function() {
+  //   alert('하이');
+  //
+  //   // 현재 스크롤 위치
+  //   var currentTop = $(window).scrollTop();
+  //   var bannerTop = currentTop + floatPosition + "px";
+  //
+  //   //이동 애니메이션
+  //   $(".sideBanner").stop().animate({
+  //     "top" : bannerTop
+  //   }, 500);
+  //
+  // }).scroll();
+
+
   if (memberNo == productMemberNo) {
     // 로그인한 no와 상품 등록자의 no가 같으면
     dealStatus.className = "row"; // 거래 상테 select 보임
@@ -153,4 +172,7 @@ window.addEventListener("DOMContentLoaded", function () {
         console.log(err);
       });
   }
+
+
+
 });

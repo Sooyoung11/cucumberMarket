@@ -3,6 +3,7 @@ package com.sohwakmo.cucumbermarket.controller;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
+import com.sohwakmo.cucumbermarket.dto.ProductRecentlyDto;
 import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +30,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, HttpSession session) {
         log.info("list()");
 
         List<Product> list = productService.read();
@@ -55,11 +59,16 @@ public class ProductController {
     }
 
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model) {
+    public String detail(Integer productNo, Model model, HttpServletRequest request) {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
         log.info("product = {}", product);
+
+        // session test
+        HttpSession session = request.getSession();
+        session.setAttribute("product", product);
+        session.setAttribute("member",product.getMember());
 
         model.addAttribute("product", product); // 상품 정보
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보

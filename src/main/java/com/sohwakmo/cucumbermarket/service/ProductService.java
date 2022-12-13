@@ -5,6 +5,7 @@ import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
 import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
+import com.sohwakmo.cucumbermarket.dto.ProductRecentlyDto;
 import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
@@ -293,7 +294,6 @@ public class ProductService {
 
     };
 
-   
 
 
 }

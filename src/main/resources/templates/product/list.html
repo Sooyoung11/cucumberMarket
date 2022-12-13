@@ -3,7 +3,52 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout.html }">
 
+
     <div layout:fragment="content">
+
+        <div>  <!-- 사이드 배너 시작-->
+            <body>
+                    <div class="sideBanner">
+                        <!--찜 하트 수-->
+                        <div class="favorites">
+                            <div class="favoritesText">찜한상품</div>
+                            <div class="favoritesCount">
+                                <p id="toFavorites" class="toFavorites">
+                                    <i class="fas fa-heart"></i>&nbsp; <span id="wishProduct">0</span>
+                                </p>
+                            </div>
+                            <!-- favoritesCount -->
+                            <br>
+                        </div>
+                        <!--찜 끝-->
+
+                        <!-- 최근 본 상품 시작 -->
+                        <div class="recently">
+                            <div class="recentlyText">최근본상품</div>
+                                 <div class="recentlyProduct">
+                                    <span id="recentlyCnt"></span>
+                                         <div id="recentlyArea">
+                                             <a id="recentlyList" > </a>
+                                             <!-- 최근본상품  -->
+                                             <a id="noList"></a>
+                                            </div>
+                                            </div>
+                                            <div id="recentlyPaging" style="text-align: center;">
+                                                <button id="recentlySubPage" class="btn subpage"
+                                                        onclick="recentlySubPage()"></button>
+                                                <a id="currentPage"></a>
+                                    <button id="recentlyAddPage" class="btn addpage" onclick="recentlyAddPage()"></button>
+                              </div>
+                        </div>
+                                   <!-- 최근 본 상품 끝 -->
+
+                            <div class="totheTop">
+                                <a href="#" class="topText">TOP</a>
+                            </div>
+                        </div>
+                    </span>
+            </body>
+        </div> <!-- 사이드 배너 끝 -->
 
         <div class="card my-2 container">
             <div class="card-header text-center">
@@ -51,6 +96,7 @@
                 </div>
             </div>
 
+
             <th:block th:if="${ result } == 'ok'">
                 <p>있음ㄴ</p>
             </th:block>
@@ -59,15 +105,14 @@
                 <p>검색 결과가 없습니다.</p>
             </th:block>
 
-
         </div> <!-- container -->
+
+
     </div> <!-- layout:fragment="content" -->
 
     <th:block layout:fragment="script">
-
-
 <!--        <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>-->
-
+<!--        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.js"></script>-->
     </th:block>
 
 </html>
