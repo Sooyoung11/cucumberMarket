@@ -123,4 +123,10 @@ public class ChatRoomService {
         }
         return unReadMessage;
     }
+
+    public void deleteChatRoom(String roomId, String nickname) {
+        Member member = memberRepository.findByNickname(nickname).orElse(null);
+        ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(roomId, member.getMemberNo());
+        chatRoomRepository.delete(chatRoom);
+    }
 }

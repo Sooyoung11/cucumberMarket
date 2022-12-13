@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -62,5 +63,12 @@ public class ChatRoomsController {
         model.addAttribute("memberNo", memberNo);
         model.addAttribute("nicknameNum",nicknameNum);
         model.addAttribute("messages", loadMessage);
+    }
+
+    @GetMapping("/delete")
+    public String deleteChatRoom(String roomId, String nickname, Integer memberNo, RedirectAttributes attributes){
+        chatRoomService.deleteChatRoom(roomId, nickname);
+        attributes.addAttribute("memberNo", memberNo);
+        return "redirect:/chat/list";
     }
 }
