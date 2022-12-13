@@ -51,7 +51,7 @@
                 >
               </th:block>
               <a
-                th:href="@{/chat/delete(roomId=${room.roomId},nickname=${room.member.nickname},memberNo = ${#authentication.principal.memberNo})}"
+                th:href="@{/chat/delete(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${#authentication.principal.memberNo})}"
               >
                 <i class="fa-solid fa-trash"></i>
               </a>
@@ -85,7 +85,7 @@
                 >
               </th:block>
               <a
-                th:href="@{/chat/delete(roomId=${room.roomId},nickname=${room.member.nickname})}"
+                th:href="@{/chat/delete(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${#authentication.principal.memberNo})}"
               >
                 <i class="fa-solid fa-trash"></i>
               </a>

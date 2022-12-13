@@ -67,7 +67,7 @@ public class ChatRoomsController {
 
     @GetMapping("/delete")
     public String deleteChatRoom(String roomId, String nickname, Integer memberNo, RedirectAttributes attributes){
-        chatRoomService.deleteChatRoom(roomId, nickname);
+        chatRoomService.deleteChatRoom(roomId, nickname,memberNo);
         attributes.addAttribute("memberNo", memberNo);
         return "redirect:/chat/list";
     }

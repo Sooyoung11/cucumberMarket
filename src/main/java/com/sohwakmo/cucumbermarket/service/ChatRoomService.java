@@ -124,9 +124,14 @@ public class ChatRoomService {
         return unReadMessage;
     }
 
-    public void deleteChatRoom(String roomId, String nickname) {
+    @Transactional
+    public void deleteChatRoom(String roomId, String nickname,Integer memberNo) {
         Member member = memberRepository.findByNickname(nickname).orElse(null);
+        Member loginUser = memberRepository.findById(memberNo).orElse(null);
         ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(roomId, member.getMemberNo());
-        chatRoomRepository.delete(chatRoom);
+        chatRoom.setLeavedUser(loginUser.getNickname());
+
+        // TODO 여기서 if문으로 묶어서 2명이된순간 해야함. String 인지 Integer 인지 확인
+        //chatRoomRepository.delete(chatRoom);
     }
 }

@@ -31,6 +31,9 @@ public class ChatRoom {
     @ColumnDefault("0")
     private Integer unReadMessages;
 
+    @ColumnDefault("0")
+    private String leavedUser;
+
 
     public ChatRoom(String roomId, Member member) {
         this.roomId = roomId;
