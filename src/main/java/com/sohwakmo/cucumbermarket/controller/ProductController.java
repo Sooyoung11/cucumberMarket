@@ -10,6 +10,7 @@ import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -261,6 +262,7 @@ public class ProductController {
     }
 
     // 상품 등록 페이지 이동
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/create")
     public String create() {
         log.info("create()");
@@ -269,6 +271,7 @@ public class ProductController {
     }
 
     //상품 등록
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
     public String create(
             @RequestParam(value = "imgFile", required = false) List<MultipartFile> imgFile,
@@ -294,6 +297,7 @@ public class ProductController {
     }
 
     // 상품 수정 페이지로 이동
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/modify")
     public String modify(Integer productNo, Model model) {
         log.info("modify(productNo={})", productNo);
@@ -305,6 +309,7 @@ public class ProductController {
     }
 
     // 상품 수정
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/update")
     public String update(ProductUpdateDto dto) {
         log.info("update(dto={})", dto);
@@ -315,6 +320,7 @@ public class ProductController {
     }
 
     // 상품 삭제//
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/delete")
     public String delete(Integer productNo) {
         log.info("delete(productNo={})", productNo);
