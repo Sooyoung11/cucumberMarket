@@ -34,9 +34,22 @@
                 th:text="${room.roomId}"
               ></a>
 
-              <span th:text="${room.message}">eee</span>
+              <span th:text="${room.message}">마지막 작성 메시지</span>
 
-              <span class="badge badge-warning badge-pill">1411</span>
+              <th:block th:if="${room.unReadMessages} != 0">
+                <span
+                  class="badge badge-warning badge-pill"
+                  th:text="${room.unReadMessages}"
+                  >안 읽은 메시지 개수</span
+                >
+              </th:block>
+              <th:block th:if="${room.unReadMessages} == 0">
+                <span
+                  class="badge badge-warning badge-pill"
+                  style="visibility: hidden"
+                  >안 읽은 메시지 개수</span
+                >
+              </th:block>
             </li>
           </th:block>
           <th:block th:if="${room.roomId} == ${nickName}">
@@ -50,9 +63,22 @@
                 th:text="${room.member.nickname}"
                 id="detailChat"
               ></a>
-              <span th:text="${room.message}">eee</span>
+              <span th:text="${room.message}">마지막 작성 메시지</span>
 
-              <span class="badge badge-warning badge-pill">121212</span>
+              <th:block th:if="${room.unReadMessages} != 0">
+                <span
+                  class="badge badge-warning badge-pill"
+                  th:text="${room.unReadMessages}"
+                  >안 읽은 메시지 개수</span
+                >
+              </th:block>
+              <th:block th:if="${room.unReadMessages} == 0">
+                <span
+                  class="badge badge-warning badge-pill"
+                  style="visibility: hidden"
+                  >안 읽은 메시지 개수</span
+                >
+              </th:block>
             </li>
           </th:block>
         </ul>
