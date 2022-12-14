@@ -280,6 +280,9 @@ public class ProductController {
         log.info("imgFile={}", imgFile);
         Member member = memberService.findMemberByMemberNo(memberNo);
 
+        //매너온도 +1.5
+        member.gradeUpdate(member.getGrade()+2.5);
+
         Product product = ProductCreateDto.builder()
                 .title(dto.getTitle()).content(dto.getContent()).price(dto.getPrice()).category(dto.getCategory()).clickCount(dto.getClickCount()).likeCount(dto.getLikeCount()).dealAddress(dto.getDealAddress()).member(member).build().toEntity();
 
