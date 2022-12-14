@@ -144,7 +144,7 @@
 					
 					<!--btnMorePopularProduct-->
 					<div class="btnMore">
-						<a th:href="@{ /product/list }">
+						<a  th:href="@{/product/list?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
 							<div id="btnMoreAreaPopularProduct" class="btn btn-outline-success">인기매물 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
 						</a>	
 					</div>

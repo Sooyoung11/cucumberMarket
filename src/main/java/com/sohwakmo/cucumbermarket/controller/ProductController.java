@@ -36,15 +36,25 @@ public class ProductController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, Integer memberNo) {
         log.info("list()");
 
         List<Product> list = productService.read();
         model.addAttribute("list", list);
 
+        // 찜 개수
+        Integer interestedCount = 0;
+        List<Product> likeList = productService.interestedRead(memberNo);
+
+        if(likeList.size() != 0)
+        interestedCount = likeList.size();
+
+        model.addAttribute("interestedList",interestedCount);
+
+
 //        List<List<Product>> productsList = new ArrayList<>();
 //        List<Product> products = new ArrayList<>();
-//
+//sssssss
 //        for (int i = 0; i < list.size(); i++) {
 //            products.add(list.get(i));
 //
@@ -66,7 +76,7 @@ public class ProductController {
     }
 
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
+    public String detail(Integer productNo, Model model, HttpSession session) throws UnsupportedEncodingException {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
@@ -75,8 +85,8 @@ public class ProductController {
         model.addAttribute("product", product); // 상품 정보
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보
 
-        // ssesion test;
-//        Integer productNo1 = product.getProductNo(); // 상품 번호
+        // 최근 본 목록
+//        String productNo1 = product.getProductNo().toString(); // 상품 번호
         String photo = product.getPhotoUrl1(); // 상품 사진
 
         ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
@@ -93,9 +103,27 @@ public class ProductController {
         // 최근 본 상품 3개로 제한두기
         if(productlist.size() > 2){
             productlist.remove(productlist.size()-2);
-            productlist.add(0, photo);
+//            productlist.remove(productlist.size()-5);
+
+            // 사진이 default 값이면
+            if(photo == null){
+                productlist.add(0, "/images/product/noimg.png");
+//                productlist.add(1, productNo1);
+            }else{
+                productlist.add(0, photo);
+//                productlist.add(1, productNo1);
+            }
+
         } else {
-            productlist.add( photo);
+
+            // 사진이 default 값이면
+            if(photo == null){
+                productlist.add("/images/product/noimg.png");
+//                productlist.add( productNo1);
+            }else{
+                productlist.add(photo);
+//                productlist.add(productNo1);
+            }
         }
 
         return "/product/detail";
