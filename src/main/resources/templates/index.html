@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns="http://www.w3.org/1999/html"
 	  layout:decorate="~{ layout/layout.html }">
 
 	<head>
@@ -9,6 +9,7 @@
 		<link rel="stylesheet" th:href="@{/css/index.css}">
     </head>
 
+	<body onload="doPopupopen();">
 
 	<div layout:fragment="content">
 		<!--slide-->
@@ -182,9 +183,14 @@
 	</div>
 
 
+	</body>
 	<!--	<script th:src="@{/js/js.js}"></script>-->
 	<th:block layout:fragment="script">
-
+		<script type="text/javascript">
+			function doPopupopen(){
+				window.open("/popup", "popup", "width=500, height=650");
+			}
+		</script>
 	</th:block>
 
 </html>
