@@ -6,13 +6,14 @@
     <title>오이마켓 | 프로필 수정페이지</title>
 </head>
     <div layout:fragment="content">
+        <div class="container">
           <!-- mypage start -->
             <div class="row">
                 <!-- 사용자 정보 start -->
                 <div class="col-lg-4">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">사용자 정보</h6>
+                            <h6 class="m-0 font-weight-bold">사용자 정보</h6>
                         </div>
                         <div class="card-body">
                             <!-- 사용자 프로필 사진 -->
@@ -20,7 +21,7 @@
                                 <img class="user_img" alt="..." id="userProfileImage"/>
                             </div>
                             <div class="container my-3 align-content-center" >
-                                <a class="btn btn-secondary btn-icon-split" id="profileImageChange">
+                                <a class="btn btn-light btn-icon-split" id="profileImageChange">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-arrow-right"></i>
                                             </span>
@@ -36,7 +37,7 @@
                 <div class="col-lg-8">
                     <div class="card mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">프로필 수정</h6>
+                            <h6 class="m-0 font-weight-bold">프로필 수정</h6>
                         </div>
                         <div class="card-body">
                             <form id="formModify">
@@ -71,7 +72,7 @@
                                         <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
                                         <input id="totalAddress" class="form-control" style="display: inline-block" name="address" type="text" th:value="${userProfile.address}"/>
                                         <div class="mb-2">
-                                            <input type="button" id="btnPostcode" class="btn btn-outline-success form-control-lg" value="우편번호 찾기">
+                                            <input type="button" id="btnPostcode" class="btn btn-success form-control" style="width:110px" value="우편번호 찾기">
                                             <span id="postcode">
                                                 <input type="text" id="sample4_postcode" class="form-control d-none" placeholder="우편번호">
                                             </span>
@@ -107,7 +108,7 @@
                                                 <span id="emailNok" class="d-none">
                                                 <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
                                                 </span>
-                                                <input type="button" id="btnAuthcode" class="btn btn-success btn-lg disabled" value="인증코드 받기">
+                                                <input type="button" id="btnAuthcode" class="btn btn-success disabled" style="width: 110px;" value="인증코드 받기">
                                         </div>
                                         <div id="emailNok2" class="d-none">
                                             <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
@@ -126,8 +127,8 @@
                                     </div>
                                 </div>
                                 <div class="my-2" style="display:inline" >
-                                    <input type="submit" id="btnSubmit" class="form-control btn btn-success disabled ml-4" value="수정완료" style="float:left; display:block; width:200px; margin-right:200px;"/>
-                                    <input type="button" onClick="history.go(-1)" class="form-control btn btn-success ml-4" value="취소" style="float:leaft; display:block; width:200px;"/>
+                                    <input type="submit" id="btnSubmit" class="form-control btn btn-success disabled ml-4" value="수정완료" style="float:right; display:block; width:100px; margin-right:10px;"/>
+                                    <input type="button" onClick="history.go(-1)" class="form-control btn btn-success ml-4" value="취소" style="float:right; display:block; width:100px; margin-right:10px;"/>
                                 </div>
 
                             </form>
@@ -135,8 +136,10 @@
                     </div>
                 </div>
                 <!-- 사용자 프로필 end -->
+            </div>
+            <!-- row:end -->
         </div>
-        <!-- row:end -->
+        <!--container END-->
 
         <!--modal start -->
         <div class="modal" tabindex="-1" id="profileImageModal">
