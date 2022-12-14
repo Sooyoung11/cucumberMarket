@@ -185,12 +185,12 @@
 				<!--isAnonymous-->
 				<th:block sec:authorize="isAnonymous()">
 					
-					<div id="recentPost" class="sectionTitle">
+					<div id="popularPost" class="sectionTitle">
 						<h1>이웃과 함께 하는 동네 생활</h1>
 						<h4>오이마켓 회원이 되어 우리 동네의 다양한 이야기를 나누어요.</h4>
 					</div>
 
-					<div id="recentPostList" class="postList">
+					<div id="popularPostList" class="postList">
 						<!--row-->
 						<div class="row row-cols-2">
 							<!--post-->
@@ -228,10 +228,10 @@
 						
 					</div>
 					
-					<!--btnMorePopularProduct-->
+					<!--btnMorePopularPost-->
 					<div class="btnMore">
 						<a th:href="@{ /product/list }">
-							<div id="btnMoreAreaPopularProduct" class="btn btn-outline-success">인기매물 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+							<div id="btnMorePopularPost" class="btn btn-outline-success">인기매물 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
 						</a>	
 					</div>
 
@@ -240,7 +240,7 @@
 				<!--isAuthenticated-->
 				<th:block sec:authorize="isAuthenticated()">
 
-					<div id="recentPost" class="sectionTitle">
+					<div id="areaPopularPost" class="sectionTitle">
 						<h1>이웃과 함께 하는 동네 생활</h1>
 						<h4><span sec:authentication="name"></span>님 동네의 다양한 이야기를 이웃과 함께 나누어요.</h4>
 					</div>
