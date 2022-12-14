@@ -598,18 +598,6 @@ progress {
   margin: auto;
   display: block;
 }
-
-.profileButton {
-  display: flex;
-  justify-content: space-around;
-}
-
-#profileContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
 .profile{
   width: 100%;
   height: 100%;

@@ -9,224 +9,227 @@
     <body>
 
 <div layout:fragment="content">
-    <div class="container">
     <!-- mypage start -->
-        <div class="row">
-            <!-- 사용자 정보 start -->
-            <div class="col-lg-4">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold">사용자 정보</h6>
+    <div class="row">
+        <!-- 사용자 정보 start -->
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">사용자 정보</h6>
+                </div>
+                <div class="card-body">
+                    <!-- 채팅 -->
+                    <div style="display: inline-block; margin: 0 5px;  float: right;">
+                        <a href="#" id="checkChatList">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </a>
                     </div>
-                    <div class="card-body">
-                        <!-- 채팅 -->
-                        <div style="display: inline-block; margin: 0 5px;  float: right;">
-                            <a href="#" id="checkChatList">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                            </a>
-                        </div>
-                        <!-- 사용자 프로필 사진 -->
-                        <div>
-                            <img class="user_img" alt="..." id="userProfileImage"/>
-                        </div>
-                        <div class="container my-3 align-content-center">
-                            <div class="profileButton">
-                                <div>
-                                    <a class="btn btn-light btn-icon-split" id="profileImageChange" >
-                                                        <span class="icon text-white-50">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </span>
-                                        <span class="text">  사진 수정  </span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a class="btn btn-light btn-icon-split"
-                                       th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}" >
-                                                        <span class="icon text-white-50">
-                                                            <i class="fas fa-arrow-right"></i>
-                                                        </span>
-                                        <span class="text"> 프로필 수정  </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- 사용자 프로필 사진 -->
+                    <div>
+                        <img class="user_img" alt="..." id="userProfileImage"/>
+                    </div>
+                    <div class="container my-3 align-content-center">
+                        <a class="btn btn-secondary btn-icon-split" id="profileImageChange">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </span>
+                            <span class="text">  사진 수정  </span>
+                        </a>
+                        <a class="btn btn-secondary btn-icon-split"
+                           th:href="@{/mypage/modify?memberNo={no} (no=${userProfile.memberNo})}">
+                                            <span class="icon text-white-50">
+                                                <i class="fas fa-arrow-right"></i>
+                                            </span>
+                            <span class="text"> 프로필 수정  </span>
+                        </a>
+                    </div>
 
-                        <!-- 매너온도 start -->
-                        <div class="my-2">
-                            <div>
-                                <div class="card border-left-info shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">매너온도
-                                                </div>
-                                                <div class="row no-gutters align-items-center">
-                                                    <div class="col-auto">
-                                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                            <p> <span id="userGrade"></span>°</p>
-                                                        </div>
+                    <!-- 매너온도 start -->
+                    <div class="my-2">
+                        <div>
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">매너온도
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                        <p> <span id="userGrade"></span>°</p>
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="progress progress-sm mr-2">
-                                                            <div id="userTemp" class="progress-bar bg-info" role="progressbar"
-                                                                 style="width: 37%"  aria-valuemin="0"
-                                                                 aria-valuemax="100"></div>
-                                                        </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div id="userTemp" class="progress-bar bg-info" role="progressbar"
+                                                             style="width: 37%"  aria-valuemin="0"
+                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-auto">
-                                                <i class="fa-solid fa-temperature-three-quarters fa-lg"></i>
-                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fa-solid fa-temperature-three-quarters"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- 매너온도 end -->
                     </div>
+                    <!-- 매너온도 end -->
                 </div>
             </div>
-            <!-- 사용자 정보 end -->
+        </div>
+        <!-- 사용자 정보 end -->
 
-            <!-- 사용자 프로필 start-->
-            <div class="col-lg-8">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold">사용자 프로필</h6>
-                    </div>
-                    <div class="card-body" id="profileContent" style="height: 345px;">
-                        <input type="hidden" id="memberNo" th:value="${userProfile.memberNo}" readonly/>
-                        <div>
-                                <label class="form-control font-weight-bold" style="border:none; float: left; display: block; width: 120px;">사용자 이름</label>
-                                <input id="name" class="form-control-plaintext" style="display: block; width: 250px;" type="text" th:value="${userProfile.name}"
-                                       readonly/>
+        <!-- 사용자 프로필 start-->
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">사용자 프로필</h6>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" id="memberNo" th:value="${userProfile.memberNo}" readonly/>
+                    <div class="mb-3 row">
+                        <label class="col-sm-2 font-weight-bold">사용자 이름</label>
+                        <div class="col-sm-10">
+                            <!--                                <label for="name" class="form-label">사용자 이름</label>-->
+                            <input id="name" class="form-control-plaintext" type="text" th:value="${userProfile.name}"
+                                   readonly/>
                         </div>
-                        <div>
-                            <label class="form-control font-weight-bold" style="border:none; float: left; display: block; width: 120px;">닉네임</label>
-                            <input id="nickname" class="form-control-plaintext" style="display: block; width: 250px;" type="text"
+                    </div>
+                    <div class="my-2 mb-3 row">
+                        <h4 class="col-sm-2 small font-weight-bold">닉네임</h4>
+                        <div class="col-sm-10">
+                            <input id="nickname" class="form-control-plaintext" type="text"
                                    th:value="${userProfile.nickname}" readonly/>
                         </div>
-                        <div>
-                            <label class="form-control font-weight-bold" style="border:none; float: left; display: block; width: 120px;">주소</label>
-                            <input id="address" class="form-control-plaintext" style="display: block; width: 250px;" type="text"
-                                       th:value="${userProfile.address}" readonly/>
-                        </div>
-                        <div>
-                            <label class="form-control font-weight-bold" style="border:none; float: left; display: block; width: 120px;">핸드폰 번호</label>
-                            <input id="phone" class="form-control-plaintext" style="display: block; width: 250px;" type="text" th:value="${userProfile.phone}"
-                                       readonly/>
-                        </div>
-                        <div>
-                            <label class="form-control font-weight-bold" style="border:none; float: left; display: block; width: 120px;">이메일</label>
-                            <input id="email" class="form-control-plaintext" style="display: block; width: 250px;" type="email"
-                                       th:value="${userProfile.email}" readonly/>
+                    </div>
+                    <div class="my-2 mb-3 row">
+                        <h4 class="col-sm-2 small font-weight-bold">주소</h4>
+                        <div class="col-sm-10">
+                            <input id="address" class="form-control-plaintext" type="text"
+                                   th:value="${userProfile.address}" readonly/>
                         </div>
                     </div>
-                </div>
+                    <div class="my-2 mb-3 row">
+                        <h4 class="col-sm-2 small font-weight-bold">핸드폰 번호</h4>
+                        <div class="col-sm-10">
+                            <input id="phone" class="form-control-plaintext" type="text" th:value="${userProfile.phone}"
+                                   readonly/>
+                        </div>
+                    </div>
+                    <div class="my-2 mb-3 row">
+                        <h4 class="col-sm-2 small font-weight-bold">이메일</h4>
+                        <div class="col-sm-10">
+                            <input id="email" class="form-control-plaintext" type="email"
+                                   th:value="${userProfile.email}" readonly/>
+                        </div>
 
+                    </div>
+                </div>
             </div>
-            <!-- 사용자 프로필 end -->
 
-            <!-- 찜목록/판매내역/구매내역 start -->
-            <div class="row">
-
-                <!-- 찜목록 start -->
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                        찜목록
-                                        <div class="col-auto" style="display: inline-block">
-                                            <i class="fa-solid fa-star fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800" style="display: inline-block">
-                                        <a th:href="@{/product/interested?memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                            <p>
-                                            <input type="number" id="myInterestedList"
-                                                   style="text-align:right; border:none; font-weight: bold; width:250px;height:50px;font-size:16px;"
-                                                   value="*" readonly/>건
-                                            </p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 찜목록 end -->
-
-                <!-- 판매목록 start -->
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                        판매내역
-                                        <div class="col-auto" style="display: inline-block">
-                                            <i class="fa-solid fa-money-bill fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <p>
-                                        <label for="proceedingList" class="form-label align-content-center">진행중</label>
-                                        <a th:href="@{/product/myList/searchStatus?myProductListSelect=2&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                            <input type="number" id="proceedingList" style="text-align:right; border:none; font-weight: bold; width:250px;height:40px;font-size:16px;" value="*" readonly/>건
-                                        </a>
-                                        </p>
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <p>
-                                        <label for="completedList" class="form-label align-content-center">거래완료</label>
-                                        <a th:href="@{/product/myList/searchStatus?myProductListSelect=3&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                            <input type="number" id="completedList" style="text-align:right; border:none; font-weight: bold; width:240px;height:10px;font-size:16px;" value="*" readonly/>건
-                                        </a>
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 판매목록 end -->
-
-                <!-- 구매목록 start -->
-                <div class="col-xl-4 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                        구매내역
-                                        <div class="col-auto" style="display: inline-block">
-                                            <i class="fa-solid fa-cart-shopping fa-lg"></i>
-                                        </div>
-                                    </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                        <p>
-                                        <a th:href="@{/product/myList/searchStatus?myProductListSelect=4&memberNo={no} (no=${#authentication.principal.memberNo})}">
-                                            <input type="number" id="purchaseList" style="text-align:right; border:none; font-weight: bold; width:250px;height:50px;font-size:16px;" value="*" readonly/>건
-                                        </a>
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 구매목록 end -->
-            </div>
-            <!-- 찜목록/판매내역/구매내역 end -->
         </div>
-        <!-- Mypage END -->
+        <!-- 사용자 프로필 end -->
+
+        <!-- 찜목록/판매내역/구매내역 start -->
+        <div class="row">
+
+            <!-- 찜목록 start -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    찜목록
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" style="display: inline-block">
+                                    <a th:href="@{/product/interested?memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <p>
+                                        <input type="number" width="100px" id="myInterestedList"
+                                               style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;"
+                                               value="*" readonly/>건
+                                        </p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 찜목록 end -->
+
+            <!-- 판매목록 start -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    판매내역
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-money-bill"></i>
+                                    </div>
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
+                                    <label for="proceedingList" class="form-label align-content-center">진행중</label>
+                                    <a th:href="@{/product/myList/searchStatus?myProductListSelect=2&memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <input type="number" id="proceedingList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
+                                    </a>
+                                    </p>
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
+                                    <label for="completedList" class="form-label align-content-center">거래완료</label>
+                                    <a th:href="@{/product/myList/searchStatus?myProductListSelect=3&memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <input type="number" id="completedList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
+                                    </a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 판매목록 end -->
+
+            <!-- 구매목록 start -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                    구매내역
+                                    <div class="col-auto" style="display: inline-block">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </div>
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <p>
+                                    <a th:href="@{/product/myList/searchStatus?myProductListSelect=4&memberNo={no} (no=${#authentication.principal.memberNo})}">
+                                        <input type="number" id="purchaseList" style="text-align:right; border:none; font-weight: bold; width:100px;height:50px;font-size:16px;" value="*" readonly/>건
+                                    </a>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 구매목록 end -->
+        </div>
+        <!-- 찜목록/판매내역/구매내역 end -->
     </div>
-    <!--container END-->
+    <!-- Mypage END -->
 
 
     <!--modal start -->
