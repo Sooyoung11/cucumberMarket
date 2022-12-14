@@ -72,9 +72,18 @@
 						<div class="row row-cols-4">
 							<!--product-->
 							<div th:each="product: ${ productList }" class="product col card">
+							<a th:href="@{/login}">
 								<!--productImg-->
 								<div class="productImg card-img-top">
-									<img th:src="@{ ${product.photoUrl1} }" alt="매물사진" >
+									<!-- 이미지가 없다면 -->
+									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and 
+									${ product.photoUrl3 }== null and ${ product.photoUrl4 }== null and ${ product.photoUrl5 }== null">
+										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #aaa" alt="...">
+									</th:block>
+									<!-- 이미지가 있다면-->
+									<th:block th:if="${product.photoUrl1} != null">
+										<img th:src="@{ ${product.photoUrl1} }" alt="...">
+									</th:block>
 								</div>
 								<!--productInfo-->
 								<div class="productInfo card-body">
@@ -91,6 +100,7 @@
 										<!--productLike-->
 									</p>
 								</div>
+							</a>
 							</div><!--end.product-->
 						</div><!--end.row-->
 					</div>
@@ -120,7 +130,15 @@
 							<a th:href="@{product/detail(productNo=${product.productNo})}">
 								<!--productImg-->
 								<div class="productImg card-img-top">
-									<img th:src="@{ ${product.photoUrl1} }" alt="매물사진" >
+									<!-- 이미지가 없다면 -->
+									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and 
+									${ product.photoUrl3 }== null and ${ product.photoUrl4 }== null and ${ product.photoUrl5 }== null">
+										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #aaa" alt="...">
+									</th:block>
+									<!-- 이미지가 있다면-->
+									<th:block th:if="${product.photoUrl1} != null">
+										<img th:src="@{ ${product.photoUrl1} }" alt="...">
+									</th:block>
 								</div>
 								<!--productInfo-->
 								<div class="productInfo card-body">
@@ -173,8 +191,61 @@
 					</div>
 
 					<div id="recentPostList" class="postList">
+						<!--row-->
+						<div class="row row-cols-2">
+							<!--post-->
+							<div th:each="post: ${ postList }" class="post">
+							<a th:href="@{/login}" class="postA">
+								<!--postImg-->
+								<div class="postImg">
+									<!-- 이미지가 없다면 -->
+									<th:block th:if="${ post.imageUrl01 }== null">
+										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #aaa" alt="...">
+									</th:block>
+									<!-- 이미지가 있다면-->
+									<th:block th:if="${ post.imageUrl01 } != null">
+										<img th:src="@{ ${ post.imageUrl01 } }" alt="...">
+									</th:block>
+								</div>
+								<!--postInfo-->
+								<div class="postInfo card-body">
+									<p th:text="${ post.title }" class="postTitle card-title">
+										<!--postTitle-->제목
+									</p>
+									<p  th:text="${ post.member.nickname }" class="postMember card-title">
+										<!--postMember-->작성자
+									</p>
+									<p th:text="${ post.member.nickname }" class="postDate card-title">
+										<!--postDate-->작성일
+									</p>
+									<p th:text="${ post.clickCount }" class="postClickCount card-text">
+										<!--postClickCount-->조회수
+									</p>
+								</div>
+							</a>
+							</div><!--end.post-->							
+						</div><!--end.row-->
+						
 					</div>
+					
+					<!--btnMorePopularProduct-->
+					<div class="btnMore">
+						<a th:href="@{ /product/list }">
+							<div id="btnMoreAreaPopularProduct" class="btn btn-outline-success">인기매물 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+						</a>	
+					</div>
+
 				</th:block><!--end.isAnonymous-->
+
+				<!--isAuthenticated-->
+				<th:block sec:authorize="isAuthenticated()">
+
+					<div id="recentPost" class="sectionTitle">
+						<h1>이웃과 함께 하는 동네 생활</h1>
+						<h4><span sec:authentication="name"></span>님 동네의 다양한 이야기를 이웃과 함께 나누어요.</h4>
+					</div>
+
+				</th:block>
 			</div>
 		</div><!--end.postSection-->
 
