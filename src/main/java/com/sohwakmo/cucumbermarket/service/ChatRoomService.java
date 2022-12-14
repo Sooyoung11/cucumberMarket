@@ -36,6 +36,9 @@ public class ChatRoomService {
         Member member = memberRepository.findByNickname(nickname).orElse(null);
         for(ChatRoom c : chatRoom){
             if(c.getMember().getMemberNo().equals(member.getMemberNo())&&c.getRoomId().equals(roomId)) {
+                if(c.getLastEnterName().equals(c.getLeavedUser())){ // 한번 채팅방을 나갔다가 다시 그 사람에게 메세지를 보내서 채팅리스트에 띄워져야하는경우
+                    c.setLeavedUser("nobody");
+                }
                 return c;
             }
         }
@@ -87,7 +90,11 @@ public class ChatRoomService {
      */
     public String getRecentMessage(String roomId,Integer memberNo) {
         List<Message> messages = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(memberNo,roomId);
-        return String.valueOf(messages.get(0).getMessage());
+        if(messages.size()!=0){
+            return String.valueOf(messages.get(0).getMessage());
+        }else{
+            return null;
+        }
     }
 
     @Transactional
