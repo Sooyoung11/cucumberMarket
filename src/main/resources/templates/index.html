@@ -72,9 +72,18 @@
 						<div class="row row-cols-4">
 							<!--product-->
 							<div th:each="product: ${ productList }" class="product col card">
+							<a th:href="@{/login}">
 								<!--productImg-->
 								<div class="productImg card-img-top">
-									<img th:src="@{ ${product.photoUrl1} }" alt="매물사진" >
+									<!-- 이미지가 없다면 -->
+									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and 
+									${ product.photoUrl3 }== null and ${ product.photoUrl4 }== null and ${ product.photoUrl5 }== null">
+										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #e1e1e1" alt="...">
+									</th:block>
+									<!-- 이미지가 있다면-->
+									<th:block th:if="${product.photoUrl1} != null">
+										<img th:src="@{ ${product.photoUrl1} }" alt="...">
+									</th:block>
 								</div>
 								<!--productInfo-->
 								<div class="productInfo card-body">
@@ -91,6 +100,7 @@
 										<!--productLike-->
 									</p>
 								</div>
+							</a>
 							</div><!--end.product-->
 						</div><!--end.row-->
 					</div>
@@ -167,7 +177,15 @@
 							<a th:href="@{product/detail(productNo=${product.productNo})}">
 								<!--productImg-->
 								<div class="productImg card-img-top">
-									<img th:src="@{ ${product.photoUrl1} }" alt="매물사진" >
+									<!-- 이미지가 없다면 -->
+									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and 
+									${ product.photoUrl3 }== null and ${ product.photoUrl4 }== null and ${ product.photoUrl5 }== null">
+										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #e1e1e1" alt="...">
+									</th:block>
+									<!-- 이미지가 있다면-->
+									<th:block th:if="${product.photoUrl1} != null">
+										<img th:src="@{ ${product.photoUrl1} }" alt="...">
+									</th:block>
 								</div>
 								<!--productInfo-->
 								<div class="productInfo card-body">
@@ -214,14 +232,120 @@
 				<!--isAnonymous-->
 				<th:block sec:authorize="isAnonymous()">
 					
-					<div id="recentPost" class="sectionTitle">
+					<div id="popularPost" class="sectionTitle">
 						<h1>이웃과 함께 하는 동네 생활</h1>
 						<h4>오이마켓 회원이 되어 우리 동네의 다양한 이야기를 나누어요.</h4>
 					</div>
 
-					<div id="recentPostList" class="postList">
+					<div id="areaPopularPostList" class="postList">
+						<!--row-->
+						<div class="row row-cols-2">
+							<!--post-->
+							<div th:each="post: ${ postList }" class="post">
+							<a th:href="@{/login}" class="postA">
+								<!--postImg-->
+								<div class="postImg">
+									<!-- 이미지가 없다면 -->
+									<th:block th:if="${ post.imageUrl01 }== null">
+										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #fafafa" alt="...">
+									</th:block>
+									<!-- 이미지가 있다면-->
+									<th:block th:if="${ post.imageUrl01 } != null">
+										<img th:src="@{ ${ post.imageUrl01 } }" alt="...">
+									</th:block>
+								</div>
+								<!--postInfo-->
+								<div class="postInfo card-body">
+									<div class="postInfoL">
+										<p th:text="${ post.title }" class="postTitle card-title">
+											<!--postTitle-->제목
+										</p>
+										<p  th:text="${ post.member.nickname }" class="postMember card-title">
+											<!--postMember-->작성자
+										</p>
+									</div>
+									<div class="postInfoR">
+										<p th:text="'조회수 '+${ post.clickCount }" class="postClickCount card-text">
+											<!--postClickCount-->조회수
+										</p>
+										<p th:text="${ #temporals.format(post.modifiedTime, 'yyyy-MM-dd HH:mm') }" class="postDate card-title">
+											<!--postDate-->작성일
+										</p>
+									</div>
+								</div>
+							</a>
+							</div><!--end.post-->						
+						</div><!--end.row-->
+						
 					</div>
+					
+					<!--btnMorePopularPost-->
+					<div class="btnMore">
+						<a th:href="@{ /post/list }">
+							<div id="btnMorePopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+						</a>	
+					</div>
+
 				</th:block><!--end.isAnonymous-->
+
+				<!--isAuthenticated-->
+				<th:block sec:authorize="isAuthenticated()">
+
+					<div id="areaPopularPost" class="sectionTitle">
+						<h1>이웃과 함께 하는 동네 생활</h1>
+						<h4><span sec:authentication="name"></span>님 동네의 다양한 이야기를 이웃과 함께 나누어요.</h4>
+					</div>
+
+					<div id="popularPostList" class="postList">
+						<!--row-->
+						<div class="row row-cols-2">
+							<!--post-->
+							<div th:each="post: ${ postList }" class="post">
+							<a th:href="@{post/detail(postNo=${post.postNo})}" class="postA">
+								<!--postImg-->
+								<div class="postImg">
+									<!-- 이미지가 없다면 -->
+									<th:block th:if="${ post.imageUrl01 }== null">
+										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #fafafa" alt="...">
+									</th:block>
+									<!-- 이미지가 있다면-->
+									<th:block th:if="${ post.imageUrl01 } != null">
+										<img th:src="@{ ${ post.imageUrl01 } }" alt="...">
+									</th:block>
+								</div>
+								<!--postInfo-->
+								<div class="postInfo card-body">
+									<div class="postInfoL">
+										<p th:text="${ post.title }" class="postTitle card-title">
+											<!--postTitle-->제목
+										</p>
+										<p  th:text="${ post.member.nickname }" class="postMember card-title">
+											<!--postMember-->작성자
+										</p>
+									</div>
+									<div class="postInfoR">
+										<p th:text="'조회수 '+${ post.clickCount }" class="postClickCount card-text">
+											<!--postClickCount-->조회수
+										</p>
+										<p th:text="${ #temporals.format(post.modifiedTime, 'yyyy-MM-dd HH:mm') }" class="postDate card-title">
+											<!--postDate-->작성일
+										</p>
+									</div>
+								</div>
+							</a>
+							</div><!--end.post-->						
+						</div><!--end.row-->
+						
+					</div>
+					
+					<!--btnMorePopularPost-->
+					<div class="btnMore">
+						<a th:href="@{ /post/list }">
+							<div id="btnMoreAreaPopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+						</a>	
+					</div>
+
+				</th:block>
 			</div>
 		</div><!--end.postSection-->
 
