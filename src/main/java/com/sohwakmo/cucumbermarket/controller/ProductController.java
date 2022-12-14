@@ -9,6 +9,10 @@ import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,11 +34,19 @@ public class ProductController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
-        List<Product> list = productService.read();
+        Page<Product> list = productService.read(pageable);
+
+        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+
         model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
 //        List<List<Product>> productsList = new ArrayList<>();
 //        List<Product> products = new ArrayList<>();
