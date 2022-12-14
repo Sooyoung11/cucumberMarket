@@ -169,6 +169,10 @@
                     const date = new Date();
                     let nowDate = date.toLocaleString('ko-kr');
 
+                    if(message.value==''){
+                      return;
+                    }
+
                     console.log(username + ":" + message.value);
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate,messageNum:messageNum}));
                     message.value = '';
@@ -181,6 +185,10 @@
                     let message = document.getElementById("message");
                     const date = new Date();
                     let nowDate = date.toLocaleString('ko-kr');
+
+                    if(message.value==''){
+                      return;
+                    }
 
                     console.log(username + ":" + message.value);
                     stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: message.value, writer: username, sendTime:nowDate,messageNum:messageNum}));

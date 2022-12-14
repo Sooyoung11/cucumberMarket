@@ -31,9 +31,12 @@ public class ChatRoom {
     @ColumnDefault("0")
     private Integer unReadMessages;
 
+    private String leavedUser;
 
-    public ChatRoom(String roomId, Member member) {
+
+    public ChatRoom(String roomId, Member member,String leavedUser) {
         this.roomId = roomId;
         this.member = member;
+        this.leavedUser=leavedUser;
     }
 }
