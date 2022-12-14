@@ -4,9 +4,14 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{ layout/layout.html }"
 >
+  <head>
+    <link rel="stylesheet" th:href="@{/css/post/postDetail.css}" />
+  </head>
+
   <div layout:fragment="content">
-    <div class="container">
+    <div class="container postBorder">
       <form id="form">
+        <!--form 태그-->
         <div class="row">
           <div>
             <input type="hidden" th:value="${post.postNo}" name="id" />
@@ -17,50 +22,49 @@
               name="memberNo"
             />
 
-            <div>
+            <div class="buttonRow border-bottom">
               <th:block
                 th:if="${nickname}==${#authentication.principal.nickname}"
               >
                 <button
                   type="button"
-                  class="btn btn-outline-secondary"
+                  class="btn btn-light modifyButton"
                   id="modify"
                 >
-                  수정
+                  <b>수정</b>
                 </button>
                 <button
                   type="button"
-                  class="btn btn-outline-secondary"
+                  class="btn btn-light deleteButton"
                   id="delete"
                 >
-                  삭제
+                  <b>삭제</b>
                 </button>
               </th:block>
-              <button
-                type="button"
-                class="btn btn-outline-secondary float-right"
-                id="gotoList"
-              >
-                목록
+              <button type="button" class="btn btn-light list" id="gotoList">
+                <b>목록</b>
               </button>
             </div>
+            <!--수정,삭제,목록 버튼-->
           </div>
+          <!--input type hidden div-->
         </div>
+        <!--button row div 끝점-->
 
-        <div class="border border-secondary">
+        <div>
           <!--디테일 페이지 시작-->
-          <div class="form-control my-2">
+          <div class="my-2">
             <h3 th:text="${post.title}" name="title">제목</h3>
           </div>
-          <div class="form-control">
-            <span th:text="${nickname}">작성자</span>
+          <div class="chatButton my-2">
+            <span th:text="${nickname}" id="writer">작성자</span>
             <th:block
               th:if="${nickname}!=${#authentication.principal.nickname}"
             >
-              <a type="button" id="gotoChat">채팅하기</a>
+              <a type="button" id="gotoChat"><b>1대1채팅</b></a>
             </th:block>
           </div>
-          <div class="form-control">
+          <div class="mb-3">
             <span
               th:text="${ #temporals.format(post.createdTime, 'yyyy-MM-dd HH:mm') }"
               >작성시간</span
@@ -69,7 +73,7 @@
           </div>
           <div>
             <!--게시물 내용칸-->
-            <div class="border border-secondary form-control">
+            <div class="warningBox">
               <p class="m-2">
                 게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이
                 없으시길 바랍니다.
@@ -79,7 +83,21 @@
                 조치가 진행될 수 있습니다.
               </p>
             </div>
-            <div class="form-control">
+            <!--image1태그 시작-->
+            <div class="text-center">
+              <div th:classappend="${post.imageUrl01 == null} ? 'hidden'">
+                <img th:src="@{${post.imageUrl01}}" class="img-fluid" />
+              </div>
+            </div>
+            <!--image1태그 끝-->
+            <!--image2태그 시작-->
+            <div class="text-center">
+              <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
+                <img th:src="@{${post.imageUrl02}}" class="img-fluid" />
+              </div>
+            </div>
+            <!--image2태그 끝-->
+            <div class="">
               <!--게시물 찐 내용-->
               <textarea
                 class="form-control"
@@ -90,23 +108,13 @@
                 th:text="${post.content}"
               >
               </textarea>
-              <div th:classappend="${post.imageUrl01 == null} ? 'hidden'">
-                <img th:src="@{${post.imageUrl01}}" />
-              </div>
-              <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
-                <img th:src="@{${post.imageUrl02}}" />
-              </div>
             </div>
-            <div class="form-control">
-              <!-- 이미지가 있다면 들어갈곳-->
-              <img src="#" />
-            </div>
+            <!--textArea 닫는태그-->
           </div>
         </div>
       </form>
 
       <!--아래는 희지~ 위는 주환~ 선넘으면 안됨-->
-      <hr />
 
       <!-- 댓글 작성하기 -->
       <div class="card border-gray my-5">
