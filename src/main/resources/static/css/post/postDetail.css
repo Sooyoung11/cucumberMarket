@@ -6,7 +6,7 @@
 .buttonRow {
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border: #efefef;
+  border-bottom: #efefef;
 }
 
 .chatButton a {

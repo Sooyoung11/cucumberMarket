@@ -13,7 +13,7 @@
       <form id="form">
         <!--form 태그-->
         <div class="row">
-          <div>
+          <div class="buttonRow border-bottom">
             <input type="hidden" th:value="${post.postNo}" name="id" />
             <!-- 매너온도 값 불러오기 위해 -->
             <input
@@ -22,7 +22,7 @@
               name="memberNo"
             />
 
-            <div class="buttonRow border-bottom">
+            <div>
               <th:block
                 th:if="${nickname}==${#authentication.principal.nickname}"
               >
