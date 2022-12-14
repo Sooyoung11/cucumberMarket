@@ -1,0 +1,43 @@
+.postBorder {
+  border: 1px solid #efefef;
+  border-radius: 6px;
+  padding: 50px;
+}
+.buttonRow {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: #efefef;
+}
+
+.chatButton a {
+  background-color: rgba(207, 229, 177, 255);
+  color: black;
+  border-radius: 6px;
+  padding: 1px;
+}
+
+#writer {
+  font-size: 17px;
+}
+
+.warningBox {
+  border: 1px solid #efefef;
+  border-radius: 6px;
+  background-color: rgba(249, 249, 250, 255);
+  margin-bottom: 30px;
+  padding: 20px 24px;
+  font-size: 14px;
+  line-height: 23.8px;
+}
+.buttonRow .list {
+  background-color: rgba(239, 240, 242, 255);
+  float: right;
+}
+
+.buttonRow .modifyButton {
+  background-color: rgba(239, 240, 242, 255);
+}
+
+.buttonRow .deleteButton {
+  background-color: rgba(239, 240, 242, 255);
+}

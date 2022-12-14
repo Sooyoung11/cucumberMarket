@@ -103,12 +103,6 @@ public class    PostController {
         return "redirect:/post/list";
     }
 
-//    @PostMapping("/delete")
-//    public String delete(Integer id){
-//        postService.deletePost(id);
-//        return "redirect:/post/list";
-//    }
-
     @PostMapping("/delete")
     public String delete(Integer id, Integer memberNo){
         log.info("delete(id={}, memberNo={})", id, memberNo);
