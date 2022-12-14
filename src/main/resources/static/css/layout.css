@@ -30,11 +30,11 @@
 body { height: 2000px; }
 
 .sideBanner {
-    position: absolute;
-    width: 150px;
-    height: 250px;
+    position: fixed;
+    width: 210px;
+    height: 550px;
     top: 50px;
     margin: 50px;
-    background-color: #999900;
+    background-color:#F5F5F5;
     right: 0px;
 }

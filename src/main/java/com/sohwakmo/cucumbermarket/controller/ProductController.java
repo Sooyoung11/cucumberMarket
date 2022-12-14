@@ -3,7 +3,6 @@ package com.sohwakmo.cucumbermarket.controller;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
-import com.sohwakmo.cucumbermarket.dto.ProductRecentlyDto;
 import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -30,7 +32,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/list")
-    public String list(Model model, HttpSession session) {
+    public String list(Model model) {
         log.info("list()");
 
         List<Product> list = productService.read();
@@ -59,19 +61,40 @@ public class ProductController {
     }
 
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model, HttpServletRequest request) {
+    public String detail(Integer productNo, Model model, HttpServletRequest request, HttpSession session) throws UnsupportedEncodingException {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
         log.info("product = {}", product);
 
-        // session test
-        HttpSession session = request.getSession();
-        session.setAttribute("product", product);
-        session.setAttribute("member",product.getMember());
-
         model.addAttribute("product", product); // 상품 정보
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보
+
+        // ssesion test;
+
+//        Integer productNo1 = product.getProductNo(); // 상품 번호
+        String photo = product.getPhotoUrl1(); // 상품 사진
+
+        ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
+//        ArrayList<String> list = (ArrayList) session.getAttribute("list");
+
+        if(productlist==null ) {
+            productlist = new ArrayList<>();
+
+            session.setAttribute("productlist",productlist);
+            session.setMaxInactiveInterval(1*60);
+        }
+
+        log.info("리스트 사이즈={}",productlist.size());
+
+        if(productlist.size() > 2){
+            productlist.remove(productlist.size()-2);
+            productlist.add(0, photo);
+        } else {
+            productlist.add( photo);
+        }
+
+        log.info("productlist99999={}",productlist);
 
         return "/product/detail";
     }
@@ -107,7 +130,6 @@ public class ProductController {
             result = "ok";
         }
         model.addAttribute("result", result);
-
         model.addAttribute("list", productsList);
 
         return "/product/list";

@@ -6,23 +6,6 @@ window.addEventListener("DOMContentLoaded", function () {
   const btnChat = document.querySelector("#btnChat"); // 채팅하기 버튼
   const btnUpdateAndDelete = document.querySelector("#btnUpdateAndDelete"); // 수정 삭제 버튼
 
-  // 기본 위치(top)값
-  // var floatPosition = parseInt($(".sideBanner").css('top'))
-  //
-  // // scroll 인식
-  // $(window).scroll(function() {
-  //   alert('하이');
-  //
-  //   // 현재 스크롤 위치
-  //   var currentTop = $(window).scrollTop();
-  //   var bannerTop = currentTop + floatPosition + "px";
-  //
-  //   //이동 애니메이션
-  //   $(".sideBanner").stop().animate({
-  //     "top" : bannerTop
-  //   }, 500);
-  //
-  // }).scroll();
 
 
   if (memberNo == productMemberNo) {
