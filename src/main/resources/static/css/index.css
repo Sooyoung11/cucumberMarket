@@ -2,18 +2,26 @@
 .carousel-item img{width: 100%; height: 400px; background-color: #666;}
 
 /*productSection*/
-#productSection{margin-top: 120px;}
+#productSection{margin-top: 120px; display: block;}
 .sectionTitle{text-align: center; margin-bottom: 40px;}
 .sectionTitle h1{font-family: 'Dokdo'; font-size: 40px; margin-bottom: -3px;}
 .sectionTitle h4{font-size: 16px;}
-.card{margin: 0; padding: 0; width: 306px; border: 0;}
+.card{margin: 0 32px 0 0; padding: 0; width: 306px; border: 0; display: block; float: left;}
 .card-img-top{width: 100%; height: 306px; position: relative;}
 .card-img-top img{width: 100%; height: 100%;
     position: absolute; top: 0; left: 0;
     transform: translate(50, 50); object-fit: cover;
     border-radius: 4px; margin: auto;}
-.product{margin-right: 32px;}
-#popularProduct4, #areaPopularProduct4{margin-right: 0;}
+.card:nth-child(4){margin-right: 0;}
+
+a{text-decoration: none; color: #333;}
+a:hover{color: #333;}
+.card-body{padding: 8px 4px;}
+.card-title{margin-bottom: 4px;}
+.productTitle{font-size: 15px; margin-bottom: 0;}
+.productPrice{font-size: 17px; font-weight: 700;}
+.productAdd{font-size: 13px; color: #666;}
+.productLike{font-size: 12px; color: #aaa;}
 
 .btnMore{margin: 20px auto; text-align: center;}
 .btnMore div{padding: 12px 40px; border-radius: 40px; font-weight: 700;}

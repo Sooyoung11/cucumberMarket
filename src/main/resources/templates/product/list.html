@@ -12,48 +12,65 @@
 
             <div class="my-2">
                 <form th:action="@{ /product/search }" method="get">
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-6">
                             <input type="text" class="form-control" name="keyword" placeholder="제목과 내용 검색" required autofocus />
                         </div>
                         <div class="col-4">
                             <input type="submit" class="btn btn-outline-info" value="검색" />
-                            <a class="btn btn-outline-secondary" th:href="@{/product/create}" >상품 등록</a>
-                            <a class="btn btn-outline-secondary" th:href="@{/product/list}" >전체 검색</a>
+
+                            <a class="btn btn-outline-info" th:href="@{/product/list}" >전체 검색</a>
                         </div>
                     </div>
                 </form>
             </div>
 
+
             <div id="productList" >
-                <div class="card-group row h-75 my-5" th:each="products : ${ list }">
-                    <div th:each="p : ${products}" class="col-4" >
-                        <div class="card" >
+                <div class="card-group row my-3" th:each="products : ${ list }">
+                    <div th:each="p : ${products}" class="col-4"  style="height:80%">
+                        <div class="card my-4">
+
                             <a th:if="${ p.photoUrl1 } == null and ${ p.photoUrl2 } == null and ${ p.photoUrl3 } == null and ${ p.photoUrl4 } == null and ${ p.photoUrl5 } == null"
-                               th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }">
-                                <img th:src="@{ /images/product/noimg.png }" class="card-img-top" alt="...">
+                               th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"
+                               style="text-decoration-line:none; color:black;">
+                                <div class="w-100" style="height:50%;">
+                                    <img th:src="@{ /images/product/noimg.png }" class="card-img-top" style="width:100%; height:150px;" alt="..." >
+                                </div>
+
+                                <div class="card-body w-100 h-50 d-inline-block" style="height:50%">
+                                    <h5 class="card-title" th:text="${ p.title  }" style="height:5%; "></h5>
+                                    <p class="card-text" th:text="${ p.price } + ' 원' " style="height:5%; font-weight:bold"></p>
+                                    <p class="card-text" th:text="${ p.dealAddress }" style="height:5% text"></p>
+                                    <p class="card-text" style="height:5%">
+                                        <small class="text-muted" th:text=" '관심 ' + ${ p.likeCount }"></small>
+                                    </p>
+                                </div>
                             </a>
 
                             <a th:if="${p.photoUrl1} != null"
-                               th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }">
-                                <img th:src="@{ ${p.photoUrl1} }" class="card-img-top" alt="...">
+                               th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"
+                               style="text-decoration-line:none; color:black;">
+                                <div class="w-100">
+                                    <img th:src="@{ ${p.photoUrl1} }" class="card-img-top" style="width:100%; height:200px; padding:5px; border-radius:30px;" alt="...">
+                                </div>
+
+                                <div class="card-body w-100 h-50 d-inline-block" style="height:50%">
+                                    <h5 class="card-title" th:text="${ p.title  }" style="height:5%; "></h5>
+                                    <p class="card-text" th:text="${ p.price } + ' 원' " style="height:5%; font-weight:bold"></p>
+                                    <p class="card-text" th:text="${ p.dealAddress }" style="height:5% text"></p>
+                                    <p class="card-text" style="height:5%">
+                                        <small class="text-muted" th:text=" '관심 ' + ${ p.likeCount }"></small>
+                                    </p>
+                                </div>
                             </a>
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${ p.title  }"></h5>
-                                <p class="card-text" th:text="${ p.content }"></p>
-                                <p class="card-text" th:text="${ p.price }"></p>
-                                <p class="card-text">
-                                    <small class="text-muted" th:text="${ #temporals.format(p.createdTime, 'yyyy-MM-dd HH:mm') }"></small>
-                                </p>
-                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
-            <th:block th:if="${ result } == 'ok'">
-                <p>있음ㄴ</p>
-            </th:block>
+            <a class="btn btn-outline-info" th:href="@{/product/create}" >상품 등록</a>
 
             <th:block th:if="${ result } == 'nok' ">
                 <p>검색 결과가 없습니다.</p>
@@ -64,10 +81,7 @@
     </div> <!-- layout:fragment="content" -->
 
     <th:block layout:fragment="script">
-
-
 <!--        <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>-->
-
     </th:block>
 
 </html>
