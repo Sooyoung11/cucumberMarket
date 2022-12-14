@@ -40,26 +40,27 @@ public class ProductController {
         log.info("list()");
 
         List<Product> list = productService.read();
+        model.addAttribute("list", list);
 
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 5 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
-
-        model.addAttribute("list", productsList);
+//        List<List<Product>> productsList = new ArrayList<>();
+//        List<Product> products = new ArrayList<>();
+//
+//        for (int i = 0; i < list.size(); i++) {
+//            products.add(list.get(i));
+//
+//            if ((i + 1) % 5 == 0) {
+//                productsList.add(products);
+//                products = new ArrayList<>();
+//            }
+//        }
+//        if (products.size() > 0) {
+//            productsList.add(products);
+//        }
+//
+//        log.info(productsList.toString());
+//        log.info("list={}", list);
+//
+//        model.addAttribute("list", productsList);
 
         return "/product/list";
     }
@@ -75,30 +76,27 @@ public class ProductController {
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보
 
         // ssesion test;
-
 //        Integer productNo1 = product.getProductNo(); // 상품 번호
         String photo = product.getPhotoUrl1(); // 상품 사진
 
         ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
 //        ArrayList<String> list = (ArrayList) session.getAttribute("list");
 
+        // 최근 본 상품 생성
         if(productlist==null ) {
             productlist = new ArrayList<>();
 
             session.setAttribute("productlist",productlist);
-            session.setMaxInactiveInterval(1*60);
+//            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
         }
 
-        log.info("리스트 사이즈={}",productlist.size());
-
+        // 최근 본 상품 3개로 제한두기
         if(productlist.size() > 2){
             productlist.remove(productlist.size()-2);
             productlist.add(0, photo);
         } else {
             productlist.add( photo);
         }
-
-        log.info("productlist99999={}",productlist);
 
         return "/product/detail";
     }

@@ -29,9 +29,13 @@
 
 body { height: 2000px; }
 
+.sectionTitle{text-align: center; margin-bottom: 40px;}
+.sectionTitle h1{font-family: 'Dokdo'; font-size: 20px; margin-bottom: -3px;}
+.sectionTitle h4{font-size: 16px;}
+
 .sideBanner {
     position: fixed;
-    width: 210px;
+    width: 180px;
     height: 550px;
     top: 50px;
     margin: 50px;
