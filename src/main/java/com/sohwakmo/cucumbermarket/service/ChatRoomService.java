@@ -36,10 +36,13 @@ public class ChatRoomService {
         Member member = memberRepository.findByNickname(nickname).orElse(null);
         for(ChatRoom c : chatRoom){
             if(c.getMember().getMemberNo().equals(member.getMemberNo())&&c.getRoomId().equals(roomId)) {
+                if(c.getLastEnterName().equals(c.getLeavedUser())){ // 한번 채팅방을 나갔다가 다시 그 사람에게 메세지를 보내서 채팅리스트에 띄워져야하는경우
+                    c.setLeavedUser("nobody");
+                }
                 return c;
             }
         }
-        ChatRoom c = new ChatRoom(roomId,member);
+        ChatRoom c = new ChatRoom(roomId,member,"nobody");
         chatRoomRepository.save(c);
         return c;
     }
@@ -87,7 +90,11 @@ public class ChatRoomService {
      */
     public String getRecentMessage(String roomId,Integer memberNo) {
         List<Message> messages = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(memberNo,roomId);
-        return String.valueOf(messages.get(0).getMessage());
+        if(messages.size()!=0){
+            return String.valueOf(messages.get(0).getMessage());
+        }else{
+            return null;
+        }
     }
 
     @Transactional
@@ -124,9 +131,31 @@ public class ChatRoomService {
         return unReadMessage;
     }
 
-    public void deleteChatRoom(String roomId, String nickname) {
+    @Transactional
+    public void deleteChatRoom(String roomId, String nickname,Integer memberNo) {
         Member member = memberRepository.findByNickname(nickname).orElse(null);
+        Member loginUser = memberRepository.findById(memberNo).orElse(null);
         ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(roomId, member.getMemberNo());
-        chatRoomRepository.delete(chatRoom);
+
+        // TODO 여기서 if문으로 묶어서 2명이된순간 해야함.
+        if(!chatRoom.getLeavedUser().equals("nobody")){ // nobody가 아니면 즉, 한명이라도 채팅방을 나가면 이제 채팅방을 삭제한다.
+            chatRoomRepository.delete(chatRoom);
+            List<Message> deleteMessageList1 = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(loginUser.getMemberNo(), roomId);
+//            Member deleteMessageMember = memberRepository.findByNickname(roomId).get();
+            List<Message> deleteMessageList2 = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(member.getMemberNo(), roomId);
+            messageRepository.deleteAllInBatch(deleteMessageList1);
+            messageRepository.deleteAllInBatch(deleteMessageList2);
+        }else{
+            chatRoom.setLeavedUser(loginUser.getNickname());
+        }
+    }
+
+    /**
+     * 현재 로그인 되어있는 유저의 정보를 회원번호로 가져온다.
+     * @param memberNo 회원번호
+     * @return 로그인 되어있는 유저의 객체
+     */
+    public Member getLoginedMember(Integer memberNo) {
+        return memberRepository.findById(memberNo).get();
     }
 }
