@@ -7,12 +7,17 @@
   <div layout:fragment="content">
     <div class="container">
       <!-- Content here -->
-      <div class="row">
+      <div class="row border-bottom">
+        <!--부제,작성 취소 버튼-->
         <div class="col-8">
           <h2>글 작성</h2>
         </div>
         <div class="col-4 text-end">
-          <button type="submit" class="btn btn-primary" id="insertPostButton">
+          <button
+            type="submit"
+            class="btn btn-primary p-o"
+            id="insertPostButton"
+          >
             작성
           </button>
           <a type="button" class="btn btn-primary" th:href="@{/post/list}"
@@ -20,21 +25,26 @@
           >
         </div>
       </div>
+      <!--부제,작성 취소 버튼 끝-->
       <!--제목, 버튼-->
       <div>
         <form th:object="${post}" id="form" enctype="multipart/form-data">
-          <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}"/>
+          <input
+            type="hidden"
+            name="memberNo"
+            th:value="${#authentication.principal.memberNo}"
+          />
           <input type="hidden" name="clickCount" th:value="0" />
           <input
             type="text"
-            class="form-control my-2"
+            class="my-2"
             id="title"
             aria-describedby="emailHelp"
             th:field="*{title}"
             placeholder="제목을 입력해 주세요."
             th:value="${post.title}"
           />
-          <div class="border border-secondary">
+          <div id="warningBox">
             <p class="m-2">
               게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이
               없으시길 바랍니다.
