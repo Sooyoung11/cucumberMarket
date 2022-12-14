@@ -51,8 +51,10 @@
           </select>
         </div>
         <div class="my-2 input-group mb-3">
-          <input id="imgUpload" class="form-control" name="imgFile"
-                 type="file" multiple="multiple" accept="image/jpeg, image/png"/>
+          <div class="uploadImg">
+              <input id="imgUpload" class="form-control" name="imgFile"
+                     type="file" multiple="multiple" onchange="fileCheck(this)" accept="image/jpeg, image/png"/>
+          </div>
         </div>
 
         <div class="my-2 mb-3">
