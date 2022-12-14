@@ -31,7 +31,6 @@ public class ChatRoom {
     @ColumnDefault("0")
     private Integer unReadMessages;
 
-//    @ColumnDefault("nobody")
     private String leavedUser;
 
 
