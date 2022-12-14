@@ -9,7 +9,6 @@ import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -20,8 +19,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -34,7 +39,7 @@ public class ProductController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model, @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String list(Model model, Integer memberNo, @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
         Page<Product> list = productService.read(pageable);
@@ -47,6 +52,16 @@ public class ProductController {
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+
+        // 찜 개수
+        Integer interestedCount = 0;
+        List<Product> likeList = productService.interestedRead(memberNo);
+
+        if(likeList.size() != 0)
+        interestedCount = likeList.size();
+
+        model.addAttribute("interestedList",interestedCount);
+
 
 //        List<List<Product>> productsList = new ArrayList<>();
 //        List<Product> products = new ArrayList<>();
@@ -72,7 +87,7 @@ public class ProductController {
     }
 
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model) {
+    public String detail(Integer productNo, Model model, HttpSession session) throws UnsupportedEncodingException {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
@@ -80,6 +95,47 @@ public class ProductController {
 
         model.addAttribute("product", product); // 상품 정보
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보
+
+        // 최근 본 목록
+//        String productNo1 = product.getProductNo().toString(); // 상품 번호
+        String photo = product.getPhotoUrl1(); // 상품 사진
+
+        ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
+//        ArrayList<String> list = (ArrayList) session.getAttribute("list");
+
+        // 최근 본 상품 생성
+        if(productlist==null ) {
+            productlist = new ArrayList<>();
+
+            session.setAttribute("productlist",productlist);
+//            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
+        }
+
+        // 최근 본 상품 3개로 제한두기
+        if(productlist.size() > 2){
+            productlist.remove(productlist.size()-2);
+//            productlist.remove(productlist.size()-5);
+
+            // 사진이 default 값이면
+            if(photo == null){
+                productlist.add(0, "/images/product/noimg.png");
+//                productlist.add(1, productNo1);
+            }else{
+                productlist.add(0, photo);
+//                productlist.add(1, productNo1);
+            }
+
+        } else {
+
+            // 사진이 default 값이면
+            if(photo == null){
+                productlist.add("/images/product/noimg.png");
+//                productlist.add( productNo1);
+            }else{
+                productlist.add(photo);
+//                productlist.add(productNo1);
+            }
+        }
 
         return "/product/detail";
     }
@@ -115,7 +171,6 @@ public class ProductController {
             result = "ok";
         }
         model.addAttribute("result", result);
-
         model.addAttribute("list", productsList);
 
         return "/product/list";

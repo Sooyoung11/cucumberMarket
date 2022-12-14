@@ -26,3 +26,20 @@
 
 #section{width: 100%; height: auto; min-width: 1280px; margin: 0 auto; padding-top: 80px;}
 #sectionWrap{padding: 0;}
+
+body { height: 2000px; }
+
+.sectionTitle{text-align: center; margin-bottom: 40px;}
+.sectionTitle h1{font-family: 'Dokdo'; font-size: 20px; margin-bottom: -3px;}
+.sectionTitle h4{font-size: 16px;}
+
+.sideBanner {
+    position: fixed;
+    width: 180px;
+    height: 550px;
+    top: 450px;
+    margin: 50px;
+    background-color:#F5F5F5;
+    right: 0px;
+
+}

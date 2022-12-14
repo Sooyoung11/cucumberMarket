@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -30,8 +31,14 @@
                 <div id="navWrap">
                     <h1 id="logoText"><a th:href="@{ / }">cucumber<br>market</a></h1>
                     <ul id="navUlL">
-                        <li><a th:href="@{ /product/list }">중고거래</a></li>
-                        <li><a th:href="@{ /post/list }">동네생활</a></li>
+                        <th:block sec:authorize="isAnonymous()">
+                            <li><a th:href="@{ /product/list }">중고거래</a></li>
+                            <li><a th:href="@{ /post/list }">동네생활</a></li>
+                        </th:block>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <li><a th:href="@{/product/list?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">중고거래</a></li>
+                            <li><a th:href="@{ /post/list }">동네생활</a></li>
+                        </th:block>
                     </ul>
                     <ul id="navUlR">
                         <th:block sec:authorize="isAnonymous()">

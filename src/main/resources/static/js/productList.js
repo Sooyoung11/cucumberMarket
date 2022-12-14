@@ -6,6 +6,8 @@ window.addEventListener("DOMContentLoaded", function () {
   const btnChat = document.querySelector("#btnChat"); // 채팅하기 버튼
   const btnUpdateAndDelete = document.querySelector("#btnUpdateAndDelete"); // 수정 삭제 버튼
 
+
+
   if (memberNo == productMemberNo) {
     // 로그인한 no와 상품 등록자의 no가 같으면
     dealStatus.className = "row"; // 거래 상테 select 보임
@@ -125,4 +127,6 @@ window.addEventListener("DOMContentLoaded", function () {
         console.log(err);
       });
   }
+
+
 });
