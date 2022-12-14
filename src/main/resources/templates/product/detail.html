@@ -94,12 +94,13 @@
             </div>
             <form id="form">
                 <div class="my-2 d-none" id="btnUpdateAndDelete">
-                    <input type="hidden" th:value="${product.productNo}" name="productNo" />  <!-- 번호 필요해서 추가했어요! -->
+                    <input type="hidden" th:value="${product.productNo}" name="productNo" id="hiddenProductNo"/>  <!-- 번호 필요해서 추가했어요! -->
                     <button type="button" id="detailUpdate" class="btn btn-outline-info">수정</button>   <!--버튼 두개 추가해놨어요 -->
                     <button type="button" id="detailDelete" class="btn btn-outline-secondary">삭제</button>
                 </div>
             </form>
         </div>
+
 
         <div id="map" style="width:1000px;height:400px;"></div>
 
@@ -115,12 +116,6 @@
             let memberNo          = [[${#authentication.principal.memberNo} ]]; // 로그인한 사람의 memberNo
             let productNo         = [[ ${ product.productNo } ]];               // 상품 번호
             let productMemberNo   = [[ ${ member.memberNo } ]];                 // 상품 등록한 memberNo;
-            let boughtMemberNo    = 2;                                          // 상품 구매자 memberNo 들어갈 예정
-
-            console.log(memberNo);
-            console.log(productNo);
-            console.log(productMemberNo);
-            console.log(boughtMemberNo);
 
             let dealLocation = '[[ ${ product.dealAddress } ]]';
         </script>

@@ -20,20 +20,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
   nointerested.addEventListener("click", function () {
     axios
-      .get(
-        "/product/addInterested?memberNo=" +
-          memberNo +
-          "&productNo=" +
-          productNo
-      )
+      .get("/product/addInterested?memberNo=" + memberNo + "&productNo=" + productNo)
       .then((response) => {
         checkIsInterestedProduct();
         alert("관심 목록에 추가되었습니다.");
-        //            let result = confirm("관심 목록에 추가되었습니다. 관심 목록 페이지로 가시겠습니까?");
-        //            console.log(result);
-        //            if (result) {
-        //                window.location.href = "/product/interested?memberNo=" + memberNo;
-        //            }
       })
       .catch((err) => {
         console.log(err);
@@ -42,12 +32,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
   interested.addEventListener("click", function () {
     axios
-      .delete(
-        "/product/deleteInterested?memberNo=" +
-          memberNo +
-          "&productNo=" +
-          productNo
-      )
+      .delete("/product/deleteInterested?memberNo=" + memberNo + "&productNo=" + productNo)
       .then((response) => {
         checkIsInterestedProduct();
       })
@@ -63,12 +48,7 @@ window.addEventListener("DOMContentLoaded", function () {
   function checkIsInterestedProduct() {
     // 관심 목록에 있는지 체크해서 별모양 이미지 바꿔 주기
     axios
-      .get(
-        "/product/checkInterestedProduct?memberNo=" +
-          memberNo +
-          "&productNo=" +
-          productNo
-      )
+      .get("/product/checkInterestedProduct?memberNo=" + memberNo + "&productNo=" + productNo)
       .then((response) => {
         console.log(response.data);
 
@@ -88,45 +68,39 @@ window.addEventListener("DOMContentLoaded", function () {
   function changeDealStatus() {
     let option = selectOption.value;
 
-    if (option == "ing") {
-      // 거래 중
+
+    if (option == "ing") { // 거래 중
       axios
-        .get(
-          "/product/ing?productNo=" +
-            productNo +
-            "&boughtMemberNo=" +
-            boughtMemberNo
-        )
+        .get("/product/ing?productNo=" + productNo)
         .then((response) => {
           isDealStatus();
         })
         .catch((err) => {
           console.log(err);
         });
-    } else if (option == "done") {
-      // 거래 완료
+    } else if (option == "done") { // 거래 완료
+
+      let boughtMemberNo = 0; // 상품 구매자
+
       let _left = Math.ceil((window.screen.width - 500) / 2);
       let _top = Math.ceil((window.screen.height - 600) / 2);
-      window.open(
-        "/chat/productChatList?memberNo=" + memberNo,
-        "PopupNew",
-        "width=500,height=600,left=" + _left + ",top=" + _top
-      );
+      window.open( "/chat/productChatList?memberNo=" + memberNo, "PopupNew", "width=500,height=600,left=" + _left + ",top=" + _top );
+
+    }
+  }
+
+  window.parentFunction = function (memberNo) {
+      console.log(memberNo);
+      let boughtMemberNo = memberNo;
 
       axios
-        .get(
-          "/product/done?productNo=" +
-            productNo +
-            "&boughtMemberNo=" +
-            boughtMemberNo
-        )
-        .then((response) => {
-          isDealStatus();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+      .get( "/product/done?productNo=" + productNo +  "&boughtMemberNo=" +boughtMemberNo)
+      .then((response) => {
+        isDealStatus();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function isDealStatus() {
@@ -137,13 +111,11 @@ window.addEventListener("DOMContentLoaded", function () {
       .get("/product/isDealStatus?productNo=" + productNo)
       .then((response) => {
         console.log(response.data);
-        if (response.data == "nok") {
-          // 거래 중(null)인 경우
+        if (response.data == "nok") { // 거래 중(null)인 경우
           str =
             '<option value="ing" selected>거래 중</option>' +
             '<option value="done">거래 완료</option>';
-        } else if (response.data == "ok") {
-          // 거래 완료(not null)인 경우
+        } else if (response.data == "ok") { // 거래 완료(not null)인 경우
           str =
             '<option value="ing">거래 중</option>' +
             '<option value="done" selected>거래 완료</option>';

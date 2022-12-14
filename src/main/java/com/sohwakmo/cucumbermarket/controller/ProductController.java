@@ -1,13 +1,16 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
 import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
+import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +33,7 @@ import java.util.Map;
 public class ProductController {
 
     private final ProductService productService;
+    private final MemberService memberService;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -43,7 +47,7 @@ public class ProductController {
         for (int i = 0; i < list.size(); i++) {
             products.add(list.get(i));
 
-            if ((i + 1) % 3 == 0) {
+            if ((i + 1) % 5 == 0) {
                 productsList.add(products);
                 products = new ArrayList<>();
             }
@@ -251,10 +255,10 @@ public class ProductController {
 
     @GetMapping("/ing")
     @ResponseBody
-    public ResponseEntity<String> dealStatusIng(Integer productNo, Integer boughtMemberNo) {
-        log.info("dealStatusIng(productNo = {}, boughtMemberNo = {})", productNo, boughtMemberNo);
+    public ResponseEntity<String> dealStatusIng(Integer productNo) {
+        log.info("dealStatusIng(productNo = {})", productNo);
 
-        productService.dealStatusIng(productNo, boughtMemberNo);
+        productService.dealStatusIng(productNo);
 
         return ResponseEntity.ok("hello");
     }
@@ -289,6 +293,7 @@ public class ProductController {
     }
 
     // 상품 등록 페이지 이동
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/create")
     public String create() {
         log.info("create()");
@@ -297,25 +302,45 @@ public class ProductController {
     }
 
     //상품 등록
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
-    public String create(ProductCreateDto dto, @RequestParam("imgFile") MultipartFile products) throws Exception {
-        log.info("create(dto={})", dto);
-        Product entity = productService.create(dto, products);
+    public String create(
+            @RequestParam(value = "imgFile", required = false) List<MultipartFile> imgFile,
+            ProductCreateDto dto, Integer memberNo) throws Exception {
 
+        log.info("imgFile={}", imgFile);
+        Member member = memberService.findMemberByMemberNo(memberNo);
+
+        Product product = ProductCreateDto.builder()
+                .title(dto.getTitle()).content(dto.getContent()).price(dto.getPrice()).category(dto.getCategory()).clickCount(dto.getClickCount()).likeCount(dto.getLikeCount()).dealAddress(dto.getDealAddress()).member(member).build().toEntity();
+
+        for (MultipartFile multipartFile : imgFile) {
+            log.info("imgFile={}", imgFile);
+            log.info("multipartFile={}", multipartFile);
+
+            if (multipartFile.isEmpty()) {
+                Product products = productService.create(product);
+            } else {
+                Product products = productService.create(product, multipartFile);
+            }
+        }
         return "redirect:/product/list";
-
     }
 
     // 상품 수정 페이지로 이동
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/modify")
     public String modify(Integer productNo, Model model) {
         log.info("modify(productNo={})", productNo);
+
         Product product = productService.read(productNo);
         model.addAttribute("product", product);
+
         return "/product/modify";
     }
 
     // 상품 수정
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/update")
     public String update(ProductUpdateDto dto) {
         log.info("update(dto={})", dto);
@@ -326,6 +351,7 @@ public class ProductController {
     }
 
     // 상품 삭제//
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/delete")
     public String delete(Integer productNo) {
         log.info("delete(productNo={})", productNo);
@@ -334,8 +360,6 @@ public class ProductController {
 
         return "redirect:/product/list";
     }
-
-
 
 }
 

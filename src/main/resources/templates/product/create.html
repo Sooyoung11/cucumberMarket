@@ -10,7 +10,7 @@
     </div>
 
     <div class="list-group list-group-flush">
-      <form method="post" enctype="multipart/form-data" action="/product/create">
+      <form method="post" enctype="multipart/form-data" action="/product/create" name="join">
         <div class="my-2 mb-3">
           <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />    <!-- 멤버 -->
           <label for="title" class="form-label fst-italic">제목</label>
@@ -51,15 +51,16 @@
           </select>
         </div>
         <div class="my-2 input-group mb-3">
-          <input id="imgUpload1" class="form-control" name="imgFile" type="file" multiple="multiple/form-data"/>
+          <input id="imgUpload" class="form-control" name="imgFile"
+                 type="file" multiple="multiple" />
         </div>
 
         <div class="my-2 mb-3">
           <p>거래 희망 장소</p>
           <P>
-            우편번호 : <input type="text" id="openZip" name="openZip" style="width:80px; height:26px;" />
+            우편번호 : <input type="text" id="openZip" name="openZip" style="width:80px; height:26px;" required/>
             <button type="button" style="width:60px; height:32px;" onclick="openZipSearch()">검색</button><br>
-            주소 : <input type="text" id="dealAddress" name="dealAddress" style="width:300px; height:30px;" readonly /><br>
+            주소 : <input type="text" id="dealAddress" name="dealAddress" style="width:300px; height:30px;" required readonly /><br>
           </P>
 
         </div>

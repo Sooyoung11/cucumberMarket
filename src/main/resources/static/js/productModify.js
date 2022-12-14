@@ -1,4 +1,3 @@
-
 const form = document.querySelector('#formModify');
 const updateButton = document.querySelector('#updateButtonOk')
 updateButton.addEventListener('click', function(){
