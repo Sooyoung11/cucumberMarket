@@ -2,32 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout.html }">
-<head>
-    <style>
 
-    </style>
-</head>
     <div layout:fragment="content">
 
         <div class="card my-2 container">
+
+            <!-- 타이틀 -->
             <div class="card-header text-center">
-                <h1>상품 목록 페이지</h1>
+                <h1 style="text-center">상품 목록 페이지</h1>
             </div>
+
+            <!-- 검색 -->
+<!--            <div class="my-2">-->
+<!--                <form th:action="@{ /product/search }" method="get">-->
+<!--                    <div class="row ">-->
+<!--                        <div class="col-6">-->
+<!--                            <input type="text" class="form-control" name="keyword" placeholder="제목과 내용 작성자 검색" required autofocus />-->
+<!--                        </div>-->
+<!--                        <div class="col-4">-->
+<!--                            <input type="submit" class="btn btn-outline-success" value="검색" />-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
 
             <div class="my-2">
                 <form th:action="@{ /product/search }" method="get">
                     <div class="row ">
-                        <div class="col-6">
-                            <input type="text" class="form-control" name="keyword" placeholder="제목과 내용 작성자 검색" required autofocus />
-                        </div>
                         <div class="col-4">
+                            <select name="type" class="form-control">
+                                <option value="all">전체 검색</option>
+                                <option value="서울">서울특별시</option>
+                                <option value="부산">부산광역시</option>
+                                <option value="대구">대구 광역시</option>
+                                <option value="인천">인천광역시</option>
+                                <option value="광주">광주광역시</option>
+                                <option value="대전">대전광역시</option>
+                                <option value="울산">울산광역시</option>
+                                <option value="세종">세종특별자치시</option>
+                                <option value="경기">경기도</option>
+                                <option value="강원">강원도</option>
+                                <option value="충북">충청북도</option>
+                                <option value="충남">충청남도</option>
+                                <option value="전북">전라북도</option>
+                                <option value="전남">전라남도</option>
+                                <option value="경북">경상북도</option>
+                                <option value="경남">경상남도</option>
+                                <option value="제주">제주특별자치도</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" name="keyword" placeholder="제목과 내용 작성자 검색"  autofocus />
+                        </div>
+                        <div class="col-2">
                             <input type="submit" class="btn btn-outline-success" value="검색" />
-
-                            <a class="btn btn-outline-success" th:href="@{/product/list}" >전체 검색</a>
                         </div>
                     </div>
                 </form>
             </div>
+
+<!--            <a class="btn btn-outline-success" th:href="@{/product/list}" >전체 검색</a>-->
 
             <!-- 상품 리스트 -->
             <div id="productList">
@@ -58,6 +92,9 @@
                             </div>
                         </a>
                     </div>
+
+                    <!-- 상품 등록 -->
+                    <a th:href="@{/product/create}" class="btn btn-outline-success">상품 등록</a>
 
                 </div>
             </div>
@@ -106,8 +143,9 @@
 <!--                    </div>-->
 <!--                </div>-->
 <!--            </div>-->
-
-            <a th:href="@{/product/create}" class="btn btn-outline-success">상품 등록</a>
+<!--            <div style="position:relative">-->
+<!--                <a th:href="@{/product/create}" class="btn btn-outline-success" style="position:absolute; right:0;">상품 등록</a>-->
+<!--            </div>-->
             <th:block th:if="${ result } == 'nok' ">
                 <p>검색 결과가 없습니다.</p>
             </th:block>

@@ -73,28 +73,10 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String search(String keyword, Model model) {
-        log.info("search(keyword = {})", keyword);
+    public String search(String type, String keyword, Model model) {
+        log.info("search(type = {}, keyword = {})", type, keyword);
 
-        List<Product> list = productService.search(keyword);
-
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
+        List<Product> list = productService.search(type, keyword);
 
         String result;
         if( list.size() == 0) { // 검색 결과가 없으면
@@ -103,8 +85,7 @@ public class ProductController {
             result = "ok";
         }
         model.addAttribute("result", result);
-
-        model.addAttribute("list", productsList);
+        model.addAttribute("list", list);
 
         return "/product/list";
     }
