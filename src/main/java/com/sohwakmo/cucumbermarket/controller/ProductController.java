@@ -101,7 +101,7 @@ public class ProductController {
 //    }
 
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model) {
+    public String detail(Integer productNo, Model model, HttpSession session) {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
@@ -109,6 +109,47 @@ public class ProductController {
 
         model.addAttribute("product", product); // 상품 정보
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보
+
+        // 최근 본 목록
+//        String productNo1 = product.getProductNo().toString(); // 상품 번호
+        String photo = product.getPhotoUrl1(); // 상품 사진
+
+        ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
+//        ArrayList<String> list = (ArrayList) session.getAttribute("list");
+
+        // 최근 본 상품 생성
+        if(productlist==null ) {
+            productlist = new ArrayList<>();
+
+            session.setAttribute("productlist",productlist);
+//            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
+        }
+
+        // 최근 본 상품 3개로 제한두기
+        if(productlist.size() > 2){
+            productlist.remove(productlist.size()-2);
+//            productlist.remove(productlist.size()-5);
+
+            // 사진이 default 값이면
+            if(photo == null){
+                productlist.add(0, "/images/product/noimg.png");
+//                productlist.add(1, productNo1);
+            }else{
+                productlist.add(0, photo);
+//                productlist.add(1, productNo1);
+            }
+
+        } else {
+
+            // 사진이 default 값이면
+            if(photo == null){
+                productlist.add("/images/product/noimg.png");
+//                productlist.add( productNo1);
+            }else{
+                productlist.add(photo);
+//                productlist.add(productNo1);
+            }
+        }
 
         return "/product/detail";
     }
