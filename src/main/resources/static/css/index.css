@@ -27,7 +27,8 @@ a:hover{color: #333;}
 .btnMore div{padding: 12px 40px; border-radius: 40px; font-weight: 700;}
 
 /*bannerSection*/
-#bannerSection{width: 100%; height: 136px; background: #e6f3e6; margin-top: 80px;}
+#bannerSection{width: 100%; height: 136px; margin-top: 80px;}
+#bannerSectionWrap{width: 100%; height: 100%; background: #e6f3e6;}
 
 /*postSection*/
 #postSection{margin-top: 100px;}
