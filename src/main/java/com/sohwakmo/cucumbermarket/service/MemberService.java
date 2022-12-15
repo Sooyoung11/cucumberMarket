@@ -86,4 +86,5 @@ public class MemberService {
 
         return memberRepository.findById(memberNo).orElse(null);
     }
+
 }

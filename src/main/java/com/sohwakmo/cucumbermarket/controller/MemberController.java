@@ -1,5 +1,6 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
 import com.sohwakmo.cucumbermarket.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
