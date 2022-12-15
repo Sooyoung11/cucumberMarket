@@ -43,16 +43,18 @@ public class ProductController {
     public String list(Model model, Integer memberNo, @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
-        Page<Product> list = productService.read(pageable);
+        List<Product> list = productService.read();
 
-        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
-        int startPage = Math.max(nowPage - 4, 1);
-        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+//        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+//        int startPage = Math.max(nowPage - 4, 1);
+//        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+
+//        model.addAttribute("nowPage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+
 
         model.addAttribute("list", list);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
 
         // 찜 개수
         Integer interestedCount = 0;
@@ -62,7 +64,6 @@ public class ProductController {
             interestedCount = likeList.size();
 
         model.addAttribute("interestedList",interestedCount);
-
 
         return "/product/list";
     }

@@ -44,6 +44,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByMember(Member member);
 
     // select * from PRODUCTS where status = 0;
+    List<Product> findByStatusOrderByProductNoDesc(Boolean status);
+
     Page<Product> findByStatusOrderByProductNoDesc(Boolean status, Pageable pageable);
 
     List<Product> findByMemberAndStatus(Member member, boolean status);

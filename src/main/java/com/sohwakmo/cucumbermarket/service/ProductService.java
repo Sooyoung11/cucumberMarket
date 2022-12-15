@@ -32,10 +32,10 @@ public class ProductService {
     private final MemberRepository memberRepository;
     private final ProductOfInterestedRepository productOfInterestedRepository;
 
-    public Page<Product> read(Pageable pageable) { // 전체 상품 목록
+    public List<Product> read() { // 전체 상품 목록
         log.info("read()");
 
-        return productRepository.findByStatusOrderByProductNoDesc(false, pageable);
+        return productRepository.findByStatusOrderByProductNoDesc(false);
     }
 
     public List<Product> readByLikeCountDesc(){
