@@ -1,11 +1,18 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
 import com.sohwakmo.cucumbermarket.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +24,41 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final AuthenticationManager authenticationManager;
+    @Value("${cos.key}")
+    private String cosKey;
+
+
+    @GetMapping("/login")
+    public void login(@RequestParam(value = "error", required = false)String error,
+                      @RequestParam(value = "exception", required = false)String exception,
+                      Model model){
+        log.info("loginPage");
+        log.info("error={}, exception={}", error, exception);
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+    }
+
+    @GetMapping("/auth/kakao/callback")
+    public String kakaoCallback(String code){
+
+        MemberRegisterDto kakaoMember = memberService.socialLogin(code);
+
+        //카카오 로그인 요청한 사용자가 가입자인지 확인
+        Member originMember = memberService.findRegisterMember(kakaoMember.getMemberId());
+
+        //카카오 로그인 요청한 사용자가 비가입자이면 회원가입
+        if(originMember.getMemberId() == null) {
+            memberService.registerMember(kakaoMember);
+        }
+
+        //카카오 로그인 요청한 사용자 자동 로그인
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(kakaoMember.getMemberId(), cosKey));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return "redirect:/";
+    }
 
     @GetMapping("/member/join")
     public void join(){

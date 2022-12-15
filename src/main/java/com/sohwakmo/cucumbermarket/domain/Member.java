@@ -30,22 +30,22 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
     @Column(nullable = false, unique = true)
     private String nickname;
 
-    @Column(nullable = false)
+    @Column
     private String address;
 
-    @Column(nullable = false)
+    @Column
     private String phone;
 
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false, name= "email_key")
+    @Column(name= "email_key")
     private String emailKey;
 
     @Column(name= "email_auth")
@@ -54,12 +54,14 @@ public class Member {
     @ColumnDefault("36.5")
     private Double grade;
 
+    //kakao Login
+    private String oauth;
+
     @ColumnDefault("'/images/mypage/default.jpg'")
     private String userImgUrl;
 
     @ColumnDefault("'default.jpg'")
     private String userImgName;
-
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
