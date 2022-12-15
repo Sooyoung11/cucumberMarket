@@ -45,10 +45,12 @@ public class MypageController {
 
     //마이페이지 회원정보 수정
     @PostMapping("/update")
-    public String update(MypageUpdateDto dto){
-        log.info("update(dto={})", dto);
+    public String update(MypageUpdateDto dto, String oauth){
+        log.info("update(dto={}, oauth={})", dto, oauth);
 
+        if(oauth ==null)
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+
         Integer memberNo = mypageService.update(dto);
 
         return "redirect:/mypage/mymain?memberNo="+ memberNo;

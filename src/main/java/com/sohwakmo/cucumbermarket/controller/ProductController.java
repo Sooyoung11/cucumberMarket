@@ -60,7 +60,7 @@ public class ProductController {
         List<Product> likeList = productService.interestedRead(memberNo);
 
         if(likeList.size() != 0)
-        interestedCount = likeList.size();
+            interestedCount = likeList.size();
 
         model.addAttribute("interestedList",interestedCount);
 
@@ -90,7 +90,7 @@ public class ProductController {
 
     @GetMapping("/detail")
     public String detail(Integer productNo, Model model, HttpSession session) throws UnsupportedEncodingException {
-        log.info("datail(productNo = {})", productNo);
+        log.info("detail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
         log.info("product = {}", product);
