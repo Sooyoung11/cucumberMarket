@@ -44,11 +44,19 @@ public class ProductController {
                        @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
         log.info("list()");
 
-        Page<Product> list = productService.read(pageable);
+        List<Product> list = productService.read();
+
+//        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+//        int startPage = Math.max(nowPage - 4, 1);
+//        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
 
         int nowPage = pageable.getPageNumber()+ 1; // 페이지 0부터 시작해서 +1
         int startPage = Math.max(1, nowPage-4);
         int endPage =  Math.min(nowPage+5, list.getTotalPages());
+//        model.addAttribute("nowPage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+
 
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
@@ -64,33 +72,12 @@ public class ProductController {
 
         model.addAttribute("interestedList",interestedCount);
 
-
-//        List<List<Product>> productsList = new ArrayList<>();
-//        List<Product> products = new ArrayList<>();
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            products.add(list.get(i));
-//
-//            if ((i + 1) % 5 == 0) {
-//                productsList.add(products);
-//                products = new ArrayList<>();
-//            }
-//        }
-//        if (products.size() > 0) {
-//            productsList.add(products);
-//        }
-//
-//        log.info(productsList.toString());
-//        log.info("list={}", list);
-//
-//        model.addAttribute("list", productsList);
-
         return "/product/list";
     }
 
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model, HttpSession session) throws UnsupportedEncodingException {
-        log.info("detail(productNo = {})", productNo);
+    public String detail(Integer productNo, Model model) {
+        log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
         log.info("product = {}", product);
@@ -98,90 +85,23 @@ public class ProductController {
         model.addAttribute("product", product); // 상품 정보
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보
 
-        // 최근 본 목록
-//        String productNo1 = product.getProductNo().toString(); // 상품 번호
-        String photo = product.getPhotoUrl1(); // 상품 사진
-
-        ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
-//        ArrayList<String> list = (ArrayList) session.getAttribute("list");
-
-        // 최근 본 상품 생성
-        if(productlist==null ) {
-            productlist = new ArrayList<>();
-
-            session.setAttribute("productlist",productlist);
-//            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
-        }
-
-        // 최근 본 상품 3개로 제한두기
-        if(productlist.size() > 2){
-            productlist.remove(productlist.size()-2);
-//            productlist.remove(productlist.size()-5);
-
-            // 사진이 default 값이면
-            if(photo == null){
-                productlist.add(0, "/images/product/noimg.png");
-//                productlist.add(1, productNo1);
-            }else{
-                productlist.add(0, photo);
-//                productlist.add(1, productNo1);
-            }
-
-        } else {
-
-            // 사진이 default 값이면
-            if(photo == null){
-                productlist.add("/images/product/noimg.png");
-//                productlist.add( productNo1);
-            }else{
-                productlist.add(photo);
-//                productlist.add(productNo1);
-            }
-        }
-
         return "/product/detail";
     }
 
     @GetMapping("/search")
-    public String search(String keyword, Model model,
-                         @PageableDefault(page = 0, size = 4, sort="productNo", direction = Sort.Direction.DESC) Pageable pageable) {
-        log.info("search(keyword = {})", keyword);
+    public String search(String type, String keyword, Model model) {
+        log.info("search(type = {}, keyword = {})", type, keyword);
 
-        Page<Product> list = productService.search(keyword, pageable);
+        List<Product> list = productService.search(type, keyword);
 
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-//        for (int i = 0; i < list.size(); i++) {
-//            products.add(list.get(i));
-//
-//            if ((i + 1) % 3 == 0) {
-//                productsList.add(products);
-//                products = new ArrayList<>();
-//            }
-//        }
-//        if (products.size() > 0) {
-//            productsList.add(products);
-//        }
-//
-//        log.info(productsList.toString());
-//        log.info("list={}", list);
-//
-//        String result;
-//        if( list.size() == 0) { // 검색 결과가 없으면
-//            result = "nok";
-//        } else {
-//            result = "ok";
-//        }
-//        model.addAttribute("result", result);
-        model.addAttribute("list", productsList);
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
-        model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("hasNext", list.hasNext());
-        model.addAttribute("hasPrev", list.hasPrevious());
-
-
+        String result;
+        if( list.size() == 0) { // 검색 결과가 없으면
+            result = "nok";
+        } else {
+            result = "ok";
+        }
+        model.addAttribute("result", result);
+        model.addAttribute("list", list);
 
         return "/product/list";
     }

@@ -2,79 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout.html }">
-<head>
-    <style>
-
-    </style>
-</head>
 
 
-<div layout:fragment="content">
-        <!--isAuthenticated-->
-        <th:block sec:authorize="isAuthenticated()">
-                <div>  <!-- 사이드 배너 시작-->
-                    <body>
-                    <div class="sideBanner " style="text-align: center">
-                        <!--찜 하트 수-->
-                        <div class="favorites my-4">
-                            <div class="favoritesText" >찜한상품</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800" style="display: inline-block" >
-                                <a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
-                                    <i class="fas fa-heart"></i>&nbsp;<div th:text="${interestedList}" ></div>
-                                </a>
-                            </div>
-                            <!-- favoritesCount -->
-                            <br>
-                        </div>
-                        <!--찜 끝-->
-                        <!-- 최근 본 상품 시작 -->
-                        <div class="recently">
-                            <div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 10px;">최근본상품</div>
-                            <div class="recentlyProduct"  >
-                                <span id="recentlyCnt2"></span>
-                                <!-- 최근본상품  -->
-                                <div id="recentlyArea2"  >
-                                    <a id="recentlyList2">
-                                        <div th:each="p : ${ session.productlist }" style ="text-align:center; padding-bottom: 5px;" >
-<!--                                            <a  th:href="${session.productlist}">-->
-                                                <img th:src="@{${p}}"  width="150px" height="100px" border="1px"/>
-<!--                                            </a>-->
-                                        </div>
-                                    </a>
-                                    <!--                                             </div>-->
-                                </div>
-                            </div>
-                            <div id="recentlyPaging2" style="text-align: center;">
-                                <button id="recentlySubPage2" class="btn subpage"
-                                        onclick="recentlySubPage()"></button>
-                                <a id="currentPage2"></a>
-                                <button id="recentlyAddPage2" class="btn addpage" onclick="recentlyAddPage()"></button>
-                            </div>
-                        </div>
-                        <!-- 최근 본 상품 끝 -->
-                        <div class="totheTop">
-                            <a href="#" class="topText">TOP</a>
-                        </div>
-                    </div>
-                    </body>
-                </div> <!-- 사이드 배너 끝 -->
-        </th:block><!--end.isAuthenticated-->
 
-    <div class="card my-2 container">
+    <div layout:fragment="content">
+        <div class="card my-2 container">
+            <!-- 타이틀 -->
             <div class="card-header text-center">
-                <h1>상품 목록 페이지</h1>
+                <h1 style="text-center">상품 목록 페이지</h1>
             </div>
 
-            <div class="my-2">
+            <!-- 검색 -->
+            <div class="my-2" style="margin: 0 auto;">
                 <form th:action="@{ /product/search }" method="get">
-                    <div class="row ">
-                        <div class="col-6">
-                            <input type="text" class="form-control" name="keyword" placeholder="제목과 내용 작성자 검색" required autofocus />
-                        </div>
+                    <div class="row">
                         <div class="col-4">
+                            <select name="type" class="form-control">
+                                <option value="all">전체 검색</option>
+                                <option value="서울">서울특별시</option>
+                                <option value="부산">부산광역시</option>
+                                <option value="대구">대구 광역시</option>
+                                <option value="인천">인천광역시</option>
+                                <option value="광주">광주광역시</option>
+                                <option value="대전">대전광역시</option>
+                                <option value="울산">울산광역시</option>
+                                <option value="세종">세종특별자치시</option>
+                                <option value="경기">경기도</option>
+                                <option value="강원">강원도</option>
+                                <option value="충북">충청북도</option>
+                                <option value="충남">충청남도</option>
+                                <option value="전북">전라북도</option>
+                                <option value="전남">전라남도</option>
+                                <option value="경북">경상북도</option>
+                                <option value="경남">경상남도</option>
+                                <option value="제주">제주특별자치도</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" name="keyword" placeholder="제목과 내용 작성자 검색"  autofocus />
+                        </div>
+                        <div class="col-2">
                             <input type="submit" class="btn btn-outline-success" value="검색" />
-
-                            <a class="btn btn-outline-success" th:href="@{/product/list}" >전체 검색</a>
                         </div>
                     </div>
                 </form>
@@ -84,7 +52,7 @@
             <div id="productList">
                 <div class="row row-cols-4">
 
-                    <div th:each="p : ${ list }" class="card my-4" style="width:300px; padding:15px; margin:5px 14px">
+                    <div th:each="p : ${ list }" class="card my-4" style="width:300px; padding:15px; margin:5px 14px; border:none">
                         <a th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"
                            style="text-decoration-line:none; color:black;">
                             <!-- 이미지 -->
@@ -105,60 +73,18 @@
                                 <p th:text="${ p.dealAddress }" class=" card-title" style="height:5% text"></p>
                                 <p class="card-text" style="height:5%">
                                     <small th:text=" '관심 ' + ${ p.likeCount }" class="text-muted" ></small>
+                                    <small th:text=" '∙ 조회수 ' + ${ p.clickCount }" class="text-muted" ></small>
                                 </p>
                             </div>
                         </a>
                     </div>
 
+                    <!-- 상품 등록 -->
+                    <a th:href="@{/product/create}" class="btn btn-outline-success">상품 등록</a>
                 </div>
             </div>
 
-
-<!--            <div id="productList" >-->
-<!--                <div th:each="products : ${ list }" class="card-group row my-3">-->
-<!--                    <div th:each="p : ${products}" class="col-4"  style="height:80%">-->
-<!--                        <div class="card my-4">-->
-
-<!--                            <a th:if="${ p.photoUrl1 } == null and ${ p.photoUrl2 } == null and ${ p.photoUrl3 } == null and ${ p.photoUrl4 } == null and ${ p.photoUrl5 } == null"-->
-<!--                               th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"-->
-<!--                               style="text-decoration-line:none; color:black;">-->
-<!--                                <div class="w-100" style="height:50%;">-->
-<!--                                    <img th:src="@{ /images/product/noimg.png }" class="card-img-top" style="width:100%; height:150px;" alt="..." >-->
-<!--                                </div>-->
-
-<!--                                <div class="card-body w-100 h-50 d-inline-block" style="height:50%">-->
-<!--                                    <h5 class="card-title" th:text="${ p.title  }" style="height:5%; "></h5>-->
-<!--                                    <p class="card-text" th:text="${ p.price } + ' 원' " style="height:5%; font-weight:bold"></p>-->
-<!--                                    <p class="card-text" th:text="${ p.dealAddress }" style="height:5% text"></p>-->
-<!--                                    <p class="card-text" style="height:5%">-->
-<!--                                        <small class="text-muted" th:text=" '관심 ' + ${ p.likeCount }"></small>-->
-<!--                                    </p>-->
-<!--                                </div>-->
-<!--                            </a>-->
-
-<!--                            <a th:if="${p.photoUrl1} != null"-->
-<!--                               th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"-->
-<!--                               style="text-decoration-line:none; color:black;">-->
-<!--                                <div class="w-100">-->
-<!--                                    <img th:src="@{ ${p.photoUrl1} }" class="card-img-top" style="width:100%; height:200px; padding:5px; border-radius:30px;" alt="...">-->
-<!--                                </div>-->
-
-<!--                                <div class="card-body w-100 h-50 d-inline-block" style="height:50%">-->
-<!--                                    <h5 class="card-title" th:text="${ p.title  }" style="height:5%; "></h5>-->
-<!--                                    <p class="card-text" th:text="${ p.price } + ' 원' " style="height:5%; font-weight:bold"></p>-->
-<!--                                    <p class="card-text" th:text="${ p.dealAddress }" style="height:5% text"></p>-->
-<!--                                    <p class="card-text" style="height:5%">-->
-<!--                                        <small class="text-muted" th:text=" '관심 ' + ${ p.likeCount }"></small>-->
-<!--                                    </p>-->
-<!--                                </div>-->
-<!--                            </a>-->
-
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
-            <a th:href="@{/product/create}" class="btn btn-outline-success">상품 등록</a>
+            <!-- 검색 결과 없으면 -->
             <th:block th:if="${ result } == 'nok' ">
                 <p>검색 결과가 없습니다.</p>
             </th:block>
@@ -168,33 +94,33 @@
 <!--                <strong th:if="${page == nowPage}" th:text="${page}"></strong>-->
 <!--            </th:block>-->
 
-            <nav aria-label="Page navigation example" class="my-3 mb-3">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1})}" tabindex="-1" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}"> <!-- 수정 필요 -->
-                            <li class="page-item">
-                                <a class="page-link"  th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1})}" th:text="${page}"></a>
-                                <strong class="page-link" th:if="${page == nowPage}" th:text="${page}"></strong>
-                            </li>
-                        </th:block>
-                    <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
+<!--            <nav aria-label="Page navigation example" class="my-3 mb-3">-->
+<!--                <ul class="pagination justify-content-center">-->
+<!--                    <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">-->
+<!--                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1})}" tabindex="-1" aria-label="Previous">-->
+<!--                            <span aria-hidden="true">&laquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}"> &lt;!&ndash; 수정 필요 &ndash;&gt;-->
+<!--                            <li class="page-item">-->
+<!--                                <a class="page-link"  th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1})}" th:text="${page}"></a>-->
+<!--                                <strong class="page-link" th:if="${page == nowPage}" th:text="${page}"></strong>-->
+<!--                            </li>-->
+<!--                        </th:block>-->
+<!--                    <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">-->
 
-                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1})}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+<!--                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1})}" aria-label="Next">-->
+<!--                            <span aria-hidden="true">&raquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
 
         </div> <!-- container -->
     </div> <!-- layout:fragment="content" -->
 
     <th:block layout:fragment="script">
-<!--        <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>-->
+
     </th:block>
 
 </html>

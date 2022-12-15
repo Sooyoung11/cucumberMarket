@@ -6,7 +6,14 @@ window.addEventListener("DOMContentLoaded", function () {
   const btnChat = document.querySelector("#btnChat"); // 채팅하기 버튼
   const btnUpdateAndDelete = document.querySelector("#btnUpdateAndDelete"); // 수정 삭제 버튼
 
+  const memberAddress = document.querySelector("#memberAddress"); // 상품 등록자의 주소
+  let memberAddressSplit = memberAddress.innerText.split(" "); // 주소 자르고
+  memberAddress.innerHTML = memberAddressSplit[0] + ' ' + memberAddressSplit[1]; // 값 넣기
 
+
+//    console.log(new Date());
+//    let createTime = document.querySelector("#createTime");
+//    console.log(createTime.innerText);
 
   if (memberNo == productMemberNo) {
     // 로그인한 no와 상품 등록자의 no가 같으면
@@ -127,6 +134,4 @@ window.addEventListener("DOMContentLoaded", function () {
         console.log(err);
       });
   }
-
-
 });
