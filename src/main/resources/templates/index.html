@@ -9,6 +9,7 @@
 		<link rel="stylesheet" th:href="@{/css/index.css}">
     </head>
 
+	<body onload="doPopupopen();">
 
 	<div layout:fragment="content">
 		<!--slide-->
@@ -76,7 +77,7 @@
 								<!--productImg-->
 								<div class="productImg card-img-top">
 									<!-- 이미지가 없다면 -->
-									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and 
+									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and
 									${ product.photoUrl3 }== null and ${ product.photoUrl4 }== null and ${ product.photoUrl5 }== null">
 										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #e1e1e1" alt="...">
 									</th:block>
@@ -178,7 +179,7 @@
 								<!--productImg-->
 								<div class="productImg card-img-top">
 									<!-- 이미지가 없다면 -->
-									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and 
+									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and
 									${ product.photoUrl3 }== null and ${ product.photoUrl4 }== null and ${ product.photoUrl5 }== null">
 										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #e1e1e1" alt="...">
 									</th:block>
@@ -274,16 +275,16 @@
 									</div>
 								</div>
 							</a>
-							</div><!--end.post-->						
+							</div><!--end.post-->
 						</div><!--end.row-->
-						
+
 					</div>
-					
+
 					<!--btnMorePopularPost-->
 					<div class="btnMore">
 						<a th:href="@{ /post/list }">
 							<div id="btnMorePopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
-						</a>	
+						</a>
 					</div>
 
 				</th:block><!--end.isAnonymous-->
@@ -333,16 +334,16 @@
 									</div>
 								</div>
 							</a>
-							</div><!--end.post-->						
+							</div><!--end.post-->
 						</div><!--end.row-->
-						
+
 					</div>
-					
+
 					<!--btnMorePopularPost-->
 					<div class="btnMore">
 						<a th:href="@{ /post/list }">
 							<div id="btnMoreAreaPopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
-						</a>	
+						</a>
 					</div>
 
 				</th:block>
@@ -351,10 +352,14 @@
 
 
 	</div>
-
+	</body>
 
 	<th:block layout:fragment="script">
-
+		<script type="text/javascript">
+			function doPopupopen(){
+				window.open("/popup", "popup", "width=500, height=650");
+			}
+		</script>
 	</th:block>
 
 </html>

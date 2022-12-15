@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <title>오이마켓 | POPUP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
+    <script type="text/JavaScript">
+        function linkToOpener(URL){
+            if (window.opener && !window.opener.closed)
+                window.opener.location = URL;
+            window.close();
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Jua', sans-serif;
+        }
+        h1{ text-align: center;}
+        h3{ text-align: center;}
+        h4{ text-align: center;}
+        div{ text-align: center;}
+
+        /* 텍스트 깜빡임 */
+        @keyframes blink-effect { 50% { opacity: 0; } }
+        .blink {
+            animation: blink-effect 1s step-end infinite;
+            /*
+                animation-name: blink-effect;
+                animation-duration: 1s;
+                animation-iteration-count:infinite;
+                animation-timing-function:step-end;
+            */
+        }
+    </style>
+</head>
+    <body>
+        <div class="koreaMap " className="map">
+            <img src="/images/cucumber.jpg" style="display:inline; width: 60px; height: 60px; padding-top: 10px;">
+            <h1 style="display:inline;">오이마켓에 오신 것을 환영합니다</h1>
+
+            <h3> <i class="fa-solid fa-cart-shopping"></i> 전국 어디서든 거래 가능한 오이마켓 </h3>
+            <div class="blink">
+                <h4 className="hide">희망 거래 지역을 선택해주세요</h4>
+            </div>
+            <img src="/images/regionKorea.png" alt="국내지역 선택하기" useMap="#regionKorea">
+            <map name="regionKorea">
+                <area shape="rect" coords="36,65,70,101"
+                      href="javascript:linkToOpener('/product/search?type=인천&keyword=')" alt="인천">
+                <area shape="rect" coords="72,68,114,95"
+                      href="javascript:linkToOpener('/product/search?type=서울&keyword=')" alt="서울">
+                <area shape="rect" coords="135,28,234,116"
+                      href="javascript:linkToOpener('/product/search?type=강원&keyword=')" alt="강원">
+                <area shape="rect" coords="113,129,168,155"
+                      href="javascript:linkToOpener('/product/search?type=충북&keyword=')" alt="충북">
+                <area shape="rect" coords="171,140,237,182"
+                      href="javascript:linkToOpener('/product/search?type=경북&keyword=')" alt="경북">
+                <area shape="rect" coords="172,192,209,236"
+                      href="javascript:linkToOpener('/product/search?type=대구&keyword=')" alt="대구">
+                <area shape="rect" coords="220,229,269,252"
+                      href="javascript:linkToOpener('/product/search?type=울산&keyword=')" alt="울산">
+                <area shape="rect" coords="211,260,259,283"
+                      href="javascript:linkToOpener('/product/search?type=부산&keyword=')" alt="부산">
+                <area shape="rect" coords="30,369,87,386"
+                      href="javascript:linkToOpener('/product/search?type=제주&keyword=')" alt="제주">
+                <area shape="rect" coords="38,294,117,326"
+                      href="javascript:linkToOpener('/product/search?type=전남&keyword=')" alt="전남">
+                <area shape="rect" coords="63,266,112,284"
+                      href="javascript:linkToOpener('/product/search?type=광주&keyword=')" alt="광주">
+                <area shape="rect" coords="63,208,125,248"
+                      href="javascript:linkToOpener('/product/search?type=전북&keyword=')" alt="전북">
+                <area shape="rect" coords="136,244,203,281"
+                      href="javascript:linkToOpener('/product/search?type=경남&keyword=')" alt="경남">
+                <area shape="rect" coords="41,124,105,168"
+                      href="javascript:linkToOpener('/product/search?type=충남&keyword=')" alt="충남">
+                <area shape="rect" coords="73,98,119,125"
+                      href="javascript:linkToOpener('/product/search?type=경기&keyword=')" alt="경기">
+                <area shape="rect" coords="76,171,123,190"
+                      href="javascript:linkToOpener('/product/search?type=대전&keyword=')" alt="대전">
+            </map>
+        </div>
+
+        <script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
+    </body>
+
+
+
+</html>

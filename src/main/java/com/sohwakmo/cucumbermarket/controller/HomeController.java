@@ -44,4 +44,8 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/popup")
+    public void popup(){
+        log.info("popup()");
+    }
 }
