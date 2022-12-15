@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -54,6 +57,7 @@ public class    PostController {
         return "/post/list";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/detail")
     public String detail(Model model, @RequestParam Integer postNo,@RequestParam(required = false, defaultValue = "-1")Integer clickCount){
         if(clickCount==-1){ // modify 에서 넘어올경우 파라미터 초기화
@@ -67,6 +71,7 @@ public class    PostController {
         return "/post/detail";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/create")
     public String create(Model model, @RequestParam(required = false)Integer id){ // 새글 작성일경우 id가 필요 없으므로 필수 항복은 아니므로 false를 준다.
         if(id==null){
@@ -79,7 +84,7 @@ public class    PostController {
         }
     }
 
-
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
     public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
 
@@ -103,6 +108,7 @@ public class    PostController {
         return "redirect:/post/list";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/delete")
     public String delete(Integer id, Integer memberNo){
         log.info("delete(id={}, memberNo={})", id, memberNo);
@@ -116,13 +122,16 @@ public class    PostController {
         return "redirect:/post/list";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/modify")
     public String modify(Model model, Integer id){
         Post post = postService.findPostByPostNo(id);
         model.addAttribute("post", post);
         return "/post/modify";
+
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/modify")
     public String modify(PostUpdateDto dto,RedirectAttributes attrs, @RequestParam("files") List<MultipartFile> files){
         Integer postNo = postService.modifyPost(dto);
