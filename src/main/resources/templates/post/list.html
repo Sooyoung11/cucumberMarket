@@ -38,43 +38,39 @@
       </table>
       <!--글 작성 버튼-->
 
-      <div class="createButton" style="display: inline-block">
-        <a type="button" class="btn btn-primary" th:href="@{/post/create}"
-          >글 작성</a
-        >
+      <div class="createButton">
+        <a type="button" class="btn" th:href="@{/post/create}">글 작성</a>
       </div>
-      <div class="listButton" style="display: inline-block">
-        <a
-          type="button"
-          class="btn btn-primary listButton"
-          th:href="@{/post/list}"
-          >전체 목록</a
-        >
+      <div class="listButton">
+        <a type="button" class="btn" th:href="@{/post/list}">전체 목록</a>
       </div>
     </div>
+
     <!-- 검색기능 -->
-    <form
-      class="row g-3 justify-content-center"
-      method="get"
-      th:action="@{/post/list}"
-    >
-      <div class="col-auto justify-content-center">
-        <input
-          type="text"
-          class="form-control"
-          name="searchText"
-          placeholder="검색어를 입력해주세요"
-          th:value="${param.searchText}"
-        />
-      </div>
-      <div class="col-auto">
-        <button type="submit" class="btn searchButton mb-3">
-          <span>
-            <i class="bi bi-search"></i>
-          </span>
-        </button>
-      </div>
-    </form>
+    <div id="formDiv">
+      <form
+        class="row justify-content-center"
+        method="get"
+        th:action="@{/post/list}"
+      >
+        <div class="col-auto">
+          <input
+            type="text"
+            class="form-control"
+            name="searchText"
+            placeholder="검색어를 입력해주세요"
+            th:value="${param.searchText}"
+          />
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn searchButton mb-3">
+            <span>
+              <i class="bi bi-search"></i>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
 
     <!--페이지버튼-->
     <nav aria-label="Page navigation example">

@@ -10,11 +10,14 @@ const password = document.querySelector('#password');
 const passwordCheck = document.querySelector('#passwordCheck');
 const totalAddress = document.querySelector('#totalAddress');
 const detailAddress = document.getElementById("sample4_detailAddress");
-
+const oauth = document.querySelector('#oauth');
 
 const btnPostcode = document.querySelector('#btnPostcode');
 btnPostcode.addEventListener('click', sample4_execDaumPostcode);
-passwordValueCheck();
+
+if(oauth == null) {
+    passwordValueCheck();
+}
 
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
 function sample4_execDaumPostcode() {
@@ -91,21 +94,49 @@ function passwordValueCheck() {
         btnSubmit.classList.add('disabled');
     }
 }
+if(oauth ==null) {
+    password.addEventListener('change', function () {
+        if (password.value.length < 8 || password.value.length > 20) {
+            passwordCheck.className = "my-2";
+            passwordConfirm.disabled = true;
+        } else {
+            passwordCheck.className = "my-2 d-none";
+            passwordConfirm.disabled = false;
+            passwordValueCheck();
+        }
+    })
 
-password.addEventListener('change', function () {
-    if (password.value.length < 8 || password.value.length > 20) {
-        passwordCheck.className = "my-2";
-        passwordConfirm.disabled = true;
-    } else {
-        passwordCheck.className = "my-2 d-none";
-        passwordConfirm.disabled = false;
+    passwordConfirm.addEventListener('change', function () {
         passwordValueCheck();
-    }
-})
+    })
+}
 
-passwordConfirm.addEventListener('change', function () {
-    passwordValueCheck();
-})
+// 닉네임 체크
+const nicknameInput = document.querySelector('#nickname');
+const nicknameOk = document.querySelector('#nicknameOk');
+const nicknameNok = document.querySelector('#nicknameNok');
+
+nicknameInput.addEventListener('change', function () {
+    const nickname = nicknameInput.value;
+    console.log(nickname);
+    axios
+        .get('/member/check_nickname?nickname='+ nickname)
+        .then(res => { displayCheckNickname(res.data) })
+        .catch(err => { console.log(err); });
+});
+
+function displayCheckNickname(data) {
+    if (data == 'nicknameOk') {
+        nicknameOk.className = '';
+        nicknameNok.className = 'd-none';
+        btnSubmit.classList.remove('disabled');
+    } else {
+        nicknameOk.className = 'd-none';
+        nicknameNok.className = '';
+        btnSubmit.classList.add('disabled');
+    }
+}
+
 // 이메일 체크
 const emailInput = document.querySelector('#email');
 const emailOk = document.querySelector('#emailOk');
@@ -113,76 +144,89 @@ const emailNok = document.querySelector('#emailNok');
 const emailNok2 = document.querySelector('#emailNok2');
 const btnAuthcode= document.querySelector('#btnAuthcode');
 
-emailInput.addEventListener('change', function () {
-    const email= emailInput.value;
-    console.log(email);
-    axios
-        .get('/member/check_email?email='+ email)
-        .then(res => { displayCheckEmail(res.data) })
-        .catch(err => { console.log(err); });
-});
+if(oauth==null) {
+    emailInput.addEventListener('change', function () {
+        const email = emailInput.value;
+        console.log(email);
+        axios
+            .get('/member/check_email?email=' + email)
+            .then(res => {
+                displayCheckEmail(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
 
-function displayCheckEmail(data) {
-    if (data == 'emailOk') {
-        emailOk.className = '';
-        emailNok.className = 'd-none';
-        emailNok2.className = 'd-none';
-        btnAuthcode.classList.remove('disabled');
-        btnSubmit.classList.remove('disabled');
-    } else {
-        emailOk.className = 'd-none';
-        emailNok.className = '';
-        emailNok2.className = '';
-        btnAuthcode.classList.add('disabled');
-        btnSubmit.classList.add('disabled');
+    function displayCheckEmail(data) {
+        if (data == 'emailOk') {
+            emailOk.className = '';
+            emailNok.className = 'd-none';
+            emailNok2.className = 'd-none';
+            btnAuthcode.classList.remove('disabled');
+            btnSubmit.classList.remove('disabled');
+        } else {
+            emailOk.className = 'd-none';
+            emailNok.className = '';
+            emailNok2.className = '';
+            btnAuthcode.classList.add('disabled');
+            btnSubmit.classList.add('disabled');
+        }
     }
-}
-const emailKeyInput= document.querySelector('#emailKey');
+
+    const emailKeyInput = document.querySelector('#emailKey');
 // 인증코드 발송
-let authCode= '';
-btnAuthcode.addEventListener('click', function(){
-    emailKeyInput.type='text';
-    axios
-        .get('/member/sendEmail?email='+emailInput.value)
-        .then(function(res){
-            console.log(res.data);
-            authCode= res.data;
-            console.log('sendEmail=> authCode='+authCode);
-        })
-        .catch(err => { console.log(err); });
-})
+    let authCode = '';
+    btnAuthcode.addEventListener('click', function () {
+        emailKeyInput.type = 'text';
+        axios
+            .get('/member/sendEmail?email=' + emailInput.value)
+            .then(function (res) {
+                console.log(res.data);
+                authCode = res.data;
+                console.log('sendEmail=> authCode=' + authCode);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    })
 
 // 인증코드 체크
 
-const emailKeyOk = document.querySelector('#emailKeyOk');
-const emailKeyNok = document.querySelector('#emailKeyNok');
-const emailKeyNok2 = document.querySelector('#emailKeyNok2');
+    const emailKeyOk = document.querySelector('#emailKeyOk');
+    const emailKeyNok = document.querySelector('#emailKeyNok');
+    const emailKeyNok2 = document.querySelector('#emailKeyNok2');
 
-emailKeyInput.addEventListener('change', function () {
-    console.log('emailAuth=> authCode='+authCode)
-    const emailKey= emailKeyInput.value;
-    axios
-        .get('/member/emailAuth?authCode='+authCode+'&&emailKey='+emailKey)
-        .then(res => { displayCheckEmailKey(res.data) })
-        .catch(err => { console.log(err); });
-});
+    emailKeyInput.addEventListener('change', function () {
+        console.log('emailAuth=> authCode=' + authCode)
+        const emailKey = emailKeyInput.value;
+        axios
+            .get('/member/emailAuth?authCode=' + authCode + '&&emailKey=' + emailKey)
+            .then(res => {
+                displayCheckEmailKey(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    });
 
-function displayCheckEmailKey(data) {
-    if (data == 'emailKeyOk') {
-        emailKeyOk.className = '';
-        emailKeyNok.className = 'd-none';
-        emailKeyNok2.className = 'd-none';
-        btnSubmit.classList.remove('disabled');
-    } else {
-        emailKeyOk.className = 'd-none';
-        emailKeyNok.className = '';
-        emailKeyNok2.className = '';
-        btnSubmit.classList.add('disabled');
+    function displayCheckEmailKey(data) {
+        if (data == 'emailKeyOk') {
+            emailKeyOk.className = '';
+            emailKeyNok.className = 'd-none';
+            emailKeyNok2.className = 'd-none';
+            btnSubmit.classList.remove('disabled');
+        } else {
+            emailKeyOk.className = 'd-none';
+            emailKeyNok.className = '';
+            emailKeyNok2.className = '';
+            btnSubmit.classList.add('disabled');
+        }
     }
 }
 
 form.addEventListener("submit", function (e) {
-    if (form.name.value == '' || form.nickname.value == '' || totalAddress == '' || form.phone.value == '' || form.email.value == '') {
+    if (form.nickname.value == '' ||  form.email.value == '') {
         alert('사용자 정보를 모두 입력해주세요');
         e.preventDefault();
         form.name.focus();

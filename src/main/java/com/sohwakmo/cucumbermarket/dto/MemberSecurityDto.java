@@ -25,10 +25,12 @@ public class MemberSecurityDto extends User {
     private String email;
     private Double grade;
 
+    private String oauth;
+
 //    @Override
     public MemberSecurityDto(Integer memberNo, String memberId, String password, String name,
                              String nickname, String address, String phone,
-                             String email, Double grade,
+                             String email, Double grade, String oauth,
                              Collection<? extends GrantedAuthority> authorities) {
         super(memberId, password, authorities);
 
@@ -41,6 +43,7 @@ public class MemberSecurityDto extends User {
         this.phone = phone;
         this.email = email;
         this.grade = grade;
+        this.oauth = oauth;
     }
 
     public static MemberSecurityDto fromEntity(Member m){
@@ -49,7 +52,7 @@ public class MemberSecurityDto extends User {
                 .collect(Collectors.toList());
         MemberSecurityDto dto= new MemberSecurityDto(m.getMemberNo(), m.getMemberId(),
                 m.getPassword(), m.getName(), m.getNickname(), m.getAddress(),
-                m.getPhone(), m.getEmail(), m.getGrade(), authorities);
+                m.getPhone(), m.getEmail(), m.getGrade(), m.getOauth(), authorities);
 
         return dto;
     }

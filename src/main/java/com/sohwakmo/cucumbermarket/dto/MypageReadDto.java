@@ -21,7 +21,7 @@ public class MypageReadDto {
                 .memberNo(m.getMemberNo())
                 .name(m.getName())
                 .nickname(m.getNickname())
-                .password(m.getPassword().substring(0,7))
+                .password(m.getPassword())
                 .address(m.getAddress())
                 .phone(m.getPhone())
                 .email(m.getEmail())

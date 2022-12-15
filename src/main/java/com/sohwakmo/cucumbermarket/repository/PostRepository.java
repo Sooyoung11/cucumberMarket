@@ -11,4 +11,5 @@ public interface PostRepository extends JpaRepository<Post,Integer>{
 
     Post findByImageName01(String imageSrc);
     Post findByImageName02(String imageSrc);
+    List<Post> findByOrderByClickCountDescPostNoDesc();
 }

@@ -17,7 +17,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
   if (memberNo == productMemberNo) {
     // 로그인한 no와 상품 등록자의 no가 같으면
-    dealStatus.className = "row mb-3"; // 거래 상테 select 보임
+    dealStatus.className = "row"; // 거래 상테 select 보임
     btnUpdateAndDelete.className = "my-2"; // 수정 삭제 보임
     isDealStatus(); // 거래 상태 체크해서 거래 중 or 거래 완료 보여줌
   } else {
@@ -75,6 +75,7 @@ window.addEventListener("DOMContentLoaded", function () {
   function changeDealStatus() {
     let option = selectOption.value;
 
+
     if (option == "ing") { // 거래 중
       axios
         .get("/product/ing?productNo=" + productNo)
@@ -96,6 +97,7 @@ window.addEventListener("DOMContentLoaded", function () {
   }
 
   window.parentFunction = function (memberNo) {
+      console.log(memberNo);
       let boughtMemberNo = memberNo;
 
       axios
@@ -132,6 +134,4 @@ window.addEventListener("DOMContentLoaded", function () {
         console.log(err);
       });
   }
-
-
 });

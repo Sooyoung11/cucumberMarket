@@ -9,6 +9,10 @@ import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,8 +20,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -30,31 +40,29 @@ public class ProductController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(Model model, Integer memberNo, @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
-        List<Product> list = productService.read();
-        model.addAttribute("list", list);
+        Page<Product> list = productService.read(pageable);
 
-//        List<List<Product>> productsList = new ArrayList<>();
-//        List<Product> products = new ArrayList<>();
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            products.add(list.get(i));
-//
-//            if ((i + 1) % 5 == 0) {
-//                productsList.add(products);
-//                products = new ArrayList<>();
-//            }
-//        }
-//        if (products.size() > 0) {
-//            productsList.add(products);
-//        }
-//
-//        log.info(productsList.toString());
-//        log.info("list={}", list);
-//
-//        model.addAttribute("list", productsList);
+        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+
+        model.addAttribute("list", list);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        // 찜 개수
+        Integer interestedCount = 0;
+        List<Product> likeList = productService.interestedRead(memberNo);
+
+        if(likeList.size() != 0)
+            interestedCount = likeList.size();
+
+        model.addAttribute("interestedList",interestedCount);
+
 
         return "/product/list";
     }

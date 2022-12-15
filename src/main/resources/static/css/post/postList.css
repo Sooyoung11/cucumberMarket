@@ -1,10 +1,34 @@
 .createButton {
+  display: block;
   float: right;
   margin-left: 3px;
 }
 .listButton {
+  display: block;
   float: right;
 }
+
+.createButton a {
+  background-color: #e4fcb8;
+}
+
+.createButton a:hover {
+  background-color: #e4fcb8;
+  text-decoration: underline;
+}
+
+.listButton a {
+  background-color: #e4fcb8;
+}
+.listButton a:hover {
+  background-color: #e4fcb8;
+  text-decoration: underline;
+}
+
 .searchButton {
   background-color: #e4fcb8;
+}
+
+#formDiv {
+  margin: auto;
 }
