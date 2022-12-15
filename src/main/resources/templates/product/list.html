@@ -36,8 +36,9 @@
                                 <div id="recentlyArea2"  >
                                     <a id="recentlyList2">
                                         <div th:each="p : ${ session.productlist }" style ="text-align:center; padding-bottom: 5px;" >
-<!--                                            <a  th:href="${session.productlist}">-->
-                                                <img th:src="@{${p}}"  width="150px" height="100px" border="1px"/>
+<!--                                            <a  th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.map.keySet() })">-->
+                                            <div>hi</div>
+<!--                                                <img th:src="@{${p.map.get(map.keySet()) }}"  width="150px" height="100px" border="1px"/>-->
 <!--                                            </a>-->
                                         </div>
                                     </a>

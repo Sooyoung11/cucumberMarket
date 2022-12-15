@@ -20,10 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 
 @Slf4j
@@ -75,6 +73,7 @@ public class ProductController {
         return "/product/list";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/detail")
     public String detail(Integer productNo, Model model, HttpSession session) throws UnsupportedEncodingException {
         log.info("datail(productNo = {})", productNo);
@@ -86,45 +85,52 @@ public class ProductController {
         model.addAttribute("member", product.getMember()); // 상품 올린 사람의 정보
 
         // 최근 본 목록
-//        String productNo1 = product.getProductNo().toString(); // 상품 번호
+        Integer productNo2  = product.getProductNo(); // 상품 번호
         String photo = product.getPhotoUrl1(); // 상품 사진
 
         ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
-//        ArrayList<String> list = (ArrayList) session.getAttribute("list");
+
+         Map<Integer, String> map = new HashMap<>();
+
+         map.put(productNo2,photo);
+        log.info("map1231231232133={}",map);
+        log.info("map1231231232133={}",map.get(4));
+        log.info("map1231231232133={}",map.keySet());
 
         // 최근 본 상품 생성
         if(productlist==null ) {
             productlist = new ArrayList<>();
 
             session.setAttribute("productlist",productlist);
-//            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
+            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
         }
 
-        // 최근 본 상품 3개로 제한두기
-        if(productlist.size() > 2){
+//        // 최근 본 상품 3개로 제한두기
+        if(productlist.size() > 3){
             productlist.remove(productlist.size()-2);
-//            productlist.remove(productlist.size()-5);
 
             // 사진이 default 값이면
             if(photo == null){
-                productlist.add(0, "/images/product/noimg.png");
-//                productlist.add(1, productNo1);
+                map.put(productNo2,"/images/product/noimg.png" );
+                productlist.add(0, map.toString());
             }else{
-                productlist.add(0, photo);
-//                productlist.add(1, productNo1);
+                map.put(productNo2,photo);
+                productlist.add(0, map.toString());
             }
 
         } else {
 
             // 사진이 default 값이면
             if(photo == null){
-                productlist.add("/images/product/noimg.png");
-//                productlist.add( productNo1);
+                map.put(productNo2,"/images/product/noimg.png" );
+                productlist.add(map.toString());
             }else{
-                productlist.add(photo);
-//                productlist.add(productNo1);
+                map.put(productNo2,photo);
+                productlist.add(map.toString());
             }
         }
+
+        log.info("productlist={}", productlist);
 
         return "/product/detail";
     }
@@ -165,6 +171,7 @@ public class ProductController {
         return "/product/list";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/addInterested")
     @ResponseBody
     public void addInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
@@ -173,6 +180,7 @@ public class ProductController {
         productService.addInterested(dto);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/deleteInterested")
     @ResponseBody
     public void deleteInterested(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
@@ -181,6 +189,7 @@ public class ProductController {
         productService.deleteInterested(dto);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/checkInterestedProduct")
     @ResponseBody
     public ResponseEntity<String> checkInterestedProduct(ProductOfInterestedRegisterOrDeleteOrCheckDto dto) {
@@ -192,6 +201,7 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/interested")
     public String interestedPage(Integer memberNo, Model model) {
         log.info("interestedPage(memberNo = {})", memberNo);
@@ -207,6 +217,7 @@ public class ProductController {
         return "/product/interested";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/myList")
     public String myList(Integer memberNo, Model model) {
         log.info("myList()");
@@ -221,6 +232,7 @@ public class ProductController {
         return "/product/myList";
     }
 
+    @PreAuthorize("hasRole('USER')")
     //마이페이지 판매목록(진행중, 거래완료) 호출
     @GetMapping("/myList/searchStatus")
     public String searchStatus(Integer myProductListSelect, Integer memberNo, Model model){
@@ -279,6 +291,7 @@ public class ProductController {
     }
 
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/ing")
     @ResponseBody
     public ResponseEntity<String> dealStatusIng(Integer productNo) {
@@ -289,6 +302,7 @@ public class ProductController {
         return ResponseEntity.ok("hello");
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/done")
     @ResponseBody
     public ResponseEntity<String> dealStatusDone(Integer productNo, Integer boughtMemberNo) {
@@ -299,6 +313,7 @@ public class ProductController {
         return ResponseEntity.ok("ok");
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/isDealStatus")
     @ResponseBody
     public ResponseEntity<String> isDealStatus(Integer productNo) {
@@ -318,6 +333,7 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
+
     // 상품 등록 페이지 이동
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/create")
@@ -326,6 +342,7 @@ public class ProductController {
 
         return "product/create";
     }
+
 
     //상품 등록
     @PreAuthorize("hasRole('USER')")
