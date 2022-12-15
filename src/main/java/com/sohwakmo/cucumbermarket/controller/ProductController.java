@@ -9,6 +9,7 @@ import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -58,7 +59,7 @@ public class ProductController {
         List<Product> likeList = productService.interestedRead(memberNo);
 
         if(likeList.size() != 0)
-        interestedCount = likeList.size();
+            interestedCount = likeList.size();
 
         model.addAttribute("interestedList",interestedCount);
 
@@ -88,7 +89,7 @@ public class ProductController {
 
     @GetMapping("/detail")
     public String detail(Integer productNo, Model model, HttpSession session) throws UnsupportedEncodingException {
-        log.info("datail(productNo = {})", productNo);
+        log.info("detail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
         log.info("product = {}", product);
