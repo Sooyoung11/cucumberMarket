@@ -35,6 +35,11 @@ public class PostService {
 
     private  final ReplyRepository replyRepository;
 
+    public List<Post> readByClickCountDesc(){
+        log.info("readByClickCountDesc()");
+        return postRepository.findByOrderByClickCountDescPostNoDesc();
+    }
+
     @Transactional(readOnly = true)
     /**
      * 내용, 제목으로 검색해서 결과를 페이지로 가져오기

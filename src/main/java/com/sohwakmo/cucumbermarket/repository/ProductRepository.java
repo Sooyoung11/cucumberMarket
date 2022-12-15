@@ -2,6 +2,8 @@ package com.sohwakmo.cucumbermarket.repository;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,7 +29,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByMember(Member member);
 
     // select * from PRODUCTS where status = 0;
-    List<Product> findByStatusOrderByProductNoDesc(Boolean status);
+    Page<Product> findByStatusOrderByProductNoDesc(Boolean status, Pageable pageable);
 
     List<Product> findByMemberAndStatus(Member member, boolean status);
 

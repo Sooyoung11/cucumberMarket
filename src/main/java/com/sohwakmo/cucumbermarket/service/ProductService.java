@@ -11,6 +11,8 @@ import com.sohwakmo.cucumbermarket.repository.ProductOfInterestedRepository;
 import com.sohwakmo.cucumbermarket.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,10 +32,10 @@ public class ProductService {
     private final MemberRepository memberRepository;
     private final ProductOfInterestedRepository productOfInterestedRepository;
 
-    public List<Product> read() { // 전체 상품 목록
+    public Page<Product> read(Pageable pageable) { // 전체 상품 목록
         log.info("read()");
 
-        return productRepository.findByStatusOrderByProductNoDesc(false);
+        return productRepository.findByStatusOrderByProductNoDesc(false, pageable);
     }
 
     public List<Product> readByLikeCountDesc(){
