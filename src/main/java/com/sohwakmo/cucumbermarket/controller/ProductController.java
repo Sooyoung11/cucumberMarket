@@ -69,7 +69,7 @@ public class ProductController {
     }
 
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model) {
+    public String detail(Integer productNo, Model model, HttpSession session) {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
