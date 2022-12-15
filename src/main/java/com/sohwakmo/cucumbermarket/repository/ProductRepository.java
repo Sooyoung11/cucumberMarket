@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             @Param(value = "content") String content, @Param(value = "author") String author, Pageable pageable);
 
     // select * from PRODUCTS where lower(deal_address) like '??%' order by PRODUCT_NO desc
-    List<Product> findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(boolean status, String key);
+    Page<Product> findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(boolean status, String key, Pageable pageable);
 
     @Query(
             "select p from PRODUCTS p" +
@@ -38,13 +38,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
                     " or lower(p.member.nickname) like lower('%' || :author || '%') )" +
                     " order by p.productNo desc"
     )
-    List<Product> searchByTypeAndKeyword(@Param(value = "status") Boolean status, @Param(value = "type") String type,
-                                         @Param(value = "title") String title, @Param(value = "content") String content, @Param(value = "author") String author);
+    Page<Product> searchByTypeAndKeyword(@Param(value = "status") Boolean status, @Param(value = "type") String type,
+                                         @Param(value = "title") String title, @Param(value = "content") String content, @Param(value = "author") String author, Pageable pageable);
 
     List<Product> findByMember(Member member);
 
     // select * from PRODUCTS where status = 0;
-    List<Product> findByStatusOrderByProductNoDesc(Boolean status);
+//    List<Product> findByStatusOrderByProductNoDesc(Boolean status);
 
     Page<Product> findByStatusOrderByProductNoDesc(Boolean status, Pageable pageable);
 

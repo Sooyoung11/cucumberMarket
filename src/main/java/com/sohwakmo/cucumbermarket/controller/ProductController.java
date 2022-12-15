@@ -41,22 +41,13 @@ public class ProductController {
 
     @GetMapping("/list")
     public String list(Model model, Integer memberNo,
-                       @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
+                       @PageableDefault(page = 0, size = 2, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
+        Page<Product> list = productService.read(pageable);
 
-        List<Product> list = productService.read();
-
-//        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
-//        int startPage = Math.max(nowPage - 4, 1);
-//        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
-
-        int nowPage = pageable.getPageNumber()+ 1; // 페이지 0부터 시작해서 +1
-        int startPage = Math.max(1, nowPage-4);
-        int endPage =  Math.min(nowPage+5, list.getTotalPages());
-//        model.addAttribute("nowPage", nowPage);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-
+        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage =  Math.min(nowPage + 4, list.getTotalPages());
 
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
@@ -89,19 +80,28 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String search(String type, String keyword, Model model) {
+    public String search(String type, String keyword, Model model, @PageableDefault(page = 0, size = 2, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("search(type = {}, keyword = {})", type, keyword);
 
-        List<Product> list = productService.search(type, keyword);
+        Page<Product> list = productService.search(type, keyword, pageable);
 
         String result;
-        if( list.size() == 0) { // 검색 결과가 없으면
+        if( list.getSize() == 0) { // 검색 결과가 없으면
             result = "nok";
         } else {
             result = "ok";
         }
+
+        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage =  Math.min(nowPage + 4, list.getTotalPages());
+
         model.addAttribute("result", result);
         model.addAttribute("list", list);
+
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
 
         return "/product/list";
     }

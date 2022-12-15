@@ -32,10 +32,10 @@ public class ProductService {
     private final MemberRepository memberRepository;
     private final ProductOfInterestedRepository productOfInterestedRepository;
 
-    public List<Product> read() { // 전체 상품 목록
+    public Page<Product> read(Pageable pageable) { // 전체 상품 목록
         log.info("read()");
 
-        return productRepository.findByStatusOrderByProductNoDesc(false);
+        return productRepository.findByStatusOrderByProductNoDesc(false, pageable);
     }
 
     public List<Product> readByLikeCountDesc(){
@@ -62,10 +62,10 @@ public class ProductService {
         return product;
     }
 
-    public List<Product> search(String type, String keyword) {
+    public Page<Product> search(String type, String keyword, Pageable pageable) {
         log.info("search(type = {}, keyword = {})", type, keyword);
 
-        List<Product> list = new ArrayList<>();
+        Page<Product> list = null;
 
 
         switch(type) {
@@ -74,10 +74,10 @@ public class ProductService {
 
             if( keyword.equals("")) { // 검색 내용이 없으면 전부 검색
                 log.info("keyword = null");
-                list = productRepository.findByStatusOrderByProductNoDesc(false);
+                list = productRepository.findByStatusOrderByProductNoDesc(false, pageable);
             } else { // 검색 내용이 있으면 내용 검색
                 log.info("keyword = notNull");
-                list = productRepository.searchByKeyword(false, keyword, keyword, keyword);
+                list = productRepository.searchByKeyword(false, keyword, keyword, keyword, pageable);
             }
 
             break;
@@ -86,10 +86,10 @@ public class ProductService {
 
             if( keyword.equals("")) { // 검색 내용이 없으면
                 log.info("keyword = null");
-                list = productRepository.findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(false, type);
+                list = productRepository.findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(false, type, pageable);
             } else { // 검색 내용이 있으면 내용 검색
                 log.info("keyword = notNull");
-                list = productRepository.searchByTypeAndKeyword(false, type, keyword, keyword, keyword);
+                list = productRepository.searchByTypeAndKeyword(false, type, keyword, keyword, keyword, pageable);
             }
 
         }
