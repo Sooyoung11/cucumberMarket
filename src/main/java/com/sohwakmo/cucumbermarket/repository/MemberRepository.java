@@ -27,4 +27,5 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 
     @EntityGraph(attributePaths = "roles")
     Member save(MemberRegisterDto dto);
+
 }
