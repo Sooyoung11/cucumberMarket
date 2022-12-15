@@ -56,15 +56,18 @@
                 </div> <!-- 사이드 배너 끝 -->
         </th:block><!--end.isAuthenticated-->
 
-        <div class="card my-2 container">
+        <div class="card my-2 container" style="border:none;">
             <!-- 타이틀 -->
-            <div class="card-header text-center">
-                <h1 style="text-center">상품 목록 페이지</h1>
+<!--            <div class="card-header text-center">-->
+<!--                <h1 style="text-center">상품 목록 페이지</h1>-->
+<!--            </div>-->
+            <div class="my-2" style="width:100%; height:50px; background:#e6f3e6;">
+                <div></div>
             </div>
 
             <!-- 검색 -->
             <div class="my-2" style="margin: 0 auto;">
-                <form th:action="@{ /product/search }" method="get">
+                <form th:action="@{ /product/list }" method="get">
                     <div class="row">
                         <div class="col-4">
                             <select name="type" class="form-control">
@@ -135,9 +138,10 @@
             </div>
 
             <!-- 검색 결과 없으면 -->
-            <th:block th:if="${ result } == 'nok' ">
-                <p>검색 결과가 없습니다.</p>
-            </th:block>
+<!--            <th:block th:if="${ result } == 'nok' ">-->
+<!--                <p>검색 결과가 없습니다.</p>-->
+<!--            </th:block>-->
+
 
 <!--            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
 <!--                <a th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1})}" th:text="${page}"></a>-->
@@ -147,19 +151,19 @@
             <nav aria-label="Page navigation example" class="my-3 mb-3">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1})}" tabindex="-1" aria-label="Previous">
+                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1}, type=${param.type}, keyword=${param.keyword})}" tabindex="-1" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
-                        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}"> <!-- 수정 필요 -->
                             <li class="page-item">
-                                <a class="page-link"  th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1})}" th:text="${page}"></a>
+                                <a class="page-link"  th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1}, type=${param.type}, keyword=${param.keyword} )}" th:text="${page}"></a>
                                 <strong class="page-link" th:if="${page == nowPage}" th:text="${page}"></strong>
                             </li>
                         </th:block>
                     <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
 
-                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1})}" aria-label="Next">
+                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

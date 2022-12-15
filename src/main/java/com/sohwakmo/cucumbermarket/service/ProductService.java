@@ -49,7 +49,6 @@ public class ProductService {
         return productRepository.findById(productNo).get();
     }
 
-
     @Transactional
     public Product detail(Integer productNo) {
         log.info("detail(productNo = {})", productNo);
@@ -65,11 +64,11 @@ public class ProductService {
     public Page<Product> search(String type, String keyword, Pageable pageable) {
         log.info("search(type = {}, keyword = {})", type, keyword);
 
-        Page<Product> list = null;
-
+//        List<Product> list = new ArrayList<>();
+        Page<Product> list;
 
         switch(type) {
-        case "all": // 전체 검색이라면
+        case "all": // 전체 검색이라면 
             log.info("type = {}", type);
 
             if( keyword.equals("")) { // 검색 내용이 없으면 전부 검색

@@ -12,9 +12,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-//     select * from PRODUCTS where lower(TITLE) like ? or lower (CONTENT) like ? order by PRODUCT_NO desc
-//    List<Product> findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByProductNoDesc(String title, String content, String memberNickname);
-
     @Query(
             "select p from PRODUCTS p" +
                     " where p.status = :status" +
