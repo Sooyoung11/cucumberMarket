@@ -5,7 +5,7 @@
 
 <head>
     <style>
-        img {
+        .carousel-inner < img {
             height:500px;
         }
     </style>
@@ -96,18 +96,22 @@
                 </div>
                 <hr>
 
-                <div class="row">
+                <!-- 별 모양 -->
+                <div class="row text-center">
                     <div class="col my-2 d-none" id="interested">
                         <img th:src="@{ /images/product/interested.png }" width="50px">
                     </div>
                     <div class="col my-2 d-none" id="nointerested">
                         <img th:src="@{ /images/product/nointerested.png }" width="50px">
                     </div>
-
                 </div>
+
+                <!-- 채팅하기 -->
                 <div class="my-2 text-center d-none" id="btnChat">
                     <a class="btn btn-primary" id="gotoChat">채팅하기</a>
                 </div>
+
+                <!-- 수정 삭제 -->
                 <form id="form" class="text-center">
                     <div class="my-2 d-none" id="btnUpdateAndDelete">
                         <input type="hidden" th:value="${product.productNo}" name="productNo" id="hiddenProductNo"/>  <!-- 번호 필요해서 추가했어요! -->
