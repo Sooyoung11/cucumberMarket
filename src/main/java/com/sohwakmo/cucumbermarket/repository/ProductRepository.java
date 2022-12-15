@@ -23,8 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
                     " or lower(p.member.nickname) like lower('%' || :author || '%') )" +
                     " order by p.productNo desc"
     )
-    List<Product> searchByKeyword(@Param(value = "status") Boolean status, @Param(value = "title") String title,
-            @Param(value = "content") String content, @Param(value = "author") String author);
+    Page<Product> searchByKeyword(@Param(value = "status") Boolean status, @Param(value = "title") String title,
+            @Param(value = "content") String content, @Param(value = "author") String author, Pageable pageable);
 
     List<Product> findByMember(Member member);
 

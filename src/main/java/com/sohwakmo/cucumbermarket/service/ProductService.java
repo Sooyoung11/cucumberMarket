@@ -62,10 +62,10 @@ public class ProductService {
         return product;
     }
 
-    public List<Product> search(String keyword) {
+    public Page<Product> search(String keyword, Pageable pageable) {
         log.info("search(keyword = {})", keyword);
 
-        List<Product> list = productRepository.searchByKeyword(false, keyword, keyword, keyword);
+        Page<Product> list = productRepository.searchByKeyword(false, keyword, keyword, keyword, pageable);
         log.info("list = {}", list);
 
         return list;

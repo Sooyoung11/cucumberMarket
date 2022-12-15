@@ -9,6 +9,7 @@ import com.sohwakmo.cucumbermarket.service.MemberService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -39,14 +40,15 @@ public class ProductController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model, Integer memberNo, @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String list(Model model, Integer memberNo,
+                       @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable, String searchKeyword) {
         log.info("list()");
 
         Page<Product> list = productService.read(pageable);
 
-        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
-        int startPage = Math.max(nowPage - 4, 1);
-        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+        int nowPage = pageable.getPageNumber()+ 1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(1, nowPage-4);
+        int endPage =  Math.min(nowPage+5, list.getTotalPages());
 
         model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
@@ -141,37 +143,45 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String search(String keyword, Model model) {
+    public String search(String keyword, Model model,
+                         @PageableDefault(page = 0, size = 4, sort="productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("search(keyword = {})", keyword);
 
-        List<Product> list = productService.search(keyword);
+        Page<Product> list = productService.search(keyword, pageable);
 
         List<List<Product>> productsList = new ArrayList<>();
         List<Product> products = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
-
-        String result;
-        if( list.size() == 0) { // 검색 결과가 없으면
-            result = "nok";
-        } else {
-            result = "ok";
-        }
-        model.addAttribute("result", result);
+//        for (int i = 0; i < list.size(); i++) {
+//            products.add(list.get(i));
+//
+//            if ((i + 1) % 3 == 0) {
+//                productsList.add(products);
+//                products = new ArrayList<>();
+//            }
+//        }
+//        if (products.size() > 0) {
+//            productsList.add(products);
+//        }
+//
+//        log.info(productsList.toString());
+//        log.info("list={}", list);
+//
+//        String result;
+//        if( list.size() == 0) { // 검색 결과가 없으면
+//            result = "nok";
+//        } else {
+//            result = "ok";
+//        }
+//        model.addAttribute("result", result);
         model.addAttribute("list", productsList);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", list.hasNext());
+        model.addAttribute("hasPrev", list.hasPrevious());
+
+
 
         return "/product/list";
     }
