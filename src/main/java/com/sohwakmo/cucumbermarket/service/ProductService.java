@@ -69,7 +69,6 @@ public class ProductService {
     public Page<Product> search(String type, String keyword, Pageable pageable) {
         log.info("search(type = {}, keyword = {})", type, keyword);
 
-//        List<Product> list = new ArrayList<>();
         Page<Product> list;
 
         switch (type) {
