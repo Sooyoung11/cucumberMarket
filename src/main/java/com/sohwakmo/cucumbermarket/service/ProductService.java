@@ -3,7 +3,6 @@ package com.sohwakmo.cucumbermarket.service;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
-import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
 import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
@@ -21,7 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -168,7 +166,31 @@ public class ProductService {
         return productsList;
     }
 
+    //overloading
+    public Page<ProductOfInterested> interestedRead(Integer memberNo, Pageable pageable) {
+        log.info("interested(memberNo = {})", memberNo);
+
+        Page<ProductOfInterested> list = productOfInterestedRepository.findByMemberOrderByProductProductNoDesc(memberNo, pageable);
+        log.info("list = {}", list);
+
+        return list;
+    }
+
     //마이페이지 판매내역-진행중 검색
+    public Page<Product> proceedListRead(Integer memberNo, Pageable pageable) {
+        log.info("proceedListRead(memberNo={})", memberNo);
+
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member={}", member);
+
+        Page<Product> list = productRepository.findByMemberAndStatusOrderByProductNoDesc(member, false, pageable);
+        log.info("proceeding list = {}", list);
+
+        return list;
+
+    }
+
+    //overloading
     public List<Product> proceedListRead(Integer memberNo) {
         log.info("proceedListRead(memberNo={})", memberNo);
 
@@ -183,6 +205,19 @@ public class ProductService {
     }
 
     //마이페이지 판매내역-거래완료 검색
+    public Page<Product> completedListRead(Integer memberNo, Pageable pageable) {
+        log.info("completedListRead(memberNo={})", memberNo);
+
+        Member member = memberRepository.findById(memberNo).get();
+        log.info("member={}", member);
+
+        Page<Product> list = productRepository.findByMemberAndStatusOrderByProductNoDesc(member, true, pageable);
+        log.info("completed list = {}", list);
+
+        return list;
+    }
+
+    //overloading
     public List<Product> completedListRead(Integer memberNo) {
         log.info("completedListRead(memberNo={})", memberNo);
 
@@ -196,6 +231,16 @@ public class ProductService {
     }
 
     //마이페이지 구매목록
+    public Page<Product> buyMyListRead(Integer memberNo, Pageable pageable) {
+        log.info("buyMyListRead(memberNo={})", memberNo);
+
+        Page<Product> list = productRepository.findByBoughtMemberNoOrderByProductNoDesc(memberNo, pageable);
+        log.info("list = {}", list);
+
+        return list;
+    }
+
+    //overloading
     public List<Product> buyMyListRead(Integer memberNo) {
         log.info("buyMyListRead(memberNo={})", memberNo);
 
@@ -206,13 +251,13 @@ public class ProductService {
     }
 
     @Transactional
-    public List<Product> myProductListRead(Integer memberNo) {
+    public Page<Product> myProductListRead(Integer memberNo, Pageable pageable) {
         log.info("myProductListRead(memberNo = {})", memberNo);
 
         Member member = memberRepository.findById(memberNo).get();
         log.info("member = {}", member);
 
-        List<Product> list = productRepository.findByMember(member);
+        Page<Product> list = productRepository.findByMemberOrderByProductNoDesc(member, pageable);
         log.info("list = {}", list);
 
         return list;
