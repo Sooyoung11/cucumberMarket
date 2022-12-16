@@ -60,11 +60,16 @@
             <div class="col-1" id="imageDiv">
               <img
                 th:src="${post.member.userImgUrl}"
-                style="width: 70px; height: 100%"
+                style="width: 70px; height: 90%"
               />
             </div>
             <div class="col mb-3" id="userNickname">
-              <span th:text="${nickname}" id="writer">작성자</span>
+              <span
+                th:text="${nickname}"
+                id="writer"
+                style="font-size: 17px; font-weight: bold"
+                >작성자</span
+              >
               <th:block
                 th:if="${nickname}!=${#authentication.principal.nickname}"
               >
@@ -73,9 +78,12 @@
               <br />
               <span
                 th:text="${ #temporals.format(post.createdTime, 'yyyy-MM-dd HH:mm') }"
+                style="color: #979797"
                 >작성시간</span
               >
-              <span th:text="'조회 '+${post.clickCount}">조회수</span>
+              <span th:text="'조회 '+${post.clickCount}" style="color: #979797"
+                >조회수</span
+              >
             </div>
           </div>
           <!--게시물 내용칸-->
