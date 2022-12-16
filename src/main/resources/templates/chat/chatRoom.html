@@ -21,20 +21,23 @@
 
   <header>
     <div class="container">
-      <a th:href="@{/chat/list(memberNo=${memberNo})}">
-        <i class="fa-solid fa-chevron-left fa-2x"></i>
-      </a>
+      <div id="userInfo">
+        <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
+          <div class="titleDiv">
+            <span class="roomTitle" th:text="${room.roomId}"></span>
+            <span class="memberGrade" th:text="${room.member.grade} + ℃"></span>
+          </div>
+        </th:block>
+        <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
+        <div class="titleDiv">
+          <span th:text="${nickname}"></span>
+        </div>
+      </th:block>
 
-      <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
-        <div>
-          <h3 th:text="${room.roomId}" style="text-align: center"></h3>
-        </div>
-      </th:block>
-      <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
-        <div>
-          <h3 th:text="${nickname}" style="text-align: center"></h3>
-        </div>
-      </th:block>
+      <a th:href="@{/chat/list(memberNo=${memberNo})}">
+        <i class="fa-solid fa-chevron-left" id="goBack"></i>
+      </a>
+    </div>
     </div>
   </header>
 
@@ -77,7 +80,7 @@
         <input
           type="text"
           id="message"
-          class="mx-2"
+          class="ml-3"
           placeholder="메시지 보내기"
         />
         <div class="sendButton">
@@ -86,7 +89,7 @@
             type="button"
             id="button-send"
           >
-          <i class="fa-duotone fa-paper-plane"></i>
+          <b>💬</b>
         </a>
         </div>
       </div>
