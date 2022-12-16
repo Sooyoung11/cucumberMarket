@@ -39,7 +39,6 @@ window.addEventListener('DOMContentLoaded', event => {
         //비밀 댓글 체크 여부
         let secretReply = document.getElementById('secretReply').checked;
         console.log(secretReply);
-        alert(userURL);
 
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
         // java {} 은 배열, javascript {} 은 object.
@@ -114,8 +113,13 @@ window.addEventListener('DOMContentLoaded', event => {
 
                 str +=
                     '<div>'
-                        + '<div  style="padding-left: 40px">' + ' 비밀 댓글입니다.' + '</div>'
-                    + '</div>'
+
+                if (r.replier == loginUser || postMemberNo == memberNo) {
+                    str += '<div style="padding-left: 40px" >' + r.replyContent + '</div>'
+                } else {
+                    str += '<div  style="padding-left: 40px">' + ' 비밀 댓글입니다.' + '</div>'
+                }
+                    str += '</div>'
                     + '<div class="font-weight-lighter text-gray-600 pt-1" style="padding-left: 40px">' + r.modifiedTime
 
                 // 로그인한 유저와 작성자가 같을 경우 [수정] 보이게 하기
