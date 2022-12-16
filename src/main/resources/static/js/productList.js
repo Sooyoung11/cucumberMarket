@@ -6,15 +6,22 @@ window.addEventListener("DOMContentLoaded", function () {
   const btnChat = document.querySelector("#btnChat"); // 채팅하기 버튼
   const btnUpdateAndDelete = document.querySelector("#btnUpdateAndDelete"); // 수정 삭제 버튼
 
+  const memberAddress = document.querySelector("#memberAddress"); // 상품 등록자의 주소
+  let memberAddressSplit = memberAddress.innerText.split(" "); // 주소 자르고
+  memberAddress.innerHTML = memberAddressSplit[0] + ' ' + memberAddressSplit[1]; // 값 넣기
 
+
+//    console.log(new Date());
+//    let createTime = document.querySelector("#createTime");
+//    console.log(createTime.innerText);
 
   if (memberNo == productMemberNo) {
     // 로그인한 no와 상품 등록자의 no가 같으면
-    dealStatus.className = "row"; // 거래 상테 select 보임
+    dealStatus.className = "row mb-3"; // 거래 상테 select 보임
     btnUpdateAndDelete.className = "my-2"; // 수정 삭제 보임
     isDealStatus(); // 거래 상태 체크해서 거래 중 or 거래 완료 보여줌
   } else {
-    btnChat.className = "my-2"; // 채팅하기 버튼 보임
+    btnChat.className = "my-2 text-center"; // 채팅하기 버튼 보임
     checkIsInterestedProduct(); // 별 모양 처리
   }
 
@@ -127,6 +134,4 @@ window.addEventListener("DOMContentLoaded", function () {
         console.log(err);
       });
   }
-
-
 });

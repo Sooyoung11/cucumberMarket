@@ -40,19 +40,33 @@ public class ProductController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public String list(Model model, Integer memberNo, @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String list(Model model, Integer memberNo, String type, String keyword,
+                       @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
-        Page<Product> list = productService.read(pageable);
+        Page<Product> list;
+        if (keyword == null) {
+            list = productService.read(pageable);
+        } else {
+            list = productService.search(type, keyword, pageable);
+        }
 
         int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
-        int startPage = Math.max(nowPage - 4, 1);
-        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+        int startPage = Math.max(nowPage - 2, 1);
+        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
 
-        model.addAttribute("list", list);
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+
+        model.addAttribute("list", list);
+//        String result;
+//        if( list.size() == 0) { // 검색 결과가 없으면
+//            result = "nok";
+//        } else {
+//            result = "ok";
+//        }
+//        model.addAttribute("result", result);
 
         // 찜 개수
         Integer interestedCount = 0;
@@ -63,33 +77,32 @@ public class ProductController {
 
         model.addAttribute("interestedList",interestedCount);
 
-
-//        List<List<Product>> productsList = new ArrayList<>();
-//        List<Product> products = new ArrayList<>();
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            products.add(list.get(i));
-//
-//            if ((i + 1) % 5 == 0) {
-//                productsList.add(products);
-//                products = new ArrayList<>();
-//            }
-//        }
-//        if (products.size() > 0) {
-//            productsList.add(products);
-//        }
-//
-//        log.info(productsList.toString());
-//        log.info("list={}", list);
-//
-//        model.addAttribute("list", productsList);
-
         return "/product/list";
     }
 
+//    @GetMapping("/search")
+//    public String search(String type, String keyword, Model model,  @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+//        log.info("search(type = {}, keyword = {})", type, keyword);
+//
+//        Page<Product> list = productService.search(type, keyword, pageable);
+//
+//        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+//        int startPage = Math.max(nowPage - 4, 1);
+//        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+//
+//        model.addAttribute("nowPage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//
+//
+//        model.addAttribute("list", list);
+//
+//        return "/product/list";
+//    }
+
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model, HttpSession session) throws UnsupportedEncodingException {
-        log.info("detail(productNo = {})", productNo);
+    public String detail(Integer productNo, Model model, HttpSession session) {
+        log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
         log.info("product = {}", product);
@@ -139,42 +152,6 @@ public class ProductController {
         }
 
         return "/product/detail";
-    }
-
-    @GetMapping("/search")
-    public String search(String keyword, Model model) {
-        log.info("search(keyword = {})", keyword);
-
-        List<Product> list = productService.search(keyword);
-
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
-
-        String result;
-        if( list.size() == 0) { // 검색 결과가 없으면
-            result = "nok";
-        } else {
-            result = "ok";
-        }
-        model.addAttribute("result", result);
-        model.addAttribute("list", productsList);
-
-        return "/product/list";
     }
 
     @GetMapping("/addInterested")

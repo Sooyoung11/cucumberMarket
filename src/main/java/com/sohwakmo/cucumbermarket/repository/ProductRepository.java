@@ -12,9 +12,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-//     select * from PRODUCTS where lower(TITLE) like ? or lower (CONTENT) like ? order by PRODUCT_NO desc
-//    List<Product> findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByProductNoDesc(String title, String content, String memberNickname);
-
     @Query(
             "select p from PRODUCTS p" +
                     " where p.status = :status" +
@@ -23,8 +20,23 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
                     " or lower(p.member.nickname) like lower('%' || :author || '%') )" +
                     " order by p.productNo desc"
     )
-    List<Product> searchByKeyword(@Param(value = "status") Boolean status, @Param(value = "title") String title,
-            @Param(value = "content") String content, @Param(value = "author") String author);
+    Page<Product> searchByKeyword(@Param(value = "status") Boolean status, @Param(value = "title") String title,
+            @Param(value = "content") String content, @Param(value = "author") String author, Pageable pageable);
+
+    // select * from PRODUCTS where lower(deal_address) like '??%' order by PRODUCT_NO desc
+    Page<Product> findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(boolean status, String key, Pageable pageable);
+
+    @Query(
+            "select p from PRODUCTS p" +
+                    " where p.status = :status" +
+                    " and lower(p.dealAddress) like lower('%' || :type || '%')" +
+                    " and ( lower(p.title) like lower('%' || :title || '%')" +
+                    " or lower(p.content) like lower('%' || :content || '%')" +
+                    " or lower(p.member.nickname) like lower('%' || :author || '%') )" +
+                    " order by p.productNo desc"
+    )
+    Page<Product> searchByTypeAndKeyword(@Param(value = "status") Boolean status, @Param(value = "type") String type,
+                                         @Param(value = "title") String title, @Param(value = "content") String content, @Param(value = "author") String author, Pageable pageable);
 
     List<Product> findByMember(Member member);
 

@@ -36,8 +36,8 @@ body { height: 2000px; }
 .sideBanner {
     position: fixed;
     width: 180px;
-    height: 550px;
-    top: 450px;
+    height: 500px;
+    top: 45%;
     margin: 50px;
     background-color:#F5F5F5;
     right: 0px;

@@ -49,7 +49,6 @@ public class ProductService {
         return productRepository.findById(productNo).get();
     }
 
-
     @Transactional
     public Product detail(Integer productNo) {
         log.info("detail(productNo = {})", productNo);
@@ -62,10 +61,38 @@ public class ProductService {
         return product;
     }
 
-    public List<Product> search(String keyword) {
-        log.info("search(keyword = {})", keyword);
+    public Page<Product> search(String type, String keyword, Pageable pageable) {
+        log.info("search(type = {}, keyword = {})", type, keyword);
 
-        List<Product> list = productRepository.searchByKeyword(false, keyword, keyword, keyword);
+//        List<Product> list = new ArrayList<>();
+        Page<Product> list;
+
+        switch(type) {
+        case "all": // 전체 검색이라면 
+            log.info("type = {}", type);
+
+            if( keyword.equals("")) { // 검색 내용이 없으면 전부 검색
+                log.info("keyword = null");
+                list = productRepository.findByStatusOrderByProductNoDesc(false, pageable);
+            } else { // 검색 내용이 있으면 내용 검색
+                log.info("keyword = notNull");
+                list = productRepository.searchByKeyword(false, keyword, keyword, keyword, pageable);
+            }
+
+            break;
+        default: // 전체 검색이 아니라면
+            log.info("type = {}", type);
+
+            if( keyword.equals("")) { // 검색 내용이 없으면
+                log.info("keyword = null");
+                list = productRepository.findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(false, type, pageable);
+            } else { // 검색 내용이 있으면 내용 검색
+                log.info("keyword = notNull");
+                list = productRepository.searchByTypeAndKeyword(false, type, keyword, keyword, keyword, pageable);
+            }
+
+        }
+
         log.info("list = {}", list);
 
         return list;
