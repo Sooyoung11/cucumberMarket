@@ -186,6 +186,7 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/interested")
     public String interestedPage(Integer memberNo, Model model, @PageableDefault(page = 0, size = 8, sort = "productProductNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("interestedPage(memberNo = {})", memberNo);
@@ -213,6 +214,7 @@ public class ProductController {
     }
 
     //마이페이지 판매목록(진행중, 거래완료) 호출
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/myList/searchStatus")
     public String searchStatus(Integer myProductListSelect, Integer memberNo, Model model, @PageableDefault(page = 0, size = 8, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable){
         log.info("searchStatus(myProductListSelect={}, memberNo={})", myProductListSelect, memberNo);
@@ -255,30 +257,6 @@ public class ProductController {
         model.addAttribute("selectedValue", myProductListSelect);
 
         return "/product/myList";
-    }
-
-    //ListRead() 함수
-    public List<List<Product>> listRead(List<Product> list){
-
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
-
-        return productsList;
     }
 
 
