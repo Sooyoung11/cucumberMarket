@@ -31,7 +31,11 @@ public class MypageController {
 
         MypageReadDto loginUser = mypageService.loadProfile(memberNo);
         log.info(loginUser.toString());
+
+        // 마이페이지 접속시 온 메세지가 있는지 확인
+        Integer recievedMessage = mypageService.countRecievedMessage(memberNo);
         model.addAttribute("userProfile", loginUser);
+        model.addAttribute("recievedMessage", recievedMessage);
 
     }
 
