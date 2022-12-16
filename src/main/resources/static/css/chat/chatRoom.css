@@ -15,8 +15,7 @@ header {
   opacity: 90%;
 }
 
-
-body{
+body {
   background-color: #d6dacd;
 }
 
@@ -30,61 +29,60 @@ footer {
 body {
   padding-bottom: 50px;
 }
-footer{
+footer {
   background-color: #d6dacd;
 }
 
-footer #message{
+footer #message {
   width: 80%;
   padding: 8px;
-  border:1px solid #efefef;
+  border: 1px solid #efefef;
   border-radius: 20px;
 }
 
-footer #message:focus{
+footer #message:focus {
   outline: none;
   box-shadow: 0 0 0 2px #efefef;
 }
 
-footer .sendButton{
+footer .sendButton {
   display: inline;
 }
 
-footer .sendDiv{
+footer .sendDiv {
   margin-bottom: 10px;
 }
 
-header #goBack{
+header #goBack {
   color: black;
 }
 
-header #goBack :hover{
+header #goBack :hover {
   box-shadow: 0 0 0 2px #aab09a;
 }
 
-header #userInfo{
+header #userInfo {
   display: inline;
   justify-content: center;
   text-align: center;
 }
 
-
-header .titleDiv .roomTitle{
-  font-size: 30px;
+header .titleDiv .roomTitle {
+  font-size: 20px;
 }
 
-header .titleDiv #goBack{
+header .titleDiv #goBack {
   display: inline;
   float: left;
 }
 
-footer .sendButton #button-send{
+footer .sendButton #button-send {
   margin-bottom: 5px;
   margin-left: 5px;
   font-size: 25px;
 }
 
-header .memberGrade{
+header .memberGrade {
   font-size: 10px;
   margin-left: 1px;
   padding: 5px;

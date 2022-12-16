@@ -72,24 +72,24 @@
                     <div class="row">
                         <div class="col-4">
                             <select name="type" class="form-control">
-                                <option value="all">전체 검색</option>
-                                <option value="서울">서울특별시</option>
-                                <option value="부산">부산광역시</option>
-                                <option value="대구">대구 광역시</option>
-                                <option value="인천">인천광역시</option>
-                                <option value="광주">광주광역시</option>
-                                <option value="대전">대전광역시</option>
-                                <option value="울산">울산광역시</option>
-                                <option value="세종">세종특별자치시</option>
-                                <option value="경기">경기도</option>
-                                <option value="강원">강원도</option>
-                                <option value="충북">충청북도</option>
-                                <option value="충남">충청남도</option>
-                                <option value="전북">전라북도</option>
-                                <option value="전남">전라남도</option>
-                                <option value="경북">경상북도</option>
-                                <option value="경남">경상남도</option>
-                                <option value="제주">제주특별자치도</option>
+                                <option th:selected="${type}=='all'"  value="all">전체 검색</option>
+                                <option th:selected="${type}=='서울'"  value="서울">서울특별시</option>
+                                <option th:selected="${type}=='부산'"  value="부산">부산광역시</option>
+                                <option th:selected="${type}=='대구'"  value="대구">대구 광역시</option>
+                                <option th:selected="${type}=='인천'"  value="인천">인천광역시</option>
+                                <option th:selected="${type}=='광주'"  value="광주">광주광역시</option>
+                                <option th:selected="${type}=='대전'"  value="대전">대전광역시</option>
+                                <option th:selected="${type}=='울산'"  value="울산">울산광역시</option>
+                                <option th:selected="${type}=='세종'"  value="세종">세종특별자치시</option>
+                                <option th:selected="${type}=='경기'"  value="경기">경기도</option>
+                                <option th:selected="${type}=='강원'"  value="강원">강원도</option>
+                                <option th:selected="${type}=='충북'"  value="충북">충청북도</option>
+                                <option th:selected="${type}=='충남'"  value="충남">충청남도</option>
+                                <option th:selected="${type}=='전북'"  value="전북">전라북도</option>
+                                <option th:selected="${type}=='전남'"  value="전남">전라남도</option>
+                                <option th:selected="${type}=='경북'"  value="경북">경상북도</option>
+                                <option th:selected="${type}=='경남'"  value="경남">경상남도</option>
+                                <option th:selected="${type}=='제주'"  value="제주">제주특별자치도</option>
                             </select>
                         </div>
                         <div class="col-6">

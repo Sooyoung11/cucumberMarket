@@ -79,9 +79,11 @@ public class ChatRoomsController {
         List<Message> loadMessage = chatRoomService.getAllMessages(roomId,nickname);
         log.info(chatRoom.toString());
         Member member = memberRepository.findByNickname(nickname).orElse(null);
+        Member chatRoomMember = memberRepository.findByNickname(roomId).orElse(null);
         Integer nicknameNum = member.getMemberNo();
         chatRoomService.setLastCheckUser(roomId,nickname,memberNo); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
         model.addAttribute("room", chatRoom);
+        model.addAttribute("chatRoomMember",chatRoomMember);
         model.addAttribute("nickname",nickname);
         model.addAttribute("memberNo", memberNo);
         model.addAttribute("nicknameNum",nicknameNum);
