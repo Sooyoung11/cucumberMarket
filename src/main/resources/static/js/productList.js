@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", function () {
     btnUpdateAndDelete.className = "my-2"; // 수정 삭제 보임
     isDealStatus(); // 거래 상태 체크해서 거래 중 or 거래 완료 보여줌
   } else {
-    btnChat.className = "my-2"; // 채팅하기 버튼 보임
+    btnChat.className = "my-2 text-center"; // 채팅하기 버튼 보임
     checkIsInterestedProduct(); // 별 모양 처리
   }
 

@@ -91,7 +91,7 @@
             </div>
             <!--image1태그 끝-->
             <!--image2태그 시작-->
-            <div class="text-center">
+            <div class="text-center mt-3">
               <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
                 <img th:src="@{${post.imageUrl02}}" class="img-fluid" />
               </div>
@@ -100,12 +100,13 @@
             <div class="">
               <!--게시물 찐 내용-->
               <textarea
-                class="form-control"
+                class="form-control my-4"
                 placeholder="내용을 입력해주세요."
                 id="postContent"
                 name="content"
-                style="height: 200px"
+                style="background-color: white; height: 200px"
                 th:text="${post.content}"
+                readonly
               >
               </textarea>
             </div>
