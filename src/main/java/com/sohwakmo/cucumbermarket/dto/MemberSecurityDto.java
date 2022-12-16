@@ -24,13 +24,14 @@ public class MemberSecurityDto extends User {
     private String phone;
     private String email;
     private Double grade;
+    private String userImgUrl;
 
     private String oauth;
 
 //    @Override
     public MemberSecurityDto(Integer memberNo, String memberId, String password, String name,
                              String nickname, String address, String phone,
-                             String email, Double grade, String oauth,
+                             String email, Double grade, String userImgUrl, String oauth,
                              Collection<? extends GrantedAuthority> authorities) {
         super(memberId, password, authorities);
 
@@ -43,6 +44,7 @@ public class MemberSecurityDto extends User {
         this.phone = phone;
         this.email = email;
         this.grade = grade;
+        this.userImgUrl= userImgUrl;
         this.oauth = oauth;
     }
 
@@ -52,7 +54,7 @@ public class MemberSecurityDto extends User {
                 .collect(Collectors.toList());
         MemberSecurityDto dto= new MemberSecurityDto(m.getMemberNo(), m.getMemberId(),
                 m.getPassword(), m.getName(), m.getNickname(), m.getAddress(),
-                m.getPhone(), m.getEmail(), m.getGrade(), m.getOauth(), authorities);
+                m.getPhone(), m.getEmail(), m.getGrade(), m.getUserImgUrl(), m.getOauth(), authorities);
 
         return dto;
     }
