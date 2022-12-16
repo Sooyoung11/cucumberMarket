@@ -41,3 +41,12 @@
 .buttonRow .deleteButton {
   background-color: rgba(239, 240, 242, 255);
 }
+
+.CommentWriter {
+  margin: 12px 0 29px;
+  padding: 16px 10px 10px 18px;
+  border: 2px solid var(--skinCommentWriterBorder);
+  border-radius: 6px;
+  box-sizing: border-box;
+  background: var(--skinCommentWriterBg);
+}

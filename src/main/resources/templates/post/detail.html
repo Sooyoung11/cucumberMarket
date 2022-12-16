@@ -59,7 +59,7 @@
           <div class="chatButton my-2">
             <span th:text="${nickname}" id="writer">작성자</span>
             <th:block
-              th:if="${nickname}!=${#authentication.principal.nickname}"
+                    th:if="${nickname}!=${#authentication.principal.nickname}"
             >
               <a type="button" id="gotoChat"><b>1대1채팅</b></a>
             </th:block>
@@ -104,7 +104,7 @@
                 placeholder="내용을 입력해주세요."
                 id="postContent"
                 name="content"
-                style="height: 200px"
+                style="height: 200px; border: none "
                 th:text="${post.content}"
               >
               </textarea>
@@ -117,7 +117,12 @@
       <!--아래는 희지~ 위는 주환~ 선넘으면 안됨-->
 
       <!-- 댓글 작성하기 -->
-      <div class="card border-gray my-5">
+      <hr/>
+         <h5 class="my-2 font-weight-bold" >댓글<div style="display: inline-block; margin-left: 12px;" class="font-weight-lighter text-gray-600">최신순</div> </h5>
+
+      </br>
+
+      <div class="card border-gray ">
         <div class="col-4">
           <input
             type="hidden"
@@ -126,10 +131,10 @@
             th:value="${post.postNo}"
           />
         </div>
-        <div class="card-header">
+        <div class="card border-gray">
           <div class="col-4">
             <input
-              type="text"
+              type="hidden"
               class="form-control"
               id="replier"
               placeholder="작성자"
@@ -137,17 +142,32 @@
               readonly
             />
           </div>
-        </div>
+          <div class="col-4">
+            <input
+                    type="hidden"
+                    class="form-control"
+                    id="userURl"
+                    placeholder="유저 사진"
+                    th:value="${ member.userImgUrl}"
+                    readonly
+            />
+          </div>
+
         <div class="card-body row">
+            <!-- 작성자 -->
+            <div th:text="${#authentication.principal.nickname}" class="font-weight-bold" style="display: inline"></div>
           <div class="col-10">
             <textarea
               class="form-control"
               id="replyContent"
-              placeholder="댓글 작성"
+              placeholder="댓글을 남겨보세요"
+              style="border: none; "
             ></textarea>
           </div>
           <div class="col-2">
-            <button class="btn btn-primary" id="btnReplyRegis">등록</button>
+            <button type="button" class="btn btn-light list" id="btnReplyRegis" >
+              <b>등록</b>
+            </button>
             <div class="form-inline">
               <div>
                 비밀댓글
@@ -156,12 +176,12 @@
             </div>
           </div>
         </div>
+       </div>
       </div>
 
-      <hr />
 
       <!-- 댓글 리스트 -->
-      <div id="replies" class="my-2 p-3 bg-body rounded shadow-sm"></div>
+      <div id="replies" ></div>
 
       <!-- Modal -->
       <div

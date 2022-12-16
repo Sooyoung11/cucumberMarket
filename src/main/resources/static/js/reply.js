@@ -3,17 +3,18 @@
  * 댓글 관련 Ajax 기능 구현
  */
 
+
 window.addEventListener('DOMContentLoaded', event => {
 
-    // 선택한 replyNo 가져오기 위해
+
+    // 선택한 replyNo 가져오기 위해서
     let getReplyNo = 0;
 
-    // 선택한 postNo 가져오기 위해
+    // 선택한 postNo 가져오기 위해서
     let getPostNo = 0;
 
     // HTML 의 Document Object들이 모두 로딩이 끝난 후에 코드들이 실행될 수 있도록 하기 위해서.
     readAllReplies(); // 포스트 상세 페이지가 로딩된 후 댓글 목록 화면 출력.
-
 
     // btnReplyRegister 버튼(댓글 등록 버튼)을 찾고 이벤트 리스너를 등록.
     const btnReplyRegister = document.querySelector('#btnReplyRegis');
@@ -21,6 +22,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
     // 댓글 작성 함수
     function registerNewReply() {
+        const userURL = document.querySelector('#userURl').value;
         // 포스트 글 번호 찾음.
         const postNo = document.querySelector('#postNo').value;
         // 댓글 작성자 찾음.
@@ -37,6 +39,7 @@ window.addEventListener('DOMContentLoaded', event => {
         //비밀 댓글 체크 여부
         let secretReply = document.getElementById('secretReply').checked;
         console.log(secretReply);
+        alert(userURL);
 
         // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
         // java {} 은 배열, javascript {} 은 object.
@@ -47,7 +50,8 @@ window.addEventListener('DOMContentLoaded', event => {
             secretReply: secretReply, // 비밀 댓글
             parent: 0, // 댓글로 구분
             likeCount: 0, // 좋아요
-            parentReplyNo: 0 // 댓글의 상위 번호 없음.
+            parentReplyNo: 0, // 댓글의 상위 번호 없음.
+            userURL: userURL // 유저 사진
         };
 
         // Axios 라이브러리를 사용해서 Ajax POST 요청을 보냄.
@@ -68,6 +72,10 @@ window.addEventListener('DOMContentLoaded', event => {
     function clearInputs() {
         // replyContent 초기화
         document.querySelector('#replyContent').value = '';
+    }
+
+    function clearclearInputs() {
+        // replyContent 초기화
         document.querySelector('#rereplyContent').value = '';
     }
 
@@ -95,67 +103,72 @@ window.addEventListener('DOMContentLoaded', event => {
         for (let r of data) {
 
             str +=
-                '<h6 class="my-2 p-3">' + '작성자 : ' + r.replier + '</h6>'
-                + '<div class="d-flex text-muted pt-3">'
-                + '<div class="pb-3 mb-0 small 1h-sm border-bottom w-100">'
+                '</br>'
+                + `<img style="width:35px; height:80%; display: inline;  border-radius: 70%;" src="${r.userURL}" >`
+                + '<h6 class=" font-weight-bold" style="display:inline;">' +' '+ r.replier  + '</h6>'
+                + '<div class="small 1h-sm border-bottom w-100">'
 
 
             // 비밀 체크 했을 때
             if (r.secretReply != false) {
 
                 str +=
-                    '<div class="d-flex justify-content-between">'
-                    + '<div>'
-                    + '<strong class="text-gray-dark  p-4">' + '비밀 댓글입니다.' + '</strong>'
+                    '<div>'
+                        + '<div  style="padding-left: 40px">' + ' 비밀 댓글입니다.' + '</div>'
                     + '</div>'
-                    + '<div class="inline ">'
-                    + '</div>'
-                    + '</div>'
-                    + '<div class="text-gray-dark my-2 p-4">' + r.modifiedTime + '</div>'
+                    + '<div class="font-weight-lighter text-gray-600 pt-1" style="padding-left: 40px">' + r.modifiedTime
 
                 // 로그인한 유저와 작성자가 같을 경우 [수정] 보이게 하기
                 if (r.replier == loginUser) {
-                    str += `<button type="button" class="btnModifies btn text-gray"  data-rid="${r.replyNo}">수정하기</button>`
+                    str += `<button type="button" class="btnModifies btn text-gray-400 font-weight-light"  data-rid="${r.replyNo}">수정하기</button>`
+                        + '</div>'
                 }
 
                 str += '</div>'
-                    + '</div>'
 
             } else { // 비밀 체크 하지 않을 때
                 str +=
-                    '<div class="d-flex justify-content-between">'
-                    + '<div>'
-                    + '<strong class="text-gray-dark  p-4">' + r.replyContent + '</strong>'
+                    '<div>'
+                        + '<div style="padding-left: 40px" >' + r.replyContent + '</div>'
+                        + `<button type="button" class="likeButton btn "  data-rid="${r.replyNo}" style="float: right" >` + '👍🏻 ' + r.likeCount + '</button>'
                     + '</div>'
-                    + `<button type="button" id="likeButton" class="likeButton btn btn-outline-dark my-2"  data-rid="${r.replyNo}" >` + '👍 ' + r.likeCount + '</button>'
-                    + '</div>'
-                    + '<div class="text-gray-dark my-2 p-4">' + r.modifiedTime + '</div>'
+                    + '<div class="font-weight-lighter text-gray-600 pt-1 " style="padding-left: 40px" >' + r.modifiedTime
 
                 // 로그인한 유저와 작성자가 같을 경우 [수정] 보이게 하기
                 if (r.replier == loginUser) {
-                    str += `<button type="button" class="btnModifies btn text-primary"  data-rid="${r.replyNo}">수정하기</button>`
+                    str += `<button type="button" class="btnModifies btn text-gray-400 font-weight-light"  data-rid="${r.replyNo}">수정하기</button>`
                 }
 
-                str += `<button type="button" class="btnReReply btn text-primary" " data-rid="${r.replyNo}">` + '답글보기' + '</button>'
+                str +=
+                    `<button type="button" class="btnReReply btn text-gray-400 font-weight-light"  data-rid="${r.replyNo}">답글보기</button>`
                     + '</div>'
                     + '</div>'
+
+            }
 
                 // 선택한 댓글의 대댓글 작성하기
                 if (r.replyNo == getReplyNo) {
                     str +=
-                        `<hr />
+                                <!--대댓글 리스트-->
+                                `<div id="rereplise" style="width: 95%; margin-left : 40px;" ></div>
+
                                 <!-- 대댓글 작성하기 -->
-                                  <div class="card border-gray my-5 w-75 container text-center">
-                                  
-                                        <div class="card-body row  ">
-                                            <div class="col-10">
+                                </br>
+                                    <div class="card border-gray " style="width: 95%; margin-left : 40px;">
+                                        <div class="card-body row ">`
+                                         + `<div class="font-weight-bold"style="display: inline" >` + r.replier + `</div>
+                                             <div class="col-10">   
                                                 <textarea
                                                     class="form-control"
                                                     id="rereplyContent"
-                                                    placeholder="댓글 작성"></textarea>
+                                                    placeholder="댓글을 남겨보세요"
+                                                    style="border: none"
+                                                    ></textarea>
                                             </div>
                                             <div class="col-2">
-                                                <button class="btn btn-primary" id="btnReReplyRegister" data-rid="${r.replyNo}">등록</button>
+                                                <button type="button" class=" btn btn-light list" id="btnReReplyRegister"  data="${r.replyNo}" >
+                                                  <b>등록</b>
+                                                 </button>
                                                 <div class="form-inline">
                                                     <div>
                                                         비밀댓글
@@ -164,12 +177,9 @@ window.addEventListener('DOMContentLoaded', event => {
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                    </div>
-                                    <hr />
-                        <!--대댓글 리스트-->
-                        <div id="rereplise" class="my-2 bg-body rounded shadow-sm w-75 container text-center"></div>`
-                }
+                                        </div>
+                                     </div>
+                                    `
             }
         }
         divReplies.innerHTML = str;
@@ -199,7 +209,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 });
         }
 
-        // 대댓글 작성 버튼
+        // 답글보기 버튼
         const ReButton = document.querySelectorAll('.btnReReply');
         ReButton.forEach(btn => {
             btn.addEventListener('click', ReReply);
@@ -303,10 +313,11 @@ window.addEventListener('DOMContentLoaded', event => {
             if (getReplyNo != 0) {
                 getReplyNo = 0;
                 readAllReplies();
+
             } else {
                 getReplyNo = replyNo;
-                readAllReReplies();
                 readAllReplies();
+                readAllReReplies();
             }
 
         }
@@ -318,12 +329,19 @@ window.addEventListener('DOMContentLoaded', event => {
         // 대댓글 등록 함수
         function btnReReplyFunction(event) {
 
+            //비밀 댓글 체크 여부
+            let secretReply = document.getElementById('secretReReply').checked;
+            console.log(secretReply);
+
             // 댓글의 번호
-            const replyNo = event.target.getAttribute('data-rid');
+            const replyNo = event.target.getAttribute('data');
+            alert(replyNo);
             // 댓글 작성자 찾음.
             const replier = loginUser;
             // 댓글 내용을 찾음.
             const replyContent = document.querySelector('#rereplyContent').value;
+            // 유저 이미지
+            const userURL = document.querySelector('#userURl').value;
 
             // 댓글 작성자와 내용은 비어있으면 안됨.
             if (replier == '' || replyContent == '') {
@@ -331,9 +349,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 return;
             }
 
-            //비밀 댓글 체크 여부
-            let secretReply = document.getElementById('secretReReply').checked;
-            console.log(secretReply);
+
 
             // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
             // java {} 은 배열, javascript {} 은 object.
@@ -344,7 +360,8 @@ window.addEventListener('DOMContentLoaded', event => {
                 secretReply: secretReply, // 비밀 댓글
                 parent: 1, // 대댓글 구분
                 parentReplyNo: replyNo, // 대댓글 상위 댓글 번호
-                likeCount: 0 // 좋아요 널값 대신
+                likeCount: 0, // 좋아요 널값 대신
+                userURL: userURL
             };
 
             console.log(data);
@@ -353,9 +370,8 @@ window.addEventListener('DOMContentLoaded', event => {
                 .then(response => {
                     console.log(response);
                     alert('# ' + response.data + '댓글 작성 성공');
-                    clearInputs(); // 댓글 작성자와 내용을 삭제.
+                    clearclearInputs(); // 댓글 작성자와 내용을 삭제.
                     readAllReReplies(); // 댓글 목록을 다시 요청.
-
                 }) // 성공 응답을 받았을 때
                 .catch(error => {
                     console.log(error);
@@ -390,38 +406,44 @@ window.addEventListener('DOMContentLoaded', event => {
             for (let r of data) {
 
                 str +=
-                    '<hr />'
-                    + '<div class="d-flex justify-content-between">'
-                    + '<h6 class="my-2 p-2">' + '작성자 : ' + r.replier + '</h6>'
+                    '</br>'
+                    + `<img style="width:35px; height:80%; display: inline;  border-radius: 70%;" src="${r.userURL}" >`
+                    + '<h6 class="my-1 font-weight-bold" style="display:inline;">' +' '+ r.replier  + '</h6>'
+                    + '<div class="small 1h-sm border-bottom w-100">'
 
                 if (r.secretReply != false) { // 비밀 체크 했을 때
 
                     str +=
-                        '<strong class="text-gray-dark  p-4">' + '비밀 댓글입니다.' + '</strong>'
-                        + '<div class="text-gray-dark my-2 p-4">' + r.modifiedTime + '</div>'
+                        '<div >'
+                        + '<div style="padding-left: 40px">' + ' 비밀 댓글입니다.' + '</div>'
+                        + '</div>'
+                        + '<div class="font-weight-lighter text-gray-600 pt-1" style="padding-left: 40px">' + r.modifiedTime
 
                     if (r.replier == loginUser) { // 로그인한 유저와 작성자가 같을때만 보이기
-                        str += `<button type="button" class="btnModify btn text-gray"  data-rid="${r.replyNo}">수정하기</button>`
+                        str += `<button type="button" class="btnModify btn  text-gray-400 "  data-rid="${r.replyNo}">수정하기</button>`
+                            + '</div>'
                     }
 
                     str +=
                         '</div>'
-                        + '<hr />'
+                        + '</div>'
 
 
                 } else { // 비밀 체크 하지 않을 때
                     str +=
-                        '<strong class="text-gray-dark  p-4">' + r.replyContent + '</strong>'
-                        + '<div class="text-gray-dark my-2 p-4">' + r.modifiedTime + '</div>'
+                        '<div >'
+                        + '<div style="padding-left: 40px">' + r.replyContent + '</div>'
+                        + '</div>'
+                        + '<div class="font-weight-lighter text-gray-600 pt-1 " style="padding-left: 40px">' + r.modifiedTime
 
                     // 로그인한 유저와 작성자가 같을때만 보이기
                     if (r.replier == loginUser) {
-                        str += `<button type="button" class="btnModify btn text-primary"  data-rid="${r.replyNo}">수정하기</button>`
+                        str += `<button type="button" class="btnModify btn btn text-gray-400 font-weight-light"  text-primary"  data-rid="${r.replyNo}">수정하기</button>`
                     }
 
                     str +=
-                        '</div>'
-                        + '<hr />'
+                         '</div>'
+                        + '</div>'
 
                 }
             }
@@ -433,6 +455,8 @@ window.addEventListener('DOMContentLoaded', event => {
                 btn.addEventListener('click', getReply);
             });
         }
+
+
 
     }
 

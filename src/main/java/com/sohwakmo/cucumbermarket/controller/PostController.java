@@ -68,6 +68,7 @@ public class    PostController {
         log.info("컨트롤러 Post={}",post);
         model.addAttribute("post", post);
         model.addAttribute("nickname", nickname);
+        model.addAttribute("member", post.getMember());
         return "/post/detail";
     }
 
