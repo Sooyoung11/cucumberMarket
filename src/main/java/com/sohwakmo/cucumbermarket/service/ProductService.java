@@ -40,7 +40,14 @@ public class ProductService {
 
     public List<Product> readByLikeCountDesc(){
         log.info("readByLikeCountDesc()");
-        return productRepository.findByOrderByLikeCountDescProductNoDesc();
+        List<Product> list= productRepository.findByOrderByLikeCountDescProductNoDesc();
+        List<Product> productList= new ArrayList<>();
+        for(Product p: list){
+            if(p.isStatus()== false){
+                productList.add(p);
+            }
+        }
+        return productList;
     }
 
     public Product read(Integer productNo) { // 상품 조회
