@@ -52,7 +52,7 @@ public class ProductController {
 
         int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
         int startPage = Math.max(1, nowPage - 2);
-        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
+        int endPage =  Math.min(nowPage + 3, list.getTotalPages());
         if(startPage <= 0 || endPage <=0){
             startPage =1;
             endPage =1;

@@ -53,8 +53,10 @@
         </div>
         <div class="my-2 input-group mb-3">
           <div class="uploadImg">
+
               <input id="imgUpload" class="form-control" name="imgFile"
                      type="file" multiple="multiple" onchange="fileCheck(this)" accept="image/jpeg, image/png"/>
+              <img alt="미리보기" id="preview" style="margin-top: 1%;" />
           </div>
         </div>
 
@@ -93,6 +95,8 @@
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <scropt type="text/javascript"></scropt>
+<!--  <script src="https://code.jquery-2.1.0.min,js"></script>-->
 
   <script th:src="@{ /js/productCreate.js }" th:inline="javascript"></script>
 </th:block>
