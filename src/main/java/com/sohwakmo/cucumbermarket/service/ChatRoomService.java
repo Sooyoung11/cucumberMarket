@@ -25,7 +25,7 @@ public class ChatRoomService {
     public List<ChatRoom> getAllChatList(Integer memberNo) {
         Member member = memberRepository.findById(memberNo).get(); // 차은우가담김
         log.info(member.toString());
-        List<ChatRoom> list = chatRoomRepository.findByMemberOrRoomId(member,member.getNickname()); // 차은우랑, 차은우가 담김
+        List<ChatRoom> list = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(),memberNo);// 차은우랑, 차은우가 담김
         log.info("list = {}", list);
         return list;
     }
@@ -42,7 +42,7 @@ public class ChatRoomService {
                 return c;
             }
         }
-        ChatRoom c = new ChatRoom(roomId,member,"nobody");
+        ChatRoom c = new ChatRoom(roomId,member,"nobody",0);
         chatRoomRepository.save(c);
         return c;
     }
@@ -157,5 +157,11 @@ public class ChatRoomService {
      */
     public Member getLoginedMember(Integer memberNo) {
         return memberRepository.findById(memberNo).get();
+    }
+
+    @Transactional
+    public void setMessages(ChatRoom c,String memberNickname) {
+        c.setMessage(getRecentMessage(c.getRoomId(),c.getMember().getMemberNo()));
+        c.setUnReadMessages(checkUnReadMessages(c.getRoomId(),c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
     }
 }

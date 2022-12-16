@@ -4,21 +4,26 @@
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{ layout/layout.html }"
 >
+<head>
+  <link rel="stylesheet" th:href="@{/css/post/postModify.css}" />
+</head>
+
+
   <div layout:fragment="content">
     <div class="container">
       <!-- Content here -->
       <form th:object="${post}" id="form" enctype="multipart/form-data">
         <div class="row">
-          <div class="col-8">
+          <div class="col-8 border-bottom mb-2 p-0" id="titleDiv">
             <h2>글 수정</h2>
           </div>
 
-          <div class="col-4 text-end">
-            <button type="button" class="btn btn-primary" id="modifyButton">
-              수정
+          <div class="col-4 text-end border-bottom mb-2 p-0" id="buttons">
+            <button type="button" class="btn" id="modifyButton">
+              <b>수정</b>
             </button>
-            <a type="button" class="btn btn-primary" th:href="@{/post/list}"
-              >취소</a
+            <a type="button" class="btn" th:href="@{/post/list}" id="cancleButton"
+              ><b>취소</b></a
             >
           </div>
 
@@ -31,17 +36,18 @@
               id="postNo"
             />
             <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />
-            <input
-              type="text"
-              class="form-control my-2"
-              id="title"
-              aria-describedby="emailHelp"
-              th:field="*{title}"
-              placeholder="제목을 입력해 주세요."
-              th:value="${post.title}"
-              name="title"
-            />
-            <div class="border border-secondary">
+            <div id="modifyTitle">
+              <input
+                type="text"
+                id="title"
+                aria-describedby="emailHelp"
+                th:field="*{title}"
+                placeholder="제목을 입력해 주세요."
+                th:value="${post.title}"
+                name="title"
+              />
+            </div>
+            <div class="warningBox">
               <p class="m-2">
                 게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이
                 없으시길 바랍니다.
@@ -51,10 +57,12 @@
                 조치가 진행될 수 있습니다.
               </p>
             </div>
-            <nav class="navbar bg-light">
+            <div class="imageDiv">
               <div class="imageButton">
                 <label for="chooseFile" id="insertImage">
-                  <img src="/images/사진넣기.png" />
+                  <span class="imageLable"
+                  >📷🎄👉 이미지를 넣어주세요!! 👈🎄📷</span
+                >
                 </label>
               </div>
               <input
@@ -64,8 +72,63 @@
                 id="chooseFile"
                 style="display: none"
               />
-            </nav>
-            <div class="form-floating my-2">
+            </div>
+            <div
+            th:classappend="${post.imageUrl01 == ''} ? 'hidden'"
+            id="image01div"
+            class="text-center"
+          >
+            <img
+              id="image1"
+              class="img-fluid" 
+              th:src="@{${post.imageUrl01}}"
+              th:value="${post.imageUrl01}"
+            />
+            <div id="deleteModifyImage01Nav" style="display: none">
+              <ul class="nav justify-content-center">
+                <li class="nav-item">
+                  <button type="button" id="deleteImage01Button" class="btn">
+                    <b>🗑️</b>
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <div class="imageButton">
+                    <label for="modifyFile01" class="btn labels">✏️</label>
+                  </div>
+                  <input
+                    type="file"
+                    name="file"
+                    id="modifyFile01"
+                    style="display: none"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'" class="text-center mt-3">
+            <img id="image2" th:src="@{${post.imageUrl02}}" class="img-fluid"  />
+            <div id="deleteModifyImage02Nav" style="display: none">
+              <ul class="nav justify-content-center">
+                <li class="nav-item">
+                  <button type="button" id="deleteImage02Button" class="btn">
+                    <b>🗑️</b>
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <div class="imageButton">
+                    <label for="modifyFile02" class="btn labels">✏️</label>
+                  </div>
+                  <input
+                    type="file"
+                    name="file"
+                    id="modifyFile02"
+                    style="display: none"
+                  />
+                </li>
+              </ul>
+            </div>
+          </div>
+            <div class="form-floating my-4">
               <textarea
                 class="form-control"
                 placeholder="내용을 입력해주세요."
@@ -75,59 +138,6 @@
                 th:value="${post.content}"
                 name="content"
               ></textarea>
-              <div
-                th:classappend="${post.imageUrl01 == ''} ? 'hidden'"
-                id="image01div"
-              >
-                <img
-                  id="image1"
-                  th:src="@{${post.imageUrl01}}"
-                  th:value="${post.imageUrl01}"
-                />
-                <div id="deleteModifyImage01Nav" style="display: none">
-                  <ul>
-                    <li>
-                      <button type="button" id="deleteImage01Button">
-                        삭제
-                      </button>
-                    </li>
-                    <li>
-                      <div class="imageButton">
-                        <label for="modifyFile01">수정</label>
-                      </div>
-                      <input
-                        type="file"
-                        name="file"
-                        id="modifyFile01"
-                        style="display: none"
-                      />
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
-                <img id="image2" th:src="@{${post.imageUrl02}}" />
-                <div id="deleteModifyImage02Nav" style="display: none">
-                  <ul>
-                    <li>
-                      <button type="button" id="deleteImage02Button">
-                        삭제
-                      </button>
-                    </li>
-                    <li>
-                      <div class="imageButton">
-                        <label for="modifyFile02">수정</label>
-                      </div>
-                      <input
-                        type="file"
-                        name="file"
-                        id="modifyFile02"
-                        style="display: none"
-                      />
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -139,5 +149,6 @@
     <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script th:src="@{/js/PostModify.js}"></script>
+    <script th:src="@{https://kit.fontawesome.com/cb94ffb39e.js}" crossorigin="anonymous"></script>
   </th:block>
 </html>
