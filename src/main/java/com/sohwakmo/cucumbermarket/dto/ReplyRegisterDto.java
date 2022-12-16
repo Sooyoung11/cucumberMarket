@@ -14,4 +14,5 @@ public class ReplyRegisterDto {
     private Integer likeCount;
     private Integer parent;
     private Integer parentReplyNo;
+    private String userURL;
 }

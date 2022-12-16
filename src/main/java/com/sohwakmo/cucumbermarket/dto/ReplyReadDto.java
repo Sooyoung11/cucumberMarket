@@ -23,12 +23,13 @@ public class ReplyReadDto {
     private String createdTime; // 댓글 최초 작성 시간
     private String modifiedTime; // 댓글 최종 수정 시간
     private Integer likeCount; // 댓글 좋아요
+    private String userURL; // 유저 사진
 
 
     // Entity 객체에서 DTO 객체를 생성해서 리턴하는 메서드replyRepository
     public static ReplyReadDto fromEntity(Reply entity) {
         ReplyReadDto build = ReplyReadDto.builder()
-                .replyNo(entity.getReplyNo()).postNo(entity.getPost().getPostNo()).replyContent(entity.getReplyContent()).replier(entity.getReplier()).parent(entity.getParent())
+                .replyNo(entity.getReplyNo()).postNo(entity.getPost().getPostNo()).replyContent(entity.getReplyContent()).replier(entity.getReplier()).parent(entity.getParent()).userURL(entity.getUserURL())
                 .createdTime(formatDate(entity.getCreatedTime())).modifiedTime(formatDate(entity.getModifiedTime())).secretReply(entity.isSecretReply()).replyNo(entity.getReplyNo()).likeCount(entity.getLikeCount())
                 .build();
         return build;
