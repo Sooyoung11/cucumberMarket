@@ -51,6 +51,7 @@ public class    PostController {
             endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
         }
         int a = page.getPageable().getPageNumber();
+        model.addAttribute("searchText", searchText);
         model.addAttribute("list", page);
         model.addAttribute("startPage", strtPage);
         model.addAttribute("endPage", endPage);
@@ -68,6 +69,7 @@ public class    PostController {
         log.info("컨트롤러 Post={}",post);
         model.addAttribute("post", post);
         model.addAttribute("nickname", nickname);
+        model.addAttribute("member", post.getMember());
         return "/post/detail";
     }
 

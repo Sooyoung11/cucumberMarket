@@ -3,6 +3,8 @@ package com.sohwakmo.cucumbermarket.repository;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
 import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +27,5 @@ public interface ProductOfInterestedRepository  extends JpaRepository<ProductOfI
     // delete table products_of_interested where product_no = ?
     void deleteByProduct(Product product);
 
+    Page<ProductOfInterested> findByMemberOrderByProductProductNoDesc(Integer memberNo, Pageable pageable);
 }

@@ -5,7 +5,8 @@
 
 <head>
     <style>
-        .carousel-inner < img {
+        .imgSize {
+            width:100%;
             height:500px;
         }
     </style>
@@ -22,23 +23,23 @@
 
                     <div class="carousel-item active"
                          th:if="${ product.photoUrl1 } == null and ${ product.photoUrl2 } == null and ${ product.photoUrl3 } == null and ${ product.photoUrl4 } == null and ${ product.photoUrl5 } == null">
-                        <img th:src="@{ /images/product/noimg.png }" class="d-block " alt="...">
+                        <img th:src="@{ /images/product/noimg.png }" class="d-block imgSize" alt="...">
                     </div>
 
                     <div class="carousel-item active" th:if="${ product.photoUrl1 } != null">
-                        <img th:src="@{ ${ product.photoUrl1 } }" class="d-block " alt="...">
+                        <img th:src="@{ ${ product.photoUrl1 } }" class="d-block imgSize" alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl2 } != null">
-                        <img th:src="@{ ${ product.photoUrl2 } }" class="d-block " alt="...">
+                        <img th:src="@{ ${ product.photoUrl2 } }" class="d-block imgSize" alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl3 } != null">
-                        <img th:src="@{ ${ product.photoUrl3 } }" class="d-block " alt="...">
+                        <img th:src="@{ ${ product.photoUrl3 } }" class="d-block imgSize" alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl4 } != null">
-                        <img th:src="@{ ${ product.photoUrl4 } }" class="d-block " alt="...">
+                        <img th:src="@{ ${ product.photoUrl4 } }" class="d-block imgSize" alt="...">
                     </div>
                     <div class="carousel-item" th:if="${ product.photoUrl5 } != null">
-                        <img th:src="@{ ${ product.photoUrl5 } }" class="d-block " alt="...">
+                        <img th:src="@{ ${ product.photoUrl5 } }" class="d-block imgSize" alt="...">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -85,10 +86,10 @@
                     <p th:text="${ product.title }" style="font-size:27px; font-weight:bold; height:30px;"></p>
                     <p>
                         <span th:text="${ product.category } + ' ∙'" style="font-size:12px; height:10px; color:#aaa;"></span>
-                        <span th:text="${#temporals.format(product.createdTime, 'yyyy-MM-dd HH:mm') }" id="createTime" style="color:#aaa; font-size:12px;"></span>
+                        <span th:text="${#temporals.format(product.createdTime, 'yyyy-MM-dd-HH-mm-ss') }" id="createTime" style="color:#aaa; font-size:12px;"></span>
                     </p>
                     <p th:text="${ product.price } + '원'" style="font-size:17px; font-weight:bold;"></p>
-                    <p><span th:text="${ product.content }"></span></p>
+                    <p th:utext="${ product.content }" id="productContent"></p>
                     <p>
                         <span th:text="'관심 ' + ${ product.likeCount }"  style="color:#aaa; font-size:12px;"></span>
                         <span th:text="'∙ 조회수 ' + ${ product.clickCount }"  style="color:#aaa; font-size:12px;"></span>
@@ -144,6 +145,8 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aab8e4a9f5ce56e5b56f79f8c69bebcb&libraries=services"></script>
         <!-- 지도 그리기 -->
         <script th:src="@{ /js/productDetailKakaoMap.js }" th:inline="javascript"></script>
+
+
 
         <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
         <script th:src="@{ /js/productDetail.js }" th:inline="javascript"></script>

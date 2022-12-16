@@ -5,14 +5,18 @@ header {
 
   height: 75px;
   padding: 1rem;
-  color: white;
-  background: #198754;
+  color: black;
+  background: #d6dacd;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 999;
   opacity: 90%;
+}
+
+body {
+  background-color: #d6dacd;
 }
 
 footer {
@@ -24,4 +28,64 @@ footer {
 
 body {
   padding-bottom: 50px;
+}
+footer {
+  background-color: #d6dacd;
+}
+
+footer #message {
+  width: 80%;
+  padding: 8px;
+  border: 1px solid #efefef;
+  border-radius: 20px;
+}
+
+footer #message:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #efefef;
+}
+
+footer .sendButton {
+  display: inline;
+}
+
+footer .sendDiv {
+  margin-bottom: 10px;
+}
+
+header #goBack {
+  color: black;
+}
+
+header #goBack :hover {
+  box-shadow: 0 0 0 2px #aab09a;
+}
+
+header #userInfo {
+  display: inline;
+  justify-content: center;
+  text-align: center;
+}
+
+header .titleDiv .roomTitle {
+  font-size: 20px;
+}
+
+header .titleDiv #goBack {
+  display: inline;
+  float: left;
+}
+
+footer .sendButton #button-send {
+  margin-bottom: 5px;
+  margin-left: 5px;
+  font-size: 25px;
+}
+
+header .memberGrade {
+  font-size: 10px;
+  margin-left: 1px;
+  padding: 5px;
+  background-color: #cacec7;
+  border-radius: 50px;
 }

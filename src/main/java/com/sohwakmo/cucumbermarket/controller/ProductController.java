@@ -2,6 +2,7 @@ package com.sohwakmo.cucumbermarket.controller;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
+import com.sohwakmo.cucumbermarket.domain.ProductOfInterested;
 import com.sohwakmo.cucumbermarket.dto.ProductCreateDto;
 import com.sohwakmo.cucumbermarket.dto.ProductOfInterestedRegisterOrDeleteOrCheckDto;
 import com.sohwakmo.cucumbermarket.dto.ProductUpdateDto;
@@ -44,11 +45,13 @@ public class ProductController {
         log.info("list()");
 
         Page<Product> list;
+
         if (keyword == null) {
             list = productService.read(pageable);
         } else {
             list = productService.search(type, keyword, pageable);
         }
+        log.info("list = {}", list);
 
         int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
         int startPage = Math.max(1, nowPage - 2);
@@ -62,14 +65,9 @@ public class ProductController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
+        model.addAttribute("type", type);
         model.addAttribute("list", list);
-//        String result;
-//        if( list.size() == 0) { // 검색 결과가 없으면
-//            result = "nok";
-//        } else {
-//            result = "ok";
-//        }
-//        model.addAttribute("result", result);
+
 
         // 찜 개수
         Integer interestedCount = 0;
@@ -83,31 +81,12 @@ public class ProductController {
         return "/product/list";
     }
 
-//    @GetMapping("/search")
-//    public String search(String type, String keyword, Model model,  @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
-//        log.info("search(type = {}, keyword = {})", type, keyword);
-//
-//        Page<Product> list = productService.search(type, keyword, pageable);
-//
-//        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
-//        int startPage = Math.max(nowPage - 4, 1);
-//        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
-//
-//        model.addAttribute("nowPage", nowPage);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-//
-//
-//        model.addAttribute("list", list);
-//
-//        return "/product/list";
-//    }
-
     @GetMapping("/detail")
     public String detail(Integer productNo, Model model, HttpSession session) {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
+        product.setContent(product.getContent().replace("\n", "<br/>")); // 컨텐트 내용 줄바꿈 처리
         log.info("product = {}", product);
 
         model.addAttribute("product", product); // 상품 정보
@@ -184,90 +163,77 @@ public class ProductController {
         return ResponseEntity.ok(result);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/interested")
-    public String interestedPage(Integer memberNo, Model model) {
+    public String interestedPage(Integer memberNo, Model model, @PageableDefault(page = 0, size = 8, sort = "productProductNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("interestedPage(memberNo = {})", memberNo);
 
-        List<Product> list = productService.interestedRead(memberNo);
+        Page<ProductOfInterested> list = productService.interestedRead(memberNo, pageable);
         log.info("list = {}", list);
 
-        List<List<Product>> productsList = listRead(list);
+        int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(1, nowPage - 2);
+        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
+        if(startPage <= 0 || endPage <=0){
+            startPage =1;
+            endPage =1;
+        }
+
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
 
         model.addAttribute("memberNo", memberNo);
-        model.addAttribute("list", productsList);
+        model.addAttribute("list", list);
 
         return "/product/interested";
     }
 
-    @GetMapping("/myList")
-    public String myList(Integer memberNo, Model model) {
-        log.info("myList()");
-
-        List<Product> list = productService.myProductListRead(memberNo);
-        log.info("list = {}", list);
-
-        List<List<Product>> productsList = listRead(list);
-
-        model.addAttribute("list", productsList);
-
-        return "/product/myList";
-    }
-
     //마이페이지 판매목록(진행중, 거래완료) 호출
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/myList/searchStatus")
-    public String searchStatus(Integer myProductListSelect, Integer memberNo, Model model){
+    public String searchStatus(Integer myProductListSelect, Integer memberNo, Model model, @PageableDefault(page = 0, size = 8, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable){
         log.info("searchStatus(myProductListSelect={}, memberNo={})", myProductListSelect, memberNo);
 
-        List<Product> list = null;
+
+        Page<Product> list = null;
         switch (myProductListSelect){
             case 1:
-                list = productService.myProductListRead(memberNo);
+                list = productService.myProductListRead(memberNo, pageable);
                 log.info("myProductListRead list = {}", list);
                 break;
             case 2:
-                list = productService.proceedListRead(memberNo);
+                list = productService.proceedListRead(memberNo, pageable);
                 log.info("proceedListRead list = {}", list);
                 break;
             case 3:
-                list = productService.completedListRead(memberNo);
+                list = productService.completedListRead(memberNo, pageable);
                 log.info("completedListRead list = {}", list);
                 break;
             case 4:
-                list = productService.buyMyListRead(memberNo);
+                list = productService.buyMyListRead(memberNo, pageable);
                 log.info("list = {}", list);
                 break;
 
         }
 
-        List<List<Product>> productsList = listRead(list);
+        int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(1, nowPage - 2);
+        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
+        if(startPage <= 0 || endPage <=0){
+            startPage =1;
+            endPage =1;
+        }
 
-        model.addAttribute("list", productsList);
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        model.addAttribute("list", list);
+        model.addAttribute("selectedValue", myProductListSelect);
 
         return "/product/myList";
-    }
-
-    //ListRead() 함수
-    public List<List<Product>> listRead(List<Product> list){
-
-        List<List<Product>> productsList = new ArrayList<>();
-        List<Product> products = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-            products.add(list.get(i));
-
-            if ((i + 1) % 3 == 0) {
-                productsList.add(products);
-                products = new ArrayList<>();
-            }
-        }
-        if (products.size() > 0) {
-            productsList.add(products);
-        }
-
-        log.info(productsList.toString());
-        log.info("list={}", list);
-
-        return productsList;
     }
 
 

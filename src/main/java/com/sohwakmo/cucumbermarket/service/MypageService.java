@@ -1,9 +1,12 @@
 package com.sohwakmo.cucumbermarket.service;
 
+import com.sohwakmo.cucumbermarket.domain.ChatRoom;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.dto.MypageReadDto;
 import com.sohwakmo.cucumbermarket.dto.MypageUpdateDto;
 import com.sohwakmo.cucumbermarket.dto.ProfileImageReadDto;
+import com.sohwakmo.cucumbermarket.repository.ChatRoomRepository;
+import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import com.sohwakmo.cucumbermarket.repository.MypageRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -11,12 +14,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class MypageService {
 
     private final MypageRepository mypageRepository;
+
+    private final ChatRoomRepository chatRoomRepository;
+
+    private final MemberRepository memberRepository;
 
 
     //마이페이지 사용자 정보 load
@@ -41,6 +50,7 @@ public class MypageService {
     }
 
     //마이페이지 사용자 사진 프로필 load
+    @Transactional(readOnly = true)
     public ProfileImageReadDto readProfileImage(Integer memberNo) {
         log.info("readProfileImage(memberNo={})", memberNo);
         Member entity = mypageRepository.findByMemberNo(memberNo);
@@ -60,6 +70,7 @@ public class MypageService {
         return entity.getMemberNo();
     }
 
+    @Transactional(readOnly = true)
     public Double readUserTemp(Integer memberNo) {
         log.info("readUserTemp(memberNo={})", memberNo);
 
@@ -67,5 +78,15 @@ public class MypageService {
         Member entity = mypageRepository.findByMemberNo(memberNo);
 
         return entity.getGrade();
+    }
+
+    public Integer countRecievedMessage(Integer memberNo) {
+        Member member = memberRepository.findById(memberNo).orElse(null);
+        List<ChatRoom> chatRooms = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(), memberNo);
+        Integer recievedMessage = 0;
+        for(ChatRoom c : chatRooms){
+            recievedMessage += c.getUnReadMessages();
+        }
+        return recievedMessage;
     }
 }

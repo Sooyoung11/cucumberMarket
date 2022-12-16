@@ -21,20 +21,27 @@
 
   <header>
     <div class="container">
-      <a th:href="@{/chat/list(memberNo=${memberNo})}">
-        <i class="fa-solid fa-chevron-left fa-2x"></i>
-      </a>
+      <div id="userInfo">
+        <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
+          <div class="titleDiv">
+            <span class="roomTitle" th:text="${room.roomId}"></span>
+            <span
+              class="memberGrade"
+              th:text="${chatRoomMember.grade} + ℃"
+            ></span>
+          </div>
+        </th:block>
+        <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
+          <div class="titleDiv">
+            <span th:text="${nickname}"></span>
+            <span class="memberGrade" th:text="${room.member.grade} + ℃"></span>
+          </div>
+        </th:block>
 
-      <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
-        <div>
-          <h3 th:text="${room.roomId}" style="text-align: center"></h3>
-        </div>
-      </th:block>
-      <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
-        <div>
-          <h3 th:text="${nickname}" style="text-align: center"></h3>
-        </div>
-      </th:block>
+        <a th:href="@{/chat/list(memberNo=${memberNo})}">
+          <i class="fa-solid fa-chevron-left" id="goBack"></i>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -73,21 +80,17 @@
     <div class="col-6"></div>
 
     <footer>
-      <div class="input-group mb-3">
+      <div class="sendDiv">
         <input
           type="text"
           id="message"
-          class="form-control mx-2"
+          class="ml-3"
           placeholder="메시지 보내기"
         />
-        <div class="input-group-append">
-          <button
-            class="btn btn-outline-secondary mr-3"
-            type="button"
-            id="button-send"
-          >
-            전송
-          </button>
+        <div class="sendButton">
+          <a class="btn" type="button" id="button-send">
+            <b>💬</b>
+          </a>
         </div>
       </div>
     </footer>

@@ -121,9 +121,7 @@ public class PostService {
     private  String saveImage(MultipartFile files) throws IOException {
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
-        UUID uuid = UUID.randomUUID();
-
-        String fileName = uuid + "_" + files.getOriginalFilename();
+        String fileName = files.getOriginalFilename();
 
         File saveFile = new File(projectPath, fileName);
 
