@@ -149,7 +149,8 @@ public class ProductService {
 
     }
 
-    @Transactional
+
+    @Transactional(readOnly = true)
     public List<Product> interestedRead(Integer memberNo) {
         log.info("interested(memberNo = {})", memberNo);
 
@@ -166,6 +167,7 @@ public class ProductService {
     }
 
     //overloading
+    @Transactional(readOnly = true)
     public Page<ProductOfInterested> interestedRead(Integer memberNo, Pageable pageable) {
         log.info("interested(memberNo = {})", memberNo);
 
@@ -176,6 +178,7 @@ public class ProductService {
     }
 
     //마이페이지 판매내역-진행중 검색
+    @Transactional(readOnly = true)
     public Page<Product> proceedListRead(Integer memberNo, Pageable pageable) {
         log.info("proceedListRead(memberNo={})", memberNo);
 
@@ -190,6 +193,7 @@ public class ProductService {
     }
 
     //overloading
+    @Transactional(readOnly = true)
     public List<Product> proceedListRead(Integer memberNo) {
         log.info("proceedListRead(memberNo={})", memberNo);
 
@@ -204,6 +208,7 @@ public class ProductService {
     }
 
     //마이페이지 판매내역-거래완료 검색
+    @Transactional(readOnly = true)
     public Page<Product> completedListRead(Integer memberNo, Pageable pageable) {
         log.info("completedListRead(memberNo={})", memberNo);
 
@@ -217,6 +222,7 @@ public class ProductService {
     }
 
     //overloading
+    @Transactional(readOnly = true)
     public List<Product> completedListRead(Integer memberNo) {
         log.info("completedListRead(memberNo={})", memberNo);
 
@@ -230,6 +236,7 @@ public class ProductService {
     }
 
     //마이페이지 구매목록
+    @Transactional(readOnly = true)
     public Page<Product> buyMyListRead(Integer memberNo, Pageable pageable) {
         log.info("buyMyListRead(memberNo={})", memberNo);
 
@@ -240,6 +247,7 @@ public class ProductService {
     }
 
     //overloading
+    @Transactional(readOnly = true)
     public List<Product> buyMyListRead(Integer memberNo) {
         log.info("buyMyListRead(memberNo={})", memberNo);
 
@@ -249,7 +257,7 @@ public class ProductService {
         return list;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Product> myProductListRead(Integer memberNo, Pageable pageable) {
         log.info("myProductListRead(memberNo = {})", memberNo);
 

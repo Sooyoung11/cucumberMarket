@@ -41,6 +41,7 @@ public class MypageService {
     }
 
     //마이페이지 사용자 사진 프로필 load
+    @Transactional(readOnly = true)
     public ProfileImageReadDto readProfileImage(Integer memberNo) {
         log.info("readProfileImage(memberNo={})", memberNo);
         Member entity = mypageRepository.findByMemberNo(memberNo);
@@ -60,6 +61,7 @@ public class MypageService {
         return entity.getMemberNo();
     }
 
+    @Transactional(readOnly = true)
     public Double readUserTemp(Integer memberNo) {
         log.info("readUserTemp(memberNo={})", memberNo);
 
