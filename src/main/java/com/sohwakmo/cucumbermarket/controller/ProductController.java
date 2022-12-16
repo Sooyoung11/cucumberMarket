@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +40,7 @@ public class ProductController {
 
     @GetMapping("/list")
     public String list(Model model, Integer memberNo, String type, String keyword,
-                       @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+                       @PageableDefault(page = 0, size = 2, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
         Page<Product> list;
@@ -51,9 +50,13 @@ public class ProductController {
             list = productService.search(type, keyword, pageable);
         }
 
-        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
-        int startPage = Math.max(nowPage - 2, 1);
+        int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
+        int startPage = Math.max(1, nowPage - 2);
         int endPage =  Math.min(nowPage + 2, list.getTotalPages());
+        if(startPage <= 0 || endPage <=0){
+            startPage =1;
+            endPage =1;
+        }
 
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);

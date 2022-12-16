@@ -1,208 +1,336 @@
 <!DOCTYPE html>
-<html xmlns:th= "http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>오이마켓 | 회원가입</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dokdo&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link rel="stylesheet" th:href="@{/css/join.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dokdo&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/join.css}" />
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-</head>
-<body id="body">
-<div id="wrap">
-    <div id="header">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body id="body">
+    <div id="wrap">
+      <div id="header">
         <div id="logoWrap">
-            <img src="" alt="">
-                <div id="logoText"><a th:href="@{ / }">cucumber<br>market</a></div>
+          <div id="logoText">
+            <a th:href="@{ / }">cucumber<br />market</a>
+          </div>
         </div>
-    </div>
-    <div id="joinForm">
+      </div>
+      <div id="joinForm">
         <form method="post">
-            <div>
-
-                <!-- 아이디 -->
-                <div class="mt-4">
-                    <div>
-                        <label for="memberId" class="form-label" id="lblMemberId">아이디</label>
-                        <span class="form-control form-control-lg" id="memberIdSpan">
-                            <input type="text" id="memberId" name="memberId" required autofocus />
-                        </span>
-                        <div id="memberIdOk" class="d-none">
-                            <p class="text-success">멋진 아이디네요!</p>
-                        </div>
-                        <div id="memberIdNok" class="d-none">
-                            <p class="text-danger">이미 사용중이거나 탈퇴한 아이디입니다.</p>
-                        </div>
-                    </div>
+          <div>
+            <!-- 아이디 -->
+            <div class="mt-4">
+              <div>
+                <label for="memberId" class="form-label" id="lblMemberId"
+                  >아이디</label
+                >
+                <span class="form-control form-control-lg" id="memberIdSpan">
+                  <input
+                    type="text"
+                    id="memberId"
+                    name="memberId"
+                    required
+                    autofocus
+                  />
+                </span>
+                <div id="memberIdOk" class="d-none">
+                  <p class="text-success">멋진 아이디네요!</p>
                 </div>
-
-                <!-- 비밀번호 -->
-                <div class="mt-4">
-                    <div>
-                        <label for="password" class="form-label" id="lblPassword">비밀번호</label>
-                        <span class="form-control form-control-lg" id="passwordSpan">
-                            <input type="password" id="password" name="password" required />
-                            <span id="passwordOk" class="d-none">
-                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
-                            </span>
-                            <span id="passwordNok" class="d-none">
-                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
-                            </span>
-                        </span>
-                        <div id="passwordNok2" class="d-none">
-                            <p class="text-danger">8~16자의 비밀번호를 사용하세요.</p>
-                        </div>
-                    </div>
+                <div id="memberIdNok" class="d-none">
+                  <p class="text-danger">
+                    이미 사용중이거나 탈퇴한 아이디입니다.
+                  </p>
                 </div>
-
-                <!-- 비밀번호 확인 -->
-                <div class="mt-4">
-                    <div>
-                        <label for="password2" class="form-label" id="lblPassword2">비밀번호 재확인</label>
-                        <span class="form-control form-control-lg" id="password2Span">
-                            <input type="password" id="password2" name="password2" required />
-                            <span id="password2Ok" class="d-none">
-                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
-                            </span>
-                            <span id="password2Nok" class="d-none">
-                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
-                            </span>
-                        </span>
-                        <div id="password2Nok2" class="d-none">
-                            <p class="text-danger">비밀번호를 다시 확인해주세요.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 이름 -->
-                <div class="mt-4">
-                    <div>
-                        <label for="name" class="form-label" id="lblName">이름</label>
-                        <span class="form-control form-control-lg" id="nameSpan">
-                            <input type="text" id="name" name="name" required />
-                        </span>
-                        <div id="nameNok" class="d-none">
-                            <p class="text-danger">필수 정보입니다.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 닉네임 -->
-                <div class="mt-4">
-                    <div>
-                        <label for="nickname" class="form-label" id="lblNickname">닉네임</label>
-                        <span class="form-control form-control-lg" id="nicknameSpan">
-                            <input type="text" id="nickname" name="nickname" required />
-                        </span>
-                        <div id="nicknameOk" class="d-none">
-                            <p class="text-success">멋진 별명이네요!</p>
-                        </div>
-                        <div id="nicknameNok" class="d-none">
-                            <p class="text-danger">이미 사용중이거나 탈퇴한 닉네임입니다.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 주소 -->
-                <div class="mt-4">
-                    <div>
-                        <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
-                        <div class="mb-2">
-
-                            <input type="button" id="btnPostcode" class="btn btn-success btn-lg" value="우편번호 찾기">
-
-                            <span class="form-control form-control-lg mb-2" id="postcode">
-                                <input type="text" id="sample4_postcode" placeholder="우편번호" required >
-                            </span>
-                        </div>
-                        <span class="form-control form-control-lg mb-2" id="roadAddressSpan">
-                            <input type="text" id="sample4_roadAddress" placeholder="도로명주소" required >
-                        </span>
-                        <span class="form-control form-control-lg mb-2" id="jibunAddressSpan">
-                            <input type="text" id="sample4_jibunAddress" placeholder="지번주소" name="address" required >
-                        </span>
-                        <span id="guide" style="color:#999;font-size:13px;display:none"></span>
-                        <span class="form-control form-control-lg mb-2" id="detailAddressSpan">
-                            <input type="text" id="sample4_detailAddress" placeholder="상세주소" required >
-                        </span>
-                        <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="d-none">
-                        <div id="addressNok" class="d-none">
-                            <p class="text-danger">필수 정보입니다.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 휴대폰 번호 -->
-                <div class="mt-4">
-                    <label for="phone" class="form-label" id="lblPhone">휴대전화</label>
-                    <span class="form-control form-control-lg" id="phoneSpan">
-                        <input type="tel" id="phone" name="phone" required/>
-                    </span>
-                    <div id="phoneNok" class="d-none">
-                        <p class="text-danger">필수 정보입니다.</p>
-                    </div>
-                </div>
-
-                <!-- 이메일 -->
-                <div class="mt-4">
-                    <div>
-                        <label for="email" class="form-label" id="lblEmail">이메일</label>
-                        <div class="mb-2">
-                            <span class="form-control form-control-lg" id="emailSpan">
-                                <input type="email" id="email" name="email" required />
-                                <span id="emailOk" class="d-none">
-                                    <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
-                                </span>
-                                <span id="emailNok" class="d-none">
-                                    <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
-                                </span>
-                            </span>
-                            <input type="button" id="btnAuthcode" class="btn btn-success btn-lg disabled" value="인증코드 받기">
-                        </div>
-                        <div id="emailNok2" class="d-none">
-                            <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
-                        </div>
-                        <div>
-                            <span class="form-control form-control-lg mt-2" id="emailKeySpan">
-                                <input type="text" id="emailKey" name="emailKey" placeholder="인증코드 입력" required />
-                                <span id="emailKeyOk" class="d-none">
-                                    <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
-                                </span>
-                                <span id="emailKeyNok" class="d-none">
-                                    <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
-                                </span>
-                            </span>
-                            <input type="button" id="btnAuth" class="btn btn-success btn-lg disabled mt-2" value="인증코드 확인">
-                        </div>
-                        <div id="emailKeyNok2" class="d-none">
-                            <p class="text-danger">인증코드가 일치하지 않습니다.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 가입하기 버튼 -->
-                <div>
-                    <input type="submit" value="가입하기" id="btnSubmit" class="btn btn-success btn-lg disabled"/>
-                </div>
+              </div>
             </div>
-        </form>
-    </div>
-</div>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- axios-http JS -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- 주소 검색 -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-<!-- Core theme JS-->
-<script th:src="@{ /js/join.js }"></script>
-</body>
+            <!-- 비밀번호 -->
+            <div class="mt-4">
+              <div>
+                <label for="password" class="form-label" id="lblPassword"
+                  >비밀번호</label
+                >
+                <span class="form-control form-control-lg" id="passwordSpan">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                  />
+                  <span id="passwordOk" class="d-none">
+                    <span
+                      ><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"
+                    /></span>
+                  </span>
+                  <span id="passwordNok" class="d-none">
+                    <span
+                      ><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"
+                    /></span>
+                  </span>
+                </span>
+                <div id="passwordNok2" class="d-none">
+                  <p class="text-danger">8~16자의 비밀번호를 사용하세요.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="mt-4">
+              <div>
+                <label for="password2" class="form-label" id="lblPassword2"
+                  >비밀번호 재확인</label
+                >
+                <span class="form-control form-control-lg" id="password2Span">
+                  <input
+                    type="password"
+                    id="password2"
+                    name="password2"
+                    required
+                  />
+                  <span id="password2Ok" class="d-none">
+                    <span
+                      ><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"
+                    /></span>
+                  </span>
+                  <span id="password2Nok" class="d-none">
+                    <span
+                      ><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"
+                    /></span>
+                  </span>
+                </span>
+                <div id="password2Nok2" class="d-none">
+                  <p class="text-danger">비밀번호를 다시 확인해주세요.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 이름 -->
+            <div class="mt-4">
+              <div>
+                <label for="name" class="form-label" id="lblName">이름</label>
+                <span class="form-control form-control-lg" id="nameSpan">
+                  <input type="text" id="name" name="name" required />
+                </span>
+                <div id="nameNok" class="d-none">
+                  <p class="text-danger">필수 정보입니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 닉네임 -->
+            <div class="mt-4">
+              <div>
+                <label for="nickname" class="form-label" id="lblNickname"
+                  >닉네임</label
+                >
+                <span class="form-control form-control-lg" id="nicknameSpan">
+                  <input type="text" id="nickname" name="nickname" required />
+                </span>
+                <div id="nicknameOk" class="d-none">
+                  <p class="text-success">멋진 별명이네요!</p>
+                </div>
+                <div id="nicknameNok" class="d-none">
+                  <p class="text-danger">
+                    이미 사용중이거나 탈퇴한 닉네임입니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 주소 -->
+            <div class="mt-4">
+              <div>
+                <label for="sample4_postcode" class="form-label" id="lblAddress"
+                  >주소</label
+                >
+                <div class="mb-2">
+                  <input
+                    type="button"
+                    id="btnPostcode"
+                    class="btn btn-success btn-lg"
+                    value="우편번호 찾기"
+                  />
+
+                  <span class="form-control form-control-lg mb-2" id="postcode">
+                    <input
+                      type="text"
+                      id="sample4_postcode"
+                      placeholder="우편번호"
+                      required
+                    />
+                  </span>
+                </div>
+                <span
+                  class="form-control form-control-lg mb-2"
+                  id="roadAddressSpan"
+                >
+                  <input
+                    type="text"
+                    id="sample4_roadAddress"
+                    placeholder="도로명주소"
+                    required
+                  />
+                </span>
+                <span
+                  class="form-control form-control-lg mb-2"
+                  id="jibunAddressSpan"
+                >
+                  <input
+                    type="text"
+                    id="sample4_jibunAddress"
+                    placeholder="지번주소"
+                    name="address"
+                    required
+                  />
+                </span>
+                <span
+                  id="guide"
+                  style="color: #999; font-size: 13px; display: none"
+                ></span>
+                <span
+                  class="form-control form-control-lg mb-2"
+                  id="detailAddressSpan"
+                >
+                  <input
+                    type="text"
+                    id="sample4_detailAddress"
+                    placeholder="상세주소"
+                    required
+                  />
+                </span>
+                <input
+                  type="text"
+                  id="sample4_extraAddress"
+                  placeholder="참고항목"
+                  class="d-none"
+                />
+                <div id="addressNok" class="d-none">
+                  <p class="text-danger">필수 정보입니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 휴대폰 번호 -->
+            <div class="mt-4">
+              <label for="phone" class="form-label" id="lblPhone"
+                >휴대전화</label
+              >
+              <span class="form-control form-control-lg" id="phoneSpan">
+                <input type="tel" id="phone" name="phone" required />
+              </span>
+              <div id="phoneNok" class="d-none">
+                <p class="text-danger">필수 정보입니다.</p>
+              </div>
+            </div>
+
+            <!-- 이메일 -->
+            <div class="mt-4">
+              <div>
+                <label for="email" class="form-label" id="lblEmail"
+                  >이메일</label
+                >
+                <div class="mb-2">
+                  <span class="form-control form-control-lg" id="emailSpan">
+                    <input type="email" id="email" name="email" required />
+                    <span id="emailOk" class="d-none">
+                      <span
+                        ><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"
+                      /></span>
+                    </span>
+                    <span id="emailNok" class="d-none">
+                      <span
+                        ><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"
+                      /></span>
+                    </span>
+                  </span>
+                  <input
+                    type="button"
+                    id="btnAuthcode"
+                    class="btn btn-success btn-lg disabled"
+                    value="인증코드 받기"
+                  />
+                </div>
+                <div id="emailNok2" class="d-none">
+                  <p class="text-danger">
+                    이미 사용중이거나 탈퇴한 이메일입니다.
+                  </p>
+                </div>
+                <div>
+                  <span
+                    class="form-control form-control-lg mt-2"
+                    id="emailKeySpan"
+                  >
+                    <input
+                      type="text"
+                      id="emailKey"
+                      name="emailKey"
+                      placeholder="인증코드 입력"
+                      required
+                    />
+                    <span id="emailKeyOk" class="d-none">
+                      <span
+                        ><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"
+                      /></span>
+                    </span>
+                    <span id="emailKeyNok" class="d-none">
+                      <span
+                        ><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"
+                      /></span>
+                    </span>
+                  </span>
+                  <input
+                    type="button"
+                    id="btnAuth"
+                    class="btn btn-success btn-lg disabled mt-2"
+                    value="인증코드 확인"
+                  />
+                </div>
+                <div id="emailKeyNok2" class="d-none">
+                  <p class="text-danger">인증코드가 일치하지 않습니다.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 가입하기 버튼 -->
+            <div>
+              <input
+                type="submit"
+                value="가입하기"
+                id="btnSubmit"
+                class="btn btn-success btn-lg disabled"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- axios-http JS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- 주소 검색 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <!-- Core theme JS-->
+    <script th:src="@{ /js/join.js }"></script>
+  </body>
 </html>

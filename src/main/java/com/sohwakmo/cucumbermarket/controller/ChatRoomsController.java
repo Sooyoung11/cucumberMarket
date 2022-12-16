@@ -42,15 +42,7 @@ public class ChatRoomsController {
         String memberNickname = chatRoomService.getLoginedName(memberNo);
         Member member = chatRoomService.getLoginedMember(memberNo);
         for(ChatRoom c : list){
-            if(c.getLeavedUser().equals(member.getNickname())){
-                list.remove(c); // 나간 채팅방 사람과 지금 로그인한 사람의 이름이 같으면 채팅방 리스트에서 제거
-                if(list.size()==0){ // 채팅방 리스트의 사이즈가 0이면 반복문 종료 -> 안하면 NullPointerException 발생!
-                    break;
-                }
-                continue; // 더 채팅방이 남아있다면 밑의 메서드실행을 위해서 반복문으로 다시 이동
-            }
-            c.setMessage(chatRoomService.getRecentMessage(c.getRoomId(),c.getMember().getMemberNo()));
-            c.setUnReadMessages(chatRoomService.checkUnReadMessages(c.getRoomId(),c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
+            chatRoomService.setMessages(c,memberNickname);
         }
         model.addAttribute("list",list);
         model.addAttribute("memberNo",memberNo);
