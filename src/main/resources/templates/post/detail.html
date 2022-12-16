@@ -57,24 +57,19 @@
             <h3 th:text="${post.title}" name="title">제목</h3>
           </div>
           <div class="row my-2" id="chatButton">
-            <div class="col-1" id="imageDiv">
+            <div class="col-1" id="imageDiv" style="text-align:center;padding-top: 5px;">
               <img
                 th:src="${post.member.userImgUrl}"
-                style="width: 70px; height: 90%"
+                style="width: 50px; height: 50px"
               />
             </div>
-            <div class="col mb-3" id="userNickname">
+            <div class="col mb-3" id="userNickname" style="padding-top: 0px;">
               <span
                 th:text="${nickname}"
                 id="writer"
                 style="font-size: 17px; font-weight: bold"
                 >작성자</span
               >
-              <th:block
-                th:if="${nickname}!=${#authentication.principal.nickname}"
-              >
-                <a type="button" id="gotoChat"><b>1대1채팅</b></a>
-              </th:block>
               <br />
               <span
                 th:text="${ #temporals.format(post.createdTime, 'yyyy-MM-dd HH:mm') }"
@@ -84,6 +79,10 @@
               <span th:text="'조회 '+${post.clickCount}" style="color: #979797"
                 >조회수</span
               >
+              <br />
+              <th:block th:if="${nickname}!=${#authentication.principal.nickname}">
+                <a type="button" id="gotoChat"><b>1대1채팅</b></a>
+              </th:block>
             </div>
           </div>
           <!--게시물 내용칸-->
