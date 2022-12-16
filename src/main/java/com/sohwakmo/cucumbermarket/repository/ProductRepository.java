@@ -41,11 +41,23 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByMember(Member member);
 
     // select * from PRODUCTS where status = 0;
+//    List<Product> findByStatusOrderByProductNoDesc(Boolean status);
+
     Page<Product> findByStatusOrderByProductNoDesc(Boolean status, Pageable pageable);
 
+    //마이페이지 count
     List<Product> findByMemberAndStatus(Member member, boolean status);
-
+    //마이페이지 count
     List<Product> findByBoughtMemberNo(Integer boughtMemberNo);
-
+    //마이페이지 count
     List<Product> findByOrderByLikeCountDescProductNoDesc();
+
+    //마이페이지 > 전체보기
+    Page<Product> findByMemberOrderByProductNoDesc(Member member, Pageable pageable);
+
+    //마이페이지 > 진행중, 거래완료
+    Page<Product> findByMemberAndStatusOrderByProductNoDesc(Member member, boolean b, Pageable pageable);
+
+    //마이페이지 > 구매내역
+    Page<Product> findByBoughtMemberNoOrderByProductNoDesc(Integer memberNo, Pageable pageable);
 }

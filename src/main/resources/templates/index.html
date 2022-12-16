@@ -302,7 +302,7 @@
 						<div class="row row-cols-2">
 							<!--post-->
 							<div th:each="post: ${ postList }" class="post">
-							<a th:href="@{post/detail(postNo=${post.postNo})}" class="postA">
+							<a th:href="@{post/detail(postNo=${post.postNo},clickCount=${post.clickCount})}" class="postA">
 								<!--postImg-->
 								<div class="postImg">
 									<!-- 이미지가 없다면 -->

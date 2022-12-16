@@ -5,6 +5,7 @@ import com.sohwakmo.cucumbermarket.dto.MypageUpdateDto;
 import com.sohwakmo.cucumbermarket.service.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ public class MypageController {
     private final PasswordEncoder passwordEncoder;
     
     //마이페이지 호출
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/mymain")
     public void mypage(Integer memberNo, Model model){
 
@@ -34,6 +36,7 @@ public class MypageController {
     }
 
     //마이페이지 수정page 호출
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/modify")
     public void moodify(Integer memberNo, Model model){
         log.info("modify(memberId={})", memberNo);
@@ -44,6 +47,7 @@ public class MypageController {
     }
 
     //마이페이지 회원정보 수정
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/update")
     public String update(MypageUpdateDto dto, String oauth){
         log.info("update(dto={}, oauth={})", dto, oauth);

@@ -38,6 +38,7 @@ public class Product extends BaseTimeEntity {
 
     @Column(columnDefinition = "integer default 0")
     private Integer likeCount;
+
     private boolean status; // 거래상태
 
     private String photoUrl1;

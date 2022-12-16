@@ -3,56 +3,92 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout }">
 
-    <div layout:fragment="content">
-        <h1>내 목록 페이지</h1>
+<div layout:fragment="content">
+    <div class="card my-2 container" style="border:none;">
+        <div class="my-2" style="width:100%; height:50px; background:#e6f3e6;">
+        </div>
 
-        <div id="productList" >
-                <div>
-                    <!--마이페이지 판매목록(진행중, 거래완료) select list-->
-                    <form th:action="@{/product/myList/searchStatus}" method="GET">
-                        <select id="myProductListSelect" name="myProductListSelect" class="form-select" aria-label="Default select example" onchange="this.form.submit()">
-                            <option>선택</option>
-                            <option value="1">전체보기</option>
-                            <option value="2">진행중</option>
-                            <option value="3">거래완료</option>
-                            <option value="4">구매내역</option>
-                        </select>
-                        <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />
-                    </form>
-                </div>
-            <div class="card-group row h-75 my-5" th:each="products : ${ list }">
-                <div th:each="p : ${products}" class="col-4" >
-                    <div class="card" >
-                        <a th:if="${ p.photoUrl1 } == null and ${ p.photoUrl2 } == null and ${ p.photoUrl3 } == null and ${ p.photoUrl4 } == null and ${ p.photoUrl5 } == null"
-                           th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }">
-                          <img th:src="@{ /images/product/noimg.png }" class="card-img-top" alt="...">
-                        </a>
+        <!--select option start -->
+        <div class="col-3">
+            <!--마이페이지 판매목록(진행중, 거래완료) select list-->
+            <form th:action="@{/product/myList/searchStatus}" method="GET">
+                <select id="myProductListSelect" name="myProductListSelect" class="form-select" th:value="${selectedValue}" aria-label="Default select example" onchange="this.form.submit()">
+                    <option th:selected="${selectedValue}=='1'" value="1">전체보기</option>
+                    <option th:selected="${selectedValue}=='2'" value="2">진행중</option>
+                    <option th:selected="${selectedValue}=='3'" value="3">거래완료</option>
+                    <option th:selected="${selectedValue}=='4'" value="4">구매내역</option>
+                </select>
+                <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />
+            </form>
+        </div>
+        <!--select option end -->
 
-                        <a th:if="${p.photoUrl1} != null"
-                           th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }">
-                          <img th:src="@{ ${p.photoUrl1} }" class="card-img-top" alt="...">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${ p.title  }"></h5>
-                            <p class="card-text" th:text="${ p.content }"></p>
-                            <p class="card-text">
-                              <small class="text-muted" th:text="${ p.createdTime }"></small>
+        <!-- 상품 리스트 -->
+        <div id="productList">
+            <div class="row row-cols-4">
+
+                <div th:each="p : ${ list }" class="card my-4" style="width:300px; padding:15px; margin:5px 14px; border:none">
+                    <a th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"
+                       style="text-decoration-line:none; color:black;">
+                        <!-- 이미지 -->
+                        <div class="card-img-top">
+                            <!-- 이미지가 없다면 -->
+                            <th:block th:if="${ p.photoUrl1 } == null and ${ p.photoUrl2 } == null and ${ p.photoUrl3 } == null and ${ p.photoUrl4 } == null and ${ p.photoUrl5 } == null">
+                                <img th:src="@{ /images/product/noimg.png }" style="width:100%; height:200px;" alt="...">
+                            </th:block>
+                            <!-- 이미지가 있다면-->
+                            <th:block th:if="${p.photoUrl1} != null">
+                                <img th:src="@{ ${p.photoUrl1} }" style="width:100%; height:200px;" alt="...">
+                            </th:block>
+                        </div>
+                        <!-- 정보 -->
+                        <div class="card-body" style="">
+                            <p th:text="${ p.title }" class="card-title" style="height:5%; "></p>
+                            <p th:text="${ p.price } + ' 원'" class=" card-title" style="height:5%; font-weight:bold"></p>
+                            <p th:text="${ p.dealAddress }" class=" card-title" style="height:5% text"></p>
+                            <p class="card-text" style="height:5%">
+                                <small th:text=" '관심 ' + ${ p.likeCount }" class="text-muted" ></small>
+                                <small th:text=" '∙ 조회수 ' + ${ p.clickCount }" class="text-muted" ></small>
                             </p>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
+        </div>
+        <!--상품리스트 END-->
+        <!--페이징-->
+        <nav aria-label="Page navigation example" class="my-3 mb-3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1}, type=${param.type}, keyword=${param.keyword})}" tabindex="-1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'" th:each="num : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!--페이징 END-->
     </div>
+    <!--container end-->
+</div>
+<!--content end-->
 
-    </div>
 
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
 
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
+<th:block layout:fragment="script">
 
-    <th:block layout:fragment="script">
-
-    </th:block>
+</th:block>
 
 </html>
+

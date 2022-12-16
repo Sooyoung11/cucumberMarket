@@ -9,22 +9,18 @@
   border-bottom: #efefef;
 }
 
-.chatButton a {
+#gotoChat {
   background-color: rgba(207, 229, 177, 255);
   color: black;
   border-radius: 6px;
   padding: 1px;
 }
 
-#writer {
-  font-size: 17px;
-}
-
 .warningBox {
   border: 1px solid #efefef;
   border-radius: 6px;
   background-color: rgba(249, 249, 250, 255);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   padding: 20px 24px;
   font-size: 14px;
   line-height: 23.8px;
@@ -49,4 +45,9 @@
   border-radius: 6px;
   box-sizing: border-box;
   background: var(--skinCommentWriterBg);
+}
+#userNickname {
+  padding-left: 0;
+  padding-top: 14px;
+  margin-bottom: 0;
 }
