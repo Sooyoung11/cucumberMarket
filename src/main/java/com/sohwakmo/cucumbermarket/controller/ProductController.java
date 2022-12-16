@@ -109,6 +109,7 @@ public class ProductController {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
+        product.setContent(product.getContent().replace("\n", "<br/>")); // 컨텐트 내용 줄바꿈 처리
         log.info("product = {}", product);
 
         model.addAttribute("product", product); // 상품 정보
