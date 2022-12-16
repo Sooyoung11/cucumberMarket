@@ -22,8 +22,10 @@ public class MemberRegisterDto {
     private String email;
     private String emailKey;
     private Integer emailAuth;
-
     private String oauth;
+
+    private String userImgUrl;
+    private String userImgName;
 
     public Member toEntity(){
         return Member.builder()
@@ -37,6 +39,8 @@ public class MemberRegisterDto {
                 .emailKey(emailKey)
                 .emailAuth(emailAuth)
                 .oauth(oauth)
+                .userImgUrl(userImgUrl)
+                .userImgName(userImgName)
                 .build()
                 .addRole(MemberRole.USER);
     }
