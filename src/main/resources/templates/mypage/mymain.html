@@ -4,6 +4,7 @@
       layout:decorate="~{ layout/layout }">
     <head>
         <title>오이마켓 | 마이페이지</title>
+        <link rel="stylesheet" th:href="@{/css/mypage/mypage.css}" />
     </head>
 
     <body>
@@ -27,7 +28,7 @@
                                 </a>
                             </th:block>
                             <th:block th:if="${recievedMessage != 0}">
-                                <a href="#" class="checkChatList">
+                                <a href="#" class="checkChatList" id="blinking">
                                     <b style="font-size: 30px;">💌</b>
                                 </a>
                             </th:block>
