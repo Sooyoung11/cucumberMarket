@@ -1,16 +1,75 @@
-/* style.css */
-
-/* label 스타일 조정 */
-.imageButton {
-  display: flex;
-  justify-content: center;
-}
-label {
-  cursor: pointer;
-  font-size: 1em;
+#createTitle {
+  padding: 0;
+  margin-bottom: 2px;
+  border-bottom: 4px;
 }
 
-/* 못생긴 기존 input 숨기기 */
-#chooseFile {
-  display: none;
+#createTitle h2 {
+  display: inline;
+  float: left;
+}
+
+.buttons {
+  display: inline;
+  float: right;
+}
+
+.topmenu {
+  border: 10px;
+  color: black;
+}
+
+#insertPostButton {
+  background-color: rgba(239, 240, 242, 255);
+}
+#insertPostButton:hover {
+  text-decoration: underline;
+}
+
+#cancleCreate {
+  background-color: rgba(239, 240, 242, 255);
+}
+#cancleCreate:hover {
+  text-decoration: underline;
+}
+
+#form {
+  margin-top: 20px;
+}
+
+#form .titleDiv {
+  margin-bottom: 20px;
+}
+
+#form .titleDiv input {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #efefef;
+  padding: 15px 11px 15px 15px;
+  display: block;
+  font-size: 15px;
+}
+
+#form .titleDiv input:focus {
+  outline: none;
+  box-shadow: 0 0 0 1px #efefef;
+}
+
+#form .warningBox {
+  border: 1px solid #efefef;
+  border-radius: 6px;
+  background-color: rgba(249, 249, 250, 255);
+  margin-bottom: 25px;
+  padding: 20px 24px;
+  font-size: 14px;
+  line-height: 23.8px;
+}
+
+#form .imageDiv {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#form .imageDiv span {
+  font-size: 20px;
 }
