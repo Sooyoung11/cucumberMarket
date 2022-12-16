@@ -25,19 +25,23 @@
         <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
           <div class="titleDiv">
             <span class="roomTitle" th:text="${room.roomId}"></span>
-            <span class="memberGrade" th:text="${room.member.grade} + ℃"></span>
+            <span
+              class="memberGrade"
+              th:text="${chatRoomMember.grade} + ℃"
+            ></span>
           </div>
         </th:block>
         <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
-        <div class="titleDiv">
-          <span th:text="${nickname}"></span>
-        </div>
-      </th:block>
+          <div class="titleDiv">
+            <span th:text="${nickname}"></span>
+            <span class="memberGrade" th:text="${room.member.grade} + ℃"></span>
+          </div>
+        </th:block>
 
-      <a th:href="@{/chat/list(memberNo=${memberNo})}">
-        <i class="fa-solid fa-chevron-left" id="goBack"></i>
-      </a>
-    </div>
+        <a th:href="@{/chat/list(memberNo=${memberNo})}">
+          <i class="fa-solid fa-chevron-left" id="goBack"></i>
+        </a>
+      </div>
     </div>
   </header>
 
@@ -84,13 +88,9 @@
           placeholder="메시지 보내기"
         />
         <div class="sendButton">
-          <a
-            class="btn"
-            type="button"
-            id="button-send"
-          >
-          <b>💬</b>
-        </a>
+          <a class="btn" type="button" id="button-send">
+            <b>💬</b>
+          </a>
         </div>
       </div>
     </footer>
