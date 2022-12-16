@@ -43,7 +43,7 @@ public class KakaoProfile {
         public String gender;
 
         @Data
-        class Profile {
+        public class Profile {
 
             public String nickname;
             public String thumbnail_image_url;

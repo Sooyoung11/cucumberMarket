@@ -185,6 +185,7 @@ public class MemberService {
         log.info("마켓 서버 이메일: "+ kakaoProfile.getKakao_account().getEmail());
         log.info("마켓 서버 닉네임: "+ kakaoProfile.getProperties().getNickname());
         log.info("마켓 서버 이름: "+ "kakaoUser" + kakaoProfile.getId());
+        log.info("사용자 프로필 사진: "+ kakaoProfile.getKakao_account().getProfile().getProfile_image_url());
         log.info("마켓 서버 패스워드: "+ cosKey);
         //---------------POST: 토큰을 통한 사용자 정보 조회 end-----------------------
 
@@ -196,6 +197,8 @@ public class MemberService {
                 .name("kakaoUser" + kakaoProfile.getId())
                 .email(kakaoProfile.getKakao_account().getEmail())
                 .oauth("kakao")
+                .userImgName("kakaoImage"+ kakaoProfile.getId())
+                .userImgUrl(kakaoProfile.getKakao_account().getProfile().getProfile_image_url())
                 .build();
 
         return kakaoMember;
