@@ -25,3 +25,23 @@ footer {
 body {
   padding-bottom: 50px;
 }
+
+footer #message{
+  width: 80%;
+  padding: 8px;
+  border:1px solid #efefef;
+  border-radius: 20px;
+}
+
+footer #message:focus{
+  outline: none;
+  box-shadow: 0 0 0 2px #efefef;
+}
+
+footer .sendButton{
+  display: inline;
+}
+
+footer .sendDiv{
+  margin-bottom: 10px;
+}
