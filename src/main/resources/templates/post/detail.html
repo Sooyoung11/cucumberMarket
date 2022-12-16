@@ -53,65 +53,70 @@
 
         <div>
           <!--디테일 페이지 시작-->
-          <div class="my-2">
+          <div class="my-3">
             <h3 th:text="${post.title}" name="title">제목</h3>
           </div>
-          <div class="chatButton my-2">
-            <span th:text="${nickname}" id="writer">작성자</span>
-            <th:block
-              th:if="${nickname}!=${#authentication.principal.nickname}"
-            >
-              <a type="button" id="gotoChat"><b>1대1채팅</b></a>
-            </th:block>
-          </div>
-          <div class="mb-3">
-            <span
-              th:text="${ #temporals.format(post.createdTime, 'yyyy-MM-dd HH:mm') }"
-              >작성시간</span
-            >
-            <span th:text="'조회 '+${post.clickCount}">조회수</span>
-          </div>
-          <div>
-            <!--게시물 내용칸-->
-            <div class="warningBox">
-              <p class="m-2">
-                게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이
-                없으시길 바랍니다.
-              </p>
-              <p class="m-2">
-                규정을 위반한 게시글은 무통보 삭제될 수 있으며, 추가적인 제재
-                조치가 진행될 수 있습니다.
-              </p>
+          <div class="row my-2" id="chatButton">
+            <div class="col-1" id="imageDiv">
+              <img
+                th:src="${post.member.userImgUrl}"
+                style="width: 70px; height: 100%"
+              />
             </div>
-            <!--image1태그 시작-->
-            <div class="text-center">
-              <div th:classappend="${post.imageUrl01 == null} ? 'hidden'">
-                <img th:src="@{${post.imageUrl01}}" class="img-fluid" />
-              </div>
-            </div>
-            <!--image1태그 끝-->
-            <!--image2태그 시작-->
-            <div class="text-center mt-3">
-              <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
-                <img th:src="@{${post.imageUrl02}}" class="img-fluid" />
-              </div>
-            </div>
-            <!--image2태그 끝-->
-            <div class="">
-              <!--게시물 찐 내용-->
-              <textarea
-                class="form-control my-4"
-                placeholder="내용을 입력해주세요."
-                id="postContent"
-                name="content"
-                style="background-color: white; height: 200px"
-                th:text="${post.content}"
-                readonly
+            <div class="col mb-3" id="userNickname">
+              <span th:text="${nickname}" id="writer">작성자</span>
+              <th:block
+                th:if="${nickname}!=${#authentication.principal.nickname}"
               >
-              </textarea>
+                <a type="button" id="gotoChat"><b>1대1채팅</b></a>
+              </th:block>
+              <br />
+              <span
+                th:text="${ #temporals.format(post.createdTime, 'yyyy-MM-dd HH:mm') }"
+                >작성시간</span
+              >
+              <span th:text="'조회 '+${post.clickCount}">조회수</span>
             </div>
-            <!--textArea 닫는태그-->
           </div>
+          <!--게시물 내용칸-->
+          <div class="warningBox">
+            <p class="m-2">
+              게시글 작성 전 카페 운영 정책을 꼭 확인하시어 작성에 불편함이
+              없으시길 바랍니다.
+            </p>
+            <p class="m-2">
+              규정을 위반한 게시글은 무통보 삭제될 수 있으며, 추가적인 제재
+              조치가 진행될 수 있습니다.
+            </p>
+          </div>
+          <!--image1태그 시작-->
+          <div class="text-center">
+            <div th:classappend="${post.imageUrl01 == null} ? 'hidden'">
+              <img th:src="@{${post.imageUrl01}}" class="img-fluid" />
+            </div>
+          </div>
+          <!--image1태그 끝-->
+          <!--image2태그 시작-->
+          <div class="text-center mt-3">
+            <div th:classappend="${post.imageUrl02 == ''} ? 'hidden'">
+              <img th:src="@{${post.imageUrl02}}" class="img-fluid" />
+            </div>
+          </div>
+          <!--image2태그 끝-->
+          <div class="">
+            <!--게시물 찐 내용-->
+            <textarea
+              class="form-control my-4"
+              placeholder="내용을 입력해주세요."
+              id="postContent"
+              name="content"
+              style="background-color: white; height: 200px"
+              th:text="${post.content}"
+              readonly
+            >
+            </textarea>
+          </div>
+          <!--textArea 닫는태그-->
         </div>
       </form>
 

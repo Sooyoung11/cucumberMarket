@@ -9,7 +9,7 @@
   border-bottom: #efefef;
 }
 
-.chatButton a {
+#gotoChat {
   background-color: rgba(207, 229, 177, 255);
   color: black;
   border-radius: 6px;
@@ -40,4 +40,10 @@
 
 .buttonRow .deleteButton {
   background-color: rgba(239, 240, 242, 255);
+}
+
+#userNickname{
+  padding-left: 0;
+  padding-top: 14px;
+  margin-bottom: 0;
 }
