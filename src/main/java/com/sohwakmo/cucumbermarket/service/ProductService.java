@@ -38,7 +38,7 @@ public class ProductService {
         return productRepository.findByStatusOrderByProductNoDesc(false, pageable);
     }
 
-    public List<Product> readByLikeCountDesc(){
+    public List<Product> readByLikeCountDesc() {
         log.info("readByLikeCountDesc()");
         return productRepository.findByOrderByLikeCountDescProductNoDesc();
     }
@@ -55,7 +55,7 @@ public class ProductService {
 
         Product product = productRepository.findById(productNo).get();
         log.info("product = {}", product);
-        product.updateClickCount(product.getClickCount()+1);
+        product.updateClickCount(product.getClickCount() + 1);
         log.info("product = {}", product);
 
         return product;
@@ -67,29 +67,29 @@ public class ProductService {
 //        List<Product> list = new ArrayList<>();
         Page<Product> list;
 
-        switch(type) {
-        case "all": // 전체 검색이라면 
-            log.info("type = {}", type);
+        switch (type) {
+            case "all": // 전체 검색이라면
+                log.info("type = {}", type);
 
-            if( keyword.equals("")) { // 검색 내용이 없으면 전부 검색
-                log.info("keyword = null");
-                list = productRepository.findByStatusOrderByProductNoDesc(false, pageable);
-            } else { // 검색 내용이 있으면 내용 검색
-                log.info("keyword = notNull");
-                list = productRepository.searchByKeyword(false, keyword, keyword, keyword, pageable);
-            }
+                if (keyword.equals("")) { // 검색 내용이 없으면 전부 검색
+                    log.info("keyword = null");
+                    list = productRepository.findByStatusOrderByProductNoDesc(false, pageable);
+                } else { // 검색 내용이 있으면 내용 검색
+                    log.info("keyword = notNull");
+                    list = productRepository.searchByKeyword(false, keyword, keyword, keyword, pageable);
+                }
 
-            break;
-        default: // 전체 검색이 아니라면
-            log.info("type = {}", type);
+                break;
+            default: // 전체 검색이 아니라면
+                log.info("type = {}", type);
 
-            if( keyword.equals("")) { // 검색 내용이 없으면
-                log.info("keyword = null");
-                list = productRepository.findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(false, type, pageable);
-            } else { // 검색 내용이 있으면 내용 검색
-                log.info("keyword = notNull");
-                list = productRepository.searchByTypeAndKeyword(false, type, keyword, keyword, keyword, pageable);
-            }
+                if (keyword.equals("")) { // 검색 내용이 없으면
+                    log.info("keyword = null");
+                    list = productRepository.findByStatusAndDealAddressIgnoreCaseContainingOrderByProductNoDesc(false, type, pageable);
+                } else { // 검색 내용이 있으면 내용 검색
+                    log.info("keyword = notNull");
+                    list = productRepository.searchByTypeAndKeyword(false, type, keyword, keyword, keyword, pageable);
+                }
 
         }
 
@@ -112,7 +112,7 @@ public class ProductService {
 
         productOfInterestedRepository.save(entity); // DB에 insert
 
-        product.updateLikeCount(product.getLikeCount()+1); // 상품의 관심목록 1증가
+        product.updateLikeCount(product.getLikeCount() + 1); // 상품의 관심목록 1증가
         log.info("product = {}", product);
     }
 
@@ -123,7 +123,7 @@ public class ProductService {
         Product product = productRepository.findById(dto.getProductNo()).get();
         log.info("product = {}", product);
 
-        product.updateLikeCount(product.getLikeCount()-1);
+        product.updateLikeCount(product.getLikeCount() - 1);
 
         productOfInterestedRepository.deleteByMemberAndProduct(dto.getMemberNo(), product);
     }
@@ -153,7 +153,7 @@ public class ProductService {
         log.info("list = {}", list);
 
         List<Product> productsList = new ArrayList<>();
-        for(ProductOfInterested s : list) {
+        for (ProductOfInterested s : list) {
             productsList.add(s.getProduct());
         }
         log.info("productsList = {}", productsList);
@@ -168,7 +168,7 @@ public class ProductService {
         Member member = memberRepository.findById(memberNo).get();
         log.info("member={}", member);
 
-        List<Product> list = productRepository.findByMemberAndStatus(member,false);
+        List<Product> list = productRepository.findByMemberAndStatus(member, false);
         log.info("proceeding list = {}", list);
 
         return list;
@@ -177,17 +177,17 @@ public class ProductService {
 
     //마이페이지 판매내역-거래완료 검색
     public List<Product> completedListRead(Integer memberNo) {
-        log.info("completedListRead(memberNo={})",memberNo);
+        log.info("completedListRead(memberNo={})", memberNo);
 
         Member member = memberRepository.findById(memberNo).get();
         log.info("member={}", member);
 
-        List<Product> list = productRepository.findByMemberAndStatus(member,true);
+        List<Product> list = productRepository.findByMemberAndStatus(member, true);
         log.info("completed list = {}", list);
 
         return list;
     }
-    
+
     //마이페이지 구매목록
     public List<Product> buyMyListRead(Integer memberNo) {
         log.info("buyMyListRead(memberNo={})", memberNo);
@@ -244,38 +244,38 @@ public class ProductService {
 
     @Transactional
     public Integer update(ProductUpdateDto dto) { // 상품 업데이트.
-            log.info("update(dto={})", dto);
+        log.info("update(dto={})", dto);
 
-            Product entity = productRepository.findById(dto.getProductNo()).get();
-            Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
-            log.info("newProduct={}");
+        Product entity = productRepository.findById(dto.getProductNo()).get();
+        Product newProduct = entity.update(dto.getTitle(), dto.getContent(), dto.getPrice(), dto.getCategory());
+        log.info("newProduct={}");
 
-            return entity.getProductNo();
-        }
+        return entity.getProductNo();
+    }
 
     public Integer delete(Integer productNo) {
-            log.info("deleteProduct(productNo={})", productNo);
+        log.info("deleteProduct(productNo={})", productNo);
 
-            Product product = productRepository.findById(productNo).get();
-            log.info("product = {}", product);
+        Product product = productRepository.findById(productNo).get();
+        log.info("product = {}", product);
 
-            //매너온도 - 2.5
-            product.getMember().gradeUpdate(product.getMember().getGrade() - 2.5);
+        //매너온도 - 2.5
+        product.getMember().gradeUpdate(product.getMember().getGrade() - 2.5);
 
-            ProductOfInterested interestedProduct = productOfInterestedRepository.findByProduct(product);
-            log.info("interestedProduct = {}", interestedProduct);
+        ProductOfInterested interestedProduct = productOfInterestedRepository.findByProduct(product);
+        log.info("interestedProduct = {}", interestedProduct);
 
-            if (interestedProduct != null) { // 찜 목록에 데이터가 있는 경우
-                log.info("not null");
-                productOfInterestedRepository.deleteById(interestedProduct.getNo()); // 찜 목록에 상품 번호 전부 삭제
-                productRepository.deleteById(productNo); // 상품 테이블 해당 번호로 삭제
-            } else { // 찜 목록에 데이터가 없는 경우
-                log.info("null");
-                productRepository.deleteById(productNo); // 상품 테이블 해당 번호로 삭제
-            }
-
-            return productNo;
+        if (interestedProduct != null) { // 찜 목록에 데이터가 있는 경우
+            log.info("not null");
+            productOfInterestedRepository.deleteById(interestedProduct.getNo()); // 찜 목록에 상품 번호 전부 삭제
+            productRepository.deleteById(productNo); // 상품 테이블 해당 번호로 삭제
+        } else { // 찜 목록에 데이터가 없는 경우
+            log.info("null");
+            productRepository.deleteById(productNo); // 상품 테이블 해당 번호로 삭제
         }
+
+        return productNo;
+    }
 
 
     public String saveImage(MultipartFile file) throws Exception {
