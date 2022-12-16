@@ -1,117 +1,152 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{ layout/layout.html }">
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{ layout/layout.html }"
+>
+  <head>
+    <title>오이마켓 | 동네생활</title>
+    <link rel="stylesheet" th:href="@{/css/post/postList.css}" />
+  </head>
 
-	<head>
-        <title>오이마켓 | 동네생활</title>
-		<link rel="stylesheet" th:href="@{/css/post/postList.css}">
-    </head>
-
-
-	<div layout:fragment="content">
+  <div layout:fragment="content">
     <div class="container">
-        <!--bannerSection-->
-		<div id="bannerSection">
-			<div id="bannerSectionWrap">
+      <!--bannerSection-->
+      <div id="bannerSection">
+        <div id="bannerSectionWrap"></div>
+      </div>
+      <!--end.bannerSection-->
+      <table class="table table-hover">
+        <thead>
+          <tr class="tr">
+            <th scope="col"></th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">작성일</th>
+            <th scope="col">조회</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="tr"
+            th:each="list : ${list}"
+            th:onclick="|location.href='@{/post/detail(postNo=${list.postNo},clickCount=${list.clickCount})}'|"
+            id="clickCount"
+          >
+            <td th:text="${list.postNo}"></td>
+            <td th:text="${list.title}"></td>
+            <td th:text="${list.writer}"></td>
+            <td
+              th:text="${ #temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm') }"
+            ></td>
+            <td th:text="${list.clickCount}"></td>
+          </tr>
+        </tbody>
+      </table>
 
-			</div>
-		</div><!--end.bannerSection-->
-        <table class="table table-hover">
-            <thead>
-                <tr class="tr">
-                    <th scope="col"></th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">작성일</th>
-                    <th scope="col">조회</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="tr"
-                    th:each="list : ${list}"
-                    th:onclick="|location.href='@{/post/detail(postNo=${list.postNo},clickCount=${list.clickCount})}'|"
-                    id="clickCount">
-                    <td th:text="${list.postNo}"></td>
-                    <td th:text="${list.title}"></td>
-                    <td th:text="${list.writer}"></td>
-                    <td th:text="${ #temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm') }"></td>
-                    <td th:text="${list.clickCount}"></td>
-                </tr>
-            </tbody>
-        </table>
+      <!-- 검색기능 -->
+      <div id="formDiv" class="row">
+        <div class="col"></div>
+        <form class="searchForm col-5" method="get" th:action="@{/post/list}">
+          <div id="searchDiv">
+            <input
+              id="searchInput"
+              type="text"
+              class="form-control"
+              name="searchText"
+              placeholder="검색어를 입력해주세요"
+              th:value="${param.searchText}"
+            />
+          </div>
+          <div>
+            <button id="btnSearch" type="submit" class="btn searchButton">
+              <span><i class="bi bi-search"></i></span>
+            </button>
+          </div>
+        </form>
 
-        <!-- 검색기능 -->
-        <div id="formDiv" class="row">
-            <div class="col"></div>
-            <form class="searchForm col-5"
-            method="get"
-            th:action="@{/post/list}">
-                <div id="searchDiv">
-                    <input id="searchInput"
-                        type="text"
-                        class="form-control"
-                        name="searchText"
-                        placeholder="검색어를 입력해주세요"
-                        th:value="${param.searchText}"
-                    />
-                </div>
-                <div>
-                    <button id="btnSearch" type="submit" class="btn searchButton">
-                        <span><i class="bi bi-search"></i></span>
-                    </button>
-                </div>
-            </form>
+        <!--글 작성 버튼-->
+        <div id="btnGroup" class="col">
+          <div class="createButton">
+            <a type="button" class="btn" th:href="@{/post/create}">글 작성</a>
+          </div>
+          <div class="listButton">
+            <a type="button" class="btn" th:href="@{/post/list}">전체 목록</a>
+          </div>
+        </div>
+      </div>
+      <!--end.formDiv-->
 
-            <!--글 작성 버튼-->
-            <div id="btnGroup" class="col">
-                <div class="createButton">
-                    <a type="button" class="btn" th:href="@{/post/create}">글 작성</a>
-                </div>
-                <div class="listButton">
-                    <a type="button" class="btn" th:href="@{/post/list}">전체 목록</a>
-                </div>
-            </div>
-        </div><!--end.formDiv-->
-        
-
-        <!--페이지버튼-->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li
-                class="page-item"
-                th:classappend="${list.pageable.pageNumber+1 == 1} ? 'disabled'"
-                >
-                    <a
-                        class="page-link"
-                        th:href="@{/post/list(page=${list.pageable.pageNumber-1})}"
-                        tabindex="-1"
-                    ><span aria-hidden="true">&laquo;</span></a>
-                </li>
-                <li
-                    class="page-item"
-                    th:classappend="${i == list.pageable.pageNumber + 1} ? 'disabled'"
-                    th:each="i : ${#numbers.sequence(startPage, endPage)}"
-                >
-                    <a
-                        class="page-link"
-                        th:text="${i}"
-                        th:href="@{/post/list(page=${i-1})}"
-                    ></a>
-                </li>
-                <li
-                    class="page-item"
-                    th:classappend="${list.totalPages <= list.pageable.pageNumber + 1} ? 'disabled'"
-                    >
-                    <a
-                        class="page-link"
-                        th:href="@{/post/list(page=${list.pageable.pageNumber+1})}"
-                    ><span aria-hidden="true">&raquo;</span></a>
-                </li>
-            </ul>
-        </nav>
-    </div><!--end.container-->
+      <!--페이지버튼-->
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li
+            class="page-item"
+            th:classappend="${list.pageable.pageNumber+1 == 1} ? 'disabled'"
+          >
+            <th:block th:if="${searchText==''}">
+              <a
+                class="page-link"
+                th:href="@{/post/list(page=${list.pageable.pageNumber-1})}"
+                tabindex="-1"
+                ><span aria-hidden="true">&laquo;</span></a
+              >
+            </th:block>
+            <th:block th:if="${searchText !=''}">
+              <a
+                class="page-link"
+                th:href="@{/post/list(page=${list.pageable.pageNumber-1},searchText=${searchText})}"
+                tabindex="-1"
+                ><span aria-hidden="true">&laquo;</span></a
+              >
+            </th:block>
+          </li>
+          <li
+            class="page-item"
+            th:classappend="${i == list.pageable.pageNumber + 1} ? 'disabled'"
+            th:each="i : ${#numbers.sequence(startPage, endPage)}"
+          >
+            <th:block th:if="${searchText==''}">
+              <a
+                class="page-link"
+                th:text="${i}"
+                th:href="@{/post/list(page=${i-1})}"
+              ></a>
+            </th:block>
+            <th:block th:if="${searchText!=''}">
+              <a
+                class="page-link"
+                th:text="${i}"
+                th:href="@{/post/list(page=${i-1},searchText=${searchText})}"
+              ></a>
+            </th:block>
+          </li>
+          <li
+            class="page-item"
+            th:classappend="${list.totalPages <= list.pageable.pageNumber + 1} ? 'disabled'"
+          >
+            <th:block th:if="${searchText==''}">
+              <a
+                class="page-link"
+                th:href="@{/post/list(page=${list.pageable.pageNumber+1})}"
+                tabindex="-1"
+                ><span aria-hidden="true">&raquo;</span></a
+              >
+            </th:block>
+            <th:block th:if="${searchText !=''}">
+              <a
+                class="page-link"
+                th:href="@{/post/list(page=${list.pageable.pageNumber+1},searchText=${searchText})}"
+                tabindex="-1"
+                ><span aria-hidden="true">&raquo;</span></a
+              >
+            </th:block>
+          </li>
+        </ul>
+      </nav>
     </div>
+    <!--end.container-->
+  </div>
 
-    <th:block layout:fragment="script"><!--자바스크립트 작성--> </th:block>
+  <th:block layout:fragment="script"><!--자바스크립트 작성--> </th:block>
 </html>
