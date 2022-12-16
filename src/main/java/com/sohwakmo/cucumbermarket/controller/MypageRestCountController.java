@@ -65,6 +65,7 @@ public class MypageRestCountController {
         return ResponseEntity.ok(completedCount);
     }
 
+
     //마이페이지 구매목록 count
     @GetMapping("/buyMyList/{memberNo}")
     public ResponseEntity<Integer> buyMyListCount(@PathVariable Integer memberNo){
