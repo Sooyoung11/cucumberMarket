@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -118,6 +121,26 @@ public class MemberController {
 
         memberService.registerMember(dto);
         return "redirect:/login";
+    }
+
+    @GetMapping("/member/find/id")
+    public void findId(){
+        log.info("findId() GET");
+    }
+
+    @PostMapping("/member/find/id")
+    public String findId(String email, RedirectAttributes attrs){
+        log.info("findId(email= {}) POST", email);
+        Member member= memberService.findId(email);
+        String memberId=  member.getMemberId();
+        log.info("findId(memberId= {})", memberId);
+        attrs.addFlashAttribute("memberId", memberId);
+        return "redirect:/member/find/id";
+    }
+
+    @GetMapping("/member/find/pw")
+    public void findPw(){
+        log.info("findPw() GET");
     }
 
 

@@ -99,6 +99,11 @@ public class MemberService {
         return entity;
     }
 
+    public Member findId(String email){
+        log.info("findId(email= {})", email);
+        return memberRepository.findByEmail(email).orElse(null);
+    }
+
     public Member findMemberByMemberNo(Integer memberNo) {
 
         return memberRepository.findById(memberNo).orElse(null);
