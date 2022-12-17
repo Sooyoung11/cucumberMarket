@@ -89,6 +89,14 @@ public class ChatRoomsController {
         model.addAttribute("nicknameNum",nicknameNum);
         model.addAttribute("messages", loadMessage);
     }
+    
+    @GetMapping()
+    public String goChatRoom(){
+    // TODO postDetail.html 에서 누른 1대1채팅, productDetail.html에서 오는 채팅도 여기서 처리
+
+
+        return "/chat/chatRoom";
+    }
 
     @GetMapping("/delete")
     public String deleteChatRoom(String roomId, String nickname, Integer memberNo, RedirectAttributes attributes){
