@@ -85,6 +85,7 @@ public class MypageService {
         List<ChatRoom> chatRooms = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(), memberNo);
         Integer recievedMessage = 0;
         for(ChatRoom c : chatRooms){
+            if(!c.getLastEnterName().equals(member.getNickname()))
             recievedMessage += c.getUnReadMessages();
         }
         return recievedMessage;
