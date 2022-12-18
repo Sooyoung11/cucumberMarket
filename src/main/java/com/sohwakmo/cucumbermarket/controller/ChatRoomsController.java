@@ -76,7 +76,7 @@ public class ChatRoomsController {
     @GetMapping("/chatRoom")
     public void getRoom(String roomId,String nickname,Integer memberNo,Model model){
         ChatRoom chatRoom = chatRoomService.getRoomByRoomId(roomId,memberNo,nickname);
-        List<Message> loadMessage = chatRoomService.getAllMessages(roomId,nickname);
+        List<Message> loadMessage = chatRoomService.getAllMessages(chatRoom);
         log.info(chatRoom.toString());
         Member member = memberRepository.findByNickname(nickname).orElse(null);
         Member chatRoomMember = memberRepository.findByNickname(roomId).orElse(null);
@@ -91,9 +91,10 @@ public class ChatRoomsController {
     }
     
     @GetMapping()
-    public String goChatRoom(){
+    public String goChatRoom(String roomId, Integer memberNo, Model model){
     // TODO postDetail.html 에서 누른 1대1채팅, productDetail.html에서 오는 채팅도 여기서 처리
-
+    // romId = 포스트 작성자, 채탕방의 memberNo= 채팅을건 사람, leavedUser = 'nobody'로 , LastEnterName = 클릭하면 세팅해야함.
+        ChatRoom chatRoom = chatRoomService.saveAndGetChatRoom(roomId, memberNo);
 
         return "/chat/chatRoom";
     }

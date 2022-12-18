@@ -18,12 +18,6 @@ public class MessageController {
     private final MemberRepository memberRepository;
     private final SimpMessagingTemplate template; //특정 Broker로 메세지를 전달
 
-    @MessageMapping(value = "/chat/enter")
-    public void enter(Message message){
-        message.setMessage("야무지게 물건을 팔아봐요!~!");
-        template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
-    }
-
     @MessageMapping(value = "/chat/message")
     public void message(Message message){
         message.setRoomId(message.getRoomId());
