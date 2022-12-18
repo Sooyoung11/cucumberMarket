@@ -45,12 +45,14 @@
                 <span th:text="${room.message}">마지막 작성 메시지</span>
 
                 <th:block th:if="${room.unReadMessages} != 0">
+                  <th:block th:if="${room.lastEnterName} != ${#authentication.principal.nickname}">
                   <span
                     class="badge badge-warning badge-pill"
                     th:text="${room.unReadMessages}"
                     >안 읽은 메시지 개수</span
                   >
                 </th:block>
+              </th:block>
                 <th:block th:if="${room.unReadMessages} == 0">
                   <span
                     class="badge badge-warning badge-pill"
@@ -89,12 +91,14 @@
                 <span th:text="${room.message}">마지막 작성 메시지</span>
 
                 <th:block th:if="${room.unReadMessages} != 0">
+                  <th:block th:if="${room.lastEnterName} != ${#authentication.principal.nickname}">
                   <span
                     class="badge badge-warning badge-pill"
                     th:text="${room.unReadMessages}"
                     >안 읽은 메시지 개수</span
                   >
                 </th:block>
+              </th:block>
                 <th:block th:if="${room.unReadMessages} == 0">
                   <span
                     class="badge badge-warning badge-pill"

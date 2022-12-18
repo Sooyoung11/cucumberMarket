@@ -23,10 +23,9 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
     public List<ChatRoom> getAllChatList(Integer memberNo) {
-        Member member = memberRepository.findById(memberNo).get(); // 차은우가담김
+        Member member = memberRepository.findById(memberNo).get();
         log.info(member.toString());
-        List<ChatRoom> list = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(),memberNo);// 차은우랑, 차은우가 담김
-        log.info("list = {}", list);
+        List<ChatRoom> list = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(),memberNo);
         return list;
     }
 
@@ -79,14 +78,14 @@ public class ChatRoomService {
     public void saveMessage(Message message) {
         Message message1 = messageRepository.save(message);
         log.info(message1.toString());
-//        Member member1 = memberRepository.findByNickname(message.getRoomId()).orElse(null);
-//        Member member2 = memberRepository.findById(message.getMessageNum()).orElse(null);
-//
-//        ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member1.getNickname(), member2.getMemberNo());
-//        if(chatRoom == null){
-//            chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member2.getNickname(), member1.getMemberNo());
-//        }
-//        chatRoom.setUnReadMessages(chatRoom.getUnReadMessages()+1);
+        Member member1 = memberRepository.findByNickname(message.getRoomId()).orElse(null);
+        Member member2 = memberRepository.findById(message.getMessageNum()).orElse(null);
+
+        ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member1.getNickname(), member2.getMemberNo());
+        if(chatRoom == null){
+            chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member2.getNickname(), member1.getMemberNo());
+        }
+        chatRoom.setUnReadMessages(chatRoom.getUnReadMessages()+1);
     }
 
     @Transactional
