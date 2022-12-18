@@ -22,7 +22,7 @@
   <header>
     <div class="container">
       <div id="userInfo">
-        <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}">
+        <th:block th:if="${room.roomId}!=${#authentication.principal.nickname}"> 
           <div class="titleDiv">
             <span class="roomTitle" th:text="${room.roomId}"></span>
             <span

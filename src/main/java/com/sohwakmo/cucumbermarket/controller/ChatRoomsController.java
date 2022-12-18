@@ -65,7 +65,7 @@ public class ChatRoomsController {
                continue; // 더 채팅방이 남아있다면 밑의 메서드실행을 위해서 반복문으로 다시 이동
            }
            c.setMessage(chatRoomService.getRecentMessage(c.getRoomId(),c.getMember().getMemberNo()));
-           c.setUnReadMessages(chatRoomService.checkUnReadMessages(c.getRoomId(),c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
+//           c.setUnReadMessages(chatRoomService.checkUnReadMessages(c.getRoomId(),c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
        }
        model.addAttribute("list",list);
        model.addAttribute("memberNo",memberNo);
@@ -75,28 +75,17 @@ public class ChatRoomsController {
 
     @GetMapping("/chatRoom")
     public void getRoom(String roomId,String nickname,Integer memberNo,Model model){
-        ChatRoom chatRoom = chatRoomService.getRoomByRoomId(roomId,memberNo,nickname);
+        ChatRoom chatRoom = chatRoomService.saveAndGetChatRoom(roomId,memberNo,nickname);
         List<Message> loadMessage = chatRoomService.getAllMessages(chatRoom);
         log.info(chatRoom.toString());
-        Member member = memberRepository.findByNickname(nickname).orElse(null);
         Member chatRoomMember = memberRepository.findByNickname(roomId).orElse(null);
-        Integer nicknameNum = member.getMemberNo();
-        chatRoomService.setLastCheckUser(roomId,nickname,memberNo); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
+        chatRoomService.setLastCheckUser(chatRoom,nickname); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
         model.addAttribute("room", chatRoom);
         model.addAttribute("chatRoomMember",chatRoomMember);
         model.addAttribute("nickname",nickname);
         model.addAttribute("memberNo", memberNo);
-        model.addAttribute("nicknameNum",nicknameNum);
+        model.addAttribute("nicknameNum",chatRoom.getMember().getMemberNo());
         model.addAttribute("messages", loadMessage);
-    }
-    
-    @GetMapping()
-    public String goChatRoom(String roomId, Integer memberNo, Model model){
-    // TODO postDetail.html 에서 누른 1대1채팅, productDetail.html에서 오는 채팅도 여기서 처리
-    // romId = 포스트 작성자, 채탕방의 memberNo= 채팅을건 사람, leavedUser = 'nobody'로 , LastEnterName = 클릭하면 세팅해야함.
-        ChatRoom chatRoom = chatRoomService.saveAndGetChatRoom(roomId, memberNo);
-
-        return "/chat/chatRoom";
     }
 
     @GetMapping("/delete")

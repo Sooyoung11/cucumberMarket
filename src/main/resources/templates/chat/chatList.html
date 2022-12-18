@@ -38,7 +38,7 @@
                 />
                 <a
                   style="display: block; text-decoration: none"
-                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${room.member.memberNo})}"
+                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${#authentication.principal.nickname},memberNo=${memberNo})}"
                   th:text="${room.roomId}"
                 ></a>
 
@@ -82,7 +82,7 @@
                 />
                 <a
                   style="display: block; text-decoration: none"
-                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${memberNo})}"
+                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${#authentication.principal.nickname},memberNo=${room.member.memberNo})}"
                   th:text="${room.member.nickname}"
                   id="detailChat"
                 ></a>
