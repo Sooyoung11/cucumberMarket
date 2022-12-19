@@ -16,33 +16,47 @@
         <div id="bannerSectionWrap"></div>
       </div>
       <!--end.bannerSection-->
-      <table class="table table-hover">
-        <thead>
-          <tr class="tr">
-            <th scope="col"></th>
-            <th scope="col">제목</th>
-            <th scope="col">작성자</th>
-            <th scope="col">작성일</th>
-            <th scope="col">조회</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="tr"
-            th:each="list : ${list}"
-            th:onclick="|location.href='@{/post/detail(postNo=${list.postNo},clickCount=${list.clickCount})}'|"
-            id="clickCount"
-          >
-            <td th:text="${list.postNo}"></td>
-            <td th:text="${list.title}"></td>
-            <td th:text="${list.writer}"></td>
-            <td
-              th:text="${ #temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm') }"
-            ></td>
-            <td th:text="${list.clickCount}"></td>
-          </tr>
-        </tbody>
+      
+        <table class="table table-hover">
+          <thead>
+            <tr class="tr">
+              <th scope="col">글 번호</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">작성일</th>
+              <th scope="col">조회</th>
+            </tr>
+          </thead>
+          <th:block th:if="${searchResult} == 1">
+          <tbody>
+            <tr
+              class="tr"
+              th:each="list : ${list}"
+              th:onclick="|location.href='@{/post/detail(postNo=${list.postNo},clickCount=${list.clickCount})}'|"
+              id="clickCount"
+            >
+              <td th:text="${list.postNo}"></td>
+              <td th:text="${list.title}"></td>
+              <td th:text="${list.writer}"></td>
+              <td
+                th:text="${ #temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm') }"
+              ></td>
+              <td th:text="${list.clickCount}"></td>
+            </tr>
+          </tbody>
+        </th:block>
+        <th:block th:if="${searchResult}==0">
+          <tbody>
+            <tr>
+              <td colspan="5">
+                <p id="noResult">등록된 게시글이 없습니다.</p>
+              </td>
+            </tr>
+          </tbody>
+        </th:block>
       </table>
+      
+      
 
       <!-- 검색기능 -->
       <div id="formDiv" class="row">
@@ -57,6 +71,12 @@
               placeholder="검색어를 입력해주세요"
               th:value="${param.searchText}"
             />
+            <th:block th:if="${address} != '전국' ">
+                <input type="hidden" th:value="${#authentication.principal.address}" name="address"/>
+            </th:block>
+            <th:block th:if="${address} == '전국' ">
+                <input type="hidden" th:value="${address}" name="address"/>
+            </th:block>
           </div>
           <div>
             <button id="btnSearch" type="submit" class="btn searchButton">
@@ -70,9 +90,16 @@
           <div class="createButton">
             <a type="button" class="btn" th:href="@{/post/create}">글 작성</a>
           </div>
-          <div class="listButton">
-            <a type="button" class="btn" th:href="@{/post/list}">전체 목록</a>
-          </div>
+          <th:block th:if="${address} != '전국'">
+            <div class="listButton">
+              <a type="button" class="btn" th:href="@{/post/list?address={address} (address=${#authentication.principal.address})}">전체 목록</a>
+            </div>
+          </th:block>
+          <th:block th:if="${address} == '전국'">
+            <div class="listButton">
+              <a type="button" class="btn" th:href="@{/post/list?address={address} (address=${address})}">전체 목록</a>
+            </div>
+          </th:block>
         </div>
       </div>
       <!--end.formDiv-->
@@ -87,7 +114,7 @@
             <th:block th:if="${searchText==''}">
               <a
                 class="page-link"
-                th:href="@{/post/list(page=${list.pageable.pageNumber-1})}"
+                th:href="@{/post/list(page=${list.pageable.pageNumber-1},address=${address})}"
                 tabindex="-1"
                 ><span aria-hidden="true">&laquo;</span></a
               >
@@ -95,7 +122,7 @@
             <th:block th:if="${searchText !=''}">
               <a
                 class="page-link"
-                th:href="@{/post/list(page=${list.pageable.pageNumber-1},searchText=${searchText})}"
+                th:href="@{/post/list(page=${list.pageable.pageNumber-1},searchText=${searchText},address=${address})}"
                 tabindex="-1"
                 ><span aria-hidden="true">&laquo;</span></a
               >
@@ -110,14 +137,14 @@
               <a
                 class="page-link"
                 th:text="${i}"
-                th:href="@{/post/list(page=${i-1})}"
+                th:href="@{/post/list(page=${i-1},address=${address})}"
               ></a>
             </th:block>
             <th:block th:if="${searchText!=''}">
               <a
                 class="page-link"
                 th:text="${i}"
-                th:href="@{/post/list(page=${i-1},searchText=${searchText})}"
+                th:href="@{/post/list(page=${i-1},searchText=${searchText},address=${address})}"
               ></a>
             </th:block>
           </li>
@@ -128,7 +155,7 @@
             <th:block th:if="${searchText==''}">
               <a
                 class="page-link"
-                th:href="@{/post/list(page=${list.pageable.pageNumber+1})}"
+                th:href="@{/post/list(page=${list.pageable.pageNumber+1},address=${address})}"
                 tabindex="-1"
                 ><span aria-hidden="true">&raquo;</span></a
               >
@@ -136,7 +163,7 @@
             <th:block th:if="${searchText !=''}">
               <a
                 class="page-link"
-                th:href="@{/post/list(page=${list.pageable.pageNumber+1},searchText=${searchText})}"
+                th:href="@{/post/list(page=${list.pageable.pageNumber+1},searchText=${searchText},address=${address})}"
                 tabindex="-1"
                 ><span aria-hidden="true">&raquo;</span></a
               >

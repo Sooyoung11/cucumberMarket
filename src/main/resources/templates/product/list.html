@@ -136,15 +136,17 @@
 
                 </div>
             </div>
+            <!-- 검색 결과 없으면 -->
+            <th:block th:if="${ result } == 'nok' ">
+                <p style="border-top:1px solid #ccc; border-bottom: 1px solid #ccc; padding: 30px; margin-top:10px;" class="text-center">검색 결과가 없습니다.</p>
+            </th:block>
+
             <!-- 상품 등록 -->
             <div>
                 <a th:href="@{/product/create}" class="btn" style="background:#e6f3e6; width:100px; height:35px; display:inline-block; margin-left:93%;">상품 등록</a>
             </div>
 
-            <!-- 검색 결과 없으면 -->
-<!--            <th:block th:if="${ result } == 'nok' ">-->
-<!--                <p>검색 결과가 없습니다.</p>-->
-<!--            </th:block>-->
+
 
 
 <!--            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">-->

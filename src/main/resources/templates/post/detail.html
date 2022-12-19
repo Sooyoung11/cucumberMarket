@@ -41,9 +41,9 @@
                   <b>삭제</b>
                 </button>
               </th:block>
-              <button type="button" class="btn btn-light list" id="gotoList">
+              <a type="button" class="btn btn-light list" th:href="@{/post/list?address={address} (address=${#authentication.principal.address})}">
                 <b>목록</b>
-              </button>
+              </a>
             </div>
             <!--수정,삭제,목록 버튼-->
           </div>

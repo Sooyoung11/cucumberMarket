@@ -53,6 +53,15 @@ public class ProductController {
         }
         log.info("list = {}", list);
 
+        String result;
+        if(list.isEmpty() == true) { // 리스트가 비어있으면
+            log.info("nok");
+            result = "nok";
+        } else {
+            log.info("ok");
+            result = "ok";
+        }
+
         int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
         int startPage = Math.max(1, nowPage - 2);
         int endPage =  Math.min(nowPage + 2, list.getTotalPages());
@@ -65,6 +74,7 @@ public class ProductController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
+        model.addAttribute("result", result);
         model.addAttribute("type", type);
         model.addAttribute("list", list);
 
@@ -81,6 +91,7 @@ public class ProductController {
         return "/product/list";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/detail")
     public String detail(Integer productNo, Model model, HttpSession session) {
         log.info("datail(productNo = {})", productNo);
