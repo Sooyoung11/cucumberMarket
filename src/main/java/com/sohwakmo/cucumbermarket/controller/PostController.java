@@ -39,7 +39,7 @@ public class    PostController {
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 10, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable,
-                       @RequestParam(required = false,defaultValue = "")String searchText, String address){
+                       @RequestParam(required = false,defaultValue = "")String searchText, @RequestParam(required = false,defaultValue = "전국") String address){
         String memberAddress[] = address.split(" ");
         List<PostReadDto> list = postService.searchPost(searchText,memberAddress[0]);
         final int start = (int)pageable.getOffset();

@@ -57,7 +57,12 @@
               placeholder="검색어를 입력해주세요"
               th:value="${param.searchText}"
             />
-            <input type="hidden" th:value="${#authentication.principal.address}" name="address"/>
+            <th:block th:if="${address} != '전국' ">
+                <input type="hidden" th:value="${#authentication.principal.address}" name="address"/>
+            </th:block>
+            <th:block th:if="${address} == '전국' ">
+                <input type="hidden" th:value="${address}" name="address"/>
+            </th:block>
           </div>
           <div>
             <button id="btnSearch" type="submit" class="btn searchButton">
@@ -71,9 +76,16 @@
           <div class="createButton">
             <a type="button" class="btn" th:href="@{/post/create}">글 작성</a>
           </div>
-          <div class="listButton">
-            <a type="button" class="btn" th:href="@{/post/list?address={address} (address=${#authentication.principal.address})}">전체 목록</a>
-          </div>
+          <th:block th:if="${address} != '전국'">
+            <div class="listButton">
+              <a type="button" class="btn" th:href="@{/post/list?address={address} (address=${#authentication.principal.address})}">전체 목록</a>
+            </div>
+          </th:block>
+          <th:block th:if="${address} == '전국'">
+            <div class="listButton">
+              <a type="button" class="btn" th:href="@{/post/list?address={address} (address=${address})}">전체 목록</a>
+            </div>
+          </th:block>
         </div>
       </div>
       <!--end.formDiv-->

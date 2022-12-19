@@ -50,14 +50,22 @@ public class PostService {
         List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText,searchText);
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
-            String memberAddress = p.getMember().getAddress();
-            String memberDetailAddress[] = memberAddress.split(" ");
-            if(memberDetailAddress[0].equals(address)){
+            if(address.equals("전국")){
                 Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
                 PostReadDto dto = PostReadDto.builder()
                         .postNo(p.getPostNo()).title(p.getTitle()).writer(member.getNickname()).createdTime(p.getCreatedTime()).clickCount(p.getClickCount())
                         .build();
                 list.add(dto);
+            }else {
+                String memberAddress = p.getMember().getAddress();
+                String memberDetailAddress[] = memberAddress.split(" ");
+                if (memberDetailAddress[0].equals(address)) {
+                    Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
+                    PostReadDto dto = PostReadDto.builder()
+                            .postNo(p.getPostNo()).title(p.getTitle()).writer(member.getNickname()).createdTime(p.getCreatedTime()).clickCount(p.getClickCount())
+                            .build();
+                    list.add(dto);
+                }
             }
         }
         return list;
