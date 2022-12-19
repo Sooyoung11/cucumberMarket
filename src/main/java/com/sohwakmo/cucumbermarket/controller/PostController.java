@@ -39,8 +39,9 @@ public class    PostController {
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 10, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable,
-                       @RequestParam(required = false,defaultValue = "")String searchText){
-        List<PostReadDto> list = postService.searchPost(searchText);
+                       @RequestParam(required = false,defaultValue = "")String searchText, String address){
+        String memberAddress[] = address.split(" ");
+        List<PostReadDto> list = postService.searchPost(searchText,memberAddress[0]);
         final int start = (int)pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), list.size());
         final Page<PostReadDto> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
