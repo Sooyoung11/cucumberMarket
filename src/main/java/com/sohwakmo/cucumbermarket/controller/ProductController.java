@@ -106,8 +106,11 @@ public class ProductController {
         // 최근 본 목록
         String productNo1 = product.getProductNo().toString(); // 상품 번호
         String photo = product.getPhotoUrl1(); // 상품 사진
+        log.info("productNo1 = {}", productNo1);
+        log.info("photo = {}", photo);
 
         ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
+        log.info("productList = {}", productlist);
 
         // 최근 본 상품 생성
         if(productlist==null ) {
@@ -117,18 +120,20 @@ public class ProductController {
 //            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
         }
 
+
+
         // 최근 본 상품 3개로 제한두기
         if(productlist.size() > 5){
             productlist.remove(0);
-            productlist.remove(1);
+            productlist.remove(0);
 
             // 사진이 default 값이면
             if(photo == null){
-                productlist.add(0, "/images/product/noimg.png");
-                productlist.add(1, productNo1);
+                productlist.add(4, "/images/product/noimg.png");
+                productlist.add(5, productNo1);
             }else{
-                productlist.add(0, photo);
-                productlist.add(1, productNo1);
+                productlist.add(4, photo);
+                productlist.add(5, productNo1);
             }
 
         } else {
