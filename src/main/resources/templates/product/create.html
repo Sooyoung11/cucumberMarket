@@ -4,40 +4,37 @@
       layout:decorate="~{ layout/layout.html }">
 
 <div layout:fragment="content">
-  <div class="container">
-    <div class="list-group-item text-center fw-normal p-3 mb-2 bg-secondary text-dark bg-opacity-10" >
+  <div class="container my-2">
+    <div class="list-group">
+    <div class="list-group-item text-center font-italic h4 pb-3 pt-5 mb-4 border border-white" style="background-color: #e6f3e6">
       <h1>상품 등록</h1>
     </div>
 
-    <div class="list-group list-group-flush">
       <form method="post" enctype="multipart/form-data" action="/product/create" name="fromCreate">
-        <div class="my-2 mb-3">
+        <div class="p-3 border-bottom">
           <input type="hidden" name="memberNo" th:value="${#authentication.principal.memberNo}" />    <!-- 멤버 -->
-          <label for="title" class="form-label fst-italic">제목</label>
-          <input id="title" class="form-control" maxlength="50"
-                 type="text" name="title" placeholder="제목을 입력해 주세요." required autofocus />
+          <label for="title" class="font-weight-bold" style=" width: 150px; " >제목</label>
+          <input id="title" class="align-text-top shadow-sm p-3 mb-5 bg-body rounded border border-gray" style="width: 1000px; height: 50px;" maxlength="50"
+                 type="text" name="title" placeholder="제목을 입력해주세요." required autofocus />
         </div>
-        <div class="mb-3">
-          <label for="content" class="form-label fst-italic" >내용</label>
-          <textarea rows="5" cols="80" id="content" class="form-control" minlength="5"
-                    name="content" placeholder="내용을 입력해 주세요." required ></textarea>
+        <div class="p-3 mt-2 border-bottom">
+          <label for="content" class="font-weight-bold" style="width: 150px; " >내용</label>
+          <textarea rows="5" cols="80" id="content" class="align-text-top shadow-sm p-3 mb-5 mt-2 bg-body rounded border border-gray" style="width: 1000px; height: 200px;" minlength="5"
+                    name="content" placeholder="내용을 입력해주세요." required ></textarea>
         </div>
-        <div class="mb-3">
-          <label for="price" class="form-label fst-italic">가격</label>
-          <div class="my-2 input-group">
-            <input  id="price" class="form-control" size="10"
-                    type="number" name="price" placeholder="가격을 입력해 주세요." required />
-            <span class="input-group-text">원</span>
-          </div>
+        <div class="p-3 border-bottom">
+          <label for="price" class="font-weight-bold" style=" width: 150px; ">가격</label>
+            <input  id="price" class=" shadow-sm p-3 mb-5 bg-body rounded border border-gray" style="width: 200px; height: 50px;" size="10"
+                    type="number" name="price" placeholder="가격을 입력해주세요." required />
+              <span class="mt-auto m-2 pb-3 pt-xl-5">원</span>
+            </div>
           <div>
               <input type="hidden" name="clickCount" th:value="0"/>    <!-- 조회수 0으로 시작.. -->
               <input type="hidden" name="likeCount" th:value="0" />    <!-- 찜 0으로 시작 -->
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="category" class="form-label fst-italic">카테고리</label>
-          <select id="category" class="form-select" name="category">
-            <option>카테고리 선택</option>
+        <div class="p-3 mt-3 border-bottom">
+          <select id="category" class="form-select shadow-sm p-3 mb-5 bg-body rounded" style="width: 1150px;" name="category">
+            <option>카테고리를 선택해주세요.</option>
             <option value="디지털기기">디지털기기</option>
             <option value="생활가전/주방">생활가전/주방</option>
             <option value="유아용품">유아용품</option>
@@ -51,27 +48,28 @@
             <option value="기타">기타</option>
           </select>
         </div>
-        <div class="my-2 input-group mb-3">
+        <div class="p-3 input-group mb-3 border-bottom">
           <div class="uploadImg">
-              <input id="imgUpload" class="form-control" name="imgFile"
-                     type="file" multiple="multiple" onchange="fileCheck(this)" accept="image/jpeg, image/png"/>
+              <label for="price" class="font-weight-bold" style=" width: 150px; ">상품이미지</label>
+            <div class="list-group-item text-center" style="margin-left: 100px;">
+                  <img id="view" src="/images/product/images.png"  style="width: 200px; height: 200px;">
+              <div class="input-group">
+                  <input id="imgUpload" class="p-3 bg-body" style=" height: 50px; margin-left: 70px; " name="imgFile"
+                        type="file" multiple="multiple" onchange="setThumbnail(this);" accept="image/jpeg, image/png"/>
+               </div>
+            </div>
           </div>
         </div>
-
-        <div class="my-2 mb-3">
-          <label class="form-label fst-italic">거래 희망 장소</label>
-          <div>
-            <P>
-              우편번호 : <input type="text" id="openZip" name="openZip" style="width:80px; height:26px;" required/>
-              <button type="button" style="width:60px; height:32px;" class="btn btn-outline-secondary" onclick="openZipSearch()">검색</button><br>
-              주소 : <input type="text" id="dealAddress" name="dealAddress" class="form-control" style="width:300px; height:30px;" required readonly /><br>
-            </P>
-         </div>
+        <div class="pt-3">
+            <label class="font-weight-bold" style="width: 150px; ">거래 희망 장소</label>
+                <input type="text" id="openZip" name="openZip" class="text-center bg-light" style="width:100px; height:30px;" required/>
+                <button type="button" style="width:100px; height:32px;" class="btn btn-outline-secondary" onclick="openZipSearch()">주소찾기</button><br>
+            <label style="width: 150px;"></label>
+                <input type="text" id="dealAddress" name="dealAddress" class="mt-3 shadow-sm p-3 mb-2 bg-body rounded border border-gray" style="width:400px; height:30px;" required readonly /><br>
         </div>
-
-        <div class="my-1 input-group mb-2">
-          <button type="submit" class="btn btn-outline-success" id="createBtn">등록</button>
-          <a class="btn btn-outline-secondary" href="/product/list">취소</a>
+        <div class="input-group pb-3 justify-content-md-end">
+          <button type="submit" class="btn btn-outline-success" style="height: 35px; " id="createBtn">등록</button>
+          <a class="btn btn-outline-secondary" href="/product/list" id="cancelCreate" style="height: 35px;">취소</a>
         </div>
       </form>
     </div>
@@ -79,6 +77,25 @@
 </div>
 
 <th:block layout:fragment="script">
+  <!-- 이미지 미리보기-->
+  <script src="http://madalla.kr/js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $("#imgUpload").on('change', function() {
+        readURL(this);
+      });
+    });
+    function readURL(input){
+      if(input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#view').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
+
   <!-- 우편번호 -->
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script>
@@ -93,6 +110,8 @@
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <scropt type="text/javascript"></scropt>
+<!--  <script src="https://code.jquery-2.1.0.min,js"></script>-->
 
   <script th:src="@{ /js/productCreate.js }" th:inline="javascript"></script>
 </th:block>

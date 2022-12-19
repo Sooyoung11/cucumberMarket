@@ -1,32 +1,49 @@
 // 파일 확장자
-function fileCheck(event) {
+function setThumbnail(event) {
     pathpoint = event.value.lastIndexOf('.');
-    filepoint = event.value.substring(pathpoint+1, event.length);
-    filetype=filepoint.toLowerCase();
-    if(filetype=='jpg'||filetype=='png'||filetype=='jpeg'){
+    filepoint = event.value.substring(pathpoint + 1, event.length);
+    filetype = filepoint.toLowerCase();
+    if (filetype == 'jpg' || filetype == 'png' || filetype == 'jpeg') {
 
         return true;
     } else {
         alert('첨부파일은 jpg,png,jpeg로 된 이미지만 가능합니다.')
         parentObj = event.parentNode
-        node = parentObj.replaceChild(event.cloneNode(true),event);
+        node = parentObj.replaceChild(event.cloneNode(true), event);
         return false;
     }
-
-
-
-
-
-    // 이미지 미리보기
-    // let i = event.target.files.length-1;
-    // for(let image of event.target.files){
-    //     let img = document.createElement("img");
-    //     const reader = new FileReader();
-    //     reader.onload = function (event){
-    //         img.setAttribute("src",event.target.result);
-    //     }
-    //     reader.readAsDataURL(event.target.files[i--]);
-    //     document.querySelector("#imgUpload").appendChild(img);
-    // }
 }
 
+const fromCreate = document.querySelector('#fromCreate');
+const createBtn = document.querySelector('#createBtn')
+createBtn.addEventListener('click', function() {
+    const imgUpload = document.querySelector('#imgUpload').value;
+    const title = document.querySelector('#title').value;
+    const content = document.querySelector('#content').text;
+    const price = document.querySelector('#price').value;
+    const category = document.querySelector('#category').value;
+    if  (title === '') {
+        alert('제목을 입력해주세요..')
+        return;
+    } else if (content === '') {
+        alert('내용을 입력해주세요.')
+        return;
+    } else if (price === '') {
+        alert('가격을 입력해주세요.')
+        return;
+    } else if (category === '') {
+        alert('카테고리를 입력해주세요.')
+        return;
+    }
+    const result = confirm('등록하시겠습니까?')
+    if(result) {
+        form.action = '/product/create';
+        form.method = 'post';
+        form.submit();
+    }
+});
+const cancelCreate = document.querySelector('#cancelCreate');
+cancelCreate.addEventListener('click', function () {
+    const result = confirm('등록을 취소하시겠습니까?')
+
+});

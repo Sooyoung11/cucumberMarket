@@ -192,6 +192,9 @@ public class ProductController {
             startPage =1;
             endPage =1;
         }
+        if(nowPage == 1 || nowPage ==2 || nowPage ==3){
+            endPage =5;
+        }
 
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
