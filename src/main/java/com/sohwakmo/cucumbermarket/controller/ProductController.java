@@ -62,6 +62,7 @@ public class ProductController {
             result = "ok";
         }
 
+
         int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
         int startPage = Math.max(1, nowPage - 2);
         int endPage =  Math.min(nowPage + 2, list.getTotalPages());
@@ -69,6 +70,11 @@ public class ProductController {
             startPage =1;
             endPage =1;
         }
+
+
+
+
+
 
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);

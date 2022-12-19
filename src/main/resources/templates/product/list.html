@@ -158,16 +158,15 @@
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">
                         <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1}, type=${param.type}, keyword=${param.keyword})}" tabindex="-1" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
+                            <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
-
-                            <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'" th:each="num : ${#numbers.sequence(startPage, endPage)}">
-                                <a class="page-link" th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
+                            <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'"  th:each="num : ${#numbers.sequence(startPage, endPage)}">
+                                <a class="page-link"  style="background-color: white; color: black; border-color: #dee2e6;" th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
                             </li>
                     <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
                         <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
+                            <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                 </ul>
