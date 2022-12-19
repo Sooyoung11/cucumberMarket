@@ -355,8 +355,32 @@
 	<th:block layout:fragment="script">
 		<script type="text/javascript">
 			function doPopupopen(){
-				window.open("/popup", "popup", "width=500, height=650");
+				if(checkPopupCookie("koreaMap1") != "Y") {
+					window.open("/popup", "popup", "width=500, height=650, top=70, left=70");
+				}
+
 			}
+
+			//쿠키 불러오기
+			function checkPopupCookie(name){
+				var obj = name + "=";
+				var x = 0;
+				while ( x <= document.cookie.length )
+				{
+					var y = (x+obj.length);
+					if ( document.cookie.substring( x, y ) == obj )
+					{
+						if ((endOfCookie=document.cookie.indexOf( ";", y )) == -1 )
+							endOfCookie = document.cookie.length;
+						return unescape( document.cookie.substring( y, endOfCookie ) );
+					}
+					x = document.cookie.indexOf( " ", x ) + 1;
+
+					if ( x == 0 ) break;
+				}
+				return "";
+			}
+
 		</script>
 	</th:block>
 
