@@ -52,6 +52,7 @@ public class    PostController {
             endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
         }
         int a = page.getPageable().getPageNumber();
+        model.addAttribute("address", address);
         model.addAttribute("searchText", searchText);
         model.addAttribute("list", page);
         model.addAttribute("startPage", strtPage);
