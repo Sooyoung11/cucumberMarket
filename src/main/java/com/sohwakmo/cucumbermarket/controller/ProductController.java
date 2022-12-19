@@ -24,10 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Slf4j
@@ -99,7 +96,7 @@ public class ProductController {
 
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/detail")
-    public String detail(Integer productNo, Model model, HttpSession session) {
+    public String detail(Integer productNo, Model model,Integer memberNo, HttpSession session) {
         log.info("datail(productNo = {})", productNo);
 
         Product product = productService.detail(productNo);
@@ -112,11 +109,8 @@ public class ProductController {
         // 최근 본 목록
         String productNo1 = product.getProductNo().toString(); // 상품 번호
         String photo = product.getPhotoUrl1(); // 상품 사진
-        log.info("productNo1 = {}", productNo1);
-        log.info("photo = {}", photo);
 
         ArrayList<String> productlist = (ArrayList) session.getAttribute("productlist");
-        log.info("productList = {}", productlist);
 
         // 최근 본 상품 생성
         if(productlist==null ) {
@@ -125,8 +119,6 @@ public class ProductController {
             session.setAttribute("productlist",productlist);
 //            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
         }
-
-
 
         // 최근 본 상품 3개로 제한두기
         if(productlist.size() > 5){
@@ -152,9 +144,11 @@ public class ProductController {
                 productlist.add(photo);
                 productlist.add(productNo1);
             }
-        }
-//        log.info("list8888= {}", productlist.get(1));
-        log.info("list888={}", productlist);
+        };
+
+        log.info("리스트={}",productlist);
+
+
 
         return "/product/detail";
     }

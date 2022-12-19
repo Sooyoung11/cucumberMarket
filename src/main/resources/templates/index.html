@@ -119,9 +119,9 @@
 					<body>
 						<div class="sideBanner " style="text-align: center">
 							<!--찜 하트 수-->
-							<div class="favorites my-4">
+							<div class="favorites my-2">
 								<div class="favoritesText" >찜한상품</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800" style="display: inline-block" >
+								<div class="h5 font-weight-bold text-gray-800" style="display: inline-block" >
 									<a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
 										<i class="fas fa-heart"></i>&nbsp;<div th:text="${interestedList}" ></div>
 									</a>
@@ -133,47 +133,42 @@
 							<!-- 최근 본 상품 시작 -->
 							<div class="recently">
 								<div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 10px;">최근본상품</div>
-								<div class="recentlyProduct"  >
-									<span id="recentlyCnt2"></span>
-									<!-- 최근본상품  -->
-									<div id="recentlyArea2"  >
-<!--										<a id="recentlyList2">-->
-<!--											<div style ="text-align:center; padding-bottom: 5px;" >-->
-<!--												<div th:if="${session.productlist} != null ">-->
-<!--													<a  th:href="@{product/detail(productNo=${session.productlist.get(1)})}">-->
-<!--														<img th:src="@{${session.productlist.get(0)}}"  width="150px" height="100px" border="1px"/>-->
-<!--													</a>-->
-<!--												</div>-->
-<!--											</div>-->
-<!--											<div style ="text-align:center; padding-bottom: 5px;" >-->
-<!--													<div th:if="${session.productlist.size()} > 2">-->
-<!--														<a  th:href="@{product/detail(productNo=${session.productlist.get(3)})}">-->
-<!--																<img th:src="@{${session.productlist.get(2)}}"  width="150px" height="100px" border="1px"/>-->
-<!--														</a>-->
-<!--													</div>-->
-<!--											</div>-->
-<!--											<div style ="text-align:center; padding-bottom: 5px;" >-->
-<!--											<div th:if="${session.productlist.size()} > 4">-->
-<!--												<a  th:href="@{product/detail(productNo=${session.productlist.get(5)})}">-->
-<!--													<img th:src="@{${session.productlist.get(4)}}"  width="150px" height="100px" border="1px"/>-->
-<!--												</a>-->
-<!--											</div>-->
-<!--										</div>-->
-<!--											</a>-->
+									<div class="recentlyProduct"  >
+										<span id="recentlyCnt2"></span>
+										<!-- 최근본상품  -->
+										<div id="recentlyArea2"  >
+											<a id="recentlyList2">
+												<div th:if="${session.productlist} != null ">
+													<div style ="text-align:center; padding-bottom: 5px;" >
+														<div th:if="${session.productlist.size()} > 4">
+															<a  th:href="@{product/detail(productNo=${session.productlist.get(5)})}">
+																<img th:src="@{${session.productlist.get(4)}}" width="140px" height="90px"  border="1px"/>
+															</a>
+														</div>
+													</div>
+													<div style ="text-align:center; padding-bottom: 5px;" >
+														<div th:if="${session.productlist.size()} > 2">
+															<a  th:href="@{product/detail(productNo=${session.productlist.get(3)})}">
+																<img th:src="@{${session.productlist.get(2)}}"  width="140px" height="90px" border="1px"/>
+															</a>
+														</div>
+													</div>
+														<div style ="text-align:center; padding-bottom: 5px;" >
+															<a  th:href="@{product/detail(productNo=${session.productlist.get(1)})}">
+																	<img th:src="@{${session.productlist.get(0)}}"  width="140px" height="90px" border="1px"/>
+															</a>
+														</div>
+												</div>
+											</a>
 										</div>
 									</div>
 								</div>
-								<div id="recentlyPaging2" style="text-align: center;">
-									<button id="recentlySubPage2" class="btn subpage"
-											onclick="recentlySubPage()"></button>
-									<a id="currentPage2"></a>
-									<button id="recentlyAddPage2" class="btn addpage" onclick="recentlyAddPage()"></button>
-								</div>
-							</div>
+							<br />
 							<!-- 최근 본 상품 끝 -->
 							<div class="totheTop">
 								<a href="#" class="topText">TOP</a>
 							</div>
+						</div>
 					</body>
 				</div> <!-- 사이드 배너 끝 -->
 

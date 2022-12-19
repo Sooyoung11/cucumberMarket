@@ -135,14 +135,14 @@
           >
             <th:block th:if="${searchText==''}">
               <a
-                class="page-link"
+                class="page-link currentPage"
                 th:text="${i}"
                 th:href="@{/post/list(page=${i-1},address=${address})}"
               ></a>
             </th:block>
             <th:block th:if="${searchText!=''}">
               <a
-                class="page-link"
+                class="page-link currentPage"
                 th:text="${i}"
                 th:href="@{/post/list(page=${i-1},searchText=${searchText},address=${address})}"
               ></a>

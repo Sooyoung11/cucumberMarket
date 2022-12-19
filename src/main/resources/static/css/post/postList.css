@@ -55,3 +55,11 @@
   padding: 38px;
   font-size: 15px;
 }
+
+.currentPage{
+  color: green;
+}
+
+.currentPage:hover{
+  text-decoration: underline;
+}

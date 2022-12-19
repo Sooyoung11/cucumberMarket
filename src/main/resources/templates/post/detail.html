@@ -79,6 +79,7 @@
               <span th:text="'조회 '+${post.clickCount}" style="color: #979797"
                 >조회수</span
               >
+              <span th:text="${#temporals.format(post.createdTime, 'yyyy-MM-dd-HH-mm-ss') }" id="createTime" style="color:#aaa; font-size:12px;"></span>
               <br />
               <th:block th:if="${nickname}!=${#authentication.principal.nickname}">
                 <a type="button" id="gotoChat"><b>1대1채팅</b></a>
@@ -280,5 +281,6 @@
         );
       });
     </script>
+    <script th:src="@{/js/productCreateTime.js}"></script>
   </th:block>
 </html>
