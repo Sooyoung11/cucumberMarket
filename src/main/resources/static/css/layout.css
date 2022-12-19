@@ -36,10 +36,10 @@ body { height: 2000px; }
 .sideBanner {
     position: fixed;
     width: 180px;
-    height: 500px;
+    height: 40%;
     top: 45%;
     margin: 50px;
     background-color:#F5F5F5;
     right: 0px;
-
+    border-radius: 30px;
 }
