@@ -89,7 +89,7 @@ public class    PostController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
-    public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
+    public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files,RedirectAttributes attrs) throws Exception {
 
         Member member = memberService.findMemberByMemberNo(memberNo);
 
@@ -108,6 +108,7 @@ public class    PostController {
                 Post newPost=postService.createPost(post,multipartFile);
             }
         }
+        attrs.addAttribute("address", member.getAddress());
         return "redirect:/post/list";
     }
 
