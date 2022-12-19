@@ -2,6 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout.html }">
+    <head>
+    <title>오이마켓 | 중고거래</title>
+    </head>
 
     <div layout:fragment="content">
         <th:block sec:authorize="isAuthenticated()">
@@ -63,14 +66,21 @@
             </div> <!-- 사이드 배너 끝 -->
         </th:block><!--end.isAuthenticated-->
 
-        <div class="card my-2 container" style="border:none;">
+        <div class="container" style="padding: 0;">
             <!-- 타이틀 -->
 <!--            <div class="card-header text-center">-->
 <!--                <h1 style="text-center">상품 목록 페이지</h1>-->
 <!--            </div>-->
-            <div class="my-2" style="width:100%; height:50px; background:#e6f3e6;">
-                <div></div>
+             <!--bannerSection-->
+            <div id="bannerSection" 
+                style="width: 100%; height: 200px; background: #e6f3e6; margin-bottom: 60px;">
+                <div id="bannerSectionWrap"
+                    style="width: 100%; height: 100%; position: relative; background-image: url('/assets/productBanner.jpg');">
+                <h1></h1>
+                <p></p>
+                </div>
             </div>
+            <!--end.bannerSection-->
 
             <!-- 검색 -->
             <div class="my-2" style="margin: 0 auto;">
