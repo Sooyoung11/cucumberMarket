@@ -72,7 +72,7 @@
             <a type="button" class="btn" th:href="@{/post/create}">글 작성</a>
           </div>
           <div class="listButton">
-            <a type="button" class="btn" th:href="@{/post/list}">전체 목록</a>
+            <a type="button" class="btn" th:href="@{/post/list?address={address} (address=${#authentication.principal.address})}">전체 목록</a>
           </div>
         </div>
       </div>

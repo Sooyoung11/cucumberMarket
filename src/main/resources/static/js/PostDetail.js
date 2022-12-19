@@ -20,9 +20,4 @@ window.addEventListener("DOMContentLoaded", (event) => {
   });
 });
 
-const gotoList = document.querySelector("#gotoList");
-gotoList.addEventListener("click", function () {
-  form.action = "/post/list"; // 제출 요청 주소
-  form.method = "get"; // 제출 요청 방식
-  form.submit(); // 서버로 제출
-});
+
