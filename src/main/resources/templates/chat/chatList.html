@@ -11,15 +11,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
     />
+    <title>오이마켓 | 채팅</title>
     <!-- CSS -->
     <link
       rel="stylesheet"
       href="/webjars/bootstrap/4.3.1/dist/css/bootstrap.min.css"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dokdo&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/chat/chatList.css}" />
   </head>
   <body onunload="close_reload()">
-    <h1>채팅방목록</h1>
+    <h1 style="font-family:'Dokdo',cursive; font-size:36px; margin-top: 16px;
+    color:#198754; line-height:.6em;">cucumber<br>market</h1>
     <div class="container menu">
       <div>
         <ul th:each="room : ${list}" class="list-group" id="chatListGroup">

@@ -1,5 +1,6 @@
 .container{padding: 0;}
 #bannerSection{width: 100%; height: 200px; background: #e6f3e6; margin-bottom: 60px;}
+#bannerSectionWrap{width: 100%; height: 100%; position: relative; background-image: url("/assets/postBanner.jpg");}
 .table{margin-bottom: 80px;}
 .tr{text-align: center;}
 .tr th:nth-child(1){width: 12%;}
