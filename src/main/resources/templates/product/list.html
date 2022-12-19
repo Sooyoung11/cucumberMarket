@@ -31,20 +31,20 @@
                                     <div th:if="${session.productlist} != null ">
                                         <div style ="text-align:center; padding-bottom: 5px;" >
                                             <div th:if="${session.productlist.size()} > 4">
-                                                <a  th:href="@{product/detail(productNo=${session.productlist.get(5)})}">
+                                                <a  th:href="@{detail(productNo=${session.productlist.get(5)})}">
                                                     <img th:src="@{${session.productlist.get(4)}}" width="140px" height="90px"  border="1px"/>
                                                 </a>
                                             </div>
                                         </div>
                                         <div style ="text-align:center; padding-bottom: 5px;" >
                                             <div th:if="${session.productlist.size()} > 2">
-                                                <a  th:href="@{product/detail(productNo=${session.productlist.get(3)})}">
+                                                <a  th:href="@{detail(productNo=${session.productlist.get(3)})}">
                                                     <img th:src="@{${session.productlist.get(2)}}"  width="140px" height="90px" border="1px"/>
                                                 </a>
                                             </div>
                                         </div>
                                         <div style ="text-align:center; padding-bottom: 5px;" >
-                                            <a  th:href="@{product/detail(productNo=${session.productlist.get(1)})}">
+                                            <a  th:href="@{detail(productNo=${session.productlist.get(1)})}">
                                                 <img th:src="@{${session.productlist.get(0)}}"  width="140px" height="90px" border="1px"/>
                                             </a>
                                         </div>
