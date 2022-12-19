@@ -42,6 +42,11 @@ public class    PostController {
                        @RequestParam(required = false,defaultValue = "")String searchText, @RequestParam(required = false,defaultValue = "전국") String address){
         String memberAddress[] = address.split(" ");
         List<PostReadDto> list = postService.searchPost(searchText,memberAddress[0]);
+        if(list.size()==0){
+            model.addAttribute("searchResult", 0);
+        }else{
+            model.addAttribute("searchResult", 1);
+        }
         final int start = (int)pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), list.size());
         final Page<PostReadDto> page = new PageImpl<>(list.subList(start, end), pageable, list.size());

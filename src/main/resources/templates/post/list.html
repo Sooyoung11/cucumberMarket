@@ -16,33 +16,47 @@
         <div id="bannerSectionWrap"></div>
       </div>
       <!--end.bannerSection-->
-      <table class="table table-hover">
-        <thead>
-          <tr class="tr">
-            <th scope="col"></th>
-            <th scope="col">제목</th>
-            <th scope="col">작성자</th>
-            <th scope="col">작성일</th>
-            <th scope="col">조회</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="tr"
-            th:each="list : ${list}"
-            th:onclick="|location.href='@{/post/detail(postNo=${list.postNo},clickCount=${list.clickCount})}'|"
-            id="clickCount"
-          >
-            <td th:text="${list.postNo}"></td>
-            <td th:text="${list.title}"></td>
-            <td th:text="${list.writer}"></td>
-            <td
-              th:text="${ #temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm') }"
-            ></td>
-            <td th:text="${list.clickCount}"></td>
-          </tr>
-        </tbody>
+      
+        <table class="table table-hover">
+          <thead>
+            <tr class="tr">
+              <th scope="col">글 번호</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">작성일</th>
+              <th scope="col">조회</th>
+            </tr>
+          </thead>
+          <th:block th:if="${searchResult} == 1">
+          <tbody>
+            <tr
+              class="tr"
+              th:each="list : ${list}"
+              th:onclick="|location.href='@{/post/detail(postNo=${list.postNo},clickCount=${list.clickCount})}'|"
+              id="clickCount"
+            >
+              <td th:text="${list.postNo}"></td>
+              <td th:text="${list.title}"></td>
+              <td th:text="${list.writer}"></td>
+              <td
+                th:text="${ #temporals.format(list.createdTime, 'yyyy-MM-dd HH:mm') }"
+              ></td>
+              <td th:text="${list.clickCount}"></td>
+            </tr>
+          </tbody>
+        </th:block>
+        <th:block th:if="${searchResult}==0">
+          <tbody>
+            <tr>
+              <td colspan="5">
+                <p id="noResult">등록된 게시글이 없습니다.</p>
+              </td>
+            </tr>
+          </tbody>
+        </th:block>
       </table>
+      
+      
 
       <!-- 검색기능 -->
       <div id="formDiv" class="row">
