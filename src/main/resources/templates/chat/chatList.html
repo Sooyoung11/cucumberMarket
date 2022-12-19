@@ -18,7 +18,7 @@
     />
     <link rel="stylesheet" th:href="@{/css/chat/chatList.css}" />
   </head>
-  <body>
+  <body onunload="close_reload()">
     <h1>채팅방목록</h1>
     <div class="container menu">
       <div>
@@ -127,5 +127,10 @@
       src="https://kit.fontawesome.com/cb94ffb39e.js"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function close_reload(){
+        opener.parent.location.reload();
+      }
+      </script> 
   </body>
 </html>
