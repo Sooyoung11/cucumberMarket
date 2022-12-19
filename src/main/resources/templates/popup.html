@@ -37,7 +37,7 @@
     </style>
 </head>
     <body>
-        <div class="koreaMap " className="map">
+        <div  id="popup01" class="koreaMap" className="map">
             <img src="/images/cucumber.jpg" style="display:inline; width: 60px; height: 60px; padding-top: 10px;">
             <h1 style="display:inline;">오이마켓에 오신 것을 환영합니다</h1>
 
@@ -82,7 +82,35 @@
             </map>
         </div>
 
+        <form name="notice_form">
+                <div class="button_area">
+                    <input type='checkbox' name='chkbox' id='todaycloseyn' value='Y'>오늘 하루 이 창을 열지 않음
+                    <a href='#' onclick="javascript:closeWin(1);"><B>[닫기]</B></a>
+                </div>
+        </form>
+
         <script src="https://kit.fontawesome.com/3947f3eba3.js" crossorigin="anonymous"></script>
+        <script>
+            //popup 쿠키 설정
+            function setCookie( name, value, expiredays ) {
+                let todayDate = new Date();
+                todayDate.setDate( todayDate.getDate() + expiredays );
+                document.cookie = name + '=' + escape( value ) + '; path=/; expires=' + todayDate.toGMTString() + ';'
+            }
+
+            //popup 닫기 버튼 클릭시
+            function closeWin(key)
+            {
+                const checkbox = document.querySelector('#todaycloseyn');
+                const popup01 = document.querySelector('#popup01');
+                if(todaycloseyn.checked)
+                {
+                    setCookie('koreaMap'+key, 'Y' , 1 );
+                }
+                window.close();
+            }
+
+        </script>
     </body>
 
 
