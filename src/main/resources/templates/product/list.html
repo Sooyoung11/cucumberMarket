@@ -71,7 +71,7 @@
                     <div class="row">
                         <div class="col-4">
                             <select name="type" class="form-control">
-                                <option value="all">전체 검색</option>
+                                <option>전체 검색</option>
                                 <option value="서울">서울특별시</option>
                                 <option value="부산">부산광역시</option>
                                 <option value="대구">대구 광역시</option>
@@ -148,6 +148,29 @@
 <!--                <strong th:if="${page == nowPage}" th:text="${page}"></strong>-->
 <!--            </th:block>-->
 
+<!--            <nav aria-label="Page navigation example" class="my-3 mb-3">-->
+<!--                <ul class="pagination justify-content-center">-->
+<!--                    <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">-->
+<!--                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1}, type=${param.type}, keyword=${param.keyword})}" tabindex="-1" aria-label="Previous">-->
+<!--                            <span aria-hidden="true">&laquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'" th:each="num : ${#numbers.sequence(startPage, endPage)}">-->
+<!--                        <a class="page-link" th:href="@{/product/list(page=${num -1}, type=${param.type}, keyword=${param.keyword} )}", th:text="${num}">1</a>-->
+<!--                    </li>-->
+<!--&lt;!&ndash;                    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}"> &lt;!&ndash; 수정 필요 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                        <li class="page-item">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <a class="page-link"  th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1}, type=${param.type}, keyword=${param.keyword} )}" th:text="${page}"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <strong class="page-link" th:if="${page == nowPage}" th:text="${page}"></strong>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </th:block>&ndash;&gt;-->
+<!--                    <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">-->
+<!--                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">-->
+<!--                            <span aria-hidden="true">&raquo;</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
             <nav aria-label="Page navigation example" class="my-3 mb-3">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">
@@ -155,10 +178,18 @@
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
+                                        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}"> <!-- 수정 필요 -->
+                                            <li class="page-item">
+                                                <a class="page-link"  th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1}, type=${param.type}, keyword=${param.keyword} )}" th:text="${page}"></a>
+                                                <strong class="page-link" th:if="${page == nowPage}" th:text="${page}"></strong>
+                                            </li>
+                                        </th:block>
 
-                            <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'" th:each="num : ${#numbers.sequence(startPage, endPage)}">
-                                <a class="page-link" th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
-                            </li>
+
+
+<!--                    <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'" th:each="num : ${#numbers.sequence(startPage, endPage)}">-->
+<!--                        <a class="page-link" th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>-->
+<!--                    </li>-->
                     <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
                         <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>

@@ -39,38 +39,122 @@ public class ProductController {
     private final ProductService productService;
     private final MemberService memberService;
 
+//    @GetMapping("/list")
+//    public String list(Model model, Integer memberNo, String type, String keyword,
+//                       @PageableDefault(page = 1, size = 2, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+//        log.info("list()");
+//
+////        Page<Product> list;
+////        if (keyword == null) {
+////            list = productService.read(pageable);
+////        } else {
+////            list = productService.search(type, keyword, pageable);
+////        }
+////
+////        int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
+//////        int startPage = Math.min(nowPage -2, list.getTotalPages());
+////        int startPage = Math.max(1, nowPage-2);
+////        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
+////        if(startPage <= 0 || endPage <=0){
+////            startPage =1;
+////            endPage =1;
+////        }
+////            if (nowPage == 1 || nowPage == 2 || nowPage == 3) {
+////                endPage = 5;
+////            }
+//
+//        Page<Product> list;
+//
+//        if (keyword == null) {
+//            list = productService.read(pageable);
+//        } else {
+//            list = productService.search(type, keyword, pageable);
+//        }
+//        log.info("list = {}", list);
+//
+//        int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
+//        int startPage = Math.max(1, nowPage - 2);
+//        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
+//        if(startPage <= 0 || endPage <=0){
+//            startPage =1;
+//            endPage =1;
+//        }
+//
+//        model.addAttribute("nowPage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
+//
+//        model.addAttribute("type", type);
+//        model.addAttribute("list", list);
+////        String result;
+////        if( list.size() == 0) { // 검색 결과가 없으면
+////            result = "nok";
+////        } else {
+////            result = "ok";
+////        }
+////        model.addAttribute("result", result);
+//
+//        // 찜 개수
+//        Integer interestedCount = 0;
+//        List<Product> likeList = productService.interestedRead(memberNo);
+//
+//        if(likeList.size() != 0)
+//            interestedCount = likeList.size();
+//
+//        model.addAttribute("interestedList",interestedCount);
+//
+//        return "/product/list";
+//    }
+//
+////    @GetMapping("/search")
+////    public String search(String type, String keyword, Model model,  @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+////        log.info("search(type = {}, keyword = {})", type, keyword);
+////
+////        Page<Product> list = productService.search(type, keyword, pageable);
+////
+////        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
+////        int startPage = Math.max(nowPage - 4, 1);
+////        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
+////
+////        model.addAttribute("nowPage", nowPage);
+////        model.addAttribute("startPage", startPage);
+////        model.addAttribute("endPage", endPage);
+////
+////
+////        model.addAttribute("list", list);
+////
+////        return "/product/list";
+////    }
+
     @GetMapping("/list")
     public String list(Model model, Integer memberNo, String type, String keyword,
                        @PageableDefault(page = 0, size = 2, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
         Page<Product> list;
+
         if (keyword == null) {
             list = productService.read(pageable);
         } else {
             list = productService.search(type, keyword, pageable);
         }
+        log.info("list = {}", list);
 
         int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
         int startPage = Math.max(1, nowPage - 2);
-        int endPage =  Math.min(nowPage + 3, list.getTotalPages());
-        if(startPage <= 0 || endPage <=0){
-            startPage =1;
-            endPage =1;
-        }
+        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
+//        if(startPage <= 0 || endPage <=0){
+//            startPage =1;
+//            endPage =1;
+//        }
 
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
+        model.addAttribute("type", type);
         model.addAttribute("list", list);
-//        String result;
-//        if( list.size() == 0) { // 검색 결과가 없으면
-//            result = "nok";
-//        } else {
-//            result = "ok";
-//        }
-//        model.addAttribute("result", result);
+
 
         // 찜 개수
         Integer interestedCount = 0;
@@ -83,26 +167,6 @@ public class ProductController {
 
         return "/product/list";
     }
-
-//    @GetMapping("/search")
-//    public String search(String type, String keyword, Model model,  @PageableDefault(page = 0, size = 4, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
-//        log.info("search(type = {}, keyword = {})", type, keyword);
-//
-//        Page<Product> list = productService.search(type, keyword, pageable);
-//
-//        int nowPage = list.getPageable().getPageNumber() + 1; // 페이지 0부터 시작해서 +1
-//        int startPage = Math.max(nowPage - 4, 1);
-//        int endPage =  Math.min(nowPage + 5, list.getTotalPages());
-//
-//        model.addAttribute("nowPage", nowPage);
-//        model.addAttribute("startPage", startPage);
-//        model.addAttribute("endPage", endPage);
-//
-//
-//        model.addAttribute("list", list);
-//
-//        return "/product/list";
-//    }
 
     @GetMapping("/detail")
     public String detail(Integer productNo, Model model, HttpSession session) {

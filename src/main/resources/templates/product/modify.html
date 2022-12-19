@@ -5,53 +5,60 @@
 
 <div layout:fragment="content">
   <div class="container">
-    <div class="list-group-item text-center fw-normal p-3 mb-2 bg-secondary text-dark bg-opacity-10" >
+    <div class="list-group-item text-center font-italic h4 pb-3 pt-5 mb-4 border border-white" style="background-color: #e6f3e6" >
       <h1>상품 수정 </h1>
     </div> <!-- -->
 
     <div class="list-group list-group-flush">
       <form id="formModify" enctype="multipart/form-data">
 
-        <div class="my-2 mb-3">
+        <div class="p-3 border-bottom">
           <input id="productNo" type="hidden" name="productNo" th:value="${product.productNo}" readonly /> <!--번호 -->
         </div>
 
-        <div class="my-2 mb-3">
-          <label for="title" class="form-label fst-italic">제목</label>
-          <input id="title" class="form-control" maxlength="50"
+        <div class="p-3 border-bottom">
+          <label for="title" class="font-weight-bold" style=" width: 150px; ">제목</label>
+          <input id="title" class="align-text-top shadow-sm p-3 mb-5 bg-body rounded border border-gray" style="width: 1000px; height: 50px;" maxlength="50"
                  type="text" name="title" th:value="${product.title }" autofocus />
         </div>
-        <div class="mb-3">
-          <label for="content" class="form-label fst-italic" >내용</label>
-          <textarea id="content" class="form-control" minlength="5"
+        <div class="p-3 border-bottom">
+          <label for="content" class="font-weight-bold" style="width: 150px; " >내용</label>
+          <textarea id="content" class="align-text-top shadow-sm p-3 mb-5 mt-2 bg-body rounded border border-gray" style="width: 1000px; height: 200px;" minlength="5"
                     name="content" th:text="${product.content }" ></textarea>
         </div>
-        <div class="mb-3">
-          <label for="price" class="form-label fst-italic">가격</label>
-          <div class="my-2 input-group">
-            <input  id="price" class="form-control"
+        <div class="p-3 border-bottom">
+          <label for="price" class="font-weight-bold" style=" width: 150px; ">가격</label>
+            <input  id="price" class="shadow-sm p-3 mb-5 bg-body rounded border border-gray" style="width: 200px; height: 50px;"
                     type="number" name="price" th:value="${product.price}" />
-            <span class="input-group-text">원</span>
-          </div>
+            <span class="mt-auto m-2 pb-3 pt-xl-5">원</span>
         </div>
-        <div class="mb-3">
-          <label for="category" class="form-label fst-italic">카테고리</label>
-          <select id="category" class="form-select" name="category" th:value="${product.category}">
-            <option th:selected="${product.category}=='디지털기기'" value="디지털기기" >디지털기기</option>
-            <option th:selected="${product.category}=='생활가전/주방'" value="생활가전/주방">생활가전/주방</option>
-            <option th:selected="${product.category}=='유아용품'" value="유아용품">유아용품</option>
-            <option th:selected="${product.category}=='여성패션/잡화'" value="여성패션/잡화">여성패션/잡화</option>
-            <option th:selected="${product.category}=='남성패션/잡화'" value="남성패션/잡화">남성패션/잡화</option>
-            <option th:selected="${product.category}=='뷰티/미용'" value="뷰티/미용">뷰티/미용</option>
-            <option th:selected="${product.category}=='스포츠/레저'" value="스포츠/레저">스포츠/레저</option>
-            <option th:selected="${product.category}=='취미/게임/음반'" value="취미/게임/음반">취미/게임/음반</option>
-            <option th:selected="${product.category}=='도서'" value="도서">도서</option>
-            <option th:selected="${product.category}=='반려동물용품'" value="반려동물용품">반려동물용품</option>
-            <option th:selected="${product.category}=='기타'" value="기타">기타</option>
+        <div class="p-3 mt-3 border-bottom">
+          <select id="category" class="form-select shadow-sm p-3 mb-5 bg-body rounded" style="width: 1150px;" name="category" th:value="${product.category}">
+            <option th:selected="${product.category}=='디지털기기'" >디지털기기</option>
+            <option th:selected="${product.category}=='생활가전/주방'">생활가전/주방</option>
+            <option th:selected="${product.category}=='유아용품'">유아용품</option>
+            <option th:selected="${product.category}=='여성패션/잡화'">여성패션/잡화</option>
+            <option th:selected="${product.category}=='남성패션/잡화'">남성패션/잡화</option>
+            <option th:selected="${product.category}=='뷰티/미용'">뷰티/미용</option>
+            <option th:selected="${product.category}=='스포츠/레저'">스포츠/레저</option>
+            <option th:selected="${product.category}=='취미/게임/음반'">취미/게임/음반</option>
+            <option th:selected="${product.category}=='도서'">도서</option>
+            <option th:selected="${product.category}=='반려동물용품'" >반려동물용품</option>
+            <option th:selected="${product.category}=='기타'" ></option>
           </select>
         </div>
-        <div class="my-2 input-group mb-3" style="margin-bottom: 10px;">
-          <button type="button" class="btn btn-outline-info" id="updateButtonOk">수정 완료</button>
+        <div class="pt-3">
+          <label class="font-weight-bold" style="width: 150px;">거래 희망 장소</label>
+                <input type="text" id="openZip" name="openZip" class="text-center bg-light" style="width:100px; height:30px;" required/>>
+                <button type="button" style="width:100px; height:32px;" class="btn btn-outline-secondary" onclick="openZipSearch()">주소찾기</button><br>
+            <label style="width: 150px;"></label>
+                <input type="text" id="dealAddress" name="dealAddress" th:value="${product.dealAddress}" class="mt-3 shadow-sm p-3 mb-2 bg-body rounded border border-gray" style="width:400px; height:30px;" required readonly /><br>
+        </div>
+
+
+
+        <div class="input-group pb-3 justify-content-md-end">
+          <button type="button" class="btn btn-outline-success" id="updateButtonOk">수정 완료</button>
           <a class="btn btn-outline-secondary" type="button" href="/product/list">취소</a>
         </div>
       </form>
@@ -63,6 +70,19 @@
 </div>
 
 <th:block layout:fragment="script">
+  <!-- 우편번호 -->
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script>
+    function openZipSearch() {
+      new daum.Postcode({
+        oncomplete: function(data) {
+          document.querySelector("#openZip").value = data.zonecode;
+          document.querySelector("#dealAddress").value =  data.address;
+        }
+      }).open()
+    }
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script th:src="@{ /js/productModify.js }"></script>
 </th:block>
