@@ -116,7 +116,7 @@
                 class="page-link"
                 th:href="@{/post/list(page=${list.pageable.pageNumber-1},address=${address})}"
                 tabindex="-1"
-                ><span aria-hidden="true">&laquo;</span></a
+                ><span aria-hidden="true">&lt;</span></a
               >
             </th:block>
             <th:block th:if="${searchText !=''}">
@@ -124,7 +124,7 @@
                 class="page-link"
                 th:href="@{/post/list(page=${list.pageable.pageNumber-1},searchText=${searchText},address=${address})}"
                 tabindex="-1"
-                ><span aria-hidden="true">&laquo;</span></a
+                ><span aria-hidden="true">&lt;</span></a
               >
             </th:block>
           </li>
@@ -157,7 +157,7 @@
                 class="page-link"
                 th:href="@{/post/list(page=${list.pageable.pageNumber+1},address=${address})}"
                 tabindex="-1"
-                ><span aria-hidden="true">&raquo;</span></a
+                ><span aria-hidden="true">&gt;</span></a
               >
             </th:block>
             <th:block th:if="${searchText !=''}">
@@ -165,7 +165,7 @@
                 class="page-link"
                 th:href="@{/post/list(page=${list.pageable.pageNumber+1},searchText=${searchText},address=${address})}"
                 tabindex="-1"
-                ><span aria-hidden="true">&raquo;</span></a
+                ><span aria-hidden="true">&gt;</span></a
               >
             </th:block>
           </li>
