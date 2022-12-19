@@ -161,7 +161,7 @@
                     class="form-control"
                     id="userURl"
                     placeholder="유저 사진"
-                    th:value="${ member.userImgUrl}"
+                    th:value="${{#authentication.principal.userImgUrl}}"
                     readonly
             />
           </div>
@@ -263,6 +263,7 @@
       const loginUser = [[${ #authentication.principal.nickname }]];
       const memberNo = [[${ #authentication.principal.memberNo }]];
       const postMemberNo = [[ ${ member.memberNo } ]];
+      // const userImgUrl = [[ ${ #authentication.principal.userImgUrl } ]];
     </script>
     <!-- 댓글 관련 자바스크립트 함수/코드들을 작성한 스크립트 파일 -->
     <script th:src="@{/js/reply.js}"></script>

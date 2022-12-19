@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', event => {
         // 포스트 글 번호 찾음.
         const postNo = document.querySelector('#postNo').value;
         // 댓글 작성자 찾음.
-        const replier = document.querySelector('#replier').value;
+        const replier = loginUser;
         // 댓글 내용을 찾음.
         const replyContent = document.querySelector('#replyContent').value;
 
@@ -160,7 +160,7 @@ window.addEventListener('DOMContentLoaded', event => {
                                 </br>
                                     <div class="card border-gray " style="width: 95%; margin-left : 40px;">
                                         <div class="card-body row ">`
-                                         + `<div class="font-weight-bold"style="display: inline" >` + r.replier + `</div>
+                                         + `<div class="font-weight-bold"style="display: inline" >` + loginUser + `</div>
                                              <div class="col-10">   
                                                 <textarea
                                                     class="form-control"
@@ -170,7 +170,7 @@ window.addEventListener('DOMContentLoaded', event => {
                                                     ></textarea>
                                             </div>
                                             <div class="col-2">
-                                                <button type="button" class=" btn btn-light list" id="btnReReplyRegister"  data="${r.replyNo}" >
+                                                <button type="button" class=" btn btn-light list" id="btnReReplyRegister"  test="${r.replyNo}" >
                                                   <b>등록</b>
                                                  </button>
                                                 <div class="form-inline">
@@ -338,10 +338,9 @@ window.addEventListener('DOMContentLoaded', event => {
             console.log(secretReply);
 
             // 댓글의 번호
-            const replyNo = event.target.getAttribute('data');
-            alert(replyNo);
+            const replyNo = event.target.getAttribute('test');
             // 댓글 작성자 찾음.
-            const replier = loginUser;
+            const replier = document.querySelector('#replier').value;
             // 댓글 내용을 찾음.
             const replyContent = document.querySelector('#rereplyContent').value;
             // 유저 이미지
@@ -419,8 +418,14 @@ window.addEventListener('DOMContentLoaded', event => {
 
                     str +=
                         '<div >'
-                        + '<div style="padding-left: 40px">' + ' 비밀 댓글입니다.' + '</div>'
-                        + '</div>'
+
+                        if (r.replier == loginUser || postMemberNo == memberNo) {
+                            str += '<div style="padding-left: 40px" >' + r.replyContent + '</div>'
+                        } else {
+                            str += '<div  style="padding-left: 40px">' + ' 비밀 댓글입니다.' + '</div>'
+                        }
+
+                        str += '</div>'
                         + '<div class="font-weight-lighter text-gray-600 pt-1" style="padding-left: 40px">' + r.modifiedTime
 
                     if (r.replier == loginUser) { // 로그인한 유저와 작성자가 같을때만 보이기
