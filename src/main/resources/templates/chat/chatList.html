@@ -18,7 +18,7 @@
     />
     <link rel="stylesheet" th:href="@{/css/chat/chatList.css}" />
   </head>
-  <body>
+  <body onunload="close_reload()">
     <h1>채팅방목록</h1>
     <div class="container menu">
       <div>
@@ -38,19 +38,21 @@
                 />
                 <a
                   style="display: block; text-decoration: none"
-                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${room.member.memberNo})}"
+                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${#authentication.principal.nickname},memberNo=${memberNo})}"
                   th:text="${room.roomId}"
                 ></a>
 
                 <span th:text="${room.message}">마지막 작성 메시지</span>
 
                 <th:block th:if="${room.unReadMessages} != 0">
+                  <th:block th:if="${room.lastEnterName} != ${#authentication.principal.nickname}">
                   <span
                     class="badge badge-warning badge-pill"
                     th:text="${room.unReadMessages}"
                     >안 읽은 메시지 개수</span
                   >
                 </th:block>
+              </th:block>
                 <th:block th:if="${room.unReadMessages} == 0">
                   <span
                     class="badge badge-warning badge-pill"
@@ -82,19 +84,21 @@
                 />
                 <a
                   style="display: block; text-decoration: none"
-                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${room.member.nickname},memberNo=${memberNo})}"
+                  th:href="@{/chat/chatRoom(roomId=${room.roomId},nickname=${#authentication.principal.nickname},memberNo=${room.member.memberNo})}"
                   th:text="${room.member.nickname}"
                   id="detailChat"
                 ></a>
                 <span th:text="${room.message}">마지막 작성 메시지</span>
 
                 <th:block th:if="${room.unReadMessages} != 0">
+                  <th:block th:if="${room.lastEnterName} != ${#authentication.principal.nickname}">
                   <span
                     class="badge badge-warning badge-pill"
                     th:text="${room.unReadMessages}"
                     >안 읽은 메시지 개수</span
                   >
                 </th:block>
+              </th:block>
                 <th:block th:if="${room.unReadMessages} == 0">
                   <span
                     class="badge badge-warning badge-pill"
@@ -123,5 +127,10 @@
       src="https://kit.fontawesome.com/cb94ffb39e.js"
       crossorigin="anonymous"
     ></script>
+    <script>
+      function close_reload(){
+        opener.parent.location.reload();
+      }
+      </script> 
   </body>
 </html>

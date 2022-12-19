@@ -46,15 +46,27 @@ public class PostService {
      * @param searchText 검색 내용
      * @return 결과 페이지들을 리턴
      */
-    public List<PostReadDto> searchPost(String searchText){
+    public List<PostReadDto> searchPost(String searchText,String address){
         List<Post> postList =  postRepository.findByTitleIgnoreCaseContainingOrContentIgnoreCaseContainingOrMemberNicknameIgnoreCaseContainingOrderByPostNoDesc(searchText,searchText,searchText);
         List<PostReadDto> list = new ArrayList<>();
         for(Post p : postList){
-            Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
-            PostReadDto dto = PostReadDto.builder()
-                    .postNo(p.getPostNo()).title(p.getTitle()).writer(member.getNickname()).createdTime(p.getCreatedTime()).clickCount(p.getClickCount())
-                    .build();
-            list.add(dto);
+            if(address.equals("전국")){
+                Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
+                PostReadDto dto = PostReadDto.builder()
+                        .postNo(p.getPostNo()).title(p.getTitle()).writer(member.getNickname()).createdTime(p.getCreatedTime()).clickCount(p.getClickCount())
+                        .build();
+                list.add(dto);
+            }else {
+                String memberAddress = p.getMember().getAddress();
+                String memberDetailAddress[] = memberAddress.split(" ");
+                if (memberDetailAddress[0].equals(address)) {
+                    Member member = memberRepository.findById(p.getMember().getMemberNo()).get();
+                    PostReadDto dto = PostReadDto.builder()
+                            .postNo(p.getPostNo()).title(p.getTitle()).writer(member.getNickname()).createdTime(p.getCreatedTime()).clickCount(p.getClickCount())
+                            .build();
+                    list.add(dto);
+                }
+            }
         }
         return list;
     }
@@ -121,9 +133,7 @@ public class PostService {
     private  String saveImage(MultipartFile files) throws IOException {
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
 
-        UUID uuid = UUID.randomUUID();
-
-        String fileName = uuid + "_" + files.getOriginalFilename();
+        String fileName = files.getOriginalFilename();
 
         File saveFile = new File(projectPath, fileName);
 

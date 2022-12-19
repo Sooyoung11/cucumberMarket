@@ -23,10 +23,9 @@ public class ChatRoomService {
     private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
     public List<ChatRoom> getAllChatList(Integer memberNo) {
-        Member member = memberRepository.findById(memberNo).get(); // 차은우가담김
+        Member member = memberRepository.findById(memberNo).get();
         log.info(member.toString());
-        List<ChatRoom> list = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(),memberNo);// 차은우랑, 차은우가 담김
-        log.info("list = {}", list);
+        List<ChatRoom> list = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(),memberNo);
         return list;
     }
 
@@ -36,7 +35,7 @@ public class ChatRoomService {
         Member member = memberRepository.findByNickname(nickname).orElse(null);
         for(ChatRoom c : chatRoom){
             if(c.getMember().getMemberNo().equals(member.getMemberNo())&&c.getRoomId().equals(roomId)) {
-                if(c.getLastEnterName().equals(c.getLeavedUser())){ // 한번 채팅방을 나갔다가 다시 그 사람에게 메세지를 보내서 채팅리스트에 띄워져야하는경우
+                if(c.getLastEnterName().equals(c.getLeavedUser())) { // 한번 채팅방을 나갔다가 다시 그 사람에게 메세지를 보내서 채팅리스트에 띄워져야하는경우
                     c.setLeavedUser("nobody");
                 }
                 return c;
@@ -48,22 +47,57 @@ public class ChatRoomService {
     }
 
     @Transactional
+    public ChatRoom saveAndGetChatRoom(String roomId, Integer memberNo,String nickname) {
+        Member member1 = memberRepository.findByNickname(roomId).orElse(null);
+        Member member2 = memberRepository.findById(memberNo).orElse(null);
+
+        ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(roomId, memberNo);
+        if(chatRoom == null){
+            chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member2.getNickname(), member1.getMemberNo());
+            if(chatRoom == null){ // 여기서는 채팅방을 만들어야함.
+                ChatRoom newChatRoom = new ChatRoom(roomId, member2, "nobody", 0);
+                chatRoomRepository.save(newChatRoom);
+                return newChatRoom;
+            }
+        }// 채팅방을 찾거나 새로만듬
+
+        Message message = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(chatRoom.getMember().getMemberNo(), chatRoom.getRoomId()).stream().findAny().get();
+        if (!message.getWriter().equals(nickname)) {
+            chatRoom.setUnReadMessages(0);
+        }
+
+        if (chatRoom.getLeavedUser().equals(member2.getNickname())){ // 한번 채팅방을 나갔다가 다시 들어온 경우.
+            chatRoom.setLeavedUser("nobody");
+        }
+        return chatRoom;
+    }
+
+
+
+    @Transactional
     public void saveMessage(Message message) {
         Message message1 = messageRepository.save(message);
         log.info(message1.toString());
+        Member member1 = memberRepository.findByNickname(message.getRoomId()).orElse(null);
+        Member member2 = memberRepository.findById(message.getMessageNum()).orElse(null);
+
+        ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member1.getNickname(), member2.getMemberNo());
+        if(chatRoom == null){
+            chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member2.getNickname(), member1.getMemberNo());
+        }
+        chatRoom.setUnReadMessages(chatRoom.getUnReadMessages()+1);
     }
 
     @Transactional
-    public List<Message> getAllMessages(String roomId, String nickname) {
-        Member member = memberRepository.findByNickname(nickname).get();
-        List<Message> message = messageRepository.findByRoomIdAndMessageNumOrderById(roomId,member.getMemberNo());
+    public List<Message> getAllMessages(ChatRoom chatRoom) {
+        List<Message> message = messageRepository.findByRoomIdAndMessageNumOrderById(chatRoom.getRoomId(),chatRoom.getMember().getMemberNo());
         if(message==null){
             Message newMessage = new Message();
-            newMessage.setRoomId(roomId);
+            newMessage.setRoomId(chatRoom.getRoomId());
             messageRepository.save(newMessage);
             log.info("massageSave={}",newMessage);
         }
-        List<Message> messageList = messageRepository.findByRoomIdAndMessageNumOrderById(roomId, member.getMemberNo()).stream().toList();
+        List<Message> messageList = messageRepository.findByRoomIdAndMessageNumOrderById(chatRoom.getRoomId(), chatRoom.getMember().getMemberNo()).stream().toList();
         for(Message m : messageList){
             String sendTime = m.getSendTime();
             if (sendTime.length() == 24) {
@@ -103,33 +137,10 @@ public class ChatRoomService {
      * @param roomId 채팅방이름
      * @param nickname 컬럼에 채워질 이름
      */
-    public void setLastCheckUser(String roomId, String nickname, Integer memberNo) {
-        Member member = memberRepository.findByNickname(nickname).get();
-        Member lastEnterMember = memberRepository.findById(memberNo).get(); // 마지막으로 들어간 사람의 이름을 얻는다
-        ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(roomId, member.getMemberNo());
-        chatRoom.setLastEnterName(lastEnterMember.getNickname());
+    public void setLastCheckUser(ChatRoom chatRoom,String nickname) {
+        chatRoom.setLastEnterName(nickname);
     }
 
-    /**
-     * 안읽은 메세지를 반복문을 돌려서 리턴해준다
-     * @return 안읽은 메세지를 1씩더해가면서 있으면 그 값리턴, 없으면 0 리턴.
-     */
-    public Integer checkUnReadMessages(String roomId,Integer memberNo, String memberNickname,String lastEnterName) {
-        List<Message>messages = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(memberNo,roomId);
-        int unReadMessage = 0;
-        for(Message m : messages){
-           if(m.getWriter().equals(memberNickname)){ // 마지막에 작성한 사람이 나인경우
-               break;
-           }else{ // 마지막에 작성한 사람이 내가 아닐경우
-               if(lastEnterName.equals(memberNickname)){ // 마지막에 작성한 사람이 내가 아닐경우에 읽씹이 가능하므로 마지막에 들어간사람이 나라면 0리턴
-                   break;
-               }else { // 마지막으로 채팅방에 들어간게 나도 아니고, 마지막 작성자가 상대일경우 이제 카운트 시작.
-                   unReadMessage++;
-               }
-           }
-        }
-        return unReadMessage;
-    }
 
     @Transactional
     public void deleteChatRoom(String roomId, String nickname,Integer memberNo) {
@@ -141,7 +152,6 @@ public class ChatRoomService {
         if(!chatRoom.getLeavedUser().equals("nobody")){ // nobody가 아니면 즉, 한명이라도 채팅방을 나가면 이제 채팅방을 삭제한다.
             chatRoomRepository.delete(chatRoom);
             List<Message> deleteMessageList1 = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(loginUser.getMemberNo(), roomId);
-//            Member deleteMessageMember = memberRepository.findByNickname(roomId).get();
             List<Message> deleteMessageList2 = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(member.getMemberNo(), roomId);
             messageRepository.deleteAllInBatch(deleteMessageList1);
             messageRepository.deleteAllInBatch(deleteMessageList2);
@@ -162,6 +172,7 @@ public class ChatRoomService {
     @Transactional
     public void setMessages(ChatRoom c,String memberNickname) {
         c.setMessage(getRecentMessage(c.getRoomId(),c.getMember().getMemberNo()));
-        c.setUnReadMessages(checkUnReadMessages(c.getRoomId(),c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
     }
+
+
 }

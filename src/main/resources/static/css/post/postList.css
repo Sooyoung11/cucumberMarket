@@ -49,4 +49,9 @@
   background-color: #e4fcb8;
 }
 
-
+#noResult{
+  text-align: center;
+  color: gray;
+  padding: 38px;
+  font-size: 15px;
+}

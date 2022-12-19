@@ -35,6 +35,7 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
     private final MemberRepository memberRepository;
 
+    @Transactional(readOnly = true)
     public String checkMemberId(String memberId){
         log.info("checkMemberId(memberId= {})", memberId);
 
@@ -46,6 +47,7 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
     public String checkPassword(String password){
         log.info("checkPassword(password= {})", password);
         int result= password.length();
@@ -56,6 +58,7 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
     public String checkPassword2(String password, String password2){
         log.info("checkPassword2(password= {}, password2= {})", password, password2);
 
@@ -66,6 +69,7 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
     public String checkNickname(String nickname){
         log.info("checkNickname(nickname= {})", nickname);
 
@@ -77,6 +81,7 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true)
     public String checkEmail(String email){
         log.info("checkEmail(email= {})", email);
 
@@ -88,6 +93,7 @@ public class MemberService {
         }
     }
 
+    @Transactional
     public Member registerMember(MemberRegisterDto dto){
         log.info("registerMember(dto= {})", dto);
 
@@ -99,6 +105,12 @@ public class MemberService {
         return entity;
     }
 
+    public Member findId(String email){
+        log.info("findId(email= {})", email);
+        return memberRepository.findByEmail(email).orElse(null);
+    }
+
+    @Transactional(readOnly = true)
     public Member findMemberByMemberNo(Integer memberNo) {
 
         return memberRepository.findById(memberNo).orElse(null);
@@ -112,6 +124,7 @@ public class MemberService {
         return member;
     }
 
+    @Transactional
     public MemberRegisterDto socialLogin(String code){
 
         RestTemplate rt = new RestTemplate();
@@ -177,24 +190,24 @@ public class MemberService {
         } catch (JsonProcessingException e){
             e.printStackTrace();
         }
-
-        log.info("카카오 아이디(번호): "+kakaoProfile.getId());
-        log.info("카카오 이메일: "+kakaoProfile.getKakao_account().getEmail());
-
-        log.info("마켓 사용자 아이디:"+kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
-        log.info("마켓 서버 이메일: "+ kakaoProfile.getKakao_account().getEmail());
-        log.info("마켓 서버 닉네임: "+ kakaoProfile.getProperties().getNickname());
-        log.info("마켓 서버 이름: "+ "kakaoUser" + kakaoProfile.getId());
-        log.info("사용자 프로필 사진: "+ kakaoProfile.getKakao_account().getProfile().getProfile_image_url());
-        log.info("마켓 서버 패스워드: "+ cosKey);
+//
+//        log.info("카카오 아이디(번호): "+kakaoProfile.getId());
+//        log.info("카카오 이메일: "+kakaoProfile.getKakao_account().getEmail());
+//
+//        log.info("마켓 사용자 아이디:"+kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
+//        log.info("마켓 서버 이메일: "+ kakaoProfile.getKakao_account().getEmail());
+//        log.info("마켓 서버 닉네임: "+ kakaoProfile.getProperties().getNickname());
+//        log.info("마켓 서버 이름: "+ "kakaoUser" + kakaoProfile.getId());
+//        log.info("사용자 프로필 사진: "+ kakaoProfile.getKakao_account().getProfile().getProfile_image_url());
+//        log.info("마켓 서버 패스워드: "+ cosKey);
         //---------------POST: 토큰을 통한 사용자 정보 조회 end-----------------------
 
         //---------------불러온 사용자 정보를 MeberRegisterDto에 저장-------------------
         MemberRegisterDto kakaoMember = MemberRegisterDto.builder()
                 .memberId(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
                 .password(cosKey)
-                .nickname(kakaoProfile.getProperties().getNickname())
-                .name("kakaoUser" + kakaoProfile.getId())
+                .nickname("kakaoUser" + kakaoProfile.getId())
+                .name(kakaoProfile.getProperties().getNickname())
                 .email(kakaoProfile.getKakao_account().getEmail())
                 .oauth("kakao")
                 .userImgName("kakaoImage"+ kakaoProfile.getId())

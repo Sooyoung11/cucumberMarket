@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="generator" content="Hugo 0.88.1" />
-    <title>오이마켓 | 로그인</title>
+    <title>오이마켓 | 비밀번호 찾기</title>
     <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -60,15 +60,6 @@
                 <input type="submit" value="로그인" id="btnLogin" class="btn btn-success btn-lg"/>
             </div>
             
-            <!--카카오 로그인 버튼-->
-            <a href="https://kauth.kakao.com/oauth/authorize?client_id=17f10af702d544834112ae55dc49d845&redirect_uri=http://localhost:8889/auth/kakao/callback&response_type=code">
-                <img src="/images/kakao_login_medium_wide.png"/>
-            </a>
-            <div id="aGroup">
-                <a th:href="@{/member/find/id}">아이디 찾기</a>&nbsp|&nbsp
-                <a th:href="@{/member/find/pw}">비밀번호 찾기</a>&nbsp|&nbsp
-                <a th:href="@{/member/join}">회원가입</a>
-            </div>
         </form>
     </div>
     <p class="mt-5 mb-3 text-muted">&copy; CucumberMarket</p>

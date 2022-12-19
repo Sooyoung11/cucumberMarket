@@ -39,8 +39,14 @@ public class    PostController {
 
     @GetMapping("/list")
     public String list(Model model, @PageableDefault(size = 10, sort = "postNo", direction = Sort.Direction.DESC) Pageable pageable,
-                       @RequestParam(required = false,defaultValue = "")String searchText){
-        List<PostReadDto> list = postService.searchPost(searchText);
+                       @RequestParam(required = false,defaultValue = "")String searchText, @RequestParam(required = false,defaultValue = "전국") String address){
+        String memberAddress[] = address.split(" ");
+        List<PostReadDto> list = postService.searchPost(searchText,memberAddress[0]);
+        if(list.size()==0){
+            model.addAttribute("searchResult", 0);
+        }else{
+            model.addAttribute("searchResult", 1);
+        }
         final int start = (int)pageable.getOffset();
         final int end = Math.min((start + pageable.getPageSize()), list.size());
         final Page<PostReadDto> page = new PageImpl<>(list.subList(start, end), pageable, list.size());
@@ -51,6 +57,8 @@ public class    PostController {
             endPage = Math.min(page.getTotalPages(), page.getPageable().getPageNumber() + 9);
         }
         int a = page.getPageable().getPageNumber();
+        model.addAttribute("address", address);
+        model.addAttribute("searchText", searchText);
         model.addAttribute("list", page);
         model.addAttribute("startPage", strtPage);
         model.addAttribute("endPage", endPage);
@@ -68,6 +76,7 @@ public class    PostController {
         log.info("컨트롤러 Post={}",post);
         model.addAttribute("post", post);
         model.addAttribute("nickname", nickname);
+        model.addAttribute("member", post.getMember());
         return "/post/detail";
     }
 
@@ -86,7 +95,7 @@ public class    PostController {
 
     @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
-    public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files) throws Exception {
+    public String create(PostCreateDto dto, Integer memberNo, @RequestParam(value = "files", required = false) List<MultipartFile> files,RedirectAttributes attrs) throws Exception {
 
         Member member = memberService.findMemberByMemberNo(memberNo);
 
@@ -105,6 +114,7 @@ public class    PostController {
                 Post newPost=postService.createPost(post,multipartFile);
             }
         }
+        attrs.addAttribute("address", member.getAddress());
         return "redirect:/post/list";
     }
 

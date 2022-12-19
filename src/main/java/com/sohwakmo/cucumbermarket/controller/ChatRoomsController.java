@@ -57,15 +57,7 @@ public class ChatRoomsController {
        String memberNickname = chatRoomService.getLoginedName(memberNo);
        Member member = chatRoomService.getLoginedMember(memberNo);
        for(ChatRoom c : list){
-           if(c.getLeavedUser().equals(member.getNickname())){
-               list.remove(c); // 나간 채팅방 사람과 지금 로그인한 사람의 이름이 같으면 채팅방 리스트에서 제거
-               if(list.size()==0){ // 채팅방 리스트의 사이즈가 0이면 반복문 종료 -> 안하면 NullPointerException 발생!
-                   break;
-               }
-               continue; // 더 채팅방이 남아있다면 밑의 메서드실행을 위해서 반복문으로 다시 이동
-           }
-           c.setMessage(chatRoomService.getRecentMessage(c.getRoomId(),c.getMember().getMemberNo()));
-           c.setUnReadMessages(chatRoomService.checkUnReadMessages(c.getRoomId(),c.getMember().getMemberNo(),memberNickname, c.getLastEnterName()));
+           chatRoomService.setMessages(c,memberNickname);
        }
        model.addAttribute("list",list);
        model.addAttribute("memberNo",memberNo);
@@ -75,16 +67,16 @@ public class ChatRoomsController {
 
     @GetMapping("/chatRoom")
     public void getRoom(String roomId,String nickname,Integer memberNo,Model model){
-        ChatRoom chatRoom = chatRoomService.getRoomByRoomId(roomId,memberNo,nickname);
-        List<Message> loadMessage = chatRoomService.getAllMessages(roomId,nickname);
+        ChatRoom chatRoom = chatRoomService.saveAndGetChatRoom(roomId,memberNo,nickname);
+        List<Message> loadMessage = chatRoomService.getAllMessages(chatRoom);
         log.info(chatRoom.toString());
-        Member member = memberRepository.findByNickname(nickname).orElse(null);
-        Integer nicknameNum = member.getMemberNo();
-        chatRoomService.setLastCheckUser(roomId,nickname,memberNo); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
+        Member chatRoomMember = memberRepository.findByNickname(roomId).orElse(null);
+        chatRoomService.setLastCheckUser(chatRoom,nickname); // 이 채팅방에 누가 제일 마직막에 들어갔는지 업데이트
         model.addAttribute("room", chatRoom);
+        model.addAttribute("chatRoomMember",chatRoomMember);
         model.addAttribute("nickname",nickname);
         model.addAttribute("memberNo", memberNo);
-        model.addAttribute("nicknameNum",nicknameNum);
+        model.addAttribute("nicknameNum",chatRoom.getMember().getMemberNo());
         model.addAttribute("messages", loadMessage);
     }
 
