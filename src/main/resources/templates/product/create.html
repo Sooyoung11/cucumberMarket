@@ -51,10 +51,13 @@
         <div class="p-3 input-group mb-3 border-bottom">
           <div class="uploadImg">
               <label for="price" class="font-weight-bold" style=" width: 150px; ">상품이미지</label>
-              <input id="imgUpload" class="shadow-sm p-3 mb-5 bg-body" style="width: 200px; height: 50px;" name="imgFile"
-                     type="file" multiple="multiple" onchange="setThumbnail(this);" accept="image/jpeg, image/png"/>
-              <img id="view" src="/images/product/camera.png" style="width: 200px; height: 200px;">
-<!--                <span class="mt-auto m-2 pb-3 pt-xl-5" style="width: 150px;">대표이미지</span>-->
+            <div class="list-group-item text-center" style="margin-left: 100px;">
+                  <img id="view" src="/images/product/images.png"  style="width: 200px; height: 200px;">
+              <div class="input-group">
+                  <input id="imgUpload" class="p-3 bg-body" style=" height: 50px; margin-left: 70px; " name="imgFile"
+                        type="file" multiple="multiple" onchange="setThumbnail(this);" accept="image/jpeg, image/png"/>
+               </div>
+            </div>
           </div>
         </div>
         <div class="pt-3">
@@ -66,7 +69,7 @@
         </div>
         <div class="input-group pb-3 justify-content-md-end">
           <button type="submit" class="btn btn-outline-success" style="height: 35px; " id="createBtn">등록</button>
-          <a class="btn btn-outline-secondary" href="/product/list" style="height: 35px;">취소</a>
+          <a class="btn btn-outline-secondary" href="/product/list" id="cancelCreate" style="height: 35px;">취소</a>
         </div>
       </form>
     </div>

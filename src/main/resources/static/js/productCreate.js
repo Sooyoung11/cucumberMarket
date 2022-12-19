@@ -12,5 +12,38 @@ function setThumbnail(event) {
         node = parentObj.replaceChild(event.cloneNode(true), event);
         return false;
     }
-
 }
+
+const fromCreate = document.querySelector('#fromCreate');
+const createBtn = document.querySelector('#createBtn')
+createBtn.addEventListener('click', function() {
+    const imgUpload = document.querySelector('#imgUpload').value;
+    const title = document.querySelector('#title').value;
+    const content = document.querySelector('#content').text;
+    const price = document.querySelector('#price').value;
+    const category = document.querySelector('#category').value;
+    if  (title === '') {
+        alert('제목을 입력해주세요..')
+        return;
+    } else if (content === '') {
+        alert('내용을 입력해주세요.')
+        return;
+    } else if (price === '') {
+        alert('가격을 입력해주세요.')
+        return;
+    } else if (category === '') {
+        alert('카테고리를 입력해주세요.')
+        return;
+    }
+    const result = confirm('등록하시겠습니까?')
+    if(result) {
+        form.action = '/product/create';
+        form.method = 'post';
+        form.submit();
+    }
+});
+const cancelCreate = document.querySelector('#cancelCreate');
+cancelCreate.addEventListener('click', function () {
+    const result = confirm('등록을 취소하시겠습니까?')
+
+});
