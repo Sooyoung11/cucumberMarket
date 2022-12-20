@@ -2,11 +2,13 @@ package com.sohwakmo.cucumbermarket.service;
 
 import com.sohwakmo.cucumbermarket.domain.ChatRoom;
 import com.sohwakmo.cucumbermarket.domain.Member;
+import com.sohwakmo.cucumbermarket.domain.Message;
 import com.sohwakmo.cucumbermarket.dto.MypageReadDto;
 import com.sohwakmo.cucumbermarket.dto.MypageUpdateDto;
 import com.sohwakmo.cucumbermarket.dto.ProfileImageReadDto;
 import com.sohwakmo.cucumbermarket.repository.ChatRoomRepository;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
+import com.sohwakmo.cucumbermarket.repository.MessageRepository;
 import com.sohwakmo.cucumbermarket.repository.MypageRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,8 @@ public class MypageService {
 
     private final MemberRepository memberRepository;
 
+    private final MessageRepository messageRepository;
+
 
     //마이페이지 사용자 정보 load
     @Transactional(readOnly = true)
@@ -44,9 +48,30 @@ public class MypageService {
     public Integer update(MypageUpdateDto dto) {
         log.info("update(dto={})", dto);
         Member entity = mypageRepository.findByMemberNo(dto.getMemberNo());
+        // 멤버 닉네임을 변경한경우 채팅방 이름도 같이 바꿔줘야한다.
+        updateAllChat(entity,dto);
+
 
         entity.memberUpdate(dto.getName(), dto.getNickname(), dto.getPassword(), dto.getAddress(), dto.getPhone(), dto.getEmail());
+
         return dto.getMemberNo();
+    }
+
+    @Transactional
+    private void updateAllChat(Member entity, MypageUpdateDto dto) {
+       List<ChatRoom> chatRooms = chatRoomRepository.findByRoomId(entity.getNickname());
+        for(ChatRoom c : chatRooms){
+            List<Message> messages = messageRepository.findByRoomIdAndMessageNumOrderById(c.getRoomId(), c.getMember().getMemberNo());
+            for(Message m :messages){
+                if (m.getWriter().equals(c.getRoomId())) {
+                    m.setWriter(dto.getNickname());
+                }
+                if(m.getRoomId().equals(entity.getNickname())){
+                    m.setRoomId(dto.getNickname());
+                }
+            }
+            c.setRoomId(dto.getNickname());
+        }
     }
 
     //마이페이지 사용자 사진 프로필 load
