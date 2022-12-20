@@ -4,11 +4,9 @@
       layout:decorate="~{ layout/layout.html }">
     <head>
     <title>오이마켓 | 중고거래</title>
+    <link rel="stylesheet" th:href="@{/css/product/product.css }"/>
     </head>
 
-    <head>
-        <link rel="stylesheet" th:href="@{/css/product/product.css }"/>
-    </head>
     <div layout:fragment="content">
         <th:block sec:authorize="isAuthenticated()">
             <div>  <!-- 사이드 배너 시작-->

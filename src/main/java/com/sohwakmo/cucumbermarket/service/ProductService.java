@@ -359,21 +359,19 @@ public class ProductService {
 
         if (product.getPhotoUrl1() == null) {
             product.setPhotoUrl1("/images/product/" + fileName);
-            product.setPhotoName1(fileName);
+            product.setPhotoName(fileName);
         } else if (product.getPhotoUrl2() == null) {
             product.setPhotoUrl2("/images/product/" + fileName);
-            product.setPhotoName2(fileName);
+            product.setPhotoName(fileName);
         } else if (product.getPhotoUrl3() == null) {
             product.setPhotoUrl3("/images/product/" + fileName);
-            product.setPhotoName3(fileName);
+            product.setPhotoName(fileName);
         } else if (product.getPhotoUrl4() == null) {
             product.setPhotoUrl4("/images/product/" + fileName);
-            product.setPhotoName4(fileName);
+            product.setPhotoName(fileName);
         } else if (product.getPhotoUrl5() == null) {
             product.setPhotoUrl5("/images/product/" + fileName);
-            product.setPhotoName5(fileName);
-        } else if (product.getPhotoUrl1() == null && product.getPhotoUrl2() == null && product.getPhotoUrl3() == null && product.getPhotoUrl4() == product.getPhotoUrl5()) {
-            product.setPhotoUrl1("/images/product");
+            product.setPhotoName(fileName);
         }
 
         return productRepository.save(product);

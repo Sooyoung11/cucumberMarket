@@ -51,15 +51,7 @@ public class Product extends BaseTimeEntity {
 
     private String photoUrl5;
 
-    private String photoName1;
-
-    private String photoName2;
-
-    private String photoName3;
-
-    private String photoName4;
-
-    private String photoName5;
+    private String photoName;
 
     private Integer boughtMemberNo;
 
