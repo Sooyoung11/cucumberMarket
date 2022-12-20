@@ -44,18 +44,17 @@
         <!--페이징-->
         <nav aria-label="Page navigation example" class="my-3 mb-3">
             <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber + 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber -1}, type=${param.type}, keyword=${param.keyword})}" tabindex="-1" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
+                <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber} ? 'disabled'">
+                    <a class="page-link" th:href="@{/product/interested(page=${list.pageable.pageNumber -1}, memberNo=${param.memberNo})}" tabindex="-1" aria-label="Previous">
+                        <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
-
-                <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'" th:each="num : ${#numbers.sequence(startPage, endPage)}">
-                    <a class="page-link" th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
+                <li class="page-item " th:classappend="${num == list.pageable.pageNumber +1}" th:each="num : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link"  th:href="@{/product/interested(page=${num -1}, memberNo=${param.memberNo})}", th:text="${num}">1</a>
                 </li>
-                <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
+                <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber} ? 'disabled'">
+                    <a class="page-link " th:href="@{/product/interested(page=${list.pageable.pageNumber +1}, memberNo=${param.memberNo})}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
                     </a>
                 </li>
             </ul>
