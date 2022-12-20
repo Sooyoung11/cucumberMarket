@@ -123,7 +123,8 @@
 								<div class="favoritesText" >찜한상품</div>
 								<div class="h5 font-weight-bold text-gray-800" style="display: inline-block" >
 									<a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
-										<i class="fas fa-heart"></i>&nbsp;<div th:text="${interestedList}" ></div>
+										<input type="hidden" id="indexMemberNo" th:value="${#authentication.principal.memberNo}" readonly/>
+										<i class="fas fa-heart"></i>&nbsp;<input id="interestedCount" value="*">
 									</a>
 								</div>
 								<!-- favoritesCount -->
@@ -389,6 +390,25 @@
 					if ( x == 0 ) break;
 				}
 				return "";
+			}
+
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script>
+
+			console.log("찜목록 count");
+			const indexMemberNo = document.querySelector('#indexMemberNo');
+			const interestedCount = document.querySelector('#interestedCount');
+
+			if(indexMemberNo != null){
+				axios.get('/api/mypage/count/interested/'+indexMemberNo.value)
+						.then(response => {
+							console.log("interestedCount"+response.data);
+							interestedCount.value = response.data;
+						})
+						.catch(error =>{
+							console.log(error);
+						})
 			}
 
 		</script>
