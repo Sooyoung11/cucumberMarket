@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{ layout/layout.html }">
     <head>
     <title>오이마켓 | 중고거래</title>
@@ -14,10 +15,10 @@
                 <div class="sideBanner " style="text-align: center">
                     <!--찜 하트 수-->
                     <div class="favorites my-2">
-                        <div class="favoritesText" >찜한상품</div>
+                        <div class="favoritesText" >찜한 상품</div>
                         <div class="h5 font-weight-bold text-gray-800" style="display: inline-block" >
                             <a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
-                                <i class="fas fa-heart"></i>&nbsp;<div th:text="${interestedList}" ></div>
+                                <i class="fas fa-heart"></i><div th:text="${interestedList}" ></div>
                             </a>
                         </div>
                         <!-- favoritesCount -->
@@ -26,7 +27,7 @@
                     <!--찜 끝-->
                     <!-- 최근 본 상품 시작 -->
                     <div class="recently">
-                        <div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 10px;">최근본상품</div>
+                        <div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 9px;">최근 본 상품</div>
                         <div class="recentlyProduct"  >
                             <span id="recentlyCnt2"></span>
                             <!-- 최근본상품  -->
@@ -57,7 +58,6 @@
                             </div>
                         </div>
                     </div>
-                    <br />
                     <!-- 최근 본 상품 끝 -->
                     <div class="totheTop">
                         <a href="#" class="topText">TOP</a>
@@ -124,7 +124,7 @@
                 <div class="row row-cols-4">
 
                     <div th:each="p : ${ list }" class="card my-4" style="width:300px; padding:15px; margin:5px 14px; border:none">
-                        <a th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo }) }"
+                        <a th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo })  }"
                            style="text-decoration-line:none; color:black;">
                             <!-- 이미지 -->
                             <div class="card-img-top">

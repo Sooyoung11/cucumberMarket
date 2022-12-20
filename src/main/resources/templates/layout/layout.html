@@ -54,8 +54,8 @@
                         <th:block sec:authorize="isAuthenticated()">
                             <li><a th:href="@{ /logout }">로그아웃</a></li>
                             <li><a th:href="@{/mypage/mymain?memberNo={no} (no= ${#authentication.principal.memberNo})}" tabindex="-1" aria-disabled="true">마이페이지</a>
-                                <input type="hidden" id="layoutMemberNo" th:value="${#authentication.principal.memberNo}" readonly/>
-                                <span id="msgCount" class="badge text-bg-success"></span>
+
+                                <span id="msgCount" class="badge text-bg-success"> <input type="hidden" id="layoutMemberNo" th:value="${#authentication.principal.memberNo}" readonly/></span>
                             </li>
 
                             <li><a><span sec:authentication="name"></span> 님</a></li>
