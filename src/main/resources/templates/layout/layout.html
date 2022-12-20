@@ -88,11 +88,11 @@
 ></script>
 <script>
     //채팅 메시지 count
-    const layoutMemberNo = document.querySelector('#layoutMemberNo').value;
+    const checkMemberNo = document.querySelector('#layoutMemberNo');
     const msgCount = document.querySelector('#msgCount');
 
-    console.log("메인페이지 채팅msg");
-    countMessage(layoutMemberNo);
+    if(checkMemberNo != null)
+    countMessage(checkMemberNo.value);
 
     function countMessage(layoutMemberNo) {
         axios.get('/api/mypage/count/msg/' + layoutMemberNo)
