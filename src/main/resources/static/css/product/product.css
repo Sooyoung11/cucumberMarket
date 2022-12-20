@@ -1,0 +1,14 @@
+
+.pagination  {
+    background-color: white;
+}
+
+.page-link {
+    text-decoration:none;
+    color: gray;
+}
+
+.page-link:hover {
+    text-decoration: underline;
+    color: #03c75a;
+}

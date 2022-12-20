@@ -93,7 +93,6 @@ public class PostService {
             post.setImageName01(fileName);
         }else{
             post.setImageUrl02("/files/"+fileName);
-            post.setImageName02(fileName);
         }
         return postRepository.save(post);
     }
@@ -152,7 +151,6 @@ public class PostService {
         Post post =  postRepository.findByImageName01(imageSrc);
         if(post == null){
             Post post2 = postRepository.findByImageName02(imageSrc);
-            post2.setImageName02("");
             post2.setImageUrl02("");
             extractImage(imageSrc);
             return "2번사진 삭제완료";
@@ -188,9 +186,7 @@ public class PostService {
     @Transactional()
     public String modifyImage02(Post post, MultipartFile data)throws Exception {
         String fileName = saveImage(data);
-        extractImage(post.getImageName02());
         log.info(fileName);
-        post.setImageName02(fileName);
         post.setImageUrl02("/files/"+fileName);
         return "files/"+fileName;
     }
@@ -206,7 +202,6 @@ public class PostService {
             return "1번이미지 삽입 완료";
         }else {
             post.setImageUrl02("/files/"+fileName);
-            post.setImageName02(fileName);
             return "2번이미지 삽입 완료";
         }
 

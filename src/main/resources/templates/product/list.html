@@ -3,6 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{ layout/layout.html }">
 
+    <head>
+        <link rel="stylesheet" th:href="@{/css/product/product.css }"/>
+    </head>
     <div layout:fragment="content">
         <th:block sec:authorize="isAuthenticated()">
             <div>  <!-- 사이드 배너 시작-->
@@ -152,10 +155,6 @@
             <div>
                 <a th:href="@{/product/create}" class="btn" style="background:#e6f3e6; width:100px; height:35px; display:inline-block; margin-left:93%;">상품 등록</a>
             </div>
-
-
-
-
 <!--            <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">-->
 <!--                <a th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1})}" th:text="${page}"></a>-->
 <!--                <strong th:if="${page == nowPage}" th:text="${page}"></strong>-->
@@ -168,11 +167,11 @@
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
-                            <li class="page-item" th:classappend="${num == list.pageable.pageNumber +1} ? 'active'"  th:each="num : ${#numbers.sequence(startPage, endPage)}">
-                                <a class="page-link"  style="background-color: white; color: black; border-color: #dee2e6;" th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
-                            </li>
+                    <li class="page-item " th:classappend="${num == list.pageable.pageNumber +1}" th:each="num : ${#numbers.sequence(startPage, endPage)}">
+                        <a class="page-link"  th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
+                    </li>
                     <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
+                        <a class="page-link " th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>

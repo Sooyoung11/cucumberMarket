@@ -5,10 +5,9 @@
 
 <div layout:fragment="content">
   <div class="container my-2">
-    <div class="list-group">
-    <div class="list-group-item text-center font-italic h4 pb-3 pt-5 mb-4 border border-white" style="background-color: #e6f3e6">
-      <h1>상품 등록</h1>
-    </div>
+      <div class="list-group-item text-center font-weight-bold h4 pb-5 pt-5 mb-4 border-bottom">
+        <h1>상품 등록</h1>
+      </div>
 
       <form method="post" enctype="multipart/form-data" action="/product/create" name="fromCreate">
         <div class="p-3 border-bottom">
@@ -51,7 +50,7 @@
         <div class="p-3 input-group mb-3 border-bottom">
           <div class="uploadImg">
               <label for="price" class="font-weight-bold" style=" width: 150px; ">상품이미지</label>
-            <div class="list-group-item text-center" style="margin-left: 150px;">
+            <div class="text-center border border-gray" style="margin-left: 150px;">
                   <img id="view" src="/images/product/images.png"  style="width: 200px; height: 200px;">
               <div class="input-group">
                   <input id="imgUpload" class="p-3 bg-body" style=" height: 50px; margin-left: 70px; " name="imgFile"
@@ -63,16 +62,15 @@
         <div class="pt-3">
             <label class="font-weight-bold" style="width: 150px; ">거래 희망 장소</label>
                 <input type="text" id="openZip" name="openZip" class="text-center bg-light" style="width:100px; height:30px;" required/>
-                <button type="button" style="width:100px; height:32px;" class="btn btn-outline-secondary" onclick="openZipSearch()">주소찾기</button><br>
+                <button type="button" style="width:100px; height:32px;" class="border border-gary rounded" onclick="openZipSearch()">주소찾기</button><br>
             <label style="width: 150px;"></label>
                 <input type="text" id="dealAddress" name="dealAddress" class="mt-3 shadow-sm p-3 mb-2 bg-body rounded border border-gray" style="width:400px; height:30px;" required readonly /><br>
         </div>
-        <div class="input-group pb-3 justify-content-md-end">
-          <button type="submit" class="btn btn-outline-success" style="height: 35px; " id="createBtn">등록</button>
+        <div class=" pb-3 d-md-flex justify-content-md-end">
+          <button type="submit" class="btn btn-outline-success me-md-1" style="height: 35px; " id="createBtn">등록</button>
           <a class="btn btn-outline-secondary" href="/product/list" id="cancelCreate" style="height: 35px;">취소</a>
         </div>
       </form>
-    </div>
   </div>
 </div>
 
