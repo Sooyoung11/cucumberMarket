@@ -117,7 +117,11 @@ public class ChatRoomService {
     public String getRecentMessage(String roomId,Integer memberNo) {
         List<Message> messages = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(memberNo,roomId);
         if(messages.size()!=0){
-            return String.valueOf(messages.get(0).getMessage());
+            String recentMessage = String.valueOf(messages.get(0).getMessage());
+            if(recentMessage.length()>11){
+                recentMessage = recentMessage.substring(0, 11)+"...";
+            }
+            return recentMessage;
         }else{
             return null;
         }
