@@ -4,9 +4,17 @@
       layout:decorate="~{ layout/layout }">
 
 <div layout:fragment="content">
-    <div class="card my-2 container" style="border:none;">
-        <div class="my-2" style="width:100%; height:50px; background:#e6f3e6;">
+    <div class="container" style="padding: 0;">
+        <!--bannerSection-->
+        <div id="bannerSection"
+             style="width: 100%; height: 200px; background: #e6f3e6; margin-bottom: 60px;">
+            <div id="bannerSectionWrap"
+                 style="width: 100%; height: 100%; position: relative; background-image: url('/assets/productBanner.jpg');">
+                <h1></h1>
+                <p></p>
+            </div>
         </div>
+        <!--end.bannerSection-->
 
         <!--select option start -->
         <div class="col-3">
