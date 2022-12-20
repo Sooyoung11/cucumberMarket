@@ -1,7 +1,10 @@
 package com.sohwakmo.cucumbermarket.controller;
 
+import com.sohwakmo.cucumbermarket.domain.ChatRoom;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.Product;
+import com.sohwakmo.cucumbermarket.dto.MypageReadDto;
+import com.sohwakmo.cucumbermarket.service.ChatRoomService;
 import com.sohwakmo.cucumbermarket.service.MypageService;
 import com.sohwakmo.cucumbermarket.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,8 @@ public class MypageRestCountController {
 
     private final ProductService productService;
     private final MypageService mypageService;
+
+    private final ChatRoomService chatRoomService;
 
     //마이페이지 찜목록 count
     @PreAuthorize("hasRole('USER')")
@@ -99,5 +104,24 @@ public class MypageRestCountController {
         return ResponseEntity.ok(myTemp);
     }
 
+    @GetMapping("/msg/{memberNo}")
+    public ResponseEntity<Integer> checkMsg(@PathVariable Integer memberNo){
+        log.info("checkMsg(memberNo={})", memberNo);
+
+        Integer msgCount = 0;
+        List<ChatRoom> list = chatRoomService.getAllChatList(memberNo);
+        MypageReadDto member = mypageService.loadProfile(memberNo);
+
+        for(ChatRoom c: list){
+            if(c.getMember().getMemberNo()==memberNo || c.getRoomId().equals(member.getNickname()) ){
+                if(!c.getLastEnterName().equals(member.getNickname()))
+                    msgCount += c.getUnReadMessages();
+            }
+
+        }
+
+        log.info("unreadMsg={}", msgCount);
+        return ResponseEntity.ok(msgCount);
+    }
 
 }
