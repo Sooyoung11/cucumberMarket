@@ -122,18 +122,18 @@
             <div id="productList">
                 <div class="row row-cols-4">
 
-                    <div th:each="p : ${ list }" class="card my-4" style="width:300px; padding:15px; margin:5px 14px; border:none">
+                    <div th:each="p : ${ list }" class="card my-4" style="width:306px; padding:15px; margin:5px 14px; border:none">
                         <a th:href="@{ /product/detail?productNo={productNo} (productNo = ${ p.productNo })  }"
                            style="text-decoration-line:none; color:black;">
                             <!-- 이미지 -->
-                            <div class="card-img-top">
+                            <div class="card-img-top" style="border:1px solid #ccc; border-radius: 4px;">
                                <!-- 이미지가 없다면 -->
                                 <th:block th:if="${ p.photoUrl1 } == null and ${ p.photoUrl2 } == null and ${ p.photoUrl3 } == null and ${ p.photoUrl4 } == null and ${ p.photoUrl5 } == null">
                                     <img th:src="@{ /images/product/noimg.png }" style="width:100%; height:200px;" alt="...">
                                 </th:block>
                                 <!-- 이미지가 있다면-->
                                 <th:block th:if="${p.photoUrl1} != null">
-                                    <img th:src="@{ ${p.photoUrl1} }" style="width:100%; height:200px;" alt="...">
+                                    <img th:src="@{ ${p.photoUrl1} }" style="width:100%; height:306px;" alt="...">
                                 </th:block>
                             </div>
                             <!-- 정보 -->
@@ -160,7 +160,7 @@
 
             <!-- 상품 등록 -->
             <div>
-                <a th:href="@{/product/create}" class="btn" style="background:#e6f3e6; width:100px; height:35px; display:inline-block; margin-left:93%;">상품 등록</a>
+                <a th:href="@{/product/create}" class="btn btn-outline-success" style=" width:100px; height:35px; display:inline-block; margin-left:93%;">상품 등록</a>
             </div>
 
 
