@@ -38,7 +38,7 @@ public class ProductController {
 
     @GetMapping("/list")
     public String list(Model model, Integer memberNo, String type, String keyword,
-                       @PageableDefault(page = 0, size = 2, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
+                       @PageableDefault(page = 0, size = 16, sort = "productNo", direction = Sort.Direction.DESC) Pageable pageable) {
         log.info("list()");
 
         Page<Product> list;
@@ -51,7 +51,7 @@ public class ProductController {
         log.info("list = {}", list);
 
         String result;
-        if(list.isEmpty() == true) { // 리스트가 비어있으면  아아
+        if(list.isEmpty() == true) { // 리스트가 비어있으면
             log.info("nok");
             result = "nok";
         } else {
