@@ -51,7 +51,7 @@ public class ProductController {
         log.info("list = {}", list);
 
         String result;
-        if(list.isEmpty() == true) { // 리스트가 비어있으면
+        if(list.isEmpty() == true) { // 리스트가 비어있으면  아아
             log.info("nok");
             result = "nok";
         } else {
@@ -59,10 +59,9 @@ public class ProductController {
             result = "ok";
         }
 
-        int nowPage = list.getPageable().getPageNumber(); // 페이지 0부터 시작해서 +1
-        int startPage= (list.getPageable().getPageNumber() / 5) * 5 + 1;
-        int endPage= Math.min(list.getTotalPages(), (list.getPageable().getPageNumber() / 5) * 5 + 5);
-        if(endPage == 0){
+        int startPage = (list.getPageable().getPageNumber() / 5) * 5 + 1;
+        int endPage = Math.min(list.getTotalPages(), (list.getPageable().getPageNumber() / 5) * 5 + 5);
+        if(endPage <= 0) {
             startPage =1;
             endPage =1;
         } else  {
@@ -70,17 +69,16 @@ public class ProductController {
                     startPage = 1;
                     endPage = list.getTotalPages();
                 } else {
-                    if(list.getPageable().getPageNumber() >= 0) {
-                        if (list.getPageable().getPageNumber() < 5) {
-                            startPage = 1;
-                            endPage = 5;
-                        } else {
-                            startPage = (list.getPageable().getPageNumber() / 5) * 5 + 1;
-                            endPage = Math.min(list.getTotalPages(), (list.getPageable().getPageNumber() / 5) * 5 + 5);
+                    if (list.getPageable().getPageNumber() < 5) {
+                        startPage = 1;
+                        endPage = 5;
+                    } else {
+                        startPage = (list.getPageable().getPageNumber() / 5) * 5 + 1;
+                        endPage = Math.min(list.getTotalPages(), (list.getPageable().getPageNumber() / 5) * 5 + 5);
                     }
                 }
             }
-        }
+
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
