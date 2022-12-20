@@ -52,15 +52,15 @@
         <!--페이징-->
         <nav aria-label="Page navigation example" class="my-3 mb-3">
             <ul class="pagination justify-content-center">
-                <li class="page-item" th:classappend="${startPage == list.pageable.pageNumber} ? 'disabled'">
+                <li class="page-item" th:classappend="${list.pageable.pageNumber == 0} ? 'disabled'">
                     <a class="page-link" th:href="@{/product/interested(page=${list.pageable.pageNumber -1}, memberNo=${param.memberNo})}" tabindex="-1" aria-label="Previous">
                         <span aria-hidden="true">&lt;</span>
                     </a>
                 </li>
-                <li class="page-item " th:classappend="${num == list.pageable.pageNumber +1}" th:each="num : ${#numbers.sequence(startPage, endPage)}">
+                <li class="page-item " th:classappend="${num == list.pageable.pageNumber +1}? 'disabled'" th:each="num : ${#numbers.sequence(startPage, endPage)}">
                     <a class="page-link"  th:href="@{/product/interested(page=${num -1}, memberNo=${param.memberNo})}", th:text="${num}">1</a>
                 </li>
-                <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber} ? 'disabled'">
+                <li class="page-item" th:classappend="${list.pageable.pageNumber +1 > list.totalPages} ? 'disabled'">
                     <a class="page-link " th:href="@{/product/interested(page=${list.pageable.pageNumber +1}, memberNo=${param.memberNo})}" aria-label="Next">
                         <span aria-hidden="true">&gt;</span>
                     </a>
