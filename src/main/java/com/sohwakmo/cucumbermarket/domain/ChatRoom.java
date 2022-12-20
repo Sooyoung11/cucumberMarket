@@ -43,5 +43,14 @@ public class ChatRoom {
         this.unReadMessages = unReadMessages;
     }
 
+    public ChatRoom updateRoomId(String roomId){
+        this.roomId = roomId;
+        return this;
+    }
+    public ChatRoom updateLastEnterName(String lastEnterName){
+        this.lastEnterName = lastEnterName;
+        return this;
+    }
+
 
 }

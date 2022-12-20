@@ -38,7 +38,7 @@
           </div>
         </th:block>
 
-        <a th:href="@{/chat/list(memberNo=${#authentication.principal.memberNo})}">
+        <a th:href="@{/chat/list(memberNo=${memberNo})}">
           <i class="fa-solid fa-chevron-left" id="goBack"></i>
         </a>
       </div>
@@ -51,7 +51,7 @@
         <div id="msgArea" class="col">
           <div th:each="messages : ${messages}">
             <th:block
-              th:if="${messages.writer}==${#authentication.principal.nickname}"
+              th:if="${messages.writer}==${#authentication.principal.memberNo}"
             >
               <div class="d-flex justify-content-end mb-2">
                 <span class="mr-1 pt-4" th:text="${messages.sendTime}"></span>
