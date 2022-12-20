@@ -22,30 +22,22 @@ public class ChatRoomService {
     private  final MessageRepository messageRepository;
     private final MemberRepository memberRepository;
     private final ChatRoomRepository chatRoomRepository;
+
+    @Transactional
     public List<ChatRoom> getAllChatList(Integer memberNo) {
         Member member = memberRepository.findById(memberNo).get();
         log.info(member.toString());
         List<ChatRoom> list = chatRoomRepository.findByRoomIdOrMemberMemberNo(member.getNickname(),memberNo);
+        
+        // 사용자의 이미지 설정(프로필 사진이 변경 되었을 수도 있어서 애초에 채팅방을 생성할때 넣어주면 안됨)
+        for(ChatRoom c : list){
+            Member chatRoomMember = memberRepository.findByNickname(c.getRoomId()).orElse(null);
+            c.setUserImage(chatRoomMember.getUserImgUrl());
+        }
+        
         return list;
     }
-
-    @Transactional
-    public ChatRoom getRoomByRoomId(String roomId, Integer memberNo, String nickname) {
-        List<ChatRoom> chatRoom = chatRoomRepository.findByRoomIdOrMemberMemberNo(roomId,memberNo);
-        Member member = memberRepository.findByNickname(nickname).orElse(null);
-        for(ChatRoom c : chatRoom){
-            if(c.getMember().getMemberNo().equals(member.getMemberNo())&&c.getRoomId().equals(roomId)) {
-                if(c.getLastEnterName().equals(c.getLeavedUser())) { // 한번 채팅방을 나갔다가 다시 그 사람에게 메세지를 보내서 채팅리스트에 띄워져야하는경우
-                    c.setLeavedUser("nobody");
-                }
-                return c;
-            }
-        }
-        ChatRoom c = new ChatRoom(roomId,member,"nobody",0);
-        chatRoomRepository.save(c);
-        return c;
-    }
-
+    
     @Transactional
     public ChatRoom saveAndGetChatRoom(String roomId, Integer memberNo,String nickname) {
         Member member1 = memberRepository.findByNickname(roomId).orElse(null);
@@ -125,7 +117,11 @@ public class ChatRoomService {
     public String getRecentMessage(String roomId,Integer memberNo) {
         List<Message> messages = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(memberNo,roomId);
         if(messages.size()!=0){
-            return String.valueOf(messages.get(0).getMessage());
+            String recentMessage = String.valueOf(messages.get(0).getMessage());
+            if(recentMessage.length()>11){
+                recentMessage = recentMessage.substring(0, 11)+"...";
+            }
+            return recentMessage;
         }else{
             return null;
         }
