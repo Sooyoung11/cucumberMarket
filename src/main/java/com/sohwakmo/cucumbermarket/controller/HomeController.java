@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class HomeController {
     private final ProductService productService;
     private final PostService postService;
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, Integer memberNo) {
         log.info("index()");
         List<Product> list= productService.readByLikeCountDesc();
         List<Product> productList= new ArrayList<>();

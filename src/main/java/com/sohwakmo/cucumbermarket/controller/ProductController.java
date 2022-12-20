@@ -145,22 +145,6 @@ public class ProductController {
             }
         }
 
-        log.info("세션 리스트 확인 ={}", productlist);
-
-
-        // 찜 개수
-        Integer interestedCount = 0;
-        List<Product> likeList = productService.interestedRead(memberNo);
-        log.info("디테일 멤버 번호={}", memberNo);
-
-        if(likeList.size() != 0)
-            interestedCount = likeList.size();
-
-        model.addAttribute("interestedList",interestedCount);
-
-        log.info("리스트={}",productlist);
-
-
 
         return "/product/detail";
     }
