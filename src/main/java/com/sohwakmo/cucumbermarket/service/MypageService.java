@@ -49,30 +49,11 @@ public class MypageService {
         log.info("update(dto={})", dto);
         Member entity = mypageRepository.findByMemberNo(dto.getMemberNo());
         // 멤버 닉네임을 변경한경우 채팅방 이름도 같이 바꿔줘야한다.
-        updateAllChat(entity,dto);
-
-
         entity.memberUpdate(dto.getName(), dto.getNickname(), dto.getPassword(), dto.getAddress(), dto.getPhone(), dto.getEmail());
 
         return dto.getMemberNo();
     }
 
-    @Transactional
-    private void updateAllChat(Member entity, MypageUpdateDto dto) {
-       List<ChatRoom> chatRooms = chatRoomRepository.findByRoomId(entity.getNickname());
-        for(ChatRoom c : chatRooms){
-            List<Message> messages = messageRepository.findByRoomIdAndMessageNumOrderById(c.getRoomId(), c.getMember().getMemberNo());
-            for(Message m :messages){
-                if (m.getWriter().equals(c.getRoomId())) {
-                    m.setWriter(dto.getNickname());
-                }
-                if(m.getRoomId().equals(entity.getNickname())){
-                    m.setRoomId(dto.getNickname());
-                }
-            }
-            c.setRoomId(dto.getNickname());
-        }
-    }
 
     //마이페이지 사용자 사진 프로필 load
     @Transactional(readOnly = true)

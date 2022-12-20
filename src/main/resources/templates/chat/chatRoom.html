@@ -33,7 +33,7 @@
         </th:block>
         <th:block th:if="${room.roomId}==${#authentication.principal.nickname}">
           <div class="titleDiv">
-            <span th:text="${nickname}"></span>
+            <span th:text="${room.member.nickname}"></span>
             <span class="memberGrade" th:text="${room.member.grade} + ℃"></span>
           </div>
         </th:block>
