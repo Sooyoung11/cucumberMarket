@@ -38,7 +38,7 @@
           </div>
         </th:block>
 
-        <a th:href="@{/chat/list(memberNo=${memberNo})}">
+        <a th:href="@{/chat/list(memberNo=${#authentication.principal.memberNo})}">
           <i class="fa-solid fa-chevron-left" id="goBack"></i>
         </a>
       </div>

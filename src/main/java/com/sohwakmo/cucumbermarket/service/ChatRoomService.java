@@ -78,6 +78,7 @@ public class ChatRoomService {
             chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(member2.getNickname(), member1.getMemberNo());
         }
         chatRoom.setUnReadMessages(chatRoom.getUnReadMessages()+1);
+        chatRoom.setLeavedUser("nobody");
     }
 
     @Transactional
@@ -152,6 +153,7 @@ public class ChatRoomService {
             messageRepository.deleteAllInBatch(deleteMessageList2);
         }else{
             chatRoom.setLeavedUser(loginUser.getNickname());
+            chatRoom.setUnReadMessages(0);
         }
     }
 
