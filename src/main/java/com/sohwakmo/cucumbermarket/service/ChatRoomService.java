@@ -143,8 +143,7 @@ public class ChatRoomService {
         Member member = memberRepository.findByNickname(nickname).orElse(null);
         Member loginUser = memberRepository.findById(memberNo).orElse(null);
         ChatRoom chatRoom = chatRoomRepository.findByRoomIdAndMemberMemberNo(roomId, member.getMemberNo());
-
-        // TODO 여기서 if문으로 묶어서 2명이된순간 해야함.
+        
         if(!chatRoom.getLeavedUser().equals("nobody")){ // nobody가 아니면 즉, 한명이라도 채팅방을 나가면 이제 채팅방을 삭제한다.
             chatRoomRepository.delete(chatRoom);
             List<Message> deleteMessageList1 = messageRepository.findByMessageNumAndRoomIdOrderByIdDesc(loginUser.getMemberNo(), roomId);

@@ -60,7 +60,6 @@ public class ProductController {
         }
 
         int nowPage = list.getPageable().getPageNumber(); // 페이지 0부터 시작해서 +1
-//        int startPage = Math.max(1, nowPage-2);
         int startPage = (list.getPageable().getPageNumber()/5)*5 +1;
         int endPage = Math.min(nowPage+2, list.getTotalPages());
         if(endPage  <=0){
@@ -71,19 +70,15 @@ public class ProductController {
                 startPage = 1;
                 endPage = list.getTotalPages();
             } else {
-                if (list.getPageable().getPageNumber() < 6) {
+                if (list.getPageable().getPageNumber() < 5) {
                     startPage = 1;
                     endPage = 5;
                 } else {
-                    startPage = (list.getPageable().getPageNumber()/ 5)*5 +1;
-                    endPage= Math.min(startPage, list.getTotalPages());
-                    }
-//                    startPage = (list.getPageable().getPageNumber()/5)*5 +1;
-//                    endPage = Math.min(nowPage, (nowPage / 5)*5 +5);
+                    startPage = (list.getPageable().getPageNumber()/5)*5+1;
+                    endPage = Math.min(list.getTotalPages(),(list.getPageable().getPageNumber()/5)*5 +5);
                 }
             }
-
-        model.addAttribute("nowPage", nowPage);
+        }
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
@@ -200,15 +195,25 @@ public class ProductController {
         Page<ProductOfInterested> list = productService.interestedRead(memberNo, pageable);
         log.info("list = {}", list);
 
-        int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
-        int startPage = Math.max(1, nowPage - 2);
-        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
-        if(startPage <= 0 || endPage <=0){
+        int nowPage = list.getPageable().getPageNumber(); // 페이지 0부터 시작해서 +1
+        int startPage = (list.getPageable().getPageNumber()/5)*5 +1;
+        int endPage = Math.min(nowPage+2, list.getTotalPages());
+        if(endPage  <=0){
             startPage =1;
             endPage =1;
-        }
-        if(nowPage == 1 || nowPage ==2 || nowPage ==3){
-            endPage =5;
+        } else  {
+            if(list.getTotalPages() < 6) {
+                startPage = 1;
+                endPage = list.getTotalPages();
+            } else {
+                if (list.getPageable().getPageNumber() < 5) {
+                    startPage = 1;
+                    endPage = 5;
+                } else {
+                    startPage = (list.getPageable().getPageNumber()/5)*5+1;
+                    endPage = Math.min(list.getTotalPages(),(list.getPageable().getPageNumber()/5)*5 +5);
+                }
+            }
         }
 
         model.addAttribute("nowPage", nowPage);
@@ -250,12 +255,25 @@ public class ProductController {
 
         }
 
-        int nowPage = list.getPageable().getPageNumber() +1; // 페이지 0부터 시작해서 +1
-        int startPage = Math.max(1, nowPage - 2);
-        int endPage =  Math.min(nowPage + 2, list.getTotalPages());
-        if(startPage <= 0 || endPage <=0){
+        int nowPage = list.getPageable().getPageNumber(); // 페이지 0부터 시작해서 +1
+        int startPage = (list.getPageable().getPageNumber()/5)*5 +1;
+        int endPage = Math.min(nowPage+2, list.getTotalPages());
+        if(endPage  <=0){
             startPage =1;
             endPage =1;
+        } else  {
+            if(list.getTotalPages() < 6) {
+                startPage = 1;
+                endPage = list.getTotalPages();
+            } else {
+                if (list.getPageable().getPageNumber() < 5) {
+                    startPage = 1;
+                    endPage = 5;
+                } else {
+                    startPage = (list.getPageable().getPageNumber()/5)*5+1;
+                    endPage = Math.min(list.getTotalPages(),(list.getPageable().getPageNumber()/5)*5 +5);
+                }
+            }
         }
 
         model.addAttribute("nowPage", nowPage);
