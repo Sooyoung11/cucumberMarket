@@ -110,6 +110,12 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElse(null);
     }
 
+    /* repository jpql
+    public Member resetPw(String email, String password){
+        log.info("resetPw(email= {}, pw= {})", email, password);
+        return memberRepository.resetPw(email, password);
+    }*/
+
     @Transactional(readOnly = true)
     public Member findMemberByMemberNo(Integer memberNo) {
 

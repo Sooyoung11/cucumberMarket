@@ -162,7 +162,7 @@ window.addEventListener('DOMContentLoaded', function () {
             .then(function(res){
                 console.log(res.data);
                 authCode= res.data;
-                console.log('sendEmail=> authCode='+authCode);
+                console.log('sendEmail=> authCode= '+authCode);
                 btnAuth.classList.remove('disabled');
             })
             .catch(err => {
