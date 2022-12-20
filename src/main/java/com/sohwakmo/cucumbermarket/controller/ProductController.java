@@ -51,7 +51,7 @@ public class ProductController {
         log.info("list = {}", list);
 
         String result;
-        if(list.isEmpty() == true) { // 리스트가 비어있으면
+        if(list.isEmpty() == true) { // 리스트가 비어있으면  아아
             log.info("nok");
             result = "nok";
         } else {
