@@ -104,6 +104,7 @@ public class MypageRestCountController {
         return ResponseEntity.ok(myTemp);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/msg/{memberNo}")
     public ResponseEntity<Integer> checkMsg(@PathVariable Integer memberNo){
         log.info("checkMsg(memberNo={})", memberNo);

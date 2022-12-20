@@ -117,58 +117,59 @@
 
 				<div>  <!-- 사이드 배너 시작-->
 					<body>
-					<div class="sideBanner " style="text-align: center">
-						<!--찜 하트 수-->
-						<div class="favorites my-2">
-							<div class="favoritesText" >찜한상품</div>
-							<div class="h5 font-weight-bold text-gray-800" style="display: inline-block" >
-								<a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
-									<i class="fas fa-heart"></i><div th:text="${interestedList}" ></div>
-								</a>
-							</div>
-							<!-- favoritesCount -->
-							<br>
-						</div>
-						<!--찜 끝-->
-						<!-- 최근 본 상품 시작 -->
-						<div class="recently">
-							<div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 10px;">최근본상품</div>
-							<div class="recentlyProduct"  >
-								<span id="recentlyCnt2"></span>
-								<!-- 최근본상품  -->
-								<div id="recentlyArea2"  >
-									<a id="recentlyList2">
-										<div th:if="${session.productlist} != null ">
-											<div style ="text-align:center; padding-bottom: 5px;" >
-												<div th:if="${session.productlist.size()} > 4">
-													<a  th:href="@{product/detail(productNo=${session.productlist.get(5)})}">
-														<img th:src="@{${session.productlist.get(4)}}" width="140px" height="90px"  border="1px"/>
-													</a>
-												</div>
-											</div>
-											<div style ="text-align:center; padding-bottom: 5px;" >
-												<div th:if="${session.productlist.size()} > 2">
-													<a  th:href="@{product/detail(productNo=${session.productlist.get(3)})}">
-														<img th:src="@{${session.productlist.get(2)}}"  width="140px" height="90px" border="1px"/>
-													</a>
-												</div>
-											</div>
-											<div style ="text-align:center; padding-bottom: 5px;" >
-												<a  th:href="@{product/detail(productNo=${session.productlist.get(1)})}">
-													<img th:src="@{${session.productlist.get(0)}}"  width="140px" height="90px" border="1px"/>
-												</a>
-											</div>
-										</div>
+						<div class="sideBanner " style="text-align: center">
+							<!--찜 하트 수-->
+							<div class="favorites my-2">
+								<div class="favoritesText" >찜한상품</div>
+								<div class="h5 font-weight-bold text-gray-800" style="display: inline-block" >
+									<a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
+										<input type="hidden" id="indexMemberNo" th:value="${#authentication.principal.memberNo}" readonly/>
+										<i class="fas fa-heart"></i>&nbsp;<input id="interestedCount" value="*">
 									</a>
 								</div>
+								<!-- favoritesCount -->
+								<br>
+							</div>
+							<!--찜 끝-->
+							<!-- 최근 본 상품 시작 -->
+							<div class="recently">
+								<div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 10px;">최근본상품</div>
+									<div class="recentlyProduct"  >
+										<span id="recentlyCnt2"></span>
+										<!-- 최근본상품  -->
+										<div id="recentlyArea2"  >
+											<a id="recentlyList2">
+												<div th:if="${session.productlist} != null ">
+													<div style ="text-align:center; padding-bottom: 5px;" >
+														<div th:if="${session.productlist.size()} > 4">
+															<a  th:href="@{product/detail(productNo=${session.productlist.get(5)})}">
+																<img th:src="@{${session.productlist.get(4)}}" width="140px" height="90px"  border="1px"/>
+															</a>
+														</div>
+													</div>
+													<div style ="text-align:center; padding-bottom: 5px;" >
+														<div th:if="${session.productlist.size()} > 2">
+															<a  th:href="@{product/detail(productNo=${session.productlist.get(3)})}">
+																<img th:src="@{${session.productlist.get(2)}}"  width="140px" height="90px" border="1px"/>
+															</a>
+														</div>
+													</div>
+														<div style ="text-align:center; padding-bottom: 5px;" >
+															<a  th:href="@{product/detail(productNo=${session.productlist.get(1)})}">
+																	<img th:src="@{${session.productlist.get(0)}}"  width="140px" height="90px" border="1px"/>
+															</a>
+														</div>
+												</div>
+											</a>
+										</div>
+									</div>
+								</div>
+							<br />
+							<!-- 최근 본 상품 끝 -->
+							<div class="totheTop">
+								<a href="#" class="topText">TOP</a>
 							</div>
 						</div>
-						<br />
-						<!-- 최근 본 상품 끝 -->
-						<div class="totheTop">
-							<a href="#" class="topText">TOP</a>
-						</div>
-					</div>
 					</body>
 				</div> <!-- 사이드 배너 끝 -->
 
@@ -362,36 +363,55 @@
 </div>
 </body>
 
-<th:block layout:fragment="script">
-	<script type="text/javascript">
-		function doPopupopen(){
-			if(checkPopupCookie("koreaMap1") != "Y") {
-				window.open("/popup", "popup", "width=500, height=650, top=70, left=70");
-			}
-
-		}
-
-		//쿠키 불러오기
-		function checkPopupCookie(name){
-			var obj = name + "=";
-			var x = 0;
-			while ( x <= document.cookie.length )
-			{
-				var y = (x+obj.length);
-				if ( document.cookie.substring( x, y ) == obj )
-				{
-					if ((endOfCookie=document.cookie.indexOf( ";", y )) == -1 )
-						endOfCookie = document.cookie.length;
-					return unescape( document.cookie.substring( y, endOfCookie ) );
+	<th:block layout:fragment="script">
+		<script type="text/javascript">
+			function doPopupopen(){
+				if(checkPopupCookie("koreaMap1") != "Y") {
+					window.open("/popup", "popup", "width=500, height=650, top=70, left=70");
 				}
-				x = document.cookie.indexOf( " ", x ) + 1;
 
-				if ( x == 0 ) break;
 			}
-			return "";
-		}
 
-	</script>
-</th:block>
+			//쿠키 불러오기
+			function checkPopupCookie(name){
+				var obj = name + "=";
+				var x = 0;
+				while ( x <= document.cookie.length )
+				{
+					var y = (x+obj.length);
+					if ( document.cookie.substring( x, y ) == obj )
+					{
+						if ((endOfCookie=document.cookie.indexOf( ";", y )) == -1 )
+							endOfCookie = document.cookie.length;
+						return unescape( document.cookie.substring( y, endOfCookie ) );
+					}
+					x = document.cookie.indexOf( " ", x ) + 1;
+
+					if ( x == 0 ) break;
+				}
+				return "";
+			}
+
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script>
+
+			console.log("찜목록 count");
+			const indexMemberNo = document.querySelector('#indexMemberNo');
+			const interestedCount = document.querySelector('#interestedCount');
+
+			if(indexMemberNo != null){
+				axios.get('/api/mypage/count/interested/'+indexMemberNo.value)
+						.then(response => {
+							console.log("interestedCount"+response.data);
+							interestedCount.value = response.data;
+						})
+						.catch(error =>{
+							console.log(error);
+						})
+			}
+
+		</script>
+	</th:block>
 
 </html>
