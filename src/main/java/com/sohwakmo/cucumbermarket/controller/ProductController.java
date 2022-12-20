@@ -60,22 +60,24 @@ public class ProductController {
         }
 
         int nowPage = list.getPageable().getPageNumber(); // 페이지 0부터 시작해서 +1
-        int startPage = (list.getPageable().getPageNumber()/5)*5 +1;
-        int endPage = Math.min(nowPage+2, list.getTotalPages());
-        if(endPage  <=0){
+        int startPage= (list.getPageable().getPageNumber() / 5) * 5 + 1;
+        int endPage= Math.min(list.getTotalPages(), (list.getPageable().getPageNumber() / 5) * 5 + 5);
+        if(endPage == 0){
             startPage =1;
             endPage =1;
         } else  {
-            if(list.getTotalPages() < 6) {
-                startPage = 1;
-                endPage = list.getTotalPages();
-            } else {
-                if (list.getPageable().getPageNumber() < 5) {
+                if(list.getTotalPages() < 6) {
                     startPage = 1;
-                    endPage = 5;
+                    endPage = list.getTotalPages();
                 } else {
-                    startPage = (list.getPageable().getPageNumber()/5)*5+1;
-                    endPage = Math.min(list.getTotalPages(),(list.getPageable().getPageNumber()/5)*5 +5);
+                    if(list.getPageable().getPageNumber() >= 0) {
+                        if (list.getPageable().getPageNumber() < 5) {
+                            startPage = 1;
+                            endPage = 5;
+                        } else {
+                            startPage = (list.getPageable().getPageNumber() / 5) * 5 + 1;
+                            endPage = Math.min(list.getTotalPages(), (list.getPageable().getPageNumber() / 5) * 5 + 5);
+                    }
                 }
             }
         }

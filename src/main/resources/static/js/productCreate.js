@@ -12,12 +12,13 @@ function setThumbnail(event) {
         node = parentObj.replaceChild(event.cloneNode(true), event);
         return false;
     }
+
 }
+
 
 const fromCreate = document.querySelector('#fromCreate');
 const createBtn = document.querySelector('#createBtn')
 createBtn.addEventListener('click', function() {
-    const imgUpload = document.querySelector('#imgUpload').value;
     const title = document.querySelector('#title').value;
     const content = document.querySelector('#content').text;
     const price = document.querySelector('#price').value;
