@@ -69,10 +69,7 @@ public class ProductController {
             if(list.getTotalPages() < 6) {
                 startPage = 1;
                 endPage = list.getTotalPages();
-                log.info("if부분!!!"+list.getTotalPages());
             } else {
-                log.info("if else부분!!!"+list.getTotalPages());
-                log.info("getPageable()!!!"+ list.getPageable().getPageNumber());
                 if (list.getPageable().getPageNumber() < 5) {
                     startPage = 1;
                     endPage = 5;
