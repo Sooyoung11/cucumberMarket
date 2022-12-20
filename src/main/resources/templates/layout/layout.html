@@ -54,6 +54,7 @@
                         <th:block sec:authorize="isAuthenticated()">
                             <li><a th:href="@{ /logout }">로그아웃</a></li>
                             <li><a th:href="@{/mypage/mymain?memberNo={no} (no= ${#authentication.principal.memberNo})}" tabindex="-1" aria-disabled="true">마이페이지</a>
+                                <input type="hidden" id="layoutMemberNo" th:value="${#authentication.principal.memberNo}" readonly/>
                                 <span id="msgCount" class="badge text-bg-success"></span>
                             </li>
 
@@ -87,7 +88,7 @@
 ></script>
 <script>
     //채팅 메시지 count
-    const layoutMemberNo = [[${#authentication.principal.memberNo} ]];
+    const layoutMemberNo = document.querySelector('#layoutMemberNo').value;
     const msgCount = document.querySelector('#msgCount');
 
     console.log("메인페이지 채팅msg");
