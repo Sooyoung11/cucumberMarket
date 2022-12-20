@@ -167,8 +167,14 @@
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
+<!--                    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}"> &lt;!&ndash; 수정 필요 &ndash;&gt;-->
+<!--                        <li class="page-item">-->
+<!--                            <a class="page-link"  th:if="${page != nowPage}" th:href="@{/product/list(page=${page -1})}",  th:text="${page}"></a>-->
+<!--                            <strong class="page-link" th:if="${page == nowPage}" th:text="${page}"></strong>-->
+<!--                        </li>-->
+<!--                    </th:block>-->
                     <li class="page-item " th:classappend="${num == list.pageable.pageNumber +1}" th:each="num : ${#numbers.sequence(startPage, endPage)}">
-                        <a class="page-link"  th:href="@{/product/list(page=${num -1})}", th:text="${num}">1</a>
+                        <a class="page-link"  th:href="@{/product/list(page=${num -1},type=${param.type}, keyword=${param.keyword})}", th:text="${num}">1</a>
                     </li>
                     <li class="page-item" th:classappend="${endPage == list.pageable.pageNumber + 1} ? 'disabled'">
                         <a class="page-link " th:href="@{/product/list(page=${list.pageable.pageNumber +1}, type=${param.type}, keyword=${param.keyword})}" aria-label="Next">
