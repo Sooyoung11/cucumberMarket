@@ -33,6 +33,8 @@ public class ChatRoom {
 
     private String leavedUser;
 
+    private String userImage;
+
 
     public ChatRoom(String roomId, Member member,String leavedUser,Integer unReadMessages) {
         this.roomId = roomId;
@@ -40,4 +42,6 @@ public class ChatRoom {
         this.leavedUser=leavedUser;
         this.unReadMessages = unReadMessages;
     }
+
+
 }
