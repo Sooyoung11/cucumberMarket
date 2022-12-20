@@ -93,13 +93,13 @@
                   th:text="${room.member.nickname}"
                   id="detailChat"
                 ></a>
-                <span th:text="${room.message}">마지막 작성 메시지</span>
+                <span th:text="${room.message}" style="width: 150px;">마지막 작성 메시지</span>
 
                 <th:block th:if="${room.unReadMessages} != 0">
                   <th:block th:if="${room.lastEnterName} != ${#authentication.principal.nickname}">
                   <span
                     class="badge badge-warning badge-pill"
-                    th:text="${room.unReadMessages}"
+                    th:text="${room.unReadMessages}" style="width: 20px;"
                     >안 읽은 메시지 개수</span
                   >
                 </th:block>
@@ -107,7 +107,7 @@
                 <th:block th:if="${room.unReadMessages} == 0">
                   <span
                     class="badge badge-warning badge-pill"
-                    style="visibility: hidden"
+                    style="visibility: hidden; width: 20px;"
                     >안 읽은 메시지 개수</span
                   >
                 </th:block>
