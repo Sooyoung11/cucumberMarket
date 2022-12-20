@@ -109,36 +109,54 @@ public class ProductController {
         // 최근 본 상품 생성
         if(productlist==null ) {
             productlist = new ArrayList<>();
-
             session.setAttribute("productlist",productlist);
-//            session.setMaxInactiveInterval(1*60); // 시간 설정 1분
         }
 
-        // 최근 본 상품 3개로 제한두기
-        if(productlist.size() > 5){
-            productlist.remove(0);
-            productlist.remove(0);
-
-            // 사진이 default 값이면
-            if(photo == null){
-                productlist.add(4, "/images/product/noimg.png");
-                productlist.add(5, productNo1);
-            }else{
-                productlist.add(4, photo);
-                productlist.add(5, productNo1);
+        if(productlist.size() > 5){ // 최근 본 상품 3개로 제한두기
+            if(!productlist.contains(productNo1)) { // 중복 확인
+                productlist.remove(0);
+                productlist.remove(0);
             }
 
-        } else {
+            if(photo == null){ // 사진이 default 값이면
+                if(!productlist.contains(productNo1)){ // 중복 확인
+                    productlist.add(4, "/images/product/noimg.png");
+                    productlist.add(5, productNo1);
+                }
 
-            // 사진이 default 값이면
-            if(photo == null){
-                productlist.add("/images/product/noimg.png");
-                productlist.add( productNo1);
             }else{
-                productlist.add(photo);
-                productlist.add(productNo1);
+                if(!productlist.contains(productNo1)) { // 중복 확인
+                    productlist.add(4, photo);
+                    productlist.add(5, productNo1);
+                }
             }
-        };
+
+        } else { // 사진이 default 값이면
+            if(photo == null){
+                if(!productlist.contains(productNo1)) { // 중복 확인
+                    productlist.add("/images/product/noimg.png");
+                    productlist.add(productNo1);
+                }
+            }else{
+                if(!productlist.contains(productNo1)) { // 중복 확인
+                    productlist.add(photo);
+                    productlist.add(productNo1);
+                }
+            }
+        }
+
+        log.info("세션 리스트 확인 ={}", productlist);
+
+
+        // 찜 개수
+        Integer interestedCount = 0;
+        List<Product> likeList = productService.interestedRead(memberNo);
+        log.info("디테일 멤버 번호={}", memberNo);
+
+        if(likeList.size() != 0)
+            interestedCount = likeList.size();
+
+        model.addAttribute("interestedList",interestedCount);
 
         log.info("리스트={}",productlist);
 

@@ -13,215 +13,215 @@
     </style>
 </head>
 
-    <div layout:fragment="content">
-        </br>
-        <th:block sec:authorize="isAuthenticated()">
-            <div>  <!-- 사이드 배너 시작-->
-                <body>
-                <div class="sideBanner " style="text-align: center">
-                    <!--찜 하트 수-->
-                    <div class="favorites my-2">
-                        <div class="favoritesText" >찜한상품</div>
-                        <div class="h5 font-weight-bold text-gray-800" style="display: inline-block" >
-                                <a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
-                                <i class="fas fa-heart"></i>&nbsp;<div th:text="${interestedList}" ></div>
-                            </a>
-                        </div>
-                        <!-- favoritesCount -->
-                        <br>
+<div layout:fragment="content">
+    </br>
+    <th:block sec:authorize="isAuthenticated()">
+        <div>  <!-- 사이드 배너 시작-->
+            <body>
+            <div class="sideBanner " style="text-align: center">
+                <!--찜 하트 수-->
+                <div class="favorites my-2">
+                    <div class="favoritesText" >찜한상품</div>
+                    <div class="h5 font-weight-bold text-gray-800" style="display: inline-block" >
+                        <a th:href="@{/product/interested?memberNo={memberNo} (memberNo=${#authentication.principal.memberNo})}">
+                            <i class="fas fa-heart"></i><div th:text="${interestedList}" ></div>
+                        </a>
                     </div>
-                    <!--찜 끝-->
-                    <!-- 최근 본 상품 시작 -->
-                    <div class="recently">
-                        <div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 10px;">최근본상품</div>
-                        <div class="recentlyProduct"  >
-                            <span id="recentlyCnt2"></span>
-                            <!-- 최근본상품  -->
-                            <div id="recentlyArea2"  >
-                                <a id="recentlyList2">
-                                    <div th:if="${session.productlist} != null ">
-                                        <div style ="text-align:center; padding-bottom: 5px;" >
-                                            <div th:if="${session.productlist.size()} > 4">
-                                                <a  th:href="@{detail(productNo=${session.productlist.get(5)})}">
-                                                    <img th:src="@{${session.productlist.get(4)}}" width="140px" height="90px"  border="1px"/>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div style ="text-align:center; padding-bottom: 5px;" >
-                                            <div th:if="${session.productlist.size()} > 2">
-                                                <a  th:href="@{detail(productNo=${session.productlist.get(3)})}">
-                                                    <img th:src="@{${session.productlist.get(2)}}"  width="140px" height="90px" border="1px"/>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div style ="text-align:center; padding-bottom: 5px;" >
-                                            <a  th:href="@{detail(productNo=${session.productlist.get(1)})}">
-                                                <img th:src="@{${session.productlist.get(0)}}"  width="140px" height="90px" border="1px"/>
+                    <!-- favoritesCount -->
+                    <br>
+                </div>
+                <!--찜 끝-->
+                <!-- 최근 본 상품 시작 -->
+                <div class="recently">
+                    <div class="recentlyText" style="font-size: 15px; text-align: center; margin-bottom: 10px;">최근본상품</div>
+                    <div class="recentlyProduct"  >
+                        <span id="recentlyCnt2"></span>
+                        <!-- 최근본상품  -->
+                        <div id="recentlyArea2"  >
+                            <a id="recentlyList2">
+                                <div th:if="${session.productlist} != null ">
+                                    <div style ="text-align:center; padding-bottom: 5px;" >
+                                        <div th:if="${session.productlist.size()} > 4">
+                                            <a  th:href="@{detail(productNo=${session.productlist.get(5)})}">
+                                                <img th:src="@{${session.productlist.get(4)}}" width="140px" height="90px"  border="1px"/>
                                             </a>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
+                                    <div style ="text-align:center; padding-bottom: 5px;" >
+                                        <div th:if="${session.productlist.size()} > 2">
+                                            <a  th:href="@{detail(productNo=${session.productlist.get(3)})}">
+                                                <img th:src="@{${session.productlist.get(2)}}"  width="140px" height="90px" border="1px"/>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div style ="text-align:center; padding-bottom: 5px;" >
+                                        <a  th:href="@{detail(productNo=${session.productlist.get(1)})}">
+                                            <img th:src="@{${session.productlist.get(0)}}"  width="140px" height="90px" border="1px"/>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                    <br />
-                    <!-- 최근 본 상품 끝 -->
-                    <div class="totheTop">
-                        <a href="#" class="topText">TOP</a>
-                    </div>
                 </div>
-                </body>
-            </div> <!-- 사이드 배너 끝 -->
-        </th:block><!--end.isAuthenticated-->
-
-        <div class="container" style="max-width:700px;">
-
-            <!-- 이미지 -->
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="w-100">
-                <div class="carousel-inner">
-
-                    <div class="carousel-item active"
-                         th:if="${ product.photoUrl1 } == null and ${ product.photoUrl2 } == null and ${ product.photoUrl3 } == null and ${ product.photoUrl4 } == null and ${ product.photoUrl5 } == null">
-                        <img th:src="@{ /images/product/noimg.png }" class="d-block imgSize" alt="...">
-                    </div>
-
-                    <div class="carousel-item active" th:if="${ product.photoUrl1 } != null">
-                        <img th:src="@{ ${ product.photoUrl1 } }" class="d-block imgSize" alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl2 } != null">
-                        <img th:src="@{ ${ product.photoUrl2 } }" class="d-block imgSize" alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl3 } != null">
-                        <img th:src="@{ ${ product.photoUrl3 } }" class="d-block imgSize" alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl4 } != null">
-                        <img th:src="@{ ${ product.photoUrl4 } }" class="d-block imgSize" alt="...">
-                    </div>
-                    <div class="carousel-item" th:if="${ product.photoUrl5 } != null">
-                        <img th:src="@{ ${ product.photoUrl5 } }" class="d-block imgSize" alt="...">
-                    </div>
+                <br />
+                <!-- 최근 본 상품 끝 -->
+                <div class="totheTop">
+                    <a href="#" class="topText">TOP</a>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+            </div>
+            </body>
+        </div> <!-- 사이드 배너 끝 -->
+    </th:block><!--end.isAuthenticated-->
+
+    <div class="container" style="max-width:700px;">
+
+        <!-- 이미지 -->
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="w-100">
+            <div class="carousel-inner">
+
+                <div class="carousel-item active"
+                     th:if="${ product.photoUrl1 } == null and ${ product.photoUrl2 } == null and ${ product.photoUrl3 } == null and ${ product.photoUrl4 } == null and ${ product.photoUrl5 } == null">
+                    <img th:src="@{ /images/product/noimg.png }" class="d-block imgSize" alt="...">
+                </div>
+
+                <div class="carousel-item active" th:if="${ product.photoUrl1 } != null">
+                    <img th:src="@{ ${ product.photoUrl1 } }" class="d-block imgSize" alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl2 } != null">
+                    <img th:src="@{ ${ product.photoUrl2 } }" class="d-block imgSize" alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl3 } != null">
+                    <img th:src="@{ ${ product.photoUrl3 } }" class="d-block imgSize" alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl4 } != null">
+                    <img th:src="@{ ${ product.photoUrl4 } }" class="d-block imgSize" alt="...">
+                </div>
+                <div class="carousel-item" th:if="${ product.photoUrl5 } != null">
+                    <img th:src="@{ ${ product.photoUrl5 } }" class="d-block imgSize" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- 내용 -->
+        <div class="card-body my-4">
+
+            <!-- 거래 상태 select 박스 -->
+            <div class="row d-none" id="dealStatus">
+                <div class="col-4">
+                    <select name="status" class="form-control" id="selectOption">
+                        <option value="ing">거래 중</option>
+                        <option value="done">거래 완료</option>
+                    </select>
+                </div>
             </div>
 
-            <!-- 내용 -->
-            <div class="card-body my-4">
-
-                <!-- 거래 상태 select 박스 -->
-                <div class="row d-none" id="dealStatus">
-                    <div class="col-4">
-                        <select name="status" class="form-control" id="selectOption">
-                            <option value="ing">거래 중</option>
-                            <option value="done">거래 완료</option>
-                        </select>
-                    </div>
+            <!-- 유저 정보 -->
+            <div class="row">
+                <div class="col-1">
+                    <img th:src="${ member.userImgUrl }" style="width:50px; height:100%;">
                 </div>
-
-                <!-- 유저 정보 -->
-                <div class="row">
-                    <div class="col-1">
-                        <img th:src="${ member.userImgUrl }" style="width:50px; height:100%;">
-                    </div>
-                    <div class="col" style="height:50px;">
-                        <p style="height:30%;">
-                            <span th:text="${ member.Nickname }" style="font-weight:bold; font-size:18px;"></span>
-                        </p>
-                        <p style="height:30%;">
-                            <span th:text="${ member.address }" id="memberAddress"></span>
-                        </p>
-                    </div>
-                </div>
-                <hr>
-
-                <!-- 상품 내용 -->
-                <div class="row">
-                    <p th:text="${ product.title }" style="font-size:27px; font-weight:bold; height:30px;"></p>
-                    <p>
-                        <span th:text="${ product.category } + ' ∙'" style="font-size:12px; height:10px; color:#aaa;"></span>
-                        <span th:text="${#temporals.format(product.createdTime, 'yyyy-MM-dd-HH-mm-ss') }" id="createTime" style="color:#aaa; font-size:12px;"></span>
+                <div class="col" style="height:50px;">
+                    <p style="height:30%;">
+                        <span th:text="${ member.Nickname }" style="font-weight:bold; font-size:18px;"></span>
                     </p>
-                    <p th:text="${ product.price } + '원'" style="font-size:17px; font-weight:bold;"></p>
-                    <p th:utext="${ product.content }" id="productContent"></p>
-                    <p>
-                        <span th:text="'관심 ' + ${ product.likeCount }"  style="color:#aaa; font-size:12px;"></span>
-                        <span th:text="'∙ 조회수 ' + ${ product.clickCount }"  style="color:#aaa; font-size:12px;"></span>
+                    <p style="height:30%;">
+                        <span th:text="${ member.address }" id="memberAddress"></span>
                     </p>
                 </div>
-                <hr>
+            </div>
+            <hr>
 
-                <!-- 별 모양 -->
-                <div class="row text-center">
-                    <div class="col my-2 d-none" id="interested">
-                        <img th:src="@{ /images/product/interested.png }" width="50px">
-                    </div>
-                    <div class="col my-2 d-none" id="nointerested">
-                        <img th:src="@{ /images/product/nointerested.png }" width="50px">
-                    </div>
+            <!-- 상품 내용 -->
+            <div class="row">
+                <p th:text="${ product.title }" style="font-size:27px; font-weight:bold; height:30px;"></p>
+                <p>
+                    <span th:text="${ product.category } + ' ∙'" style="font-size:12px; height:10px; color:#aaa;"></span>
+                    <span th:text="${#temporals.format(product.createdTime, 'yyyy-MM-dd-HH-mm-ss') }" id="createTime" style="color:#aaa; font-size:12px;"></span>
+                </p>
+                <p th:text="${ product.price } + '원'" style="font-size:17px; font-weight:bold;"></p>
+                <p th:utext="${ product.content }" id="productContent"></p>
+                <p>
+                    <span th:text="'관심 ' + ${ product.likeCount }"  style="color:#aaa; font-size:12px;"></span>
+                    <span th:text="'∙ 조회수 ' + ${ product.clickCount }"  style="color:#aaa; font-size:12px;"></span>
+                </p>
+            </div>
+            <hr>
+
+            <!-- 별 모양 -->
+            <div class="row text-center">
+                <div class="col my-2 d-none" id="interested">
+                    <img th:src="@{ /images/product/interested.png }" width="50px">
                 </div>
-
-                <!-- 채팅하기 -->
-                <div class="my-2 text-center d-none" id="btnChat">
-                    <a class="btn btn-primary" id="gotoChat">채팅하기</a>
+                <div class="col my-2 d-none" id="nointerested">
+                    <img th:src="@{ /images/product/nointerested.png }" width="50px">
                 </div>
-
-                <!-- 수정 삭제 -->
-                <form id="form" class="text-center">
-                    <div class="my-2 d-none" id="btnUpdateAndDelete">
-                        <input type="hidden" th:value="${product.productNo}" name="productNo" id="hiddenProductNo"/>  <!-- 번호 필요해서 추가했어요! -->
-                        <button type="button" id="detailUpdate" class="btn btn-outline-info">수정</button>   <!--버튼 두개 추가해놨어요 -->
-                        <button type="button" id="detailDelete" class="btn btn-outline-secondary">삭제</button>
-                    </div>
-                </form>
             </div>
 
-            <!-- 지도 -->
-            <div id="map" style="width:100%; height:400px;"></div>
-        </div> <!-- container -->
-        <br/>
-    </div> <!-- content -->
+            <!-- 채팅하기 -->
+            <div class="my-2 text-center d-none" id="btnChat">
+                <a class="btn btn-primary" id="gotoChat">채팅하기</a>
+            </div>
+
+            <!-- 수정 삭제 -->
+            <form id="form" class="text-center">
+                <div class="my-2 d-none" id="btnUpdateAndDelete">
+                    <input type="hidden" th:value="${product.productNo}" name="productNo" id="hiddenProductNo"/>  <!-- 번호 필요해서 추가했어요! -->
+                    <button type="button" id="detailUpdate" class="btn btn-outline-info">수정</button>   <!--버튼 두개 추가해놨어요 -->
+                    <button type="button" id="detailDelete" class="btn btn-outline-secondary">삭제</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- 지도 -->
+        <div id="map" style="width:100%; height:400px;"></div>
+    </div> <!-- container -->
+    <br/>
+</div> <!-- content -->
 
 
-    <th:block layout:fragment="script">
-        <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<th:block layout:fragment="script">
+    <!--  Ajax를 사용하기 위한 axios 자바스크립트 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-        <script>
-            let memberNo          = [[${#authentication.principal.memberNo} ]]; // 로그인한 사람의 memberNo
-            let productNo         = [[ ${ product.productNo } ]];               // 상품 번호
-            let productMemberNo   = [[ ${ member.memberNo } ]];                 // 상품 등록한 memberNo;
-            let dealLocation      = '[[ ${ product.dealAddress } ]]';           // 거래 지역
+    <script>
+        let memberNo          = [[${#authentication.principal.memberNo} ]]; // 로그인한 사람의 memberNo
+        let productNo         = [[ ${ product.productNo } ]];               // 상품 번호
+        let productMemberNo   = [[ ${ member.memberNo } ]];                 // 상품 등록한 memberNo;
+        let dealLocation      = '[[ ${ product.dealAddress } ]]';           // 거래 지역
 
-         </script>
+    </script>
 
-        <!-- services 라이브러리 불러오기 -->
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aab8e4a9f5ce56e5b56f79f8c69bebcb&libraries=services"></script>
-        <!-- 지도 그리기 -->
-        <script th:src="@{ /js/productDetailKakaoMap.js }" th:inline="javascript"></script>
-        <!-- 상품 등록 시간 -->
-        <script th:src="@{ /js/productCreateTime.js }" th:inline="javascript"></script>
+    <!-- services 라이브러리 불러오기 -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aab8e4a9f5ce56e5b56f79f8c69bebcb&libraries=services"></script>
+    <!-- 지도 그리기 -->
+    <script th:src="@{ /js/productDetailKakaoMap.js }" th:inline="javascript"></script>
+    <!-- 상품 등록 시간 -->
+    <script th:src="@{ /js/productCreateTime.js }" th:inline="javascript"></script>
 
 
-        <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
-        <script th:src="@{ /js/productDetail.js }" th:inline="javascript"></script>
-        <script>
-            const gotoChat = document.querySelector("#gotoChat");
-            gotoChat.addEventListener("click", function () {
-              let _left = Math.ceil(( window.screen.width - 500 )/2);
-              let _top = Math.ceil(( window.screen.height - 600 )/2)
-              window.open(
+    <script th:src="@{ /js/productList.js }" th:inline="javascript"></script>
+    <script th:src="@{ /js/productDetail.js }" th:inline="javascript"></script>
+    <script>
+        const gotoChat = document.querySelector("#gotoChat");
+        gotoChat.addEventListener("click", function () {
+            let _left = Math.ceil(( window.screen.width - 500 )/2);
+            let _top = Math.ceil(( window.screen.height - 600 )/2)
+            window.open(
                 "/chat/chatRoom?memberNo=" + [[${ #authentication.principal.memberNo}]] +"&&roomId=[[${member.nickname}]]&&nickname=[[${#authentication.principal.nickname}]]",
                 "PopupNew",
                 "width=500,height=600,left="+_left+",top="+_top
-              );
-            });
-          </script>
-    </th:block>
+            );
+        });
+    </script>
+</th:block>
 
 </html>
