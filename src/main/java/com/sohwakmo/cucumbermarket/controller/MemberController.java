@@ -2,6 +2,8 @@ package com.sohwakmo.cucumbermarket.controller;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
+import com.sohwakmo.cucumbermarket.dto.ResetPasswordDto;
+import com.sohwakmo.cucumbermarket.service.EmailServiceImpl;
 import com.sohwakmo.cucumbermarket.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,10 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -29,6 +28,7 @@ import java.util.Optional;
 public class MemberController {
 
     private final MemberService memberService;
+    private final EmailServiceImpl emailService;
 
     private final AuthenticationManager authenticationManager;
     @Value("${cos.key}")
@@ -127,7 +127,6 @@ public class MemberController {
     public void findId(){
         log.info("findId() GET");
     }
-
     @PostMapping("/member/find/id")
     public String findId(String email, RedirectAttributes attrs){
         log.info("findId(email= {}) POST", email);
@@ -137,11 +136,24 @@ public class MemberController {
         attrs.addFlashAttribute("memberId", memberId);
         return "redirect:/member/find/id";
     }
-
     @GetMapping("/member/find/pw")
     public void findPw(){
         log.info("findPw() GET");
     }
+    @PostMapping("/member/find/pw")
+    public void findPw(String email, ModelAttribute attrs){
+        log.info("findPw(email= {})", email);
+        Member member= memberService.findId(email);
+    }
+    @GetMapping("/member/find/resetPw")
+    public void resetPw() {
+        log.info("resetPw() GET");
+    }
 
-
+    @PostMapping("/member/find/resetPw")
+    public String resetPw(ResetPasswordDto dto){
+        log.info("resetPw(dto= {})", dto);
+        memberService.resetPw(dto);
+        return "redirect:/";
+    }
 }
