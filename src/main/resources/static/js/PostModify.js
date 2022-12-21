@@ -52,7 +52,7 @@ const deleteImage01Button = document.querySelector("#deleteImage01Button");
 deleteImage01Button.addEventListener("click", function () {
   let imageSrc = image1.src;
   console.log(imageSrc);
-  imageSrc = imageSrc.substr(28);
+  imageSrc = imageSrc.substr(32);
   console.log(imageSrc);
 
   axios
@@ -70,7 +70,7 @@ const deleteImage02Button = document.querySelector("#deleteImage02Button");
 deleteImage02Button.addEventListener("click", function () {
   let imageSrc = image2.src;
   console.log(imageSrc);
-  imageSrc = imageSrc.substr(28);
+  imageSrc = imageSrc.substr(32);
   console.log(imageSrc);
 
   axios

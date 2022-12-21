@@ -147,7 +147,7 @@ public class PostService {
      * @throws Exception
      */
     @Transactional
-    public String chekImageNumandDeleteImage(String imageSrc) throws Exception{
+    public String  chekImageNumandDeleteImage(String imageSrc) throws Exception{
         Post post =  postRepository.findByImageName01(imageSrc);
         if(post == null){
             Post post2 = postRepository.findByImageName02(imageSrc);
