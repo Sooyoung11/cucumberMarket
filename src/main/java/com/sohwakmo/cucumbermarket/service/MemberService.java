@@ -7,6 +7,7 @@ import com.sohwakmo.cucumbermarket.domain.KakaoProfile;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.OAuthToken;
 import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
+import com.sohwakmo.cucumbermarket.dto.ResetPasswordDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -110,6 +111,17 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElse(null);
     }
 
+    @Transactional
+    /*repository jpql*/
+    public void resetPw(ResetPasswordDto dto){
+        log.info("resetPw(dto= {})", dto);
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        Member entity= memberRepository.findByEmail(dto.getEmail()).orElse(null);
+        log.info(entity.toString());
+        Member member = entity.resetPassword(dto.getPassword());
+        log.info(member.toString());
+    }
+
     @Transactional(readOnly = true)
     public Member findMemberByMemberNo(Integer memberNo) {
 
@@ -195,11 +207,6 @@ public class MemberService {
 //        log.info("카카오 이메일: "+kakaoProfile.getKakao_account().getEmail());
 //
 //        log.info("마켓 사용자 아이디:"+kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
-
-        int idx = kakaoProfile.getKakao_account().getEmail().indexOf("@");
-        String kakao_nickname = kakaoProfile.getKakao_account().getEmail().substring(0, idx) +"_"+kakaoProfile.getId().toString().substring(0,4);
-//        log.info("kakao_memberId="+kakao_memberId);
-//        log.info("kakao_nickname="+kakao_nickname);
 //        log.info("마켓 서버 이메일: "+ kakaoProfile.getKakao_account().getEmail());
 //        log.info("마켓 서버 닉네임: "+ kakaoProfile.getProperties().getNickname());
 //        log.info("마켓 서버 이름: "+ "kakaoUser" + kakaoProfile.getId());
@@ -209,9 +216,9 @@ public class MemberService {
 
         //---------------불러온 사용자 정보를 MeberRegisterDto에 저장-------------------
         MemberRegisterDto kakaoMember = MemberRegisterDto.builder()
-                .memberId(kakao_nickname)
+                .memberId(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
                 .password(cosKey)
-                .nickname(kakao_nickname)
+                .nickname("kakaoUser" + kakaoProfile.getId())
                 .name(kakaoProfile.getProperties().getNickname())
                 .email(kakaoProfile.getKakao_account().getEmail())
                 .oauth("kakao")
