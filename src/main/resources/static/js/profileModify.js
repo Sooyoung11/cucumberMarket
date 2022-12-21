@@ -15,8 +15,9 @@ const oauth = document.querySelector('#oauth');
 const btnPostcode = document.querySelector('#btnPostcode');
 btnPostcode.addEventListener('click', sample4_execDaumPostcode);
 
-if(oauth == null) {
-    passwordValueCheck();
+
+if(oauth.value != "") {
+    btnSubmit.classList.remove('disabled');
 }
 
 //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -94,7 +95,7 @@ function passwordValueCheck() {
         btnSubmit.classList.add('disabled');
     }
 }
-if(oauth ==null) {
+if(oauth.value == "") {
     password.addEventListener('change', function () {
         if (password.value.length < 8 || password.value.length > 20) {
             passwordCheck.className = "my-2";
@@ -144,7 +145,7 @@ const emailNok = document.querySelector('#emailNok');
 const emailNok2 = document.querySelector('#emailNok2');
 const btnAuthcode= document.querySelector('#btnAuthcode');
 
-if(oauth==null) {
+if(oauth.value == "") {
     emailInput.addEventListener('change', function () {
         const email = emailInput.value;
         console.log(email);
@@ -241,5 +242,6 @@ form.addEventListener("submit", function (e) {
         form.submit();
     }
 })
+
 
 

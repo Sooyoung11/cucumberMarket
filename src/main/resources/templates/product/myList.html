@@ -75,7 +75,7 @@
                 <li class="page-item " th:classappend="${num == list.pageable.pageNumber +1}? 'disabled'" th:each="num : ${#numbers.sequence(startPage, endPage)}">
                     <a class="page-link"  th:href="@{/product/myList/searchStatus(page=${num -1},myProductListSelect=${param.myProductListSelect} , memberNo=${param.memberNo})}", th:text="${num}">1</a>
                 </li>
-                <li class="page-item" th:classappend="${list.pageable.pageNumber +1 > list.totalPages} ? 'disabled'">
+                <li class="page-item" th:classappend="${list.pageable.pageNumber +1 >= list.totalPages} ? 'disabled'">
                     <a class="page-link " th:href="@{/product/myList/searchStatus(page=${list.pageable.pageNumber +1}, myProductListSelect=${param.myProductListSelect} , memberNo=${param.memberNo})}" aria-label="Next">
                         <span aria-hidden="true">&gt;</span>
                     </a>

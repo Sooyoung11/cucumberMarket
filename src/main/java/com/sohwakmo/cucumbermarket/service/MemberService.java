@@ -195,6 +195,11 @@ public class MemberService {
 //        log.info("카카오 이메일: "+kakaoProfile.getKakao_account().getEmail());
 //
 //        log.info("마켓 사용자 아이디:"+kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId());
+
+        int idx = kakaoProfile.getKakao_account().getEmail().indexOf("@");
+        String kakao_nickname = kakaoProfile.getKakao_account().getEmail().substring(0, idx) +"_"+kakaoProfile.getId().toString().substring(0,4);
+//        log.info("kakao_memberId="+kakao_memberId);
+//        log.info("kakao_nickname="+kakao_nickname);
 //        log.info("마켓 서버 이메일: "+ kakaoProfile.getKakao_account().getEmail());
 //        log.info("마켓 서버 닉네임: "+ kakaoProfile.getProperties().getNickname());
 //        log.info("마켓 서버 이름: "+ "kakaoUser" + kakaoProfile.getId());
@@ -204,9 +209,9 @@ public class MemberService {
 
         //---------------불러온 사용자 정보를 MeberRegisterDto에 저장-------------------
         MemberRegisterDto kakaoMember = MemberRegisterDto.builder()
-                .memberId(kakaoProfile.getKakao_account().getEmail()+"_"+kakaoProfile.getId())
+                .memberId(kakao_nickname)
                 .password(cosKey)
-                .nickname("kakaoUser" + kakaoProfile.getId())
+                .nickname(kakao_nickname)
                 .name(kakaoProfile.getProperties().getNickname())
                 .email(kakaoProfile.getKakao_account().getEmail())
                 .oauth("kakao")
