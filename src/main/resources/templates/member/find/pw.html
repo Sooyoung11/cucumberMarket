@@ -30,7 +30,7 @@
             <div id="findPw">
                 <a th:href="@{/member/find/pw}">비밀번호 찾기</a>
             </div>
-        </div><!--end.findId-->
+        </div><!--end.findTab-->
 
         <div id="findForm">
             <form method="post">
@@ -59,10 +59,14 @@
         </div><!--end.findForm-->
     </div>
 </main>
+<!-- axios-http JS -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     window.addEventListener('DOMContentLoaded', function () {
         const name= document.querySelector('#name');
         const nameSpan= document.querySelector('#nameSpan');
+        const memberId= document.querySelector('#memberId')
+        const memberIdSpan= document.querySelector('#memberIdSpan');
         const email= document.querySelector('#email')
         const emailSpan= document.querySelector('#emailSpan');
         
@@ -73,12 +77,43 @@
             nameSpan.style.borderColor= '#ced4da';
         })
 
+        memberId.addEventListener('focus', function(){
+            memberIdSpan.style.borderColor= '#198754';
+        })
+        memberId.addEventListener('blur', function(){
+            memberIdSpan.style.borderColor= '#ced4da';
+        })
+
         email.addEventListener('focus', function(){
             emailSpan.style.borderColor= '#198754';
         })
         email.addEventListener('blur', function(){
             emailSpan.style.borderColor= '#ced4da';
         })
+
+        let to= '';
+        const btnSubmit= document.querySelector('#btnSubmit');
+        btnSubmit.addEventListener('click', function (event) {
+            event.preventDefault();
+            const result = confirm('입력하신 주소로 인증메일을 발송할까요?');
+            if (result) {
+                axios
+                .get('/member/find/pw/sendLink?email='+email.value)
+                .then(function(res){
+                    console.log(res.data);
+                    to= res.data;
+                    console.log('sendLink=> to= '+to);
+                    const result2= confirm('발송 된 메일을 통해 비밀번호를 재설정하실 수 있습니다. 해당 페이지는 로그인 페이지로 이동합니다.');
+                    if(result2){
+                        location.replace('/login');
+                    }
+                })
+                .catch(err => {
+                    alert('잘못된 주소입니다. 확인 후 다시 입력해주세요.');
+                    return;
+                });
+            }
+        });
     })
 </script>
 </body>

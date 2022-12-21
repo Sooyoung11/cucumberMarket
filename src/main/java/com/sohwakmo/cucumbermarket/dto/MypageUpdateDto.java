@@ -9,7 +9,6 @@ import lombok.Data;
 public class MypageUpdateDto {
 
     private Integer memberNo;
-    private String memberId;
     private String name;
     private String nickname;
     private String password;
@@ -17,5 +16,15 @@ public class MypageUpdateDto {
     private String phone;
     private String email;
 
-
+//    public static MypageUpdateDto fromEntity(Member m){
+//        return MypageUpdateDto.builder()
+//                .memberNo(m.getMemberNo())
+//                .name(m.getName())
+//                .nickname(m.getNickname())
+//                .password(m.getPassword())
+//                .address(m.getAddress())
+//                .phone(m.getPhone())
+//                .email(m.getEmail())
+//                .build();
+//    }
 }

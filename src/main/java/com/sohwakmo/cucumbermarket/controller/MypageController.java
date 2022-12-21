@@ -5,12 +5,7 @@ import com.sohwakmo.cucumbermarket.dto.MypageUpdateDto;
 import com.sohwakmo.cucumbermarket.service.MypageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,14 +18,10 @@ import java.io.File;
 @RequestMapping("/mypage")
 @Controller
 public class MypageController {
-    @Value("${cos.key}")
-    private String cosKey;
 
     private final MypageService mypageService;
     private final PasswordEncoder passwordEncoder;
-
-    private final AuthenticationManager authenticationManager;
-
+    
     //마이페이지 호출
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/mymain")
@@ -64,31 +55,15 @@ public class MypageController {
     @PostMapping("/update")
     public String update(MypageUpdateDto dto, String oauth){
         log.info("update(dto={}, oauth={})", dto, oauth);
-        String preEncodePassword = null;
 
-        if(oauth==""){
-            preEncodePassword = dto.getPassword();
-        }else{
-            preEncodePassword = cosKey;
-        }
-
-
-        if(oauth == ""){
-            dto.setPassword(passwordEncoder.encode(dto.getPassword()));
-            log.info("setPassword(dto= {})", dto);
-        }
-
+        if(oauth ==null)
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         Integer memberNo = mypageService.update(dto);
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getMemberId(), preEncodePassword));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-
         return "redirect:/mypage/mymain?memberNo="+ memberNo;
     }
-
+    
 
 
 }
-
