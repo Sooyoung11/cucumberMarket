@@ -95,5 +95,12 @@ public class Member {
         return this;
     }
 
+    // 비밀번호 업데이트
+    public Member resetPassword(String password, String emailKey){
+        this.password= password;
+        this.emailKey= emailKey;
+        return this;
+    }
+
 
 }

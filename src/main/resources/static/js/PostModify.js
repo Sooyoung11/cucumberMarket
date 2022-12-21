@@ -107,6 +107,7 @@ modifyFile01.addEventListener("change", function () {
       console.log(image1.src);
       image1.src = "http://192.168.20.28:8889/" + response.data;
       console.log(image1.src);
+      location.reload();
       // location.reload();
     })
     .catch((error) => {
@@ -137,6 +138,7 @@ modifyFile02.addEventListener("change", function () {
       console.log(image1.src);
       image1.src = "http://192.168.20.28:8889/" + response.data;
       console.log(image1.src);
+      location.reload();
       // location.reload();
     })
     .catch((error) => {
