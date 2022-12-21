@@ -91,7 +91,6 @@ window.addEventListener('DOMContentLoaded', event => {
             });
     }
 
-
     // 댓글 리스트
     function updateReplyList(data) {
         // 댓글들의 배열(data)을 html 영역에 보일 수 있도록 html 코드를 작성.
@@ -308,15 +307,15 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         }
 
-
         // 대댓글 작성
         function ReReply(event) {
 
             let replyNo = event.target.getAttribute('data-rid');
 
             if (getReplyNo != 0) {
-                getReplyNo = 0;
                 readAllReplies();
+
+                if(getReplyNo == replyNo) {getReplyNo = 0};
 
             } else {
                 getReplyNo = replyNo;
@@ -351,8 +350,6 @@ window.addEventListener('DOMContentLoaded', event => {
                 alert('댓글 내용은 반드시 이름하세요.');
                 return;
             }
-
-
 
             // Ajax POST 요청을 보낼 때 서버로 보내는 데이터 작성.
             // java {} 은 배열, javascript {} 은 object.
