@@ -105,7 +105,7 @@ modifyFile01.addEventListener("change", function () {
       // alert("사진이 변경되었습니다.");
       console.log(response.data);
       console.log(image1.src);
-      image1.src = "http://localhost:8889/" + response.data;
+      image1.src = "http://192.168.20.28:8889/" + response.data;
       console.log(image1.src);
       // location.reload();
     })
@@ -135,7 +135,7 @@ modifyFile02.addEventListener("change", function () {
       // alert("사진이 변경되었습니다.");
       console.log(response.data);
       console.log(image1.src);
-      image1.src = "http://localhost:8889/" + response.data;
+      image1.src = "http://192.168.20.28:8889/" + response.data;
       console.log(image1.src);
       // location.reload();
     })
