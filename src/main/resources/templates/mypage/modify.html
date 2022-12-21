@@ -5,211 +5,213 @@
 <head>
     <title>오이마켓 | 프로필 수정페이지</title>
 </head>
-    <div layout:fragment="content">
-        <div class="container">
-          <!-- mypage start -->
-            <div class="row">
-                <!-- 사용자 정보 start -->
-                <div class="col-lg-4">
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold">사용자 정보</h6>
+<div layout:fragment="content">
+    <div class="container">
+        <!-- mypage start -->
+        <div class="row">
+            <!-- 사용자 정보 start -->
+            <div class="col-lg-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold">사용자 정보</h6>
+                    </div>
+                    <div class="card-body">
+                        <!-- 사용자 프로필 사진 -->
+                        <div>
+                            <img class="user_img" alt="..." id="userProfileImage"/>
                         </div>
-                        <div class="card-body">
-                            <!-- 사용자 프로필 사진 -->
-                            <div>
-                                <img class="user_img" alt="..." id="userProfileImage"/>
-                            </div>
-                            <div class="container my-3 align-content-center" >
-                                <a class="btn btn-light btn-icon-split" id="profileImageChange">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-arrow-right"></i>
-                                            </span>
-                                    <span class="text">  사진 수정  </span>
-                                </a>
-                            </div>
+                        <div class="container my-3 align-content-center" >
+                            <a class="btn btn-light btn-icon-split" id="profileImageChange">
+                                           <span class="icon text-white-50">
+                                               <i class="fas fa-arrow-right"></i>
+                                           </span>
+                                <span class="text">  사진 수정  </span>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <!-- 사용자 정보 end -->
+            </div>
+            <!-- 사용자 정보 end -->
 
-                <!-- 사용자 프로필 start-->
-                <div class="col-lg-8">
-                    <div class="card mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold">프로필 수정</h6>
-                        </div>
-                        <div class="card-body">
-                            <form id="formModify">
-                                <div class="my-2">
-                                    <input type="hidden" id="memberNo" name="memberNo" th:value="${userProfile.memberNo}"  readonly/>
-                                    <input type="hidden" id="oauth" name="oauth" th:value="${#authentication.principal.oauth}"  readonly/>
-                                    <label for="name" class="form-label">사용자 이름</label>
-                                    <input id="name" class="form-control" name="name" type="text" th:value="${userProfile.name}" autofocus/>
+            <!-- 사용자 프로필 start-->
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold">프로필 수정</h6>
+                    </div>
+                    <div class="card-body">
+                        <form id="formModify">
+                            <div class="my-2">
+                                <input type="hidden" id="memberNo" name="memberNo" th:value="${userProfile.memberNo}"  readonly/>
+                                <input type="hidden" id="oauth" name="oauth" th:value="${#authentication.principal.oauth}"  readonly/>
+                                <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.memberId}"  readonly/>
+                                <label for="name" class="form-label">사용자 이름</label>
+                                <input id="name" class="form-control" name="name" type="text" th:value="${userProfile.name}" autofocus/>
+                            </div>
+                            <div class="my-2">
+                                <label for="nickname" class="form-label">닉네임</label>
+                                <input id="nickname" class="form-control" name="nickname" type="text" th:value="${userProfile.nickname}" readonly/>
+                                <div id="nicknameOk" class="d-none">
+                                    <p class="text-success">멋진 별명이네요!</p>
                                 </div>
+                                <div id="nicknameNok" class="d-none">
+                                    <p class="text-danger">이미 사용중이거나 탈퇴한 닉네임입니다.</p>
+                                </div>
+                            </div>
+                            <th:block th:if="${#authentication.principal.oauth}==null">
                                 <div class="my-2">
-                                    <label for="nickname" class="form-label">닉네임</label>
-                                    <input id="nickname" class="form-control" name="nickname" type="text" th:value="${userProfile.nickname}" readonly/>
-                                    <div id="nicknameOk" class="d-none">
-                                        <p class="text-success">멋진 별명이네요!</p>
+                                    <label for="password" class="form-label">비밀번호</label>
+                                    <input id="password" class="form-control" name="password" type="password" maxlength='20' placeholder="비밀번호를 입력해주세요" />
+                                    <div class="my-2 d-none" id="passwordCheck">
+                                        <p class="text-danger">비밀번호는 8~20자리를 입력해주세요.</p>
                                     </div>
-                                    <div id="nicknameNok" class="d-none">
-                                        <p class="text-danger">이미 사용중이거나 탈퇴한 닉네임입니다.</p>
+                                    <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
+                                    <input id="passwordConfirm" class="form-control" type="password" maxlength="20" placeholder="비밀번호를 다시한번 입력해주세요" disabled />
+                                    <div class="my-2 d-none" id="passwordMatched" >
+                                        <p class="text-success">비밀번호가 일치합니다.</p>
+                                    </div>
+                                    <div class="my-2 d-none" id="passwordMismatched">
+                                        <p class="text-danger">비밀번호가 일치하지 않습니다.</p>
                                     </div>
                                 </div>
-                                <th:block th:if="${#authentication.principal.oauth}==null">
-                                    <div class="my-2">
-                                        <label for="password" class="form-label">비밀번호</label>
-                                        <input id="password" class="form-control" name="password" type="password" maxlength='20' th:value="${userProfile.password}" />
-                                        <div class="my-2 d-none" id="passwordCheck">
-                                            <p class="text-danger">비밀번호는 8~20자리를 입력해주세요.</p>
-                                        </div>
-                                        <label for="passwordConfirm" class="form-label">비밀번호 확인</label>
-                                        <input id="passwordConfirm" class="form-control" type="password" maxlength="20" th:value="${userProfile.password}" disabled />
-                                        <div class="my-2 d-none" id="passwordMatched" >
-                                            <p class="text-success">비밀번호가 일치합니다.</p>
-                                        </div>
-                                        <div class="my-2 d-none" id="passwordMismatched">
-                                            <p class="text-danger">비밀번호가 일치하지 않습니다.</p>
-                                        </div>
-                                    </div>
-                                </th:block>
-                                <th:block th:unless="${#authentication.principal.oauth}==null">
-                                    <input class="form-control" name="password" type="hidden" maxlength='20' th:value="${userProfile.password}" readonly/>
-                                </th:block>
+                            </th:block>
+                            <th:block th:unless="${#authentication.principal.oauth}==null">
+                                <input class="form-control" name="password" type="hidden" maxlength='20' th:value="${userProfile.password}" readonly/>
+                            </th:block>
 
-                                <!--주소 -->
+                            <!--주소 -->
+                            <div class="mt-4">
+                                <div>
+                                    <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
+                                    <input id="totalAddress" class="form-control" style="display: inline-block" name="address" type="text" th:value="${userProfile.address}"/>
+                                    <div class="mb-2">
+                                        <input type="button" id="btnPostcode" class="btn btn-success form-control" style="width:110px" value="우편번호 찾기">
+                                        <span id="postcode">
+                                               <input type="text" id="sample4_postcode" class="form-control d-none" placeholder="우편번호">
+                                           </span>
+                                    </div>
+                                    <span id="roadAddressSpan" class="my-2">
+                                           <input type="text" id="sample4_roadAddress" class="form-control d-none" placeholder="도로명주소">
+                                       </span>
+                                    <span class="my-2">
+                                           <input type="text" id="sample4_jibunAddress" class="form-control d-none" placeholder="지번주소" >
+                                       </span>
+                                    <span id="guide" style="color:#999;display:none"></span>
+                                    <span class="my-2" >
+                                           <input type="text" id="sample4_detailAddress" class="form-control d-none" placeholder="상세주소">
+                                        </span>
+                                    <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="d-none">
+                                </div>
+                            </div>
+
+                            <div class="my-2">
+                                <label for="phone" class="form-label">핸드폰 번호</label>
+                                <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
+                            </div>
+
+                            <!-- 이메일 -->
+                            <th:block th:if="${#authentication.principal.oauth}==null">
                                 <div class="mt-4">
                                     <div>
-                                        <label for="sample4_postcode" class="form-label" id="lblAddress">주소</label>
-                                        <input id="totalAddress" class="form-control" style="display: inline-block" name="address" type="text" th:value="${userProfile.address}"/>
+                                        <label for="email" class="form-label" id="lblEmail">이메일</label>
                                         <div class="mb-2">
-                                            <input type="button" id="btnPostcode" class="btn btn-success form-control" style="width:110px" value="우편번호 찾기">
-                                            <span id="postcode">
-                                                <input type="text" id="sample4_postcode" class="form-control d-none" placeholder="우편번호">
-                                            </span>
+                                            <input type="email" id="email" name="email" class="form-control" th:value="${userProfile.email}" required />
+                                            <span id="emailOk" class="d-none">
+                                                   <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                                                   </span>
+                                            <span id="emailNok" class="d-none">
+                                                   <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                                                   </span>
+                                            <input type="button" id="btnAuthcode" class="btn btn-success disabled" style="width: 110px;" value="인증코드 받기">
                                         </div>
-                                        <span id="roadAddressSpan" class="my-2">
-                                            <input type="text" id="sample4_roadAddress" class="form-control d-none" placeholder="도로명주소">
-                                        </span>
-                                        <span class="my-2">
-                                            <input type="text" id="sample4_jibunAddress" class="form-control d-none" placeholder="지번주소" >
-                                        </span>
-                                        <span id="guide" style="color:#999;display:none"></span>
-                                        <span class="my-2" >
-                                            <input type="text" id="sample4_detailAddress" class="form-control d-none" placeholder="상세주소">
-                                         </span>
-                                        <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="d-none">
-                                    </div>
-                                </div>
+                                        <div id="emailNok2" class="d-none">
+                                            <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
+                                        </div>
+                                        <input type="hidden" id="emailKey" class="form-control" name="emailKey" placeholder="인증코드 입력" required />
+                                        <span id="emailKeyOk" class="d-none">
+                                               <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
+                                               </span>
+                                        <span id="emailKeyNok" class="d-none">
+                                               <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
+                                               </span>
 
-                                <div class="my-2">
-                                    <label for="phone" class="form-label">핸드폰 번호</label>
-                                    <input id="phone" class="form-control" name="phone" type="text" th:value="${userProfile.phone}" />
-                                </div>
-
-                                <!-- 이메일 -->
-                                <th:block th:if="${#authentication.principal.oauth}==null">
-                                    <div class="mt-4">
-                                        <div>
-                                            <label for="email" class="form-label" id="lblEmail">이메일</label>
-                                            <div class="mb-2">
-                                                <input type="email" id="email" name="email" class="form-control" th:value="${userProfile.email}" required />
-                                                    <span id="emailOk" class="d-none">
-                                                    <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
-                                                    </span>
-                                                    <span id="emailNok" class="d-none">
-                                                    <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
-                                                    </span>
-                                                    <input type="button" id="btnAuthcode" class="btn btn-success disabled" style="width: 110px;" value="인증코드 받기">
-                                            </div>
-                                            <div id="emailNok2" class="d-none">
-                                                <p class="text-danger">이미 사용중이거나 탈퇴한 이메일입니다.</p>
-                                            </div>
-                                                <input type="hidden" id="emailKey" class="form-control" name="emailKey" placeholder="인증코드 입력" required />
-                                                <span id="emailKeyOk" class="d-none">
-                                                <span><img th:src="@{/assets/checkIcon.png}" alt="checkIcon"></span>
-                                                </span>
-                                                <span id="emailKeyNok" class="d-none">
-                                                <span><img th:src="@{/assets/errorIcon.png}" alt="errorIcon"></span>
-                                                </span>
-
-                                            <div id="emailKeyNok2" class="d-none">
-                                                <p class="text-danger">인증코드가 일치하지 않습니다.</p>
-                                            </div>
+                                        <div id="emailKeyNok2" class="d-none">
+                                            <p class="text-danger">인증코드가 일치하지 않습니다.</p>
                                         </div>
                                     </div>
-                                </th:block>
-                                <th:block th:unless="${#authentication.principal.oauth}==null">
-                                    <label class="form-label">이메일</label>
-                                    <div class="mb-2">
-                                        <input type="email" name="email" class="form-control" th:value="${userProfile.email}" readonly />
-                                    </div>
-                                </th:block>
-                                <div class="my-2" style="display:inline">
-                                <input type="submit" id="btnSubmit" class="form-control btn btn-success" value="수정완료" style="float:right; display:block; width:100px; margin-right:10px;"/>
+                                </div>
+                            </th:block>
+                            <th:block th:unless="${#authentication.principal.oauth}==null">
+                                <label class="form-label">이메일</label>
+                                <div class="mb-2">
+                                    <input type="email" name="email" class="form-control" th:value="${userProfile.email}" readonly />
+                                </div>
+                            </th:block>
+                            <div class="my-2" style="display:inline">
+                                <input type="submit" id="btnSubmit" class="form-control btn btn-success disabled" value="수정완료" style="float:right; display:block; width:100px; margin-right:10px;"/>
                                 <input type="button" onClick="history.go(-1)" class="form-control btn btn-success" value="취소" style="float:right; display:block; width:100px; margin-right:10px;"/>
-                                </div>
+                            </div>
 
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
-                <!-- 사용자 프로필 end -->
             </div>
-            <!-- row:end -->
+            <!-- 사용자 프로필 end -->
         </div>
-        <!--container END-->
-
-        <!--modal start -->
-        <div class="modal" tabindex="-1" id="profileImageModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">사진 수정</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-                        <div>
-                            <label for="imageFile" class="form-label">사용자 이미지</label>
-                        </div>
-                        <div>
-                            <input type="hidden" id="modalMemberNo" readonly/>
-                            <!-- <label class="form-label">이미지 이름:</label>-->
-                            <input type="text" id="modalImgName" readonly/>
-                        </div>
-                        <div>
-                            <input type="file" class="form-control" id="imageFile" name="userProfileImage"
-                                   accept="image/*"/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <button type="button" id="modalBtnDelete" class="btn btn-primary">삭제</button>
-                        <button type="button" id="modalBtnUpdate" class="btn btn-primary">수정</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!--Modal end-->
+        <!-- row:end -->
     </div>
-        <!-- content:end -->
+    <!--container END-->
 
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--modal start -->
+    <div class="modal" tabindex="-1" id="profileImageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">사진 수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-        <!-- Core theme JS-->
-        <th:block layout:fragment="script">
-            <script
-                    src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-            <!-- 주소 검색 -->
-            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-            <script th:src="@{/js/profile.js}"></script>
-            <script th:src="@{/js/profileModify.js}"></script>
-        </th:block>
+
+                <div class="modal-body">
+                    <div>
+                        <label for="imageFile" class="form-label">사용자 이미지</label>
+                    </div>
+                    <div>
+                        <input type="hidden" id="modalMemberNo" readonly/>
+                        <!-- <label class="form-label">이미지 이름:</label>-->
+                        <input type="text" id="modalImgName" readonly/>
+                    </div>
+                    <div>
+                        <input type="file" class="form-control" id="imageFile" name="userProfileImage"
+                               accept="image/*"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" id="modalBtnDelete" class="btn btn-primary">삭제</button>
+                    <button type="button" id="modalBtnUpdate" class="btn btn-primary">수정</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--Modal end-->
+</div>
+<!-- content:end -->
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core theme JS-->
+<th:block layout:fragment="script">
+    <script
+            src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- 주소 검색 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/profile.js}"></script>
+    <script th:src="@{/js/profileModify.js}"></script>
+</th:block>
 
 
 </html>
+
