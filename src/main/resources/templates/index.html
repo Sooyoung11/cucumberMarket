@@ -190,7 +190,7 @@
 									<!-- 이미지가 없다면 -->
 									<th:block th:if="${ product.photoUrl1 }== null and ${ product.photoUrl2 }== null and
 									${ product.photoUrl3 }== null and ${ product.photoUrl4 }== null and ${ product.photoUrl5 }== null">
-										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #e1e1e1" alt="...">
+										<img th:src="@{ /images/product/noimg.png }" alt="...">
 									</th:block>
 									<!-- 이미지가 있다면-->
 									<th:block th:if="${product.photoUrl1} != null">
@@ -293,7 +293,7 @@
 				<!--btnMorePopularPost-->
 				<div class="btnMore">
 					<a th:href="@{ /post/list }">
-						<div id="btnMorePopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+						<div class="btn btn-outline-success btnMoreAreaPopularPost">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
 					</a>
 				</div>
 
@@ -317,7 +317,7 @@
 								<div class="postImg">
 									<!-- 이미지가 없다면 -->
 									<th:block th:if="${ post.imageUrl01 }== null">
-										<img th:src="@{ /images/product/noimg.png }" style="border: 1px solid #fafafa" alt="...">
+										<img th:src="@{ /images/product/noimg.png }" alt="...">
 									</th:block>
 									<!-- 이미지가 있다면-->
 									<th:block th:if="${ post.imageUrl01 } != null">
