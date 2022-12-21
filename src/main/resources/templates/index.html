@@ -350,11 +350,20 @@
 				</div>
 
 				<!--btnMorePopularPost-->
-				<div class="btnMore">
-					<a th:href="@{ /post/list }">
-						<div id="btnMoreAreaPopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
-					</a>
-				</div>
+				<th:block sec:authorize="isAuthenticated()">
+					<div class="btnMore">
+						<a th:href="@{ /post/list?address={address} (address=${#authentication.principal.address}) }">
+							<div id="btnMoreAreaPopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+						</a>
+					</div>
+				</th:block>
+				<th:block sec:authorize="isAnonymous()">
+					<div class="btnMore">
+						<a th:href="@{ /post/list }">
+							<div id="btnMoreAreaPopularPost" class="btn btn-outline-success">동네생활 더 보기 <span><i class="bi bi-arrow-right"></i></span></div>
+						</a>
+					</div>
+				</th:block>
 
 			</th:block>
 		</div>
