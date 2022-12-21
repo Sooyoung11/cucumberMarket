@@ -112,7 +112,6 @@ public class MemberService {
     }
 
     @Transactional
-    /*repository jpql*/
     public void resetPw(ResetPasswordDto dto){
         log.info("resetPw(dto= {})", dto);
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
