@@ -7,6 +7,7 @@ import com.sohwakmo.cucumbermarket.domain.KakaoProfile;
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.domain.OAuthToken;
 import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
+import com.sohwakmo.cucumbermarket.dto.ResetPasswordDto;
 import com.sohwakmo.cucumbermarket.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -110,11 +111,16 @@ public class MemberService {
         return memberRepository.findByEmail(email).orElse(null);
     }
 
-    /* repository jpql
-    public Member resetPw(String email, String password){
-        log.info("resetPw(email= {}, pw= {})", email, password);
-        return memberRepository.resetPw(email, password);
-    }*/
+    @Transactional
+    /*repository jpql*/
+    public void resetPw(ResetPasswordDto dto){
+        log.info("resetPw(dto= {})", dto);
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+        Member entity= memberRepository.findByEmail(dto.getEmail()).orElse(null);
+        log.info(entity.toString());
+        Member member = entity.resetPassword(dto.getPassword(), dto.getEmailKey());
+        log.info(member.toString());
+    }
 
     @Transactional(readOnly = true)
     public Member findMemberByMemberNo(Integer memberNo) {

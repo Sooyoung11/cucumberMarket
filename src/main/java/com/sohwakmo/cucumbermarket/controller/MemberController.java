@@ -2,6 +2,7 @@ package com.sohwakmo.cucumbermarket.controller;
 
 import com.sohwakmo.cucumbermarket.domain.Member;
 import com.sohwakmo.cucumbermarket.dto.MemberRegisterDto;
+import com.sohwakmo.cucumbermarket.dto.ResetPasswordDto;
 import com.sohwakmo.cucumbermarket.service.EmailServiceImpl;
 import com.sohwakmo.cucumbermarket.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -150,11 +151,10 @@ public class MemberController {
     }
 
     @PostMapping("/member/find/resetPw")
-    public String resetPw(String email, String password){
-        log.info("resetPw(email= {}, pw= {})", email, password);
-        /*
-        memberService.resetPw(email, password);*/
-        return "redirect:/login";
+    public String resetPw(ResetPasswordDto dto){
+        log.info("resetPw(dto= {})", dto);
+        memberService.resetPw(dto);
+        return "redirect:/";
     }
 
 

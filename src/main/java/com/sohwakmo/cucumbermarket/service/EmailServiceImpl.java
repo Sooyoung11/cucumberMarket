@@ -119,7 +119,7 @@ public class EmailServiceImpl implements EmailService{
         mimeMessage.setSubject("[오이마켓] 계정 비밀번호 재설정 링크입니다.");
 
         //6자리 난수 인증번호 생성
-        String authKey = getKey(32);
+        String emailKey = getKey(32);
 
         String msg= "";
         msg += "<div style='margin-top:40px;'>";
@@ -128,8 +128,8 @@ public class EmailServiceImpl implements EmailService{
         msg += "<p>아래 링크를 클릭하시면 비밀번호 재설정 페이지로 이동합니다.</p>";
         msg += "<p><strong><a href='http://localhost:8889/member/find/resetPw?email=";
         msg += to;
-        msg += "&authKey=";
-        msg += authKey;
+        msg += "&emailKey=";
+        msg += emailKey;
         msg += "' target='_blenk'> 비밀번호 재설정 </a></strong></p><br/>";
         msg += "<p>비밀번호 변경을 원하지 않거나 변경 요청을 하지 않으신 경우<br/>이 메시지를 무시하고 삭제하여 주십시오.</p><br/>";
         msg += "<p>감사합니다.</p>";
@@ -149,7 +149,7 @@ public class EmailServiceImpl implements EmailService{
             e.printStackTrace();
             throw new IllegalArgumentException();
         }
-        log.info("sendLink(to= {}, authKey= {})", to);
+        log.info("sendLink(to= {}, emailKey= {})", to);
         return to;
     }
 
