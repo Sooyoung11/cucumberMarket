@@ -152,14 +152,18 @@ public class PostService {
         Post post =  postRepository.findByImageName01(imageSrc);
         if(post == null){
             Post post2 = postRepository.findByImageName02(imageSrc);
+            if (post2.getImageName01() == null || !post2.getImageName01().equals(post2.getImageName02())) {
+                extractImage(imageSrc);
+            }
             post2.setImageUrl02("");
             post2.setImageName02("");
-            extractImage(imageSrc);
             return "2번사진 삭제완료";
         }else{
+            if (post.getImageName02()==null || !post.getImageName01().equals(post.getImageName02())) {
+                extractImage(imageSrc);
+            }
             post.setImageName01("");
             post.setImageUrl01("");
-            extractImage(imageSrc);
             return "1번사진 삭제완료";
         }
     }
@@ -178,7 +182,9 @@ public class PostService {
     @Transactional()
     public String modifyImage01(Post post, MultipartFile data)throws Exception {
         String fileName = saveImage(data);
-//        extractImage(post.getImageName01());
+        if (!post.getImageName01().equals(post.getImageName02())) {
+            extractImage(post.getImageName01());
+        }
         log.info(fileName);
         post.setImageName01(fileName);
         post.setImageUrl01("/files/"+fileName);
@@ -188,7 +194,9 @@ public class PostService {
     @Transactional()
     public String modifyImage02(Post post, MultipartFile data)throws Exception {
         String fileName = saveImage(data);
-//        extractImage(post.getImageName02());
+        if (!post.getImageName01().equals(post.getImageName02())) {
+            extractImage(post.getImageName02());
+        }
         log.info(fileName);
         post.setImageUrl02("/files/"+fileName);
         post.setImageName02(fileName);
