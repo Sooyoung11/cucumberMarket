@@ -16,9 +16,9 @@ function setThumbnail(event) {
 }
 
 
-const fromCreate = document.querySelector('#fromCreate');
-const createBtn = document.querySelector('#createBtn')
-createBtn.addEventListener('click', function() {
+
+    const createBtn = document.querySelector('#createBtn')
+    createBtn.addEventListener('click', function() {
     const title = document.querySelector('#title').value;
     const content = document.querySelector('#content').text;
     const price = document.querySelector('#price').value;
@@ -32,19 +32,14 @@ createBtn.addEventListener('click', function() {
     } else if (price === '') {
         alert('가격을 입력해주세요.')
         return;
-    } else if (category === '') {
+    }else if (category === 'disabled') {
         alert('카테고리를 입력해주세요.')
         return;
     }
-    const result = confirm('등록하시겠습니까?')
-    if(result) {
-        form.action = '/product/create';
-        form.method = 'post';
-        form.submit();
-    }
-});
-const cancelCreate = document.querySelector('#cancelCreate');
-cancelCreate.addEventListener('click', function () {
-    const result = confirm('등록을 취소하시겠습니까?')
 
+});
+
+    const cancelCreate = document.querySelector('#cancelCreate');
+    cancelCreate.addEventListener('click', function () {
+        const result = confirm('등록이 취소되었습니다.')
 });

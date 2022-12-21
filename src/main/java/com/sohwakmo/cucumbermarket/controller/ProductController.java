@@ -361,6 +361,7 @@ public class ProductController {
                 Product products = productService.create(product, multipartFile);
             }
         }
+
         return "redirect:/product/list";
     }
 

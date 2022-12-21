@@ -35,7 +35,6 @@ public class ProductService {
     public Page<Product> read(Pageable pageable) { // 전체 상품 목록
         log.info("read()");
 
-
         return productRepository.findByStatusOrderByProductNoDesc(false, pageable);
     }
 

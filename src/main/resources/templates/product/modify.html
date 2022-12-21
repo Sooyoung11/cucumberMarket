@@ -32,17 +32,18 @@
         </div>
         <div class="p-3 mt-3 border-bottom">
           <select id="category" class="form-select shadow-sm p-3 mb-5 bg-body rounded" style="width: 1150px;" name="category" th:value="${product.category}">
-            <option th:selected="${product.category}=='디지털기기'" >디지털기기</option>
-            <option th:selected="${product.category}=='생활가전/주방'">생활가전/주방</option>
-            <option th:selected="${product.category}=='유아용품'">유아용품</option>
-            <option th:selected="${product.category}=='여성패션/잡화'">여성패션/잡화</option>
-            <option th:selected="${product.category}=='남성패션/잡화'">남성패션/잡화</option>
-            <option th:selected="${product.category}=='뷰티/미용'">뷰티/미용</option>
-            <option th:selected="${product.category}=='스포츠/레저'">스포츠/레저</option>
-            <option th:selected="${product.category}=='취미/게임/음반'">취미/게임/음반</option>
-            <option th:selected="${product.category}=='도서'">도서</option>
-            <option th:selected="${product.category}=='반려동물용품'" >반려동물용품</option>
-            <option th:selected="${product.category}=='기타'" ></option>
+            <option th:selected="${product.category}=='디지털기기'" value="디지털기기" >디지털기기</option>
+            <option th:selected="${product.category}=='생활가전/주방'" value="생활가전/주방">생활가전/주방</option>
+            <option th:selected="${product.category}=='식품'" value="식품">식품</option>
+            <option th:selected="${product.category}=='유아용품'" value="유아용품">유아용품</option>
+            <option th:selected="${product.category}=='여성패션/잡화'" value="여성패션/잡화">여성패션/잡화</option>
+            <option th:selected="${product.category}=='남성패션/잡화'" value="남성패션/잡화">남성패션/잡화</option>
+            <option th:selected="${product.category}=='뷰티/미용'" value="뷰티/미용">뷰티/미용</option>
+            <option th:selected="${product.category}=='스포츠/레저'" value="스포츠/레저">스포츠/레저</option>
+            <option th:selected="${product.category}=='취미/게임/음반'" value="취미/게임/음반">취미/게임/음반</option>
+            <option th:selected="${product.category}=='도서'" value="생활가전/주방">도서</option>
+            <option th:selected="${product.category}=='반려동물용품'" value="반려동물용품" >반려동물용품</option>
+            <option th:selected="${product.category}=='기타'" value="기타">기타</option>
           </select>
         </div>
         <div class="pt-3">
