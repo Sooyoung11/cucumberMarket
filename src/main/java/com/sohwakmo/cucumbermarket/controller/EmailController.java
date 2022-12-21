@@ -44,4 +44,12 @@ public class EmailController {
         String result= emailServiceImpl.checkEmailKey(authCode, emailKey);
         return ResponseEntity.ok(result);
     }
+    @GetMapping("/member/find/pw/sendLink")
+    @ResponseBody
+    public String sendLink(String email) throws Exception{
+        log.info("sendLink(email= {})", email);
+        String authKey= emailService.sendLink(email);
+        log.info("sendLink(authKey= {})", authKey);
+        return authKey;
+    }
 }

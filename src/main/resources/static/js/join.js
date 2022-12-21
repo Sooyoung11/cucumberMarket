@@ -100,17 +100,6 @@ window.addEventListener('DOMContentLoaded', function () {
     nicknameInput.addEventListener('change', function () {
         const nickname = nicknameInput.value;
         console.log(nickname);
-
-        //특수문자 제한
-        var regExp = /[ \{\}\[\]\/?.,;:|\)*~`^\+┼<>@\#$%&\'\"\\\(\=]/gi;
-
-        if( regExp.test(nickname)){
-            alert("특수문자는 입력할 수 없습니다.('!', '_', '-' 만 가능)");
-            nicknameInput.value=null;
-            nicknameInput.focus();
-            return;
-        }
-
         axios
         .get('/member/check_nickname?nickname='+ nickname)
         .then(res => { displayCheckNickname(res.data) })
@@ -173,7 +162,7 @@ window.addEventListener('DOMContentLoaded', function () {
             .then(function(res){
                 console.log(res.data);
                 authCode= res.data;
-                console.log('sendEmail=> authCode='+authCode);
+                console.log('sendEmail=> authCode= '+authCode);
                 btnAuth.classList.remove('disabled');
             })
             .catch(err => {
