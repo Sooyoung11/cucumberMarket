@@ -13,7 +13,8 @@ line-height: .6em; text-decoration: none;}
 #lblAddress,#lblPhone,#lblEmail{margin-bottom: 4px;}
 p{font-size: 13px; padding: 4px 0 0 8px;}
 span>p{display: inline;}
-input{display:inline-block; width: 380px;}
+span img{margin-top: -4px;}
+input{display:inline-block; width: 366px;}
 #memberId,#password,#password2,#name,#nickname,#sample4_postcode,
 #sample4_roadAddress,#sample4_jibunAddress,#sample4_detailAddress,
 #phone,#email,#emailKey{border: none; font-size: 14px;}
@@ -24,7 +25,7 @@ input{display:inline-block; width: 380px;}
 #btnAuthcode,#btnAuth{width: 128px; height: 42px; font-size: 14px; float: right;}
 #roadAddressSpan{display: inline-block;}
 #emailSpan,#emailKeySpan{width: 280px; display: inline-block; margin-right: 12px;}
-#email,#emailKey{width: 220px;}
+#email,#emailKey{width: 226px;}
 #emailKeySpan{display: inline-block;}
 #btnSubmit{font-size: 15px;  margin: 40px auto 20px auto; width: 420px; height: 42px;}
 #memberId,#password,#password2,#name,#nickname,#sample4_postcode,
