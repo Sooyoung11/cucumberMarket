@@ -6,7 +6,6 @@
 
 window.addEventListener('DOMContentLoaded', event => {
 
-
     // 선택한 replyNo 가져오기 위해서
     let getReplyNo = 0;
 
@@ -105,7 +104,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 '</br>'
                 + `<img style="width:35px; height:80%; display: inline;  border-radius: 70%;" src="${r.userURL}" >`
                 + '<h6 class=" font-weight-bold" style="display:inline;">' +' '+ r.replier  + '</h6>'
-                + '<div class="small 1h-sm border-bottom w-100">'
+                + '<div class="small 1h-sm border-bottom w-100" ">'
 
 
             // 비밀 체크 했을 때
@@ -129,6 +128,7 @@ window.addEventListener('DOMContentLoaded', event => {
                 }
 
                 str += '</div>'
+                 + '</div>'
 
             } else { // 비밀 체크 하지 않을 때
                 str +=
@@ -170,7 +170,8 @@ window.addEventListener('DOMContentLoaded', event => {
                                                     ></textarea>
                                             </div>
                                             <div class="col-2">
-                                                <button type="button" class=" btn btn-light list" id="btnReReplyRegister"  test="${r.replyNo}" >
+                                                <button type="button" class=" btn btn-light list" id="btnReReplyRegister"  preply="${r.replyNo}" >
+                                                  <span type="hidden" class="preply" value="0"></span>
                                                   <b>등록</b>
                                                  </button>
                                                 <div class="form-inline">
@@ -183,6 +184,7 @@ window.addEventListener('DOMContentLoaded', event => {
                                         </div>
                                         </div>
                                      </div>
+
                                     `
             }
         }
@@ -263,12 +265,10 @@ window.addEventListener('DOMContentLoaded', event => {
 
         function deleteReply(event) {
             const replyNo = modalreplyId.value; // 삭제할 댓글 아이디
-            const result = confirm('삭제 할까요?');
-            if (result) {
                 axios
                     .delete('/api/reply/' + replyNo) // Ajax DELETE 요청 전송
                     .then(response => {
-                        alert('#' + response.data + ' 댓글 삭제 성공');
+                        readAllReReplies();
                         readAllReplies();
                     }) // HTTP 200 OK 응답
                     .catch(err => {
@@ -277,7 +277,7 @@ window.addEventListener('DOMContentLoaded', event => {
                     .then(function () { // 성공 또는 실패 처리 후 항상 실행할 코드
                         replyModal.hide();
                     });
-            }
+
         }
 
         function updateReply(event) {
@@ -289,14 +289,11 @@ window.addEventListener('DOMContentLoaded', event => {
                 return;
             }
 
-            const result = confirm('수정 할까요?');
-
-            if (result) {
                 const data = {replyContent: replyContent};
                 axios
                     .put('/api/reply/' + replyNo, data) // Ajax PUT 요청 전송
                     .then(response => {
-                        alert('#' + response.data + ' 댓글 수정 성공');
+                        readAllReReplies();
                         readAllReplies();
                     }) // HTTP 200 OK 응답
                     .catch(err => {
@@ -305,7 +302,7 @@ window.addEventListener('DOMContentLoaded', event => {
                     .then(function () { // 성공 또는 실패 처리 후 항상 실행할 코드
                         replyModal.hide();
                     });
-            }
+
         }
 
 
@@ -317,9 +314,11 @@ window.addEventListener('DOMContentLoaded', event => {
             if (getReplyNo != 0) {
                 getReplyNo = 0;
                 readAllReplies();
+                console.log(replyNo);
 
             } else {
                 getReplyNo = replyNo;
+                console.log(replyNo);
                 readAllReplies();
                 readAllReReplies();
             }
@@ -335,10 +334,9 @@ window.addEventListener('DOMContentLoaded', event => {
 
             //비밀 댓글 체크 여부
             let secretReply = document.getElementById('secretReReply').checked;
-            console.log(secretReply);
-
             // 댓글의 번호
-            const replyNo = event.target.getAttribute('test');
+            const replyNo = event.target.getAttribute('preply');
+            console.log("댓글 번호", replyNo);
             // 댓글 작성자 찾음.
             const replier = document.querySelector('#replier').value;
             // 댓글 내용을 찾음.
@@ -369,7 +367,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
             console.log(data);
             // Axios 라이브러리를 사용해서 Ajax POST 요청을 보냄.
-            axios.post('/api/reply', data)
+             axios.post('/api/reply', data)
                 .then(response => {
                     console.log(response);
                     alert('# ' + response.data + '댓글 작성 성공');
@@ -405,7 +403,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
             let str = ''; // div 안에 들어갈 HTML 코드
 
-            // 비밀 댓글 출력 구분
+
             for (let r of data) {
 
                 str +=
@@ -436,6 +434,7 @@ window.addEventListener('DOMContentLoaded', event => {
                     str +=
                         '</div>'
                         + '</div>'
+
 
 
                 } else { // 비밀 체크 하지 않을 때

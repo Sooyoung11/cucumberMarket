@@ -52,7 +52,7 @@ public class ReplyService {
     public List<ReplyReadDto> selectByReplyNo(Integer replyNo, Integer parent) { // 대댓글 list 보기 기능
         log.info("selectByReplyNo=(replyNo={},parent={})", replyNo, parent);
 
-        List<Reply> list = replyRepository.findByParentReplyNoAndParentOrderByReplyNoDesc(replyNo, parent);
+        List<Reply> list = replyRepository.findByParentReplyNoAndParent(replyNo, parent);
         log.info("list3={}", list);
 
         return list.stream().map(ReplyReadDto::fromEntity).collect(Collectors.toList());
