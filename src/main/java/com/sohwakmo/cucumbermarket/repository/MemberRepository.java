@@ -31,4 +31,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     @EntityGraph(attributePaths = "roles")
     Member findByMemberIdAndEmail(String memberId, String email);
 
+    @EntityGraph(attributePaths = "roles")
+    Member findByNameAndEmail(String memberId, String email);
+
+
 }

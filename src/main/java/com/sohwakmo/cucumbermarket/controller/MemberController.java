@@ -123,12 +123,21 @@ public class MemberController {
         return "redirect:/login";
     }
 
-    @GetMapping("/member/find/check_email")
+    @GetMapping("/member/find/pw/check_email")
     @ResponseBody
-    public ResponseEntity<String> checkEmail(String memberId, String email){
+    public ResponseEntity<String> checkEmail4findPw(String memberId, String email){
         log.info("findPw(memberId= {}, email= {})", memberId, email);
 
         String result= memberService.checkEmail4findPw(memberId, email);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/member/find/id/check_email")
+    @ResponseBody
+    public ResponseEntity<String> checkEmail4findId(String name, String email){
+        log.info("findId(name= {}, email= {})", name, email);
+
+        String result= memberService.checkEmail4findId(name, email);
         return ResponseEntity.ok(result);
     }
 
@@ -145,6 +154,7 @@ public class MemberController {
         attrs.addFlashAttribute("memberId", memberId);
         return "redirect:/member/find/id";
     }
+
     @GetMapping("/member/find/pw")
     public void findPw(){
         log.info("findPw() GET");

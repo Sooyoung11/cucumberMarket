@@ -61,50 +61,106 @@
         </div><!--end.findTab-->
 
         <div id="findForm">
-            <form method="post">
+            <form method="post" id="form">
                 <div>
                     <label class="form-label" for="name" id="lblName">이름</label>
                     <span class="form-control form-control-lg" id="nameSpan">
                         <input type="text" id="name" name="name" required autofocus/>
                     </span>
+                    <div id="nameNok" class="d-none">
+                        <p class="text-danger">이름을 입력해주세요.</p>
+                    </div>
                 </div>
                 <div class="mt-3">
                     <label class="form-label" for="email" id="lblEmail">이메일</label>
                     <span class="form-control form-control-lg" id="emailSpan">
                         <input type="text" id="email" name="email" required/>
                     </span>
+                    <div id="emailNok" class="d-none">
+                        <p class="text-danger">이름과 이메일이 일치하지 않습니다.</p>
+                    </div>
                 </div>
                 <div>
-                    <input type="submit" value="다음" id="btnSubmit" class="btn btn-success">
+                    <input type="button" value="다음" id="btnSubmit" class="btn btn-success disabled">
                 </div>
             </form>
         </div><!--end.findForm-->
+
+        <input
+        type="hidden"
+        id="hiddenMemberId"
+        th:value="${memberId}"
+      />
         <!--
         <div>
-            <p>고객님의 정보와 일치하는 아이디는<span th:text="${memberId}"></span>입니다.</p>
+            <p>회원님의 정보와 일치하는 아이디는<span th:text="${memberId}"></span>입니다.</p>
         </div>-->
+        
     </div>
 </main>
+<!-- axios-http JS -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     window.addEventListener('DOMContentLoaded', function () {
-        const name= document.querySelector('#name');
+        const nameInput= document.querySelector('#name');
         const nameSpan= document.querySelector('#nameSpan');
-        const email= document.querySelector('#email')
+        const emailInput= document.querySelector('#email')
         const emailSpan= document.querySelector('#emailSpan');
         
-        name.addEventListener('focus', function(){
+        nameInput.addEventListener('focus', function(){
             nameSpan.style.borderColor= '#198754';
         })
-        name.addEventListener('blur', function(){
+        nameInput.addEventListener('blur', function(){
             nameSpan.style.borderColor= '#ced4da';
         })
 
-        email.addEventListener('focus', function(){
+        emailInput.addEventListener('focus', function(){
             emailSpan.style.borderColor= '#198754';
+            if(nameInput.value== ''){
+                nameNok.className= '';
+            }else{
+                nameNok.className= 'd-none';
+            }
         })
-        email.addEventListener('blur', function(){
+        emailInput.addEventListener('blur', function(){
             emailSpan.style.borderColor= '#ced4da';
         })
+
+        emailInput.addEventListener('change', function(){
+            const email= emailInput.value;
+            const name= nameInput.value;
+            axios
+            .get('/member/find/id/check_email?name='+name+'&email='+email)
+            .then(res=> {displayCheckEmail(res.data)})
+            .catch(err=> {console.log(err)});
+        });
+
+        function displayCheckEmail(data){
+            if(data== 'emailNok'){
+                emailNok.className= '';
+                btnSubmit.classList.add('disabled');
+            }else{
+                emailNok.className= 'd-none';
+                btnSubmit.classList.remove('disabled');
+            }
+        }
+
+        let to= '';
+        let memberId= document.querySelector('#hiddenMemberId').value;
+        const btnSubmit= document.querySelector('#btnSubmit');
+        const form = document.querySelector('#form');
+        btnSubmit.addEventListener('click', function (event) {
+            event.preventDefault();
+            form.action = '/member/find/id';
+            form.method = 'post';
+            form.submit();
+            
+        });
+        if(memberId!=''){
+                alert('회원님의 아이디는 '+memberId+' 입니다.');
+            }
+
+
     })
 </script>
 </body>

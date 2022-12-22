@@ -106,6 +106,17 @@ public class MemberService {
     }
 
     @Transactional
+    public String checkEmail4findId(String name, String email){
+        log.info("findId(name= {}, email= {})", name, email);
+        Member result= memberRepository.findByNameAndEmail(name, email);
+        if(result== null){
+            return "emailNok";
+        }else{
+            return "emailOk";
+        }
+    }
+
+    @Transactional
     public Member registerMember(MemberRegisterDto dto){
         log.info("registerMember(dto= {})", dto);
 
