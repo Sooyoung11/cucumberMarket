@@ -56,7 +56,7 @@ window.addEventListener('DOMContentLoaded', event => {
                     "Content-Type": "multipart/form-data",
                     "Access-Control-Allow-Origin": "*",
                 },
-                url: "http://192.168.20.28:8889/api/profileImage/upload",
+                url: "http://192.168.20.10:8889/api/profileImage/upload",
                 method: "POST",
                 data: formData,
             }).then((response) => {
