@@ -95,6 +95,17 @@ public class MemberService {
     }
 
     @Transactional
+    public String checkEmail4findPw(String memberId, String email){
+        log.info("findPw(memberId= {}, email= {})", memberId, email);
+        Member result= memberRepository.findByMemberIdAndEmail(memberId, email);
+        if(result== null){
+            return "emailNok";
+        }else{
+            return "emailOk";
+        }
+    }
+
+    @Transactional
     public Member registerMember(MemberRegisterDto dto){
         log.info("registerMember(dto= {})", dto);
 

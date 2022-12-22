@@ -123,6 +123,15 @@ public class MemberController {
         return "redirect:/login";
     }
 
+    @GetMapping("/member/find/check_email")
+    @ResponseBody
+    public ResponseEntity<String> checkEmail(String memberId, String email){
+        log.info("findPw(memberId= {}, email= {})", memberId, email);
+
+        String result= memberService.checkEmail4findPw(memberId, email);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("/member/find/id")
     public void findId(){
         log.info("findId() GET");
@@ -154,6 +163,6 @@ public class MemberController {
     public String resetPw(ResetPasswordDto dto){
         log.info("resetPw(dto= {})", dto);
         memberService.resetPw(dto);
-        return "redirect:/";
+        return "redirect:/login";
     }
 }
